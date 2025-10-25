@@ -25,6 +25,7 @@ const eslintConfig = [
       '**/styled-system-studio/**',
       '**/storybook-static/**',
       '*.openapi-tmp',
+      'next-env.d.ts',
     ],
   },
 
