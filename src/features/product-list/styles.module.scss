@@ -1,0 +1,42 @@
+.container {
+  display: grid;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+}
+
+.list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #d1d5db;
+  border-radius: var(--border-radius);
+  padding: 0.75rem;
+}
+
+.loading,
+.error {
+  padding: 1.5rem;
+}
+
+.error {
+  color: #dc2626;
+}
+
+.price {
+  font-variant-numeric: tabular-nums;
+}

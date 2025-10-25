@@ -1,0 +1,318 @@
+openapi: 3.1.1
+info:
+  title: HFSA Mock API
+  description: >-
+    Auto-generated API documentation from feature mock files using HFSA
+    architecture
+  version: 1.0.0
+  contact: {}
+servers:
+  - url: http://localhost:4010
+    description: Prism mock server
+  - url: /api
+    description: Next.js API routes
+paths:
+  /products/search:
+    get:
+      tags:
+        - products
+      summary: Search products
+      description: Search products by name, category, or description with pagination
+      operationId: Searchproducts
+      parameters:
+        - name: q
+          in: query
+          description: Search query
+          required: false
+          schema:
+            type: string
+            example: coffee
+        - name: category
+          in: query
+          description: Filter by category
+          required: false
+          schema:
+            type: string
+            example: coffee
+        - name: minPrice
+          in: query
+          description: Minimum price filter
+          required: false
+          schema:
+            type: number
+            example: 10
+        - name: page
+          in: query
+          description: 'Page number (default: 1)'
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - name: limit
+          in: query
+          description: 'Items per page (default: 20, max: 100)'
+          required: false
+          schema:
+            type: integer
+            example: 20
+      responses:
+        '200':
+          description: Search results with pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: prod_001
+                        name:
+                          type: string
+                          example: Premium Coffee Beans
+                        price:
+                          type: number
+                          format: float
+                          minimum: 0
+                          example: 24.99
+                        description:
+                          type: string
+                          example: Single origin coffee beans from Brazil
+                        category:
+                          type: string
+                          example: coffee
+                        inStock:
+                          type: boolean
+                          example: true
+                        rating:
+                          type: number
+                          format: float
+                          minimum: 0
+                          maximum: 5
+                          example: 4.8
+                        images:
+                          type: array
+                          items:
+                            type: string
+                            format: uri
+                          example:
+                            - /images/coffee-brazil.jpg
+                        tags:
+                          type: array
+                          items:
+                            type: string
+                          example:
+                            - single-origin
+                            - premium
+                      required:
+                        - id
+                        - name
+                        - price
+                        - description
+                        - category
+                        - inStock
+                        - rating
+                  total:
+                    type: integer
+                  page:
+                    type: integer
+                  totalPages:
+                    type: integer
+              example:
+                results:
+                  - id: prod_123
+                    name: Premium Coffee Beans
+                    price: 24.99
+                    category: coffee
+                    rating: 4.8
+                total: 15
+                page: 1
+                totalPages: 1
+        '400':
+          description: Invalid search parameters
+  /auth/login:
+    post:
+      tags:
+        - authentication
+      summary: User login
+      description: Authenticate user with email and password
+      operationId: Userlogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  minLength: 6
+                  example: password123
+              required:
+                - email
+                - password
+        required: true
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: user_123
+                      name:
+                        type: string
+                        example: John Doe
+                      email:
+                        type: string
+                        format: email
+                        example: john@example.com
+                      createdAt:
+                        type: string
+                        format: date-time
+                        example: '2024-01-15T10:30:00Z'
+                      updatedAt:
+                        type: string
+                        format: date-time
+                        example: '2024-01-15T10:30:00Z'
+                    required:
+                      - id
+                      - name
+                      - email
+              example:
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                user:
+                  id: user_123
+                  email: user@example.com
+                  name: John Doe
+        '400':
+          description: Missing required fields
+        '401':
+          description: Invalid credentials
+  /auth/register:
+    post:
+      tags:
+        - authentication
+      summary: User registration
+      description: Register a new user account
+      operationId: Userregistration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 2
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  example: john@example.com
+                password:
+                  type: string
+                  minLength: 8
+                  example: securepass123
+              required:
+                - name
+                - email
+                - password
+        required: true
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: user_456
+                  name:
+                    type: string
+                    example: John Doe
+                  email:
+                    type: string
+                    format: email
+                    example: john@example.com
+                  createdAt:
+                    type: string
+                    format: date-time
+                    example: '2024-01-15T10:30:00Z'
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    example: '2024-01-15T10:30:00Z'
+                required:
+                  - id
+                  - name
+                  - email
+              example:
+                id: user_456
+                name: John Doe
+                email: john@example.com
+                createdAt: '2024-01-15T10:30:00Z'
+        '400':
+          description: Validation error
+        '409':
+          description: Email already exists
+  /auth/refresh:
+    post:
+      tags:
+        - authentication
+      summary: Refresh token
+      description: Refresh the access token using a refresh token
+      operationId: Refreshtoken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  example: refresh_token_here
+              required:
+                - refreshToken
+        required: true
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: new_access_token_here
+                  refreshToken:
+                    type: string
+                    example: new_refresh_token_here
+        '401':
+          description: Invalid refresh token
+components:
+  schemas: {}
+tags:
+  - name: products
+    description: Operations related to products
+  - name: authentication
+    description: Operations related to authentication
