@@ -164,11 +164,17 @@ Located in `src/libs/testing/integration-test-setup.ts`:
 - `setupIntegrationTest({ mockError: true })` - Mock error responses
 
 **Custom render wrapper:**
-Use `customRender()` from `src/libs/testing/testing-wrapper.tsx` to wrap components with:
+Import `render` from `src/libs/testing/testing-wrapper.tsx` (not from `@testing-library/react` directly). This custom render automatically wraps components with:
 
 - SessionProvider (NextAuth)
 - QueryClientProvider (React Query)
 - Reshaped theme
+
+```typescript
+import { render, screen, waitFor } from '@/libs/testing/testing-wrapper';
+
+render(<YourComponent />);
+```
 
 **Coverage thresholds:** 80% for branches, functions, lines, and statements.
 

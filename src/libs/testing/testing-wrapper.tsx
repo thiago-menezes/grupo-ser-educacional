@@ -1,3 +1,4 @@
+/* eslint-disable import/export */
 import { QueryClient } from '@tanstack/react-query';
 import { render, RenderOptions } from '@testing-library/react';
 import { ReactElement, ReactNode } from 'react';
@@ -27,5 +28,5 @@ const customRender = (
 };
 
 export * from '@testing-library/react';
-export { customRender };
+export { customRender as render };
 export { createTestQueryClient };
