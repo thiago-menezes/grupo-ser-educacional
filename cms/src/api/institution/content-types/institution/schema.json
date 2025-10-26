@@ -1,0 +1,70 @@
+{
+  "kind": "collectionType",
+  "collectionName": "institutions",
+  "info": {
+    "singularName": "institution",
+    "pluralName": "institutions",
+    "displayName": "Institution",
+    "description": "Educational institutions in the Grupo SER network"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "code": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "maxLength": 20
+    },
+    "description": {
+      "type": "text"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "website": {
+      "type": "string"
+    },
+    "primaryColor": {
+      "type": "string",
+      "maxLength": 7,
+      "regex": "^#[0-9A-Fa-f]{6}$"
+    },
+    "secondaryColor": {
+      "type": "string",
+      "maxLength": 7,
+      "regex": "^#[0-9A-Fa-f]{6}$"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "courses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course.course",
+      "mappedBy": "institution"
+    },
+    "pageContents": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::page-content.page-content",
+      "mappedBy": "institution"
+    }
+  }
+}
