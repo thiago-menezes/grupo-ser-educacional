@@ -10,8 +10,10 @@ vi.mock('@/features/strapi-articles/hooks', () => ({
 
 // Mock next/navigation
 const mockNotFound = vi.fn();
+const mockUseParams = vi.fn();
 vi.mock('next/navigation', () => ({
   notFound: () => mockNotFound(),
+  useParams: () => mockUseParams(),
 }));
 
 const mockArticleResponse: ArticlesResponse = {
@@ -47,6 +49,8 @@ const mockArticleResponse: ArticlesResponse = {
 describe('ArticleDetailPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Mock useParams to return default slug
+    mockUseParams.mockReturnValue({ slug: 'test-article' });
   });
 
   it('renders loading state initially', () => {
@@ -57,7 +61,7 @@ describe('ArticleDetailPage', () => {
       refetch: vi.fn(),
     });
 
-    render(<ArticleDetailPage params={{ slug: 'test-article' }} />);
+    render(<ArticleDetailPage />);
 
     expect(screen.getByText('Loading article...')).toBeInTheDocument();
   });
@@ -70,7 +74,7 @@ describe('ArticleDetailPage', () => {
       refetch: vi.fn(),
     });
 
-    render(<ArticleDetailPage params={{ slug: 'test-article' }} />);
+    render(<ArticleDetailPage />);
 
     await waitFor(() => {
       expect(screen.getByText('Test Article')).toBeInTheDocument();
@@ -101,7 +105,7 @@ describe('ArticleDetailPage', () => {
       refetch: vi.fn(),
     });
 
-    render(<ArticleDetailPage params={{ slug: 'test-article' }} />);
+    render(<ArticleDetailPage />);
 
     expect(screen.getByText(/Created: January 10, 2025/)).toBeInTheDocument();
   });
@@ -116,7 +120,7 @@ describe('ArticleDetailPage', () => {
       refetch: vi.fn(),
     });
 
-    render(<ArticleDetailPage params={{ slug: 'test-article' }} />);
+    render(<ArticleDetailPage />);
 
     expect(
       screen.getByText(/Error loading article: Failed to fetch article/),
@@ -124,6 +128,8 @@ describe('ArticleDetailPage', () => {
   });
 
   it('calls notFound when article is not found', () => {
+    mockUseParams.mockReturnValue({ slug: 'non-existent-article' });
+
     // Make notFound throw an error to stop rendering
     mockNotFound.mockImplementation(() => {
       throw new Error('NEXT_NOT_FOUND');
@@ -138,13 +144,15 @@ describe('ArticleDetailPage', () => {
 
     // Expect the render to throw due to notFound
     expect(() => {
-      render(<ArticleDetailPage params={{ slug: 'non-existent-article' }} />);
+      render(<ArticleDetailPage />);
     }).toThrow('NEXT_NOT_FOUND');
 
     expect(mockNotFound).toHaveBeenCalled();
   });
 
   it('uses correct slug from params', () => {
+    mockUseParams.mockReturnValue({ slug: 'my-awesome-article' });
+
     const mockUseArticleBySlug = vi.mocked(useArticleBySlug);
 
     mockUseArticleBySlug.mockReturnValue({
@@ -154,7 +162,7 @@ describe('ArticleDetailPage', () => {
       refetch: vi.fn(),
     });
 
-    render(<ArticleDetailPage params={{ slug: 'my-awesome-article' }} />);
+    render(<ArticleDetailPage />);
 
     expect(mockUseArticleBySlug).toHaveBeenCalledWith('my-awesome-article');
   });

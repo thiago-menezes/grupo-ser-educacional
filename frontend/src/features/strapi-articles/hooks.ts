@@ -1,4 +1,3 @@
-import { useParams } from 'next/navigation';
 import {
   useArticlesQuery,
   useArticleQuery,
@@ -37,9 +36,7 @@ export const useArticle = (id: number) => {
 /**
  * Custom hook for fetching and managing a single article by slug
  */
-export const useArticleBySlug = () => {
-  const { slug } = useParams<{ slug: string }>();
-
+export const useArticleBySlug = (slug: string) => {
   const { data, isLoading, error, refetch } = useArticleBySlugQuery(slug);
 
   // Strapi returns array even with filters, so take first item

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import { BlockRenderer } from '@/features/strapi-articles/BlockRenderer';
 import { useArticleBySlug } from '@/features/strapi-articles/hooks';
 import styles from './styles.module.scss';
@@ -12,7 +12,8 @@ import styles from './styles.module.scss';
  * Displays a single article fetched from Strapi CMS by slug
  */
 export default function ArticleDetailPage() {
-  const { article, isLoading, error } = useArticleBySlug();
+  const { slug } = useParams<{ slug: string }>();
+  const { article, isLoading, error } = useArticleBySlug(slug);
 
   if (isLoading) {
     return <div className={styles.loading}>Loading article...</div>;
