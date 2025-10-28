@@ -1,8 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { useArticleBySlug } from '@/features/strapi-articles/hooks';
 import { BlockRenderer } from '@/features/strapi-articles/BlockRenderer';
+import { useArticleBySlug } from '@/features/strapi-articles/hooks';
 import styles from './styles.module.scss';
 
 /**
@@ -42,7 +43,7 @@ export default function ArticleDetailPage() {
     <article className={styles.container}>
       {cover && (
         <div className={styles.coverImage}>
-          <img
+          <Image
             src={cover.url}
             alt={cover.alternativeText || title}
             className={styles.cover}

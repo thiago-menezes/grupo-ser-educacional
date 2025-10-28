@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { ArticleBlock } from './api/types';
 import styles from './BlockRenderer.module.scss';
 
@@ -28,12 +29,12 @@ export const BlockRenderer = ({ blocks }: BlockRendererProps) => {
               />
             );
 
-          case 'shared.media':
+          case 'shared.media': {
             if (!block.file) return null;
             const media = block.file;
             return (
               <div key={block.id} className={styles.media}>
-                <img
+                <Image
                   src={media.url}
                   alt={media.alternativeText || ''}
                   width={media.width}
@@ -44,11 +45,14 @@ export const BlockRenderer = ({ blocks }: BlockRendererProps) => {
                 )}
               </div>
             );
+          }
 
           case 'shared.quote':
             return (
               <blockquote key={block.id} className={styles.quote}>
-                {block.title && <h4 className={styles.quoteTitle}>{block.title}</h4>}
+                {block.title && (
+                  <h4 className={styles.quoteTitle}>{block.title}</h4>
+                )}
                 <p className={styles.quoteBody}>{block.body}</p>
               </blockquote>
             );
@@ -59,7 +63,7 @@ export const BlockRenderer = ({ blocks }: BlockRendererProps) => {
               <div key={block.id} className={styles.slider}>
                 <div className={styles.sliderTrack}>
                   {block.files.map((file) => (
-                    <img
+                    <Image
                       key={file.id}
                       src={file.url}
                       alt={file.alternativeText || ''}

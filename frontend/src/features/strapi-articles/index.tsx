@@ -35,9 +35,7 @@ export const ArticlesList = () => {
         {articles.map((article) => (
           <article key={article.id} className={styles.article}>
             <h2 className={styles.articleTitle}>{article.title}</h2>
-            <p className={styles.description}>
-              {article.description}
-            </p>
+            <p className={styles.description}>{article.description}</p>
             {article.publishedAt && (
               <time className={styles.date}>
                 {new Date(article.publishedAt).toLocaleDateString()}

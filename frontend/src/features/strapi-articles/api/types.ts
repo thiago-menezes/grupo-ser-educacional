@@ -81,7 +81,11 @@ export interface SliderBlock {
 /**
  * Union type for all possible block types in the dynamic zone
  */
-export type ArticleBlock = RichTextBlock | MediaBlock | QuoteBlock | SliderBlock;
+export type ArticleBlock =
+  | RichTextBlock
+  | MediaBlock
+  | QuoteBlock
+  | SliderBlock;
 
 /**
  * Author type (Strapi v5 flat structure)

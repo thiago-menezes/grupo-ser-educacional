@@ -247,7 +247,7 @@ For Strapi-based features, follow the same structure but use Strapi client and t
 
 ## Important Notes
 
-- **Package manager**: This project uses `npm` (not pnpm/yarn)
+- **Package manager**: This project uses `pnpm` (not npm/yarn). Use `pnpm install` to install dependencies and `pnpm add` to add new packages.
 - **Dev server**: Uses Turbopack for faster hot reload
 - **Styling**: Reshaped component library with Slate theme
 - **API docs**: Available at `/reference` route (Scalar API Reference)

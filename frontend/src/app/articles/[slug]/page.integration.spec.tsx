@@ -1,5 +1,6 @@
-import { render, screen, waitFor } from '@/libs/testing/testing-wrapper';
 import type { ArticlesResponse } from '@/features/strapi-articles/api/types';
+import { useArticleBySlug } from '@/features/strapi-articles/hooks';
+import { render, screen, waitFor } from '@/libs/testing/testing-wrapper';
 import ArticleDetailPage from './page';
 
 // Mock the useArticleBySlug hook
@@ -12,8 +13,6 @@ const mockNotFound = vi.fn();
 vi.mock('next/navigation', () => ({
   notFound: () => mockNotFound(),
 }));
-
-import { useArticleBySlug } from '@/features/strapi-articles/hooks';
 
 const mockArticleResponse: ArticlesResponse = {
   articles: [
@@ -77,12 +76,15 @@ describe('ArticleDetailPage', () => {
       expect(screen.getByText('Test Article')).toBeInTheDocument();
     });
 
-    expect(screen.getByText('This is a test article description')).toBeInTheDocument();
+    expect(
+      screen.getByText('This is a test article description'),
+    ).toBeInTheDocument();
     expect(screen.getByText(/Published: January 15, 2025/)).toBeInTheDocument();
 
     // Check that blocks are rendered (rich text content)
-    const blocksDiv = document.querySelector('[class*="blocks"]') ||
-                      document.querySelector('[class*="richText"]');
+    const blocksDiv =
+      document.querySelector('[class*="blocks"]') ||
+      document.querySelector('[class*="richText"]');
     expect(blocksDiv).toBeInTheDocument();
   });
 
@@ -116,7 +118,9 @@ describe('ArticleDetailPage', () => {
 
     render(<ArticleDetailPage params={{ slug: 'test-article' }} />);
 
-    expect(screen.getByText(/Error loading article: Failed to fetch article/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Error loading article: Failed to fetch article/),
+    ).toBeInTheDocument();
   });
 
   it('calls notFound when article is not found', () => {

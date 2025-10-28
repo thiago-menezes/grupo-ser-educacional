@@ -1,16 +1,14 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
-import typescriptParser from '@typescript-eslint/parser';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+import js from '@eslint/js';
+import nextPlugin from '@next/eslint-plugin-next';
+import importPlugin from 'eslint-plugin-import-x';
+import prettierConfig from 'eslint-config-prettier';
+import prettierPlugin from 'eslint-plugin-prettier';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import tseslint from 'typescript-eslint';
 
 const eslintConfig = [
+  // Ignore patterns
   {
     ignores: [
       '**/node_modules/**',
@@ -29,33 +27,59 @@ const eslintConfig = [
     ],
   },
 
-  ...compat.extends(
-    'next/core-web-vitals',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:prettier/recommended',
-    'next/typescript',
-  ),
+  // Base ESLint recommended
+  js.configs.recommended,
 
+  // TypeScript ESLint recommended configs
+  ...tseslint.configs.recommended,
+
+  // React plugin config
   {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.mjs'],
-    languageOptions: {
-      parser: typescriptParser,
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      react: reactPlugin,
+      'react-hooks': reactHooksPlugin,
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+    rules: {
+      ...reactPlugin.configs.recommended.rules,
+      ...reactHooksPlugin.configs.recommended.rules,
+      'react/react-in-jsx-scope': 'off',
     },
   },
 
+  // Next.js plugin config
   {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      '@next/next': nextPlugin,
+    },
     rules: {
-      'no-undef': 'off',
-      'prettier/prettier': 'error',
-      'react/react-in-jsx-scope': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_' },
-      ],
-      'import/order': [
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
+    },
+  },
+
+  // Import plugin config
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      'import-x': importPlugin,
+    },
+    settings: {
+      'import-x/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+        },
+        node: true,
+      },
+    },
+    rules: {
+      'import-x/order': [
         'error',
         {
           groups: [
@@ -85,9 +109,32 @@ const eslintConfig = [
           },
         },
       ],
-      'import/no-duplicates': 'error',
-      'import/first': 'error',
-      'import/newline-after-import': 'error',
+      'import-x/no-duplicates': 'error',
+      'import-x/first': 'error',
+      'import-x/newline-after-import': 'error',
+    },
+  },
+
+  // Prettier config (must be last)
+  prettierConfig,
+  {
+    plugins: {
+      prettier: prettierPlugin,
+    },
+    rules: {
+      'prettier/prettier': 'error',
+    },
+  },
+
+  // Custom rules overrides
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    rules: {
+      'no-undef': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
     },
   },
 
@@ -95,19 +142,6 @@ const eslintConfig = [
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
       'no-unused-vars': 'off',
-    },
-  },
-
-  {
-    settings: {
-      react: {
-        version: 'detect',
-      },
-      'import/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-        },
-      },
     },
   },
 ];
