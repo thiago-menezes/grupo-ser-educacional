@@ -16,35 +16,55 @@ limpa orientada pela identidade visual das instituições.
 ## Como rodar
 
 1. Copie `.env.example` para `.env.local` (já existe um arquivo de referência).
-2. Defina `NEXT_PUBLIC_INSTITUTION` com o código desejado (`UNINASSAU`, `UNG`,
-   etc).
-3. Instale dependências: `pnpm install`.
-4. Suba o projeto: `pnpm dev`.
-5. Acesse `http://localhost:3000` para ver a página de tematização.
+2. Instale dependências: `pnpm install`.
+3. Suba o projeto: `pnpm dev`.
+4. Acesse uma das rotas institucionais:
+   - `http://localhost:3000/ung` - UNG
+   - `http://localhost:3000/uninassau` - UNINASSAU
+   - `http://localhost:3000/uninorte` - UNINORTE
+   - `http://localhost:3000/` - Redireciona para a instituição padrão
 
-> ⚠️ Se alterar `NEXT_PUBLIC_INSTITUTION`, reinicie o servidor para regenerar o
-> script de injeção de CSS.
+> **Nota:** A tematização agora funciona por **slug na URL** (`/ung`, `/uninassau`)
+> em vez de variável de ambiente. A var `NEXT_PUBLIC_INSTITUTION` ainda funciona
+> como fallback legacy, mas não é mais necessária.
 
 ## Estrutura atual
 
-- `src/app/page.tsx` + `page.module.scss`: página única com painel de cores,
-  tokens e componentes de referência.
-- `src/app/layout.tsx`: injeta o script bloqueante gerado em
-  `src/lib/themes/script-generator.ts`.
+- `src/app/[institution]/page.tsx` + `page.module.scss`: página de tematização
+  com painel de cores, tokens e componentes de referência.
+- `src/app/[institution]/layout.tsx`: valida o slug e injeta o script de tema
+  específico da instituição.
+- `src/app/page.tsx`: redireciona para a instituição padrão.
+- `src/app/layout.tsx`: layout raiz sem lógica de tema (providers gerais).
 - `src/components/InstitutionThemeProvider.tsx`: limpa o CSS quando o React
   desmonta a árvore.
 - `src/config/institutions.ts`: registro tipado das instituições, helpers e
   validações.
 - `src/features/theme/__tests__`: suíte de integração garantindo que as cores,
-  tokens e env vars funcionem como esperado.
+  tokens e rotas dinâmicas funcionem como esperado.
 
 ## Próximos passos sugeridos
 
 1. Clonar um novo feature folder em `src/features/` quando houver um módulo
    real (ex.: matrícula, boletos etc).
-2. Consumir `makeQueryClient()` + `query/mutate` para integrar APIs.
-3. Manter a página principal como referência visual e adicionar novos fluxos
-   em rotas dedicadas.
+2. Adicionar novas rotas dentro de `src/app/[institution]/` para herdar
+   automaticamente o tema da instituição.
+3. Consumir `makeQueryClient()` + `query/mutate` para integrar APIs.
+4. Manter o painel de tematização como referência visual para consistência de cores.
+
+## Adicionar nova instituição
+
+1. Adicione a configuração em `src/config/institutions.ts`:
+   ```typescript
+   NOVA_INSTITUICAO: {
+     name: 'Nome Completo',
+     code: 'NOVA_INSTITUICAO',
+     primary: '#HEX_COR_PRIMARIA',
+     secondary: '#HEX_COR_SECUNDARIA',
+   }
+   ```
+2. Acesse automaticamente via `/nova_instituicao` (lowercase do code)
+3. Não precisa criar rotas - o layout dinâmico `[institution]` cuida disso
 
 Com isso o projeto está “cru” e pronto para receber a primeira feature sem
 carregar rotas ou dependências que não fazem mais parte do escopo.

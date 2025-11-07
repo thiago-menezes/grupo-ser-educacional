@@ -18,6 +18,5 @@ declare namespace NodeJS {
     // Development
     MOCK_SERVER?: string;
     NODE_ENV: 'development' | 'production' | 'test';
-
   }
 }

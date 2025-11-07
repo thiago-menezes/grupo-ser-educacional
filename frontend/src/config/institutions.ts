@@ -107,18 +107,35 @@ export function getInstitutionTheme(
 }
 
 /**
- * Get the current institution from environment variable
+ * Get the current institution from slug or environment variable
  *
- * @returns Current institution ID from NEXT_PUBLIC_INSTITUTION env var
+ * @param slug - Optional institution slug from URL (e.g., 'ung', 'uninassau')
+ * @returns Current institution ID
+ *
+ * @deprecated Use slug parameter instead of environment variable
  */
-export function getCurrentInstitution(): InstitutionId {
-  const envInstitution = process.env.NEXT_PUBLIC_INSTITUTION;
-  const id = envInstitution?.toUpperCase() as InstitutionId;
-
-  if (id && id in INSTITUTIONS) {
-    return id;
+export function getCurrentInstitution(slug?: string): InstitutionId {
+  // Priority 1: Use slug if provided
+  if (slug !== undefined) {
+    const id = slug.toUpperCase() as InstitutionId;
+    if (id in INSTITUTIONS) {
+      return id;
+    }
+    // If slug was explicitly provided but invalid, return default
+    // Don't fall back to env variable
+    return DEFAULT_INSTITUTION;
   }
 
+  // Priority 2: Fall back to environment variable (only if no slug provided)
+  const envInstitution = process.env.NEXT_PUBLIC_INSTITUTION;
+  if (envInstitution) {
+    const id = envInstitution.toUpperCase() as InstitutionId;
+    if (id in INSTITUTIONS) {
+      return id;
+    }
+  }
+
+  // Priority 3: Default institution
   return DEFAULT_INSTITUTION;
 }
 

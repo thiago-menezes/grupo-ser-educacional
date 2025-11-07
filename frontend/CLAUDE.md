@@ -12,7 +12,8 @@ feature real.
 - **Estado / Data**: React Query + Axios (`src/libs/api`).
 - **Autenticação**: NextAuth v5 (Auth0) em `src/libs/auth`.
 - **Testes**: Vitest + Testing Library (ver `src/features/theme/__tests__`).
-- **UI atual**: página única em `src/app/page.tsx` com painel de cores/tokens.
+- **Rotas dinâmicas**: `/ung`, `/uninassau`, etc. com tematização por slug.
+- **UI atual**: painel de tematização em `src/app/[institution]/page.tsx`.
 - **Nada de Strapi**: todas as integrações/clients antigos foram removidos.
 
 ## Comandos úteis
@@ -33,10 +34,13 @@ pnpm test:integration  # *.integration.spec.{ts,tsx}
 ```
 src/
 ├── app/
-│   ├── layout.tsx               # Injeta script bloqueante com o CSS do tema
+│   ├── [institution]/           # Rotas dinâmicas por instituição
+│   │   ├── layout.tsx           # Injeta script de tema baseado no slug
+│   │   ├── page.tsx             # Painel de tematização
+│   │   └── page.module.scss     # Estilos do painel
+│   ├── layout.tsx               # Layout raiz (sem lógica de tema)
 │   ├── providers.tsx            # NextAuth + React Query + Reshaped
-│   ├── page.tsx                 # Única página (painel de tematização)
-│   └── page.module.scss         # Estilos do painel
+│   └── page.tsx                 # Redireciona para instituição padrão
 ├── components/
 │   └── InstitutionThemeProvider.tsx  # Remove o <style> do tema no unmount
 ├── config/
@@ -55,15 +59,16 @@ src/
 
 ## Fluxo de tematização
 
-1. `NEXT_PUBLIC_INSTITUTION` define a instituição ativa.
-2. `getCurrentInstitution()` lê/env upper-case o valor.
-3. `generateThemeInjectionScript()` cria um script inline que roda **antes**
-   do primeiro paint (SSR).
+1. Usuário acessa uma rota institucional (ex: `/ung`, `/uninassau`)
+2. O layout em `app/[institution]/layout.tsx` valida o slug e retorna 404 se inválido
+3. `generateThemeInjectionScript(slug)` cria um script inline que roda **antes**
+   do primeiro paint (SSR)
 4. O script injeta um `<style id="institution-theme">` com o CSS gerado por
-   `generateInstitutionThemeCSS()`.
+   `generateInstitutionThemeCSS()`
 5. `InstitutionThemeProvider` apenas remove o `<style>` durante hot reload /
-   unmount para evitar acúmulo.
-6. A página `/` mostra a paleta atual, tokens e exemplos visuais.
+   unmount para evitar acúmulo
+6. A página `[institution]/page.tsx` mostra a paleta atual, tokens e exemplos visuais
+7. A rota raiz `/` redireciona automaticamente para a instituição padrão
 
 ## API / Estado
 
@@ -87,15 +92,15 @@ src/
 | Variável                  | Uso                                                |
 |---------------------------|----------------------------------------------------|
 | `NEXT_PUBLIC_API_BASE_URL`| Base das requisições Axios                         |
-| `NEXT_PUBLIC_INSTITUTION` | Código da instituição ativa (UNINASSAU, UNG, etc.) |
 | `AUTH_URL`                | URL pública do NextAuth                            |
 | `AUTH_SECRET`             | Secret do NextAuth                                 |
 | `AUTH_TRUST_HOST`         | Normalmente `true` em dev                          |
 | `AUTH0_ISSUER`/`ID`/`SECRET` | Credenciais Auth0                              |
 | `MOCK_SERVER`             | Sem uso no momento, mas mantido no template        |
 
-> Sempre reinicie o dev server após alterar `NEXT_PUBLIC_INSTITUTION`, pois o
-> script bloqueante é gerado no lado do servidor.
+> **NOTA:** `NEXT_PUBLIC_INSTITUTION` foi **removida**. A instituição agora é
+> determinada pelo slug da URL (ex: `/ung`, `/uninassau`). A variável ainda
+> funciona como fallback legacy, mas o recomendado é usar rotas dinâmicas.
 
 ## Testes
 
@@ -109,9 +114,24 @@ src/
 ## Quando criar novas features
 
 1. Abra uma pasta em `src/features/<nome>/` com `api/`, `hooks/`, `index.tsx`.
-2. Adicione rotas correspondentes dentro de `src/app/`.
-3. Continue referenciando o painel `/` para garantir consistência das cores.
-4. Atualize `README.md` e este arquivo com qualquer decisão estrutural nova.
+2. Adicione rotas correspondentes dentro de `src/app/[institution]/`.
+3. As rotas automaticamente herdam o tema da instituição pelo slug.
+4. Continue referenciando o painel de tematização para garantir consistência das cores.
+5. Atualize `README.md` e este arquivo com qualquer decisão estrutural nova.
+
+## Rotas disponíveis
+
+- `/` - Redireciona automaticamente para `/uninassau` (instituição padrão)
+- `/ung` - Painel de tematização da UNG
+- `/uninassau` - Painel de tematização da UNINASSAU
+- `/uninorte` - Painel de tematização da UNINORTE
+- `/unifael` - Painel de tematização da UNIFAEL
+- `/unama` - Painel de tematização da UNAMA
+
+**Adicionar nova instituição:**
+1. Adicione a configuração em `src/config/institutions.ts`
+2. Acesse automaticamente via `/<codigo-lowercase>`
+3. Não precisa criar rotas manualmente - o layout dinâmico cuida disso
 
 Com essas informações você deve conseguir trabalhar no repositório sem tropeçar
 em artefatos antigos. Mantemos tudo lean até que o primeiro módulo real entre

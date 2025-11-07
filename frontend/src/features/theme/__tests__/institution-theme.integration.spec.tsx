@@ -2,7 +2,8 @@
  * Institution Theme Integration Tests
  *
  * Tests the dynamic theme switching functionality based on
- * the NEXT_PUBLIC_INSTITUTION environment variable.
+ * URL slugs (e.g., /ung, /uninassau) with fallback to
+ * NEXT_PUBLIC_INSTITUTION environment variable.
  */
 
 import { InstitutionThemeProvider } from '@/components/InstitutionThemeProvider';
@@ -100,22 +101,48 @@ describe('getCurrentInstitution', () => {
     process.env.NEXT_PUBLIC_INSTITUTION = originalEnv;
   });
 
-  it('should return institution from environment variable', () => {
-    process.env.NEXT_PUBLIC_INSTITUTION = 'UNG';
-    const institution = getCurrentInstitution();
-    expect(institution).toBe('UNG');
+  describe('with slug parameter (new behavior)', () => {
+    it('should return institution from slug parameter', () => {
+      const institution = getCurrentInstitution('ung');
+      expect(institution).toBe('UNG');
+    });
+
+    it('should be case-insensitive for slug', () => {
+      expect(getCurrentInstitution('ung')).toBe('UNG');
+      expect(getCurrentInstitution('UNG')).toBe('UNG');
+      expect(getCurrentInstitution('UnG')).toBe('UNG');
+    });
+
+    it('should prioritize slug over environment variable', () => {
+      process.env.NEXT_PUBLIC_INSTITUTION = 'UNINASSAU';
+      const institution = getCurrentInstitution('ung');
+      expect(institution).toBe('UNG');
+    });
+
+    it('should return default for invalid slug', () => {
+      const institution = getCurrentInstitution('invalid');
+      expect(institution).toBe(DEFAULT_INSTITUTION);
+    });
   });
 
-  it('should return default institution when env is not set', () => {
-    delete process.env.NEXT_PUBLIC_INSTITUTION;
-    const institution = getCurrentInstitution();
-    expect(institution).toBe(DEFAULT_INSTITUTION);
-  });
+  describe('with environment variable (legacy behavior)', () => {
+    it('should return institution from environment variable', () => {
+      process.env.NEXT_PUBLIC_INSTITUTION = 'UNG';
+      const institution = getCurrentInstitution();
+      expect(institution).toBe('UNG');
+    });
 
-  it('should be case-insensitive for env variable', () => {
-    process.env.NEXT_PUBLIC_INSTITUTION = 'ung';
-    const institution = getCurrentInstitution();
-    expect(institution).toBe('UNG');
+    it('should return default institution when env is not set', () => {
+      delete process.env.NEXT_PUBLIC_INSTITUTION;
+      const institution = getCurrentInstitution();
+      expect(institution).toBe(DEFAULT_INSTITUTION);
+    });
+
+    it('should be case-insensitive for env variable', () => {
+      process.env.NEXT_PUBLIC_INSTITUTION = 'ung';
+      const institution = getCurrentInstitution();
+      expect(institution).toBe('UNG');
+    });
   });
 });
 

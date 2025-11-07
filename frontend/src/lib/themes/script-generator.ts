@@ -30,12 +30,13 @@ import { generateInstitutionThemeCSS } from './generator';
  * - Uses backticks for template literals (escaped properly)
  * - Creates <style> tag and injects before any rendering happens
  *
+ * @param slug - Institution slug from URL (e.g., 'ung', 'uninassau')
  * @returns JavaScript code as string (IIFE that injects CSS)
  *
  * @example
  * ```tsx
  * // In layout.tsx (Server Component)
- * const themeScript = generateThemeInjectionScript();
+ * const themeScript = generateThemeInjectionScript('ung');
  *
  * return (
  *   <html>
@@ -47,9 +48,9 @@ import { generateInstitutionThemeCSS } from './generator';
  * );
  * ```
  */
-export function generateThemeInjectionScript(): string {
-  // Get current institution from environment variable (server-side)
-  const institutionId = getCurrentInstitution();
+export function generateThemeInjectionScript(slug?: string): string {
+  // Get institution from slug or fall back to environment variable
+  const institutionId = getCurrentInstitution(slug);
   const theme = getInstitutionTheme(institutionId);
 
   // Generate complete theme CSS using Reshaped APIs
