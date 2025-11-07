@@ -3,6 +3,7 @@ declare namespace NodeJS {
     // API Configuration
     NEXT_PUBLIC_API_BASE_URL: string;
     NEXT_PUBLIC_APP_BASE_URL?: string;
+    NEXT_PUBLIC_INSTITUTION?: string;
 
     // NextAuth
     AUTH_URL: string;
@@ -18,8 +19,5 @@ declare namespace NodeJS {
     MOCK_SERVER?: string;
     NODE_ENV: 'development' | 'production' | 'test';
 
-    // Strapi CMS
-    NEXT_PUBLIC_STRAPI_URL: string;
-    NEXT_PUBLIC_STRAPI_TOKEN: string;
   }
 }

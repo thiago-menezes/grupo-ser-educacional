@@ -1,255 +1,118 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guia rápido para qualquer agente trabalhar neste repositório após a limpeza das
+features antigas. O foco atual é manter o projeto **cru** com a
+tematização multi-institucional funcionando e pronto para receber a primeira
+feature real.
 
-## Project Overview
+## Visão geral
 
-This is a Next.js 15 application using the App Router, built with TypeScript, NextAuth (Auth0), React Query, Axios, and Strapi CMS. The project follows a **feature-based architecture** where each feature is self-contained with its own API layer, hooks, types, utilities, and tests.
+- **Framework**: Next.js 15 (App Router) + TypeScript.
+- **Design System**: Reshaped (tema Slate + tokens gerados dinamicamente).
+- **Estado / Data**: React Query + Axios (`src/libs/api`).
+- **Autenticação**: NextAuth v5 (Auth0) em `src/libs/auth`.
+- **Testes**: Vitest + Testing Library (ver `src/features/theme/__tests__`).
+- **UI atual**: página única em `src/app/page.tsx` com painel de cores/tokens.
+- **Nada de Strapi**: todas as integrações/clients antigos foram removidos.
 
-## Commands
-
-### Development
-
-```bash
-npm run dev              # Start dev server with Turbopack
-npm run build            # Build for production
-npm start                # Start production server
-```
-
-### Code Quality
-
-```bash
-npm run typecheck        # TypeScript type checking (tsc --noEmit)
-npm run lint             # ESLint with cache
-npm run lint:fix         # Auto-fix ESLint issues
-npm run format           # Prettier + ESLint fix
-```
-
-### Testing
+## Comandos úteis
 
 ```bash
-npm run test             # Run all tests with Vitest
-npm run test:ui          # Run tests with Vitest UI
-npm run test:unit        # Run only unit tests (*.spec.{ts,tsx})
-npm run test:integration # Run only integration tests (*.integration.spec.{ts,tsx})
-npm run test:coverage    # Generate coverage report (80% threshold)
-npm run test:coverage:ui # Coverage with UI
+pnpm dev          # Next.js + Turbopack
+pnpm build        # Build produção
+pnpm start        # Servir build
+pnpm typecheck    # tsc --noEmit
+pnpm lint         # ESLint
+pnpm test         # Vitest (passWithNoTests = true)
+pnpm test:unit    # *.spec.{ts,tsx}
+pnpm test:integration  # *.integration.spec.{ts,tsx}
 ```
 
-## Architecture
-
-### Feature-Based Structure
-
-Each feature lives in `src/features/` and contains:
-
-- `api/types.ts` - TypeScript types for the feature
-- `api/query.ts` - React Query hooks (e.g., `useProductsQuery`)
-- `api/mock.ts` - API endpoint documentation
-- `hooks.ts` - Custom hooks that wrap React Query hooks
-- `constants.ts` - Feature-specific constants (e.g., query keys)
-- `utils.ts` - Pure utility functions (e.g., `formatCurrency`)
-- `index.tsx` - Main component
-- `*.module.scss` - Component styles
-- `test.integration.spec.tsx` - Integration tests
-
-### Data Flow Pattern
+## Arquitetura relevante
 
 ```
-Component → Custom Hook → React Query Hook → Axios Client → API
+src/
+├── app/
+│   ├── layout.tsx               # Injeta script bloqueante com o CSS do tema
+│   ├── providers.tsx            # NextAuth + React Query + Reshaped
+│   ├── page.tsx                 # Única página (painel de tematização)
+│   └── page.module.scss         # Estilos do painel
+├── components/
+│   └── InstitutionThemeProvider.tsx  # Remove o <style> do tema no unmount
+├── config/
+│   └── institutions.ts          # Registro tipado das instituições
+├── lib/
+│   └── themes/
+│       ├── generator.ts         # Usa Reshaped para gerar o CSS
+│       └── script-generator.ts  # Cria o IIFE usado no layout
+├── libs/
+│   ├── api/                     # Axios + React Query helpers
+│   ├── auth/                    # Configuração NextAuth/Auth0
+│   └── testing/                 # Custom render + helpers
+└── features/
+    └── theme/__tests__/         # Testes de integração do fluxo de tema
 ```
 
-Example from ProductList feature:
+## Fluxo de tematização
 
-1. `<ProductList />` calls `useProductList()` custom hook
-2. `useProductList()` wraps `useProductsQuery()` React Query hook
-3. `useProductsQuery()` uses `query()` helper with `apiClient`
-4. `apiClient` (Axios) adds auth headers and makes HTTP request
+1. `NEXT_PUBLIC_INSTITUTION` define a instituição ativa.
+2. `getCurrentInstitution()` lê/env upper-case o valor.
+3. `generateThemeInjectionScript()` cria um script inline que roda **antes**
+   do primeiro paint (SSR).
+4. O script injeta um `<style id="institution-theme">` com o CSS gerado por
+   `generateInstitutionThemeCSS()`.
+5. `InstitutionThemeProvider` apenas remove o `<style>` durante hot reload /
+   unmount para evitar acúmulo.
+6. A página `/` mostra a paleta atual, tokens e exemplos visuais.
 
-### API Integration
+## API / Estado
 
-**Three Axios clients available:**
+- Use `createApiClient()` / `apiClient` de `src/libs/api/axios.ts`.
+- Helpers `query()` / `mutate()` encapsulam métodos GET/POST com tipagem.
+- `makeQueryClient()` já está configurado para reuso em providers/testes.
+- Não existe mais client Strapi. Quando precisar falar com outros serviços,
+  crie módulos específicos dentro da nova feature.
 
-- `apiClient` - With NextAuth session token (for protected routes) - located in `src/libs/api/axios.ts`
-- `publicApiClient` - Without auth (for public routes) - located in `src/libs/api/axios.ts`
-- `strapiClient` - For Strapi CMS with Bearer token auth - located in `src/libs/api/strapi.ts`
+## Autenticação
 
-**Main API clients** (`apiClient` and `publicApiClient`) include:
+- `src/libs/auth/index.ts` exporta `auth`, `signIn`, `signOut` e handlers
+  (`GET/POST`) usados na rota `src/app/api/auth/[...nextauth]/route.ts`.
+- Sessão guarda `accessToken` (JWT) e `SessionUser`. Tipos extras estão em
+  `src/types/next-auth.d.ts`.
+- A página inicial não exige login, mas o stack está pronto para rotas
+  protegidas.
 
-- Automatic Bearer token injection from session
-- Request timeout handling (50s default)
-- 401 error handling with automatic sign-out
-- Error logging in development
+## Variáveis de ambiente
 
-**Generic query helpers for main API:**
+| Variável                  | Uso                                                |
+|---------------------------|----------------------------------------------------|
+| `NEXT_PUBLIC_API_BASE_URL`| Base das requisições Axios                         |
+| `NEXT_PUBLIC_INSTITUTION` | Código da instituição ativa (UNINASSAU, UNG, etc.) |
+| `AUTH_URL`                | URL pública do NextAuth                            |
+| `AUTH_SECRET`             | Secret do NextAuth                                 |
+| `AUTH_TRUST_HOST`         | Normalmente `true` em dev                          |
+| `AUTH0_ISSUER`/`ID`/`SECRET` | Credenciais Auth0                              |
+| `MOCK_SERVER`             | Sem uso no momento, mas mantido no template        |
 
-```typescript
-// GET requests
-query<T>(endpoint: string, params?: object): Promise<T>
+> Sempre reinicie o dev server após alterar `NEXT_PUBLIC_INSTITUTION`, pois o
+> script bloqueante é gerado no lado do servidor.
 
-// POST/PUT/PATCH/DELETE requests
-mutate<T, P>(endpoint: string, payload: P, method: 'POST' | 'PUT' | 'PATCH' | 'DELETE'): Promise<T>
-```
+## Testes
 
-**Strapi API helpers:**
+- Use `pnpm test` ou execute apenas o arquivo
+  `src/features/theme/__tests__/institution-theme.integration.spec.tsx`.
+- O custom `render` em `src/libs/testing/testing-wrapper.tsx` já injeta todos
+  os providers (Session, Reshaped, React Query).
+- Não existe mais setup de Prism/Strapi; o arquivo `vitest.integration.setup.ts`
+  foi removido.
 
-```typescript
-// GET requests to Strapi
-strapiQuery<T>(endpoint: string, params?: object): Promise<T>
+## Quando criar novas features
 
-// POST/PUT/PATCH/DELETE requests to Strapi
-strapiMutate<T, P>(endpoint: string, payload?: P, method: 'post' | 'put' | 'patch' | 'delete'): Promise<T>
-```
+1. Abra uma pasta em `src/features/<nome>/` com `api/`, `hooks/`, `index.tsx`.
+2. Adicione rotas correspondentes dentro de `src/app/`.
+3. Continue referenciando o painel `/` para garantir consistência das cores.
+4. Atualize `README.md` e este arquivo com qualquer decisão estrutural nova.
 
-Strapi client features:
-
-- Automatic Bearer token from NEXT_PUBLIC_STRAPI_TOKEN env variable
-- 30-second timeout
-- Error logging in development
-- Type-safe response types: `StrapiResponse<T>`, `StrapiEntity<T>`, `StrapiError`
-
-### Authentication Flow
-
-Uses NextAuth v5 (beta) with Auth0 as the provider:
-
-1. User navigates to protected route `(auth)/page.tsx`
-2. NextAuth redirects to Auth0 for login
-3. Auth0 returns access token and refresh token
-4. Token stored in JWT session (8-hour max age)
-5. Axios interceptor adds `Authorization: Bearer <token>` to all requests
-6. 401 errors trigger automatic sign-out
-
-**Session extensions:** Custom fields added via `src/types/next-auth.d.ts` include `id`, `name`, `email`, and `accessToken`.
-
-### State Management
-
-No Redux/Zustand/Jotai. State is managed through:
-
-1. **Server State** - React Query (`@tanstack/react-query`)
-2. **Auth State** - NextAuth sessions
-3. **Client State** - React hooks + Context
-4. **Form State** - React Hook Form + Zod (dependencies installed, ready to use)
-
-React Query configuration (`src/libs/api/queryClient.ts`):
-
-- Stale time: 5 seconds
-- Retry: 1 time on failure
-- No refetch on window focus
-- DevTools enabled in development only
-
-### Environment Variables
-
-Required variables (see `.env.example`):
-
-```bash
-# API Configuration
-NEXT_PUBLIC_API_BASE_URL=http://localhost:4010
-
-# NextAuth
-AUTH_URL=http://localhost:3000
-AUTH_SECRET=<random-string>
-AUTH_TRUST_HOST=true
-
-# Auth0
-AUTH0_ISSUER=https://your-tenant.auth0.com
-AUTH0_ID=<client-id>
-AUTH0_SECRET=<client-secret>
-
-# Development
-MOCK_SERVER=http://localhost:4010
-
-# Strapi CMS
-NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
-NEXT_PUBLIC_STRAPI_TOKEN=<your-strapi-api-token>
-```
-
-## Path Aliases
-
-Configured in `tsconfig.json`:
-
-- `@/*` → `./src/*` (main imports)
-- `@root/*` → `./*` (root imports)
-
-## Testing Setup
-
-**Framework:** Vitest with happy-dom environment
-
-**Test patterns:**
-
-- Unit tests: `src/**/*.spec.{ts,tsx}`
-- Integration tests: `src/**/*.integration.spec.{ts,tsx}`
-
-**Integration test utilities:**
-Located in `src/libs/testing/integration-test-setup.ts`:
-
-- `setupIntegrationTest()` - Mock successful API responses
-- `setupIntegrationTest({ mockError: true })` - Mock error responses
-
-**Custom render wrapper:**
-Import `render` from `src/libs/testing/testing-wrapper.tsx` (not from `@testing-library/react` directly). This custom render automatically wraps components with:
-
-- SessionProvider (NextAuth)
-- QueryClientProvider (React Query)
-- Reshaped theme
-
-```typescript
-import { render, screen, waitFor } from '@/libs/testing/testing-wrapper';
-
-render(<YourComponent />);
-```
-
-**Coverage thresholds:** 80% for branches, functions, lines, and statements.
-
-## Key Conventions
-
-1. **Query keys** - Define in `features/*/constants.ts` (e.g., `['products']`)
-2. **API documentation** - Document endpoints in `features/*/api/mock.ts`
-3. **Component styles** - Use SCSS modules (`.module.scss`)
-4. **Error boundaries** - Global error boundary in `app/error.tsx`
-5. **Type safety** - Extend NextAuth types in `src/types/next-auth.d.ts`
-6. **Import ordering** - ESLint enforces import groups (React → Next → external → internal → relative)
-
-## Adding a New Feature
-
-### Standard Feature (Main API)
-
-1. Create feature directory: `src/features/my-feature/`
-2. Add API types: `api/types.ts`
-3. Add React Query hooks: `api/query.ts`
-4. Create custom hook: `hooks.ts`
-5. Define constants: `constants.ts` (query keys, etc.)
-6. Add utilities if needed: `utils.ts`
-7. Create main component: `index.tsx`
-8. Add styles: `index.module.scss`
-9. Write integration tests: `test.integration.spec.tsx`
-
-### Strapi CMS Feature
-
-For Strapi-based features, follow the same structure but use Strapi client and types:
-
-1. Create feature directory: `src/features/strapi-{content-type}/`
-2. Define types using `StrapiEntity<T>` and `StrapiResponse<T>` in `api/types.ts`
-3. Use `strapiQuery()` and `strapiMutate()` helpers in `api/query.ts`
-4. Follow remaining steps as above
-
-**Example Strapi feature:** See `src/features/strapi-articles/` for complete reference implementation.
-
-**Strapi query parameters** - The Strapi API supports:
-
-- **Filters**: `{ filters: { title: { $contains: 'React' } } }`
-- **Sorting**: `{ sort: 'publishedAt:desc' }`
-- **Pagination**: `{ pagination: { page: 1, pageSize: 25 } }`
-- **Population**: `{ populate: '*' }` or `{ populate: ['author', 'category'] }`
-
-**Additional resources:**
-
-- [STRAPI_SETUP.md](STRAPI_SETUP.md) - Detailed Strapi integration guide
-- [src/features/strapi-articles/README.md](src/features/strapi-articles/README.md) - Feature implementation example
-
-## Important Notes
-
-- **Package manager**: This project uses `pnpm` (not npm/yarn). Use `pnpm install` to install dependencies and `pnpm add` to add new packages.
-- **Dev server**: Uses Turbopack for faster hot reload
-- **Styling**: Reshaped component library with Slate theme
-- **API docs**: Available at `/reference` route (Scalar API Reference)
-- **TypeScript strict mode**: Enabled - all code must be type-safe
-- **ESLint**: Flat config format (ESLint 9+)
+Com essas informações você deve conseguir trabalhar no repositório sem tropeçar
+em artefatos antigos. Mantemos tudo lean até que o primeiro módulo real entre
+em desenvolvimento.

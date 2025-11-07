@@ -1,0 +1,331 @@
+.page {
+  min-height: 100vh;
+  padding: 64px 24px 96px;
+  background: var(--rs-color-background-surface, #f4f5f7);
+  color: var(--rs-color-foreground-primary, #101828);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 32px;
+  border-radius: 28px;
+  background: linear-gradient(
+    135deg,
+    var(--rs-color-background-primary-faded, #fff2f2),
+    var(--rs-color-background-primary, #ffe0e0)
+  );
+  border: 1px solid var(--rs-color-border-primary-faded, rgba(0, 0, 0, 0.05));
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--rs-color-foreground-primary, #7a1d1d);
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.heroTitle {
+  margin: 16px 0 8px;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
+}
+
+.heroSubtitle {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(16, 24, 40, 0.8);
+}
+
+.heroSubtitle code {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  background: rgba(16, 24, 40, 0.08);
+}
+
+.heroInstitution {
+  min-width: 260px;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 20px;
+  border: 1px solid rgba(16, 24, 40, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.heroInstitution span {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(16, 24, 40, 0.55);
+}
+
+.heroInstitution strong {
+  font-size: 24px;
+}
+
+.heroInstitution small {
+  color: rgba(16, 24, 40, 0.7);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+
+.card {
+  background: var(--rs-color-white, #ffffff);
+  border-radius: 24px;
+  padding: 28px;
+  border: 1px solid var(--rs-color-border-primary-faded, rgba(16, 24, 40, 0.08));
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cardHeader h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.cardHeader p {
+  margin: 6px 0 0;
+  color: rgba(16, 24, 40, 0.7);
+}
+
+.metaBadge {
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  background: var(--rs-color-background-primary-faded, #f2f4ff);
+  color: var(--rs-color-foreground-primary, #1d2b5c);
+  border: 1px solid var(--rs-color-border-primary-faded, rgba(16, 24, 40, 0.08));
+}
+
+.palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.swatch {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(16, 24, 40, 0.08);
+  background: rgba(16, 24, 40, 0.02);
+}
+
+.swatchColor {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(16, 24, 40, 0.08);
+}
+
+.swatchInfo strong {
+  font-size: 16px;
+}
+
+.swatchInfo span {
+  display: block;
+  font-family: 'Geist Mono', SFMono-Regular, Consolas, monospace;
+  margin-top: 4px;
+  color: rgba(16, 24, 40, 0.8);
+}
+
+.swatchInfo p {
+  margin: 8px 0 0;
+  color: rgba(16, 24, 40, 0.7);
+  font-size: 14px;
+}
+
+.metaList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.metaList li span {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(16, 24, 40, 0.6);
+}
+
+.metaList li strong {
+  font-size: 16px;
+  color: var(--rs-color-foreground-primary, #101828);
+}
+
+.tokenList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.token {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px dashed rgba(16, 24, 40, 0.15);
+  background: rgba(16, 24, 40, 0.02);
+}
+
+.tokenColor {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid rgba(16, 24, 40, 0.1);
+}
+
+.tokenMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tokenLabel {
+  font-weight: 600;
+}
+
+.tokenVariable {
+  font-family: 'Geist Mono', SFMono-Regular, Consolas, monospace;
+  font-size: 13px;
+  background: rgba(16, 24, 40, 0.06);
+  padding: 2px 6px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.componentsBoard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.componentTile {
+  border: 1px solid rgba(16, 24, 40, 0.08);
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(16, 24, 40, 0.02);
+}
+
+.componentMeta strong {
+  font-size: 15px;
+}
+
+.componentMeta p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: rgba(16, 24, 40, 0.7);
+}
+
+.componentPreview {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 48px;
+}
+
+.buttonPrimary,
+.buttonOutline,
+.buttonGhost {
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.buttonPrimary {
+  background: var(--rs-color-background-primary, #1052b4);
+  color: var(--rs-color-on-background-primary, #ffffff);
+  box-shadow: 0 12px 20px rgba(16, 82, 180, 0.25);
+}
+
+.buttonOutline {
+  background: transparent;
+  color: var(--rs-color-foreground-primary, #1052b4);
+  border: 1px solid var(--rs-color-border-primary, #1052b4);
+}
+
+.buttonGhost {
+  background: transparent;
+  color: var(--rs-color-foreground-primary, #1052b4);
+  border: none;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--rs-color-background-primary-faded, #f2f4ff);
+  color: var(--rs-color-foreground-primary, #1d2b5c);
+  border: 1px solid var(--rs-color-border-primary-faded, rgba(16, 24, 40, 0.08));
+}
+
+.buttonPrimary:hover,
+.buttonOutline:hover,
+.buttonGhost:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 40px 16px 72px;
+  }
+
+  .hero {
+    padding: 24px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}

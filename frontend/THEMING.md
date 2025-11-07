@@ -64,10 +64,10 @@ See [THEME_IMPLEMENTATION_ANALYSIS.md](THEME_IMPLEMENTATION_ANALYSIS.md) for tec
    - Removes theme CSS on component unmount
    - No longer handles CSS injection (now in layout.tsx)
 
-6. **Demo Page** ([src/app/demo/page.tsx](src/app/demo/page.tsx))
-   - Visual demonstration of theming system
-   - Component showcase with current theme
-   - Testing instructions
+6. **Página principal** ([src/app/page.tsx](src/app/page.tsx))
+   - Painel de tematização acessado em `/`
+   - Mostra paleta ativa, tokens do Reshaped e exemplos de componentes
+   - Serve como checklist visual antes de liberar novas features
 
 ### How It Works (V2.1)
 
@@ -148,12 +148,12 @@ Currently configured institutions:
 
 ### Testing Theme Switching
 
-1. Visit the demo page at `/demo`
+1. Acesse a página de tematização em `/`
 2. Note the current institution and colors
 3. Stop the dev server (Ctrl+C)
 4. Update `NEXT_PUBLIC_INSTITUTION` in `.env.local`
 5. Restart the dev server: `npm run dev`
-6. Refresh `/demo` to see the new theme
+6. Atualize `/` para ver o novo tema
 
 ## Adding a New Institution
 
@@ -209,7 +209,7 @@ NEXT_PUBLIC_INSTITUTION=UNINASSAU
    npm run dev
    ```
 
-3. Visit `/demo` to verify the colors are applied correctly
+3. Visite `/` para conferir se as cores foram aplicadas corretamente
 
 4. Check all component variants (buttons, forms, badges, etc.)
 
@@ -348,12 +348,11 @@ frontend/
 │   ├── config/
 │   │   └── institutions.ts          # Institution configuration
 │   ├── components/
-│   │   └── InstitutionThemeInjector.tsx  # Theme injection logic
+│   │   └── InstitutionThemeProvider.tsx  # Cleanup logic
 │   ├── app/
 │   │   ├── providers.tsx            # Provider integration
-│   │   └── demo/
-│   │       ├── page.tsx             # Demo page
-│   │       └── demo.module.scss     # Demo styles
+│   │   ├── page.tsx                 # Painel de tematização acessado em "/"
+│   │   └── page.module.scss         # Estilos do painel
 │   └── features/
 │       └── theme/
 │           └── __tests__/
@@ -365,7 +364,7 @@ frontend/
 ## Best Practices
 
 1. **Always use brand guidelines** - Get official HEX codes from institution marketing teams
-2. **Test all components** - Visit `/demo` to verify colors across all UI elements
+2. **Teste todos os componentes** - Visite `/` para validar as cores nos blocos de referência
 3. **Document color sources** - Add comments in `institutions.ts` with color sources
 4. **Use semantic naming** - Stick to `primary` and `secondary` naming convention
 5. **Run tests** - Ensure integration tests pass after adding institutions
@@ -384,7 +383,7 @@ For questions or issues:
 
 1. Check this documentation
 2. Review existing institutions in `src/config/institutions.ts`
-3. Visit `/demo` page for visual reference
+3. Visite `/` para referência visual
 4. Run integration tests for validation
 
 ---
