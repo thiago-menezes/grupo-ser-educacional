@@ -14,9 +14,10 @@ Follow these steps when implementing a new feature or fixing a bug:
    pnpm test              # Run all tests
    pnpm lint              # Check code style
    pnpm typecheck         # Verify TypeScript types
-   pnpm build             # Build for production
    ```
 5. **Update tracking** - Mark the task as complete in the appropriate kanban file (`docs/kanbans/*.md`)
+
+PS: Don't run `pnpm build` more
 
 ---
 

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Header } from '@/components/header';
 import { isValidInstitution } from '@/config/institutions';
-import { generateThemeInjectionScript } from '@/lib/themes/script-generator';
+import { generateThemeInjectionScript } from '@/libs/themes/script-generator';
 
 type InstitutionLayoutProps = {
   children: React.ReactNode;

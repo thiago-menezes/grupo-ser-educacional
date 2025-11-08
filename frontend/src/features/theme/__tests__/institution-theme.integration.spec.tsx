@@ -15,8 +15,8 @@ import {
   INSTITUTIONS,
   DEFAULT_INSTITUTION,
 } from '@/config/institutions';
-import { generateInstitutionThemeCSS } from '@/lib/themes/generator';
 import { render } from '@/libs/testing/testing-wrapper';
+import { generateInstitutionThemeCSS } from '@/libs/themes/generator';
 
 describe('Institution Configuration', () => {
   it('should export all required institution data', () => {
