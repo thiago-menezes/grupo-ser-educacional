@@ -31,32 +31,32 @@ export const INSTITUTIONS = {
   UNINASSAU: {
     name: 'UNINASSAU',
     code: 'UNINASSAU',
-    primary: '#E31E24', // Red - primary brand color
-    secondary: '#003DA5', // Blue - secondary brand color
+    primary: '#052B82', // Blue - primary brand color
+    secondary: '#E2052C', // Red - secondary brand color
   },
   UNG: {
     name: 'UNG - Universidade Guarulhos',
     code: 'UNG',
-    primary: '#00C853', // Green - primary brand color
-    secondary: '#1B5E20', // Dark Green - secondary brand color
+    primary: '#1B5E20', // Green - primary brand color
+    secondary: '#00C853', // Dark Green - secondary brand color
   },
   UNINORTE: {
     name: 'UNINORTE',
     code: 'UNINORTE',
-    primary: '#FF6F00', // Orange - placeholder, update with actual brand color
-    secondary: '#E65100', // Dark Orange - placeholder, update with actual brand color
+    primary: '#E65100', // Orange - placeholder, update with actual brand color
+    secondary: '#FF6F00', // Dark Orange - placeholder, update with actual brand color
   },
   UNIFAEL: {
     name: 'UNIFAEL',
     code: 'UNIFAEL',
-    primary: '#1976D2', // Blue - placeholder, update with actual brand color
-    secondary: '#0D47A1', // Dark Blue - placeholder, update with actual brand color
+    primary: '#0D47A1', // Blue - placeholder, update with actual brand color
+    secondary: '#1976D2', // Dark Blue - placeholder, update with actual brand color
   },
   UNAMA: {
     name: 'UNAMA',
     code: 'UNAMA',
-    primary: '#7B1FA2', // Purple - placeholder, update with actual brand color
-    secondary: '#4A148C', // Dark Purple - placeholder, update with actual brand color
+    primary: '#4A148C', // Purple - placeholder, update with actual brand color
+    secondary: '#7B1FA2', // Dark Purple - placeholder, update with actual brand color
   },
   // Add more institutions as needed
   // INSTITUTION_NAME: {

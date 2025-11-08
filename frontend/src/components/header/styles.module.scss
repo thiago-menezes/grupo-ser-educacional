@@ -143,33 +143,6 @@
   }
 }
 
-/* CTA Button */
-.ctaButton {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: var(--rs-unit-x3) var(--rs-unit-x6);
-  font-size: 16px;
-  line-height: var(--rs-unit-x6);
-  font-weight: 600;
-  color: var(--rs-color-on-background-primary);
-  background: var(--rs-color-background-primary);
-  border-radius: var(--rs-radius-medium);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-  box-shadow: 0 var(--rs-unit-x1) var(--rs-unit-x2) rgba(227, 30, 36, 0.2);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 var(--rs-unit-x1) var(--rs-unit-x3) rgba(227, 30, 36, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-}
-
 /* Mobile Menu Button */
 .mobileMenuButton {
   display: flex;
@@ -229,26 +202,6 @@
   }
 }
 
-.mobileCtaLink {
-  display: block;
-  margin-top: var(--rs-unit-x2);
-  padding: var(--rs-unit-x3) var(--rs-unit-x4);
-  font-size: 16px;
-  line-height: var(--rs-unit-x6);
-  font-weight: 600;
-  color: var(--rs-color-on-background-primary);
-  background: var(--rs-color-background-primary);
-  text-decoration: none;
-  text-align: center;
-  border-radius: var(--rs-radius-medium);
-  transition: all 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 var(--rs-unit-x1) var(--rs-unit-x3) rgba(227, 30, 36, 0.3);
-  }
-}
-
 /* Responsive Breakpoints */
 
 /* Mobile only (max-width: 659px) */
@@ -300,10 +253,6 @@
 
   .topBar {
     display: block;
-  }
-
-  .ctaButton {
-    display: inline-flex;
   }
 
   .utilityNav {

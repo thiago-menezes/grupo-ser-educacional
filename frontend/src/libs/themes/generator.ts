@@ -69,9 +69,13 @@ export function generateInstitutionThemeCSS(
   };
 
   // Generate complete CSS using Reshaped's official API
-  // This creates all CSS custom properties (--rs-color-*)
-  // and ensures they work with all Reshaped components
-  const css = getThemeCSS(institutionId.toLowerCase(), themeDefinition);
+  // IMPORTANT: We use "slate" as theme name to override the default Reshaped slate theme
+  // This ensures the CSS variables match the [data-rs-theme~="slate"] selector
+  // applied by <Reshaped theme="slate"> in providers.tsx
+  const css = getThemeCSS('slate', themeDefinition);
 
-  return css;
+  // Add institution identifier as CSS comment for debugging
+  const cssWithDebugInfo = `/* Institution: ${institutionId} (${theme.name}) */\n${css}`;
+
+  return cssWithDebugInfo;
 }

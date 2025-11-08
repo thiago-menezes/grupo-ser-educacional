@@ -16,7 +16,7 @@ export default async function InstitutionLayout({
 
   // Validate institution slug - return 404 if invalid
   if (!isValidInstitution(institution)) {
-    notFound();
+    return notFound();
   }
 
   // Generate theme injection script with institution slug
@@ -36,6 +36,9 @@ export default async function InstitutionLayout({
         id="institution-theme-injection"
         dangerouslySetInnerHTML={{ __html: themeScript }}
       />
+
+      <link rel="icon" href={`/favicon/${institution}.ico`} sizes="any" />
+
       <Header institution={institution} />
       {children}
     </>

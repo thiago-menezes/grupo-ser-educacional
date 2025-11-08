@@ -4,6 +4,7 @@ import { clsx } from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { Button } from 'reshaped';
 import { Icon } from '@/components/icon';
 import styles from './styles.module.scss';
 import type { HeaderProps } from './types';
@@ -99,12 +100,13 @@ export const Header = ({ institution }: HeaderProps) => {
               </nav>
 
               {/* CTA Button */}
-              <Link
+              <Button
                 href={`/${institution}/inscreva-se`}
-                className={styles.ctaButton}
+                size="large"
+                color="primary"
               >
                 Inscreva-se
-              </Link>
+              </Button>
 
               {/* Mobile menu button */}
               <button
@@ -155,12 +157,14 @@ export const Header = ({ institution }: HeaderProps) => {
               >
                 Formas de ingresso
               </Link>
-              <Link
+
+              <Button
                 href={`/${institution}/inscreva-se`}
-                className={styles.mobileCtaLink}
+                color="primary"
+                fullWidth
               >
                 Inscreva-se
-              </Link>
+              </Button>
             </nav>
           </div>
         </div>
