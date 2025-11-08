@@ -1,16 +1,5 @@
 import type { IconProps } from './types';
 
-/**
- * Tabler Icons Icon Component
- *
- * Renders Tabler Icons using the tabler-300.css stylesheet.
- * Documentation: https://tabler.io/icons
- *
- * @example
- * <Icon name="menu" size={24} />
- * <Icon name="x" size={20} />
- * <Icon name="arrow-right" size={16} />
- */
 export const Icon = ({
   name,
   className = '',

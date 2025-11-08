@@ -31,6 +31,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className={tablerIcons.variable}>
+      <link rel="icon" href="/favicon/grupo-ser.ico" />
+
       <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>

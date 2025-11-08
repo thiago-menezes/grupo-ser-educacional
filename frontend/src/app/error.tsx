@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import styles from './error.module.css';
 
 export default function GlobalErrorPage({
   error,
@@ -16,11 +15,11 @@ export default function GlobalErrorPage({
   }, [error]);
 
   return (
-    <main className={styles.container}>
+    <main>
       <div>
-        <h1 className={styles.title}>Something went wrong</h1>
-        <p className={styles.description}>Please try again.</p>
-        <button type="button" onClick={() => reset()} className={styles.button}>
+        <h1>Something went wrong</h1>
+        <p>Please try again.</p>
+        <button type="button" onClick={() => reset()}>
           Retry
         </button>
       </div>

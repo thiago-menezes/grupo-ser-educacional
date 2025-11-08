@@ -3,31 +3,20 @@
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from 'reshaped';
 import { Icon } from '@/components/icon';
 import styles from './styles.module.scss';
-import type { HeaderProps } from './types';
 
-/**
- * Main Header Component
- *
- * Displays the institutional header with:
- * - Top utility bar (Whatsapp, Student portal, Track enrollment)
- * - Logo
- * - Main navigation menu
- * - CTA button
- *
- * Responsive design with mobile menu support
- */
-export const Header = ({ institution }: HeaderProps) => {
+export const Header = () => {
+  const { institution } = useParams<{ institution: string }>();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const institutionName = institution.toUpperCase();
 
   return (
     <header className={styles.header}>
-      {/* Top utility bar */}
       <div className={styles.topBar}>
         <div className={styles.container}>
           <div className={styles.topBarContent}>
@@ -52,11 +41,9 @@ export const Header = ({ institution }: HeaderProps) => {
         </div>
       </div>
 
-      {/* Main navigation */}
       <div className={styles.mainNav}>
         <div className={styles.container}>
           <div className={styles.mainNavContent}>
-            {/* Logo */}
             <Link href={`/${institution}`} className={styles.logo}>
               <Image
                 src={`/logos/${institution}.svg`}
@@ -70,7 +57,6 @@ export const Header = ({ institution }: HeaderProps) => {
             </Link>
 
             <div className={styles.rightContainer}>
-              {/* Desktop Navigation */}
               <nav className={styles.desktopNav} aria-label="Main navigation">
                 <Link
                   href={`/${institution}/graduacao`}
@@ -99,7 +85,6 @@ export const Header = ({ institution }: HeaderProps) => {
                 </button>
               </nav>
 
-              {/* CTA Button */}
               <Button
                 href={`/${institution}/inscreva-se`}
                 size="large"
@@ -108,7 +93,6 @@ export const Header = ({ institution }: HeaderProps) => {
                 Inscreva-se
               </Button>
 
-              {/* Mobile menu button */}
               <button
                 className={styles.mobileMenuButton}
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -122,7 +106,6 @@ export const Header = ({ institution }: HeaderProps) => {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
       {mobileMenuOpen && (
         <div className={styles.mobileNav}>
           <div className={styles.container}>

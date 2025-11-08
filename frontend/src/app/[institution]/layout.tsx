@@ -1,5 +1,4 @@
 import { notFound } from 'next/navigation';
-import { Header } from '@/components/header';
 import { isValidInstitution } from '@/config/institutions';
 import { generateThemeInjectionScript } from '@/libs/themes/script-generator';
 
@@ -36,10 +35,7 @@ export default async function InstitutionLayout({
         id="institution-theme-injection"
         dangerouslySetInnerHTML={{ __html: themeScript }}
       />
-
       <link rel="icon" href={`/favicon/${institution}.ico`} sizes="any" />
-
-      <Header institution={institution} />
       {children}
     </>
   );
