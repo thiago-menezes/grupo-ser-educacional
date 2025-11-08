@@ -2,6 +2,22 @@
 
 Quick access to common information you'll need while implementing components.
 
+## 🚀 Development Workflow
+
+Follow these steps when implementing a new feature or fixing a bug:
+
+1. **Understand the problem** - Analyze requirements, edge cases, and how it integrates with existing code
+2. **Plan the solution** - Sketch component structure, state management, and API contracts before coding
+3. **Implement** - Write code, tests, and documentation together
+4. **Validate** - Run all checks before committing:
+   ```bash
+   pnpm test              # Run all tests
+   pnpm lint              # Check code style
+   pnpm typecheck         # Verify TypeScript types
+   pnpm build             # Build for production
+   ```
+5. **Update tracking** - Mark the task as complete in the appropriate kanban file (`docs/kanbans/*.md`)
+
 ---
 
 ## 📁 File Structure
@@ -93,48 +109,48 @@ import {
 
 ```typescript
 // src/features/[feature]/hooks/use[Feature].ts
-import { useQuery } from '@tanstack/react-query'
-import { apiClient } from '@/libs/api/axios'
+import { useQuery } from '@tanstack/react-query';
+import { apiClient } from '@/libs/api/axios';
 
 export function useCourses(filters: CourseFilters) {
   return useQuery({
     queryKey: ['courses', filters],
     queryFn: async () => {
-      const { data } = await apiClient.get('/courses', { params: filters })
-      return data
+      const { data } = await apiClient.get('/courses', { params: filters });
+      return data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
     enabled: Boolean(filters.institution),
-  })
+  });
 }
 
 // Usage in component
-const { data, isLoading, error } = useCourses({ institution: 'uninassau' })
+const { data, isLoading, error } = useCourses({ institution: 'uninassau' });
 ```
 
 ### Mutation Pattern
 
 ```typescript
-import { useMutation } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query';
 
 export function useLeadSubmission() {
   return useMutation({
     mutationFn: async (leadData: LeadFormData) => {
-      const { data } = await apiClient.post('/leads', leadData)
-      return data
+      const { data } = await apiClient.post('/leads', leadData);
+      return data;
     },
     onSuccess: (data) => {
       // Redirect or show success
     },
     onError: (error) => {
       // Show error message
-    }
-  })
+    },
+  });
 }
 
 // Usage
-const mutation = useLeadSubmission()
-mutation.mutate(formData)
+const mutation = useLeadSubmission();
+mutation.mutate(formData);
 ```
 
 ---
@@ -182,32 +198,32 @@ const onSubmit = (data: FormData) => {
 ### useSearchParams Pattern
 
 ```typescript
-'use client'
-import { useSearchParams, useRouter } from 'next/navigation'
+'use client';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 export function useFilters() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const filters = {
     city: searchParams.get('city') || '',
     modality: searchParams.getAll('modality'),
-  }
+  };
 
   const updateFilter = (key: string, value: string | string[]) => {
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams(searchParams);
 
     if (Array.isArray(value)) {
-      params.delete(key)
-      value.forEach(v => params.append(key, v))
+      params.delete(key);
+      value.forEach((v) => params.append(key, v));
     } else {
-      params.set(key, value)
+      params.set(key, value);
     }
 
-    router.push(`?${params.toString()}`)
-  }
+    router.push(`?${params.toString()}`);
+  };
 
-  return { filters, updateFilter }
+  return { filters, updateFilter };
 }
 ```
 
@@ -241,8 +257,8 @@ export function useFilters() {
 // Theme is injected via CSS variables
 const styles = {
   backgroundColor: 'var(--institution-primary-color)',
-  color: 'var(--institution-secondary-color)'
-}
+  color: 'var(--institution-secondary-color)',
+};
 ```
 
 ---
@@ -312,6 +328,7 @@ it('loads courses from API', async () => {
 ```
 
 **Breakpoint Values**:
+
 - Mobile: < 768px
 - Tablet: 768px - 1024px
 - Desktop: > 1024px
@@ -346,6 +363,7 @@ pnpm start                  # Serve production build
 ## 🌐 API Endpoints Reference
 
 ### Strapi (Content)
+
 ```
 GET /api/institutions/:slug
 GET /api/home-pages?filters[institution][slug][$eq]=:slug
@@ -353,6 +371,7 @@ GET /api/course-enrichments?filters[course_id][$eq]=:id
 ```
 
 ### Courses API (External)
+
 ```
 GET /api/courses
   ?institution_code=UNINASSAU
@@ -373,12 +392,12 @@ PUT /api/leads/:id
 
 ```typescript
 const institutions = {
-  'uninassau': 'UNINASSAU',
-  'ung': 'UNG',
-  'uninorte': 'UNINORTE',
-  'unifael': 'UNIFAEL',
-  'unama': 'UNAMA'
-}
+  uninassau: 'UNINASSAU',
+  ung: 'UNG',
+  uninorte: 'UNINORTE',
+  unifael: 'UNIFAEL',
+  unama: 'UNAMA',
+};
 ```
 
 Default institution: `uninassau`
@@ -388,6 +407,7 @@ Default institution: `uninassau`
 ## ✅ Pre-Commit Checklist
 
 Before committing:
+
 - [ ] `pnpm typecheck` passes
 - [ ] `pnpm lint` passes
 - [ ] `pnpm test` passes
@@ -401,23 +421,30 @@ Before committing:
 ## 🆘 Common Issues & Solutions
 
 ### Issue: "Module not found"
+
 **Solution**: Check import path is correct, run `pnpm install`
 
 ### Issue: TypeScript errors in tests
+
 **Solution**: Import from `@/libs/testing/testing-wrapper` not `@testing-library/react`
 
 ### Issue: Styles not applying
+
 **Solution**:
+
 1. Check SCSS module imported: `import styles from './Component.module.scss'`
 2. Use `className={styles.className}` not `className="className"`
 
 ### Issue: API not returning data
+
 **Solution**:
+
 1. Check network tab for request
 2. Verify query key in React Query DevTools
 3. Check `enabled` condition in useQuery
 
 ### Issue: Images not loading
+
 **Solution**: Use `next/image` component, verify path is correct
 
 ---
@@ -435,45 +462,58 @@ Before committing:
 ## 🔖 Code Snippets
 
 ### Server Component
+
 ```tsx
 // app/[institution]/page.tsx
-import { Suspense } from 'react'
+import { Suspense } from 'react';
 
-export default async function HomePage({ params }: { params: { institution: string } }) {
+export default async function HomePage({
+  params,
+}: {
+  params: { institution: string };
+}) {
   return (
     <div>
       <Suspense fallback={<Loading />}>
         <AsyncContent institution={params.institution} />
       </Suspense>
     </div>
-  )
+  );
 }
 ```
 
 ### Client Component
+
 ```tsx
-'use client'
-import { useState } from 'react'
+'use client';
+import { useState } from 'react';
 
 export function InteractiveComponent() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
-  return <button onClick={() => setCount(c => c + 1)}>{count}</button>
+  return <button onClick={() => setCount((c) => c + 1)}>{count}</button>;
 }
 ```
 
 ### Error Boundary
+
 ```tsx
 // app/[institution]/error.tsx
-'use client'
+'use client';
 
-export default function Error({ error, reset }: { error: Error, reset: () => void }) {
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error;
+  reset: () => void;
+}) {
   return (
     <div>
       <h2>Algo deu errado</h2>
       <button onClick={reset}>Tentar novamente</button>
     </div>
-  )
+  );
 }
 ```
 

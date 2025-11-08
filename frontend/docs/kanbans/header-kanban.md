@@ -60,22 +60,11 @@
 - [ ] Research Reshaped components for nav
 
 ### To Do
-- [ ] **Task 1**: Create base header structure
-  - **Assignee**: TBD
-  - **Effort**: 0.5 day
-  - **Deliverables**:
-    - `src/components/Header/Header.tsx`
-    - `src/components/Header/Header.module.scss`
-  - **Acceptance Criteria**:
-    - Renders logo and basic nav items
-    - Responsive layout structure in place
-  - **Figma Support**: Screenshot + JSON export of header section
-
 - [ ] **Task 2**: Implement Logo component
   - **Assignee**: TBD
   - **Effort**: 0.25 day
   - **Deliverables**:
-    - `src/components/Header/Logo.tsx`
+    - `src/components/header/Logo.tsx`
   - **Acceptance Criteria**:
     - Loads institution logo from Strapi
     - Fallback to default logo
@@ -87,8 +76,8 @@
   - **Assignee**: TBD
   - **Effort**: 1 day
   - **Deliverables**:
-    - `src/components/Header/Navigation.tsx`
-    - `src/components/Header/NavItem.tsx`
+    - `src/components/header/Navigation.tsx`
+    - `src/components/header/NavItem.tsx`
   - **Acceptance Criteria**:
     - All nav items render correctly
     - Active state for current page
@@ -100,7 +89,7 @@
   - **Assignee**: TBD
   - **Effort**: 1 day
   - **Deliverables**:
-    - `src/components/Header/Dropdown.tsx`
+    - `src/components/header/Dropdown.tsx`
   - **Acceptance Criteria**:
     - Dropdowns open on click/hover (desktop)
     - Smooth animation (Reshaped Motion)
@@ -112,7 +101,7 @@
   - **Assignee**: TBD
   - **Effort**: 0.5 day
   - **Deliverables**:
-    - `src/components/Header/UtilityNav.tsx`
+    - `src/components/header/UtilityNav.tsx`
   - **Acceptance Criteria**:
     - Whatsapp link with icon
     - "Seu aluno" link
@@ -135,7 +124,7 @@
   - **Assignee**: TBD
   - **Effort**: 1 day
   - **Deliverables**:
-    - `src/components/Header/MobileMenu.tsx`
+    - `src/components/header/MobileMenu.tsx`
     - Hamburger icon component
   - **Acceptance Criteria**:
     - Hamburger icon toggles menu
@@ -165,7 +154,35 @@
 <!-- Tasks pending code review or testing -->
 
 ### Done
-<!-- Completed tasks -->
+- [x] **Task 1**: Create base header structure ✅
+  - **Completed**: 2025-11-08
+  - **Assignee**: Claude Code
+  - **Actual Effort**: 0.5 day
+  - **Deliverables**:
+    - ✅ `src/components/header/index.tsx` - Main component with client interactivity
+    - ✅ `src/components/header/styles.module.scss` - Responsive styles with 5 breakpoints
+    - ✅ `src/components/header/types.ts` - Props contract (HFSA compliant)
+  - **Acceptance Criteria**:
+    - ✅ Renders logo (Next.js Image, institution-specific from `/logos/`)
+    - ✅ All basic nav items (5 main items + utility bar)
+    - ✅ Responsive layout structure (mobile < 768px, tablet 768-1023px, desktop 1024-1279px, large 1280px+, xl 1440px+)
+    - ✅ Mobile menu with hamburger toggle
+    - ✅ TypeScript type checking passing
+    - ✅ Production build successful
+  - **Implementation Details**:
+    - Uses Next.js 15 App Router (Client Component)
+    - Integrated with institution theming system (uses CSS custom properties)
+    - Sticky header with `position: sticky`
+    - 5 granular breakpoints for smooth responsive behavior
+    - SVG icons inline (Whatsapp, User, ChevronRight, ChevronDown, Menu/Close)
+    - Logo path: `/logos/{institution}.svg` with `unoptimized` prop for SVG support
+    - Integrated in `src/app/[institution]/layout.tsx`
+  - **Fixed Issues**:
+    - Logo path corrected from `/logo/` to `/logos/`
+    - Responsive breakpoints added to prevent layout breaking at 999px and 1310px
+    - Adaptive sizing with `clamp()` for gap values
+    - Progressive font scaling across breakpoints
+  - **PR**: [Link to PR when created]
 
 ---
 
@@ -174,7 +191,7 @@
 ### Blocked By
 - [ ] Strapi Institution schema finalized
 - [ ] Strapi Navigation collection type created
-- [ ] Institution theming system working
+- [x] Institution theming system working ✅ (completed in previous PR)
 
 ### Blocks
 - [ ] All page implementations (every page needs header)
@@ -341,5 +358,5 @@ When this task is assigned, the following will be provided:
 ---
 
 **Created**: 2025-11-07
-**Last Updated**: 2025-11-07
-**Status**: To Do
+**Last Updated**: 2025-11-08
+**Status**: In Progress (Task 1 completed)
