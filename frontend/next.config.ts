@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['reshaped'],
   },
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

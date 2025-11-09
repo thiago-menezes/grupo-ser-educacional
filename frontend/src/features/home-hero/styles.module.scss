@@ -1,0 +1,59 @@
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+.wrapper {
+  width: 100%;
+  position: relative;
+  padding: 80px var(--rs-unit-x4);
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.heroSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.heroCard {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: var(--rs-radius-large);
+  overflow: hidden;
+
+  @media (min-width: $breakpoint-tablet) {
+    height: 400px;
+  }
+
+  @media (min-width: $breakpoint-desktop) {
+    height: 520px;
+  }
+}
+
+.searchFormContainer {
+  position: absolute;
+  bottom: -96px;
+  left: 50%;
+  transform: translateX(-50%) translateY(50%);
+  border-radius: calc(var(--rs-radius-medium) + 4px);
+  padding: var(--rs-unit-x4);
+  width: 100%;
+  max-width: 1080px;
+  z-index: 10;
+
+  @media (min-width: $breakpoint-tablet) {
+    bottom: 0;
+    border-radius: calc(var(--rs-radius-large) + 4px);
+    padding: var(--rs-unit-x5);
+  }
+
+  @media (min-width: $breakpoint-desktop) {
+    padding: var(--rs-unit-x6);
+  }
+}
