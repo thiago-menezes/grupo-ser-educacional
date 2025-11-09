@@ -8,10 +8,12 @@
 **Estimated Effort**: 3-4 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/lead-enc.jpg`
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Simplified header (logo + "Ambiente seguro")
 - Two-column layout (form + summary)
 - **Form sections**:
@@ -46,6 +48,7 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Client Component for form)
 - Reshaped UI (TextField, Select, Radio, Button, Card)
 - TypeScript
@@ -53,11 +56,13 @@
 - React Hook Form + Zod (validation)
 
 ### Data Sources
+
 - **URL Params**: Lead ID from previous step
 - **Strapi**: Form configuration (required fields)
 - **Courses API**: Course info (for summary)
 
 ### Key Components
+
 ```typescript
 <LeadEnrichmentForm>
   <SimplifiedHeader />
@@ -77,6 +82,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (single column, summary at bottom)
 - Desktop: >= 768px (two columns: form 70%, summary 30%)
 
@@ -85,11 +91,13 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review enrichment form design
 - [ ] Define all form fields and validation rules
 - [ ] Plan conditional field logic
 
 ### To Do
+
 - [ ] **Task 1**: Create page structure
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -232,12 +240,15 @@
   - **Figma Support**: Mobile form screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -245,11 +256,13 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Leads API (PUT /api/leads/:id)
 - [ ] Course details lead form (provides initial lead)
 - [ ] Strapi form configuration
 
 ### Blocks
+
 - [ ] None (end of funnel)
 
 ---
@@ -289,11 +302,13 @@
 ## 📦 API Integration
 
 ### Leads API Endpoint
+
 ```
 PUT /api/leads/:id
 ```
 
 **Request Body**:
+
 ```typescript
 {
   personal_info: {
@@ -318,6 +333,7 @@ PUT /api/leads/:id
 ```
 
 **Response**:
+
 ```typescript
 {
   lead_id: string
@@ -328,31 +344,36 @@ PUT /api/leads/:id
 ```
 
 ### Zod Schema
+
 ```typescript
 export const leadEnrichmentSchema = z.object({
   personal_info: z.object({
     full_name: z.string().min(3).max(100),
     email: z.string().email(),
     phone: z.string().regex(/^\(\d{2}\) \d{4,5}-\d{4}$/),
-    birth_date: z.string().regex(/^\d{2}\/\d{2}\/\d{4}$/)
+    birth_date: z.string().regex(/^\d{2}\/\d{2}\/\d{4}$/),
   }),
 
-  academic_info: z.object({
-    has_enem: z.boolean(),
-    enem_score: z.number().min(0).max(1000).optional(),
-    when_to_start: z.string(),
-    high_school_completion_year: z.string()
-  }).refine(data => !data.has_enem || data.enem_score !== undefined, {
-    message: 'Nota do Enem é obrigatória'
-  }),
+  academic_info: z
+    .object({
+      has_enem: z.boolean(),
+      enem_score: z.number().min(0).max(1000).optional(),
+      when_to_start: z.string(),
+      high_school_completion_year: z.string(),
+    })
+    .refine((data) => !data.has_enem || data.enem_score !== undefined, {
+      message: 'Nota do Enem é obrigatória',
+    }),
 
-  work_info: z.object({
-    is_employed: z.boolean(),
-    salary_range: z.string().optional()
-  }).refine(data => !data.is_employed || data.salary_range !== undefined, {
-    message: 'Faixa salarial é obrigatória'
-  })
-})
+  work_info: z
+    .object({
+      is_employed: z.boolean(),
+      salary_range: z.string().optional(),
+    })
+    .refine((data) => !data.is_employed || data.salary_range !== undefined, {
+      message: 'Faixa salarial é obrigatória',
+    }),
+});
 ```
 
 ---
@@ -383,11 +404,13 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance
+
 - Debounce validation
 - Optimize re-renders (React.memo)
 - Lazy load date picker
 
 ### Accessibility
+
 - All fields labeled
 - Error messages associated
 - Focus management
@@ -395,18 +418,21 @@ When this task is assigned, the following will be provided:
 - Screen reader support
 
 ### UX
+
 - Auto-save to localStorage (optional)
 - Clear progress indicator
 - Helpful error messages
 - Mobile-friendly date/time pickers
 
 ### Security
+
 - Client + server validation
 - Rate limiting
 - CSRF protection
 - Sanitize inputs
 
 ### Conversion Optimization
+
 - Minimize friction (pre-fill data)
 - Show progress
 - Clear next steps on success

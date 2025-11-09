@@ -8,10 +8,12 @@
 **Estimated Effort**: 2 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/curso.jpg` (top section)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Breadcrumb navigation (Home / Lista de cursos / Course name)
 - Large hero image or video placeholder
 - Course title (h1)
@@ -28,16 +30,19 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Server + Client Components)
 - Reshaped UI (Badge, Button, Tabs)
 - TypeScript
 - SCSS Modules
 
 ### Data Sources
+
 - **Courses API**: Course basic info (name, duration, etc.)
 - **Strapi Course Enrichment**: Hero image/video, curriculum link
 
 ### Key Components
+
 ```typescript
 <CourseHero>
   <Breadcrumb />
@@ -53,6 +58,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (stacked, full-width)
 - Desktop: >= 768px (hero with content overlay)
 
@@ -61,11 +67,13 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review course details page design
 - [ ] Understand data structure from API
 - [ ] Plan hero media strategy (image vs video)
 
 ### To Do
+
 - [ ] **Task 1**: Create course hero container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -153,12 +161,15 @@
   - **Figma Support**: Mobile hero screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -166,11 +177,13 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Courses API with course details endpoint
 - [ ] Strapi Course Enrichment with hero media
 - [ ] Breadcrumb component
 
 ### Blocks
+
 - [ ] Course content section (below hero)
 - [ ] Lead form sidebar (receives selected modality/entry method)
 
@@ -208,34 +221,43 @@
 ## 📦 API Integration
 
 ### Courses API Endpoint
+
 ```
 GET /api/courses/:slug?institution_code=UNINASSAU
 ```
 
 **Response**:
+
 ```typescript
 {
-  id: string
-  name: string
-  area: string
-  degree_type: "Bacharelado" | "Licenciatura" | "Tecnólogo"
-  modalities: ["Presencial", "EAD"]
+  id: string;
+  name: string;
+  area: string;
+  degree_type: 'Bacharelado' | 'Licenciatura' | 'Tecnólogo';
+  modalities: ['Presencial', 'EAD'];
   duration: {
-    years: 5
-    semesters: 10
+    years: 5;
+    semesters: 10;
   }
-  available_entry_methods: ["Vestibular", "ENEM", "Transferência", "Outro diploma"]
-  slug: string
+  available_entry_methods: [
+    'Vestibular',
+    'ENEM',
+    'Transferência',
+    'Outro diploma',
+  ];
+  slug: string;
   // ... other fields
 }
 ```
 
 ### Strapi Endpoint
+
 ```
 GET /api/course-enrichments?filters[course_id][$eq]=:id&populate=*
 ```
 
 **Response**:
+
 ```typescript
 {
   data: {
@@ -277,17 +299,20 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance
+
 - Server-render hero content
 - Lazy load video player
 - Optimize hero image (priority load)
 
 ### Accessibility
+
 - Breadcrumb uses `<nav aria-label="breadcrumb">`
 - Modality selector is radio group
 - Entry method selector is radio group
 - Focus management
 
 ### SEO
+
 - H1 for course title
 - Breadcrumb JSON-LD
 - Course schema.org structured data

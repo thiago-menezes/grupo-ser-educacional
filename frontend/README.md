@@ -28,6 +28,10 @@ limpa orientada pela identidade visual das instituições.
 > em vez de variável de ambiente. A var `NEXT_PUBLIC_INSTITUTION` ainda funciona
 > como fallback legacy, mas não é mais necessária.
 
+### Checkers úteis
+
+- `pnpm lint:styles`: varre os arquivos `*.module.scss` e acusa classes não utilizadas nos componentes que importam cada módulo.
+
 ## Estrutura atual
 
 - `src/app/[institution]/page.tsx` + `page.module.scss`: página de tematização

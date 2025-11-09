@@ -8,10 +8,12 @@
 **Estimated Effort**: 3-4 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/home.jpg` (course cards grid)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Section title: "Encontre o seu curso e transforme sua carreira!"
 - Subtitle with location
 - Grid of course cards (4 per row on desktop)
@@ -31,6 +33,7 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Server + Client Components)
 - Reshaped UI (Card, Badge, Button)
 - TypeScript
@@ -38,11 +41,13 @@
 - React Query (for course data)
 
 ### Data Sources
+
 - **Strapi**: Section title, featured course IDs
 - **Courses API**: Course details (name, price, campus, etc.)
 - **Strapi Course Enrichment**: Additional course metadata
 
 ### Key Components
+
 ```typescript
 <CourseCatalog>
   <CatalogHeader />
@@ -56,6 +61,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (1 column)
 - Tablet: 768px - 1024px (2 columns)
 - Desktop: > 1024px (3-4 columns)
@@ -65,11 +71,13 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review course card design
 - [ ] Understand API response structure
 - [ ] Plan data fetching strategy (SSR vs CSR)
 
 ### To Do
+
 - [ ] **Task 1**: Create course catalog container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -176,12 +184,15 @@
   - **Figma Support**: Mobile course card screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -189,11 +200,13 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Courses API implemented (GET /api/courses)
 - [ ] Strapi Course Enrichment collection type
 - [ ] Strapi Home Page with featured_courses relation
 
 ### Blocks
+
 - [ ] Course search page (reuses CourseCard)
 - [ ] Course details page (similar data structure)
 
@@ -234,11 +247,13 @@
 ## 📦 Strapi + API Integration
 
 ### Strapi Endpoint
+
 ```
 GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[featured_courses]=*
 ```
 
 **Response**:
+
 ```typescript
 {
   data: {
@@ -260,48 +275,51 @@ GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[featured_
 ```
 
 ### Courses API Endpoint
+
 ```
 GET /api/courses?ids[]=eng-civil-123&ids[]=sociologia-456&institution_code=UNINASSAU
 ```
 
 **Response**:
+
 ```typescript
 {
   data: [
     {
-      id: "eng-civil-123",
-      name: "Engenharia civil",
-      area: "Engenharia & Tecnologia",
-      degree_type: "Bacharelado",
-      modalities: ["Presencial", "EAD"],
+      id: 'eng-civil-123',
+      name: 'Engenharia civil',
+      area: 'Engenharia & Tecnologia',
+      degree_type: 'Bacharelado',
+      modalities: ['Presencial', 'EAD'],
       duration: {
         years: 5,
-        semesters: 10
+        semesters: 10,
       },
       pricing: {
-        monthly_fee: 950.10,
-        currency: "BRL"
+        monthly_fee: 950.1,
+        currency: 'BRL',
       },
       campus: {
-        name: "Unidade Aquarius",
-        city: "São José dos Campos",
-        state: "SP"
+        name: 'Unidade Aquarius',
+        city: 'São José dos Campos',
+        state: 'SP',
       },
-      slug: "engenharia-civil"
-    }
-  ]
+      slug: 'engenharia-civil',
+    },
+  ];
 }
 ```
 
 ### React Query Hook
+
 ```typescript
 // src/features/courses/hooks/useFeaturedCourses.ts
 export function useFeaturedCourses(institutionSlug: string) {
   // 1. Fetch featured course IDs from Strapi
-  const { data: homePage } = useHomePage(institutionSlug)
+  const { data: homePage } = useHomePage(institutionSlug);
 
   // 2. Extract course IDs
-  const courseIds = homePage?.featured_courses.map(fc => fc.course_id) || []
+  const courseIds = homePage?.featured_courses.map((fc) => fc.course_id) || [];
 
   // 3. Fetch course details from Courses API
   return useQuery({
@@ -309,7 +327,7 @@ export function useFeaturedCourses(institutionSlug: string) {
     queryFn: () => fetchCoursesByIds(courseIds, institutionSlug),
     enabled: courseIds.length > 0,
     staleTime: 10 * 60 * 1000,
-  })
+  });
 }
 ```
 
@@ -341,23 +359,27 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance Considerations
+
 - Server-side render (SSR) for SEO
 - Prefetch course details on hover
 - Optimize images (course thumbnails if any)
 - Lazy load cards below the fold
 
 ### Accessibility
+
 - Each card is a clickable region
 - Heading hierarchy (h2 for section, h3 for courses)
 - Price announced correctly by screen readers
 - Keyboard navigation to cards
 
 ### SEO
+
 - Course names as h3 headings
 - Structured data (Course schema.org)
 - Internal links to course detail pages
 
 ### Reusability
+
 - CourseCard component reused in:
   - Homepage featured courses
   - Homepage popular courses

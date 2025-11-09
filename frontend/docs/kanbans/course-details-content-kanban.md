@@ -8,10 +8,12 @@
 **Estimated Effort**: 2 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/curso.jpg` (main content area)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Section: "Sobre o curso"
   - Rich text description from Strapi
   - Career opportunities
@@ -28,6 +30,7 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Server Component for content, Client for carousel)
 - Reshaped UI components
 - TypeScript
@@ -35,10 +38,12 @@
 - Swiper or custom carousel
 
 ### Data Sources
+
 - **Strapi Course Enrichment**: Description, career info, etc.
 - **Courses API**: Related courses
 
 ### Key Components
+
 ```typescript
 <CourseContent>
   <AboutSection>
@@ -56,6 +61,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (full-width, carousel scrolls)
 - Desktop: >= 768px (main content with sidebar)
 
@@ -64,11 +70,13 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review content section design
 - [ ] Understand Strapi richtext format
 - [ ] Research carousel libraries
 
 ### To Do
+
 - [ ] **Task 1**: Create course content container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -150,12 +158,15 @@
   - **Figma Support**: Mobile content screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -163,11 +174,13 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Strapi Course Enrichment with richtext content
 - [ ] CourseCard component (reused)
 - [ ] Courses API for related courses
 
 ### Blocks
+
 - [ ] None (content is standalone)
 
 ---
@@ -203,27 +216,29 @@
 ## 📦 Strapi Integration
 
 ### API Endpoint
+
 ```
 GET /api/course-enrichments?filters[course_id][$eq]=:id&populate[related_courses][populate]=*
 ```
 
 **Response**:
+
 ```typescript
 {
   data: {
     attributes: {
-      description: string // richtext HTML or Markdown
-      career_opportunities: string
-      curriculum_highlights: string
-      differentials: string
+      description: string; // richtext HTML or Markdown
+      career_opportunities: string;
+      curriculum_highlights: string;
+      differentials: string;
       related_courses: {
         data: [
           {
             attributes: {
-              course_id: string // Fetch full course from Courses API
-            }
-          }
-        ]
+              course_id: string, // Fetch full course from Courses API
+            },
+          },
+        ];
       }
     }
   }
@@ -231,6 +246,7 @@ GET /api/course-enrichments?filters[course_id][$eq]=:id&populate[related_courses
 ```
 
 ### RichText Component
+
 ```typescript
 // src/components/RichText/RichText.tsx
 export function RichText({ content }: { content: string }) {
@@ -267,20 +283,24 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance
+
 - Server-render content
 - Lazy load carousel images
 - Prefetch related courses
 
 ### Accessibility
+
 - Semantic HTML in richtext
 - Carousel accessible (ARIA labels)
 - Keyboard navigation
 
 ### SEO
+
 - Semantic heading hierarchy
 - Internal links to related courses
 
 ### Carousel Library Options
+
 - **Swiper**: Full-featured, accessible
 - **Embla Carousel**: Lightweight
 - **Custom**: Full control, more work

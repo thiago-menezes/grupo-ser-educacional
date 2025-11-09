@@ -8,10 +8,12 @@
 **Estimated Effort**: 1.5 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/home.jpg` (section with Graduação vs Pós-graduação)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Section title: "Escolha o caminho que combina com você"
 - Two large cards side by side:
   - **Graduação**: Undergraduate programs
@@ -29,15 +31,18 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Server Component)
 - Reshaped UI (Card, Badge, Button)
 - TypeScript
 - SCSS Modules
 
 ### Data Sources
+
 - **Strapi**: Career decision section content
 
 ### Key Components
+
 ```typescript
 <CareerPathSection>
   <SectionHeader />
@@ -49,6 +54,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (1 column, stacked)
 - Desktop: >= 768px (2 columns, side by side)
 
@@ -57,10 +63,12 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review career path section design
 - [ ] Define Strapi career_decision component
 
 ### To Do
+
 - [ ] **Task 1**: Create career path section container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -124,12 +132,15 @@
   - **Figma Support**: Mobile screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -137,10 +148,12 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Strapi Home Page with career_decision section
 - [ ] Badge component from modalities section
 
 ### Blocks
+
 - [ ] None (self-contained section)
 
 ---
@@ -172,11 +185,13 @@
 ## 📦 Strapi Integration
 
 ### API Endpoint
+
 ```
 GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[career_decision][populate]=*
 ```
 
 ### Expected Response
+
 ```typescript
 {
   data: {
@@ -230,15 +245,18 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance
+
 - Server Component (no client JS)
 - Icons as inline SVG
 
 ### Accessibility
+
 - Semantic headings
 - Descriptive link text
 - Keyboard accessible
 
 ### SEO
+
 - Internal links help crawlability
 - Descriptive text
 

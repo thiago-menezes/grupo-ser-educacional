@@ -3,9 +3,11 @@
 ## 1. Visão Geral do Projeto
 
 ### 1.1 Objetivo
+
 Desenvolver um sistema unificado de websites para múltiplas instituições de ensino do Grupo Ser, utilizando Next.js 15 com arquitetura multi-tenant baseada em slugs (`/[institution]`), onde todo o conteúdo dinâmico será gerenciado via Strapi CMS e dados de cursos virão de API externa.
 
 ### 1.2 Escopo Inicial
+
 - **Instituição Piloto**: UNINASSAU
 - **Páginas**: Home, Busca de Cursos, Detalhes do Curso, Enriquecimento de Lead
 - **Design System**: Reshaped (já implementado)
@@ -16,6 +18,7 @@ Desenvolver um sistema unificado de websites para múltiplas instituições de e
 ## 2. Arquitetura Técnica
 
 ### 2.1 Stack Tecnológico
+
 - **Frontend**: Next.js 15 (App Router), TypeScript, React Query
 - **UI**: Reshaped Design System
 - **CMS**: Strapi (headless)
@@ -25,6 +28,7 @@ Desenvolver um sistema unificado de websites para múltiplas instituições de e
 - **Validação de Formulários**: React Hook Form + Zod
 
 ### 2.2 Estrutura de Rotas
+
 ```
 /[institution]                    # Home institucional
 /[institution]/cursos             # Busca de cursos
@@ -60,6 +64,7 @@ Desenvolver um sistema unificado de websites para múltiplas instituições de e
 ### 3.1 Collection Types Necessários
 
 #### a) **Institution** (Single Type por instituição)
+
 - slug (string, unique)
 - name (string)
 - logo (media)
@@ -68,6 +73,7 @@ Desenvolver um sistema unificado de websites para múltiplas instituições de e
 - social_media (component)
 
 #### b) **Home Page** (Dynamic Zone)
+
 - hero_section (component)
   - title (richtext)
   - subtitle (richtext)
@@ -86,6 +92,7 @@ Desenvolver um sistema unificado de websites para múltiplas instituições de e
 - infrastructure_images (media multiple)
 
 #### c) **Course Enrichment** (Collection Type)
+
 - course_id (string, unique) - ID da API externa
 - institution (relation to Institution)
 - description (richtext)
@@ -99,6 +106,7 @@ Desenvolver um sistema unificado de websites para múltiplas instituições de e
 - is_featured (boolean)
 
 #### d) **Enrollment Process** (Collection Type)
+
 - institution (relation)
 - name (string) - ex: "Processo Seletivo 2026.1"
 - start_date (date)
@@ -107,6 +115,7 @@ Desenvolver um sistema unificado de websites para múltiplas instituições de e
 - description (richtext)
 
 #### e) **Lead Form Configuration** (Single Type)
+
 - required_fields (JSON)
 - academic_questions (component repeatable)
 - work_questions (component repeatable)
@@ -126,9 +135,11 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ### 4.1 Requisitos para o Time de Backend
 
 #### Endpoint: GET /api/courses
+
 **Descrição**: Listar cursos com filtros
 
 **Query Parameters Necessários**:
+
 ```typescript
 {
   institution_code: string        // Código da instituição (ex: "UNINASSAU")
@@ -149,6 +160,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ```
 
 **Response Esperada**:
+
 ```typescript
 {
   data: [
@@ -192,9 +204,11 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ```
 
 #### Endpoint: GET /api/courses/:id
+
 **Descrição**: Detalhes de um curso específico
 
 **Response Esperada**:
+
 ```typescript
 {
   id: string
@@ -241,9 +255,11 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ```
 
 #### Endpoint: GET /api/courses/nearby
+
 **Descrição**: Buscar cursos próximos a uma localização
 
 **Query Parameters**:
+
 ```typescript
 {
   latitude: number
@@ -255,9 +271,11 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ```
 
 #### Endpoint: GET /api/campuses
+
 **Descrição**: Listar campus disponíveis
 
 **Query Parameters**:
+
 ```typescript
 {
   institution_code: string
@@ -267,6 +285,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ```
 
 **Response**:
+
 ```typescript
 {
   data: [
@@ -283,9 +302,11 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ```
 
 #### Endpoint: POST /api/leads
+
 **Descrição**: Enviar lead de inscrição
 
 **Request Body**:
+
 ```typescript
 {
   course_id: string
@@ -321,6 +342,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ```
 
 **Response**:
+
 ```typescript
 {
   lead_id: string
@@ -357,9 +379,11 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ## 5. Roadmap de Implementação
 
 ### Fase 1: Fundação (2-3 semanas)
+
 **Objetivos**: Estrutura base e integrações essenciais
 
 #### Sprint 1.1: Setup e Infraestrutura
+
 - [ ] Configurar Strapi CMS (collections types)
 - [ ] Criar client da API de cursos no frontend
 - [ ] Setup de variáveis de ambiente
@@ -367,6 +391,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] Documentação de APIs
 
 #### Sprint 1.2: Componentes Base
+
 - [ ] Header component (reutilizável)
 - [ ] Footer component (reutilizável)
 - [ ] Course Card component
@@ -374,6 +399,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] Form components base
 
 **Entregáveis**:
+
 - Strapi rodando com schema definido
 - Client da API funcionando
 - Componentes base testados
@@ -383,6 +409,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ### Fase 2: Homepage (2 semanas)
 
 #### Sprint 2.1: Hero e Seções Estáticas
+
 - [ ] Hero section com imagem/vídeo
 - [ ] Banners promocionais
 - [ ] Seção de modalidades
@@ -390,12 +417,14 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] Seção de formas de ingresso
 
 #### Sprint 2.2: Seções Dinâmicas e Integração
+
 - [ ] Catálogo de cursos em destaque
 - [ ] Integração com Strapi para conteúdo
 - [ ] Galeria de infraestrutura
 - [ ] Otimização de imagens (next/image)
 
 **Entregáveis**:
+
 - Homepage completa e responsiva
 - Conteúdo gerenciável via Strapi
 - Testes de integração passando
@@ -405,6 +434,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ### Fase 3: Busca de Cursos (2 semanas)
 
 #### Sprint 3.1: Filtros e Busca
+
 - [ ] Sidebar de filtros
 - [ ] Filtro por graduação/pós
 - [ ] Filtro por cidade e raio
@@ -414,6 +444,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] Busca textual
 
 #### Sprint 3.2: Resultados e Navegação
+
 - [ ] Grid de resultados
 - [ ] Ordenação
 - [ ] Paginação
@@ -422,6 +453,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] URL state management (filtros na URL)
 
 **Entregáveis**:
+
 - Página de busca funcional
 - Filtros sincronizados com URL
 - Performance otimizada (debounce, lazy loading)
@@ -431,6 +463,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ### Fase 4: Detalhes do Curso (1.5 semanas)
 
 #### Sprint 4.1: Layout e Conteúdo
+
 - [ ] Hero com imagem/vídeo
 - [ ] Breadcrumb navigation
 - [ ] Seleção de modalidade
@@ -439,12 +472,14 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] Carrossel de cursos relacionados
 
 #### Sprint 4.2: Lead Form
+
 - [ ] Form de inscrição (sidebar sticky)
 - [ ] Validação com Zod
 - [ ] Integração com API de leads
 - [ ] Estados de sucesso/erro
 
 **Entregáveis**:
+
 - Página de curso completa
 - Lead form funcional
 - SEO otimizado (meta tags dinâmicas)
@@ -454,6 +489,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ### Fase 5: Enriquecimento de Lead (1 semana)
 
 #### Sprint 5.1: Formulário Completo
+
 - [ ] Layout simplificado (header + form)
 - [ ] Validação de campos
 - [ ] Etapas do formulário
@@ -461,6 +497,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] Submissão e confirmação
 
 **Entregáveis**:
+
 - Fluxo de pré-cadastro completo
 - Integração com backend de leads
 - Página de confirmação
@@ -470,12 +507,14 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ### Fase 6: Multi-Institucional (1 semana)
 
 #### Sprint 6.1: Expansão
+
 - [ ] Aplicar tematização para outras instituições
 - [ ] Testar fluxo completo em 3+ instituições
 - [ ] Ajustes de conteúdo no Strapi
 - [ ] Validação de rotas dinâmicas
 
 **Entregáveis**:
+
 - Sistema funcionando para 5 instituições
 - Guia de adição de novas instituições
 
@@ -484,6 +523,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ### Fase 7: Polimento e Lançamento (1 semana)
 
 #### Sprint 7.1: QA e Performance
+
 - [ ] Testes E2E (Playwright)
 - [ ] Lighthouse audit (score 90+)
 - [ ] Acessibilidade (WCAG AA)
@@ -491,12 +531,14 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] Mobile testing
 
 #### Sprint 7.2: Deploy e Monitoramento
+
 - [ ] Deploy em produção
 - [ ] Setup de analytics
 - [ ] Monitoramento de erros (Sentry)
 - [ ] Documentação final
 
 **Entregáveis**:
+
 - Sistema em produção
 - Métricas de performance
 - Runbook de operações
@@ -506,6 +548,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ## 6. Critérios de Sucesso
 
 ### 6.1 Técnicos
+
 - [ ] Lighthouse Performance Score > 90
 - [ ] Lighthouse Accessibility Score > 95
 - [ ] Core Web Vitals no verde
@@ -513,6 +556,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] Zero erros de console em produção
 
 ### 6.2 Funcionais
+
 - [ ] Todas as páginas responsivas (mobile-first)
 - [ ] Conteúdo 100% gerenciável via Strapi
 - [ ] Filtros de busca retornam resultados corretos
@@ -520,6 +564,7 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 - [ ] SEO implementado (meta tags, sitemap, robots.txt)
 
 ### 6.3 Negócio
+
 - [ ] Taxa de conversão de lead > 5%
 - [ ] Tempo médio de carregamento < 2s
 - [ ] Bounce rate < 40%
@@ -529,29 +574,32 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 
 ## 7. Riscos e Mitigações
 
-| Risco | Probabilidade | Impacto | Mitigação |
-|-------|---------------|---------|-----------|
-| API de cursos instável | Média | Alto | Implementar cache agressivo, fallback para dados estáticos |
-| Strapi schema changes | Baixa | Médio | Versionar schema, migrations automáticas |
-| Performance em mobile | Média | Alto | Image optimization, lazy loading, code splitting |
-| Tematização inconsistente | Baixa | Médio | Design tokens centralizados, testes visuais |
-| Dados de cursos incompletos | Alta | Médio | Validação na ingestão, alertas para admins |
+| Risco                       | Probabilidade | Impacto | Mitigação                                                  |
+| --------------------------- | ------------- | ------- | ---------------------------------------------------------- |
+| API de cursos instável      | Média         | Alto    | Implementar cache agressivo, fallback para dados estáticos |
+| Strapi schema changes       | Baixa         | Médio   | Versionar schema, migrations automáticas                   |
+| Performance em mobile       | Média         | Alto    | Image optimization, lazy loading, code splitting           |
+| Tematização inconsistente   | Baixa         | Médio   | Design tokens centralizados, testes visuais                |
+| Dados de cursos incompletos | Alta          | Médio   | Validação na ingestão, alertas para admins                 |
 
 ---
 
 ## 8. Dependências Externas
 
 ### 8.1 Time de Backend
+
 - [ ] API de cursos implementada e documentada (Prazo: Fase 1)
 - [ ] API de leads implementada (Prazo: Fase 4)
 - [ ] Strapi configurado e acessível (Prazo: Fase 1)
 
 ### 8.2 Time de Design
+
 - [ ] Mockups finalizados (Concluído ✓)
 - [ ] Componentes do Figma exportados como JSON (Por demanda)
 - [ ] Assets de imagens otimizados (Contínuo)
 
 ### 8.3 Time de Conteúdo
+
 - [ ] Textos para homepage (Prazo: Fase 2)
 - [ ] Descrições de cursos (Prazo: Fase 4)
 - [ ] Imagens de infraestrutura (Prazo: Fase 2)
@@ -561,12 +609,14 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 ## 9. Stack de Monitoramento
 
 ### Produção
+
 - **Analytics**: Google Analytics 4 ou Plausible
 - **Error Tracking**: Sentry
 - **Performance**: Vercel Analytics ou New Relic
 - **Logs**: Datadog ou CloudWatch
 
 ### Desenvolvimento
+
 - **Linting**: ESLint + Prettier
 - **Type Checking**: TypeScript strict mode
 - **Testing**: Vitest + Testing Library + Playwright

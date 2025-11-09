@@ -8,10 +8,12 @@
 **Estimated Effort**: 1 day
 
 ### Design Reference
+
 - **Mockup**: `/docs/home.jpg` (photo gallery section at bottom)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Section title: "Conheça nossa infraestrutura"
 - Subtitle text
 - Photo gallery grid (6+ images)
@@ -24,6 +26,7 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Server Component)
 - Reshaped UI components
 - TypeScript
@@ -31,9 +34,11 @@
 - next/image for optimization
 
 ### Data Sources
+
 - **Strapi**: Infrastructure section images
 
 ### Key Components
+
 ```typescript
 <InfrastructureSection>
   <SectionHeader />
@@ -47,6 +52,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (2 columns)
 - Tablet: 768px - 1024px (3 columns)
 - Desktop: > 1024px (3 columns, masonry or grid)
@@ -56,10 +62,12 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review infrastructure section design
 - [ ] Define Strapi infrastructure component
 
 ### To Do
+
 - [ ] **Task 1**: Create infrastructure section container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -134,12 +142,15 @@
   - **Figma Support**: Mobile gallery screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -147,10 +158,12 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Strapi Home Page with infrastructure_section
 - [ ] Infrastructure images uploaded
 
 ### Blocks
+
 - [ ] None (last section on homepage)
 
 ---
@@ -186,11 +199,13 @@
 ## 📦 Strapi Integration
 
 ### API Endpoint
+
 ```
 GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[infrastructure_section][populate]=*
 ```
 
 ### Expected Response
+
 ```typescript
 {
   data: {
@@ -242,17 +257,20 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance
+
 - Server Component for gallery structure
 - Client Component for lightbox (if needed)
 - Lazy load all images
 - Optimize for Core Web Vitals
 
 ### Accessibility
+
 - Images have descriptive alt text
 - Lightbox keyboard accessible
 - Focus trap in modal
 
 ### SEO
+
 - Alt text on images
 - Optional: Image sitemap
 

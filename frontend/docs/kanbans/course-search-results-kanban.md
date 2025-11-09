@@ -8,10 +8,12 @@
 **Estimated Effort**: 2-3 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/busca.jpg` (main content area)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Page header:
   - Title: "Encontre o curso ideal para você"
   - Results count: "150 cursos encontrados"
@@ -28,6 +30,7 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Client Component for pagination)
 - Reshaped UI (Select, Pagination)
 - TypeScript
@@ -35,10 +38,12 @@
 - React Query (data fetching)
 
 ### Data Sources
+
 - **Courses API**: Filtered and sorted courses
 - **URL Params**: Filters, sort, page
 
 ### Key Components
+
 ```typescript
 <CourseSearchResults>
   <ResultsHeader>
@@ -56,6 +61,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (1 column)
 - Tablet: 768px - 1024px (2 columns)
 - Desktop: > 1024px (3 columns)
@@ -65,11 +71,13 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review results page design
 - [ ] Understand API response format
 - [ ] Plan pagination strategy
 
 ### To Do
+
 - [ ] **Task 1**: Create results container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -193,12 +201,15 @@
   - **Figma Support**: N/A
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -206,11 +217,13 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] CourseCard component (from homepage)
 - [ ] Courses API with filtering/sorting
 - [ ] Course filters component
 
 ### Blocks
+
 - [ ] Course details page (linked from cards)
 
 ---
@@ -250,11 +263,13 @@
 ## 📦 Courses API Integration
 
 ### API Endpoint
+
 ```
 GET /api/courses?institution_code=UNINASSAU&degree_type=Graduação&modality=Presencial,EAD&min_price=800&max_price=2000&page=1&limit=12&sort_by=price_asc
 ```
 
 ### Expected Response
+
 ```typescript
 {
   data: [
@@ -290,15 +305,20 @@ GET /api/courses?institution_code=UNINASSAU&degree_type=Graduação&modality=Pre
 ```
 
 ### React Query Hook
+
 ```typescript
 // src/features/course-search/hooks/useCourseSearch.ts
-export function useCourseSearch(filters: CourseFilters, page: number, sortBy: string) {
+export function useCourseSearch(
+  filters: CourseFilters,
+  page: number,
+  sortBy: string,
+) {
   return useQuery({
     queryKey: ['courses', 'search', filters, page, sortBy],
     queryFn: () => fetchCourses(filters, page, sortBy),
     keepPreviousData: true, // Smooth pagination
     staleTime: 2 * 60 * 1000, // 2 minutes
-  })
+  });
 }
 ```
 
@@ -329,24 +349,28 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance Considerations
+
 - Use `keepPreviousData` in React Query for smooth pagination
 - Prefetch next page on pagination hover
 - Virtualize list if > 50 results per page
 - Debounce filter changes to reduce API calls
 
 ### Accessibility
+
 - Results count announced to screen readers
 - Pagination keyboard accessible (tab + enter)
 - Focus management (scroll to top on page change)
 - Loading state announced
 
 ### UX
+
 - Show loading state immediately on filter change
 - Preserve scroll position when returning from course details
 - Show "Back to search" breadcrumb on details page
 - Smooth transitions between states
 
 ### SEO
+
 - Server-side render first page of results
 - Dynamic meta tags with filter info
 - Canonical URL for paginated results

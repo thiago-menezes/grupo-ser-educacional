@@ -8,10 +8,12 @@
 **Estimated Effort**: 1-2 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/home.jpg` (3 colorful cards below hero)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - 3 promotional cards in a row
 - Each card with:
   - Background color/image
@@ -27,15 +29,18 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Server Component)
 - Reshaped UI components
 - TypeScript
 - SCSS Modules
 
 ### Data Sources
+
 - **Strapi**: Promotional banner content (max 3 items)
 
 ### Key Components
+
 ```typescript
 <PromotionalBanners>
   <BannerCard />
@@ -45,6 +50,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (1 column, stacked)
 - Tablet: 768px - 1024px (2 columns)
 - Desktop: > 1024px (3 columns)
@@ -54,10 +60,12 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review banner designs in mockup
 - [ ] Define Strapi promotional banner component
 
 ### To Do
+
 - [ ] **Task 1**: Create promotional banners container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -123,12 +131,15 @@
   - **Figma Support**: Mobile banners screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -136,10 +147,12 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Strapi Home Page collection type with promotional_banners field
 - [ ] Next/image configuration
 
 ### Blocks
+
 - [ ] None (banners are self-contained)
 
 ---
@@ -172,11 +185,13 @@
 ## 📦 Strapi Integration
 
 ### API Endpoint
+
 ```
 GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[promotional_banners][populate]=*
 ```
 
 ### Expected Response
+
 ```typescript
 {
   data: {
@@ -233,16 +248,19 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance
+
 - Use next/image for banner images
 - Lazy load images below the fold
 - Optimize images (WebP, srcset)
 
 ### Accessibility
+
 - Each card is a semantic link or button
 - Descriptive link text (not just "Learn more")
 - Alt text on images describes content
 
 ### SEO
+
 - Descriptive anchor text
 - Internal links improve crawlability
 

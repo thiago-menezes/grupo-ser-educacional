@@ -8,10 +8,12 @@
 **Estimated Effort**: 2-3 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/home.jpg` (top section)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Large background image/video
 - Headline with branded typography
 - Subheadline text
@@ -29,6 +31,7 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Client Component for interactivity)
 - Reshaped UI (Button, TextField)
 - TypeScript
@@ -36,10 +39,12 @@
 - Framer Motion (animations)
 
 ### Data Sources
+
 - **Strapi**: Hero content (title, subtitle, background, CTAs)
 - **Client State**: Form inputs
 
 ### Key Components
+
 ```typescript
 <HomeHero>
   <HeroBackground />
@@ -54,6 +59,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (stacked, full-width)
 - Tablet: 768px - 1024px (condensed spacing)
 - Desktop: > 1024px (full layout with sidebar form)
@@ -63,11 +69,13 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review hero section design
 - [ ] Define Strapi hero component schema
 - [ ] Research video background best practices
 
 ### To Do
+
 - [ ] **Task 1**: Create hero container structure
   - **Assignee**: TBD
   - **Effort**: 0.5 day
@@ -172,12 +180,15 @@
   - **Figma Support**: Mobile hero screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -185,11 +196,13 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Header component (for proper z-index)
 - [ ] Strapi Home Page collection type created
 - [ ] Institution theming working
 
 ### Blocks
+
 - [ ] None (hero is self-contained)
 
 ---
@@ -227,11 +240,13 @@
 ## 📦 Strapi Integration
 
 ### API Endpoint
+
 ```
 GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[hero][populate]=*
 ```
 
 ### Expected Response
+
 ```typescript
 {
   data: {
@@ -264,6 +279,7 @@ GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[hero][pop
 ```
 
 ### React Query Hook
+
 ```typescript
 // src/features/home/hooks/useHomePage.ts
 export function useHomePage(institutionSlug: string) {
@@ -271,7 +287,7 @@ export function useHomePage(institutionSlug: string) {
     queryKey: ['home', institutionSlug],
     queryFn: () => fetchHomePage(institutionSlug),
     staleTime: 5 * 60 * 1000,
-  })
+  });
 }
 ```
 
@@ -304,23 +320,27 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance Considerations
+
 - Use `priority` prop on next/image for hero image (LCP)
 - Lazy load video (Intersection Observer)
 - Optimize video (compressed, multiple formats)
 - Debounce autocomplete search
 
 ### Accessibility
+
 - Carousel has `role="region"` with `aria-label`
 - Auto-advance carousel can be paused
 - Form inputs have visible labels
 - Sufficient color contrast on overlay
 
 ### SEO
+
 - H1 tag for main headline
 - Alt text on background image
 - Descriptive CTA link text
 
 ### Animation Best Practices
+
 - Respect `prefers-reduced-motion`
 - Use GPU-accelerated properties (transform, opacity)
 - Keep animations < 500ms

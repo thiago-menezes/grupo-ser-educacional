@@ -43,31 +43,31 @@ src/
 
 ### Component Module Contract (`src/components/<name>`)
 
-| File | Responsibility |
-| --- | --- |
-| `index.tsx` | Export of the stateless component. May import hooks from sibling `hooks.ts` only if the logic is presentation-related (e.g., focus management). |
-| `styles.module.scss` | Styling with CSS modules. Name it exactly `styles.module.scss` for parity with the boilerplate. |
-| `types.ts` | Public props (`<Component>Props`), discriminated unions for variants. |
-| `constants.ts` | Copy decks, icon maps, tokens used by the component. |
-| `utils.ts` | Pure helpers (formatters, class builders). |
-| `hooks.ts` | Optional component-level hooks (no data fetching, only presentation logic). |
-| `api/*` | **Only for stateful widgets**. If a “component” owns remote data, promote it to `src/features`. |
+| File                 | Responsibility                                                                                                                                  |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index.tsx`          | Export of the stateless component. May import hooks from sibling `hooks.ts` only if the logic is presentation-related (e.g., focus management). |
+| `styles.module.scss` | Styling with CSS modules. Name it exactly `styles.module.scss` for parity with the boilerplate.                                                 |
+| `types.ts`           | Public props (`<Component>Props`), discriminated unions for variants.                                                                           |
+| `constants.ts`       | Copy decks, icon maps, tokens used by the component.                                                                                            |
+| `utils.ts`           | Pure helpers (formatters, class builders).                                                                                                      |
+| `hooks.ts`           | Optional component-level hooks (no data fetching, only presentation logic).                                                                     |
+| `api/*`              | **Only for stateful widgets**. If a “component” owns remote data, promote it to `src/features`.                                                 |
 
 ### Feature Module Contract (`src/features/<feature>`)
 
-| File/Folder | Responsibility |
-| --- | --- |
-| `index.tsx` | Composes the UI, wires hooks, and exports a single public component/hook for route usage. |
-| `hooks.ts` | React Query hooks (`useEnrollmentsQuery`, `useCreateEnrollmentMutation`) plus derived-state helpers. |
-| `constants.ts` | Static labels, query keys, feature flags. |
-| `types.ts` | Feature-scoped view models and discriminated unions that are not API DTOs. |
-| `utils.ts` | Pure transformers (e.g., map API DTO → view model). |
-| `styles.module.scss` | Feature styles (optionally split into smaller SCSS partials imported here). |
-| `api/query.ts` | Read operations. Each function wraps `libs/api/queryClient` and exposes the hook-friendly contract. |
-| `api/mutation.ts` | Write operations and side effects. |
-| `api/types.ts` | DTOs and server contracts. |
-| `api/mock.ts` | Optional MSW handlers or fixtures. |
-| `__tests__/` | Vitest specs (unit, hook, and integration). Name them `<feature>.integration.spec.tsx` when exercising the route. |
+| File/Folder          | Responsibility                                                                                                    |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `index.tsx`          | Composes the UI, wires hooks, and exports a single public component/hook for route usage.                         |
+| `hooks.ts`           | React Query hooks (`useEnrollmentsQuery`, `useCreateEnrollmentMutation`) plus derived-state helpers.              |
+| `constants.ts`       | Static labels, query keys, feature flags.                                                                         |
+| `types.ts`           | Feature-scoped view models and discriminated unions that are not API DTOs.                                        |
+| `utils.ts`           | Pure transformers (e.g., map API DTO → view model).                                                               |
+| `styles.module.scss` | Feature styles (optionally split into smaller SCSS partials imported here).                                       |
+| `api/query.ts`       | Read operations. Each function wraps `libs/api/queryClient` and exposes the hook-friendly contract.               |
+| `api/mutation.ts`    | Write operations and side effects.                                                                                |
+| `api/types.ts`       | DTOs and server contracts.                                                                                        |
+| `api/mock.ts`        | Optional MSW handlers or fixtures.                                                                                |
+| `__tests__/`         | Vitest specs (unit, hook, and integration). Name them `<feature>.integration.spec.tsx` when exercising the route. |
 
 ### Routing Contract
 
@@ -101,14 +101,14 @@ export default function EnrollmentPage({ params }: Props) {
 
 ## Current State vs HFSA Readiness
 
-| Area | Current State | Gap / Action |
-| --- | --- | --- |
+| Area                       | Current State                                                                                                                                                                              | Gap / Action                                                                                                                                                            |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Routing + feature boundary | `src/app/[institution]/page.tsx` mixes data constants, view logic, and layout in a single file (`tokenSwatches`, `componentTiles`, `buttonClassMap`, component definitions) [lines 7-150]. | Move the entire experience into `src/features/theme-demo` (or similar) with `constants.ts`, `types.ts`, and `styles.module.scss`, leaving the route as a thin delegate. |
-| Components folder | `src/components/header` now ships with `index.tsx`, `types.ts`, and `styles.module.scss`, matching the HFSA contract for dumb UI primitives. | Use the header implementation as the template and audit remaining components to ensure they follow the same structure. |
-| Theming provider | `src/components/InstitutionThemeProvider.tsx` lives as a loose file with business logic in the components root [lines 1-55]. | Convert into `src/features/theme/institution-theme-provider/` or move under `src/features/theme` with the standard file layout. |
-| Feature directory usage | `src/features/theme` only contains `__tests__/institution-theme.integration.spec.tsx` and no production code [lines 1-158]. | Populate `src/features/theme` (or new feature folders) with UI, hooks, and API files; keep tests colocated. |
-| API ownership | `src/libs/api/axios.ts` declares `query` and `mutate` helpers globally [lines 5-70], so features do not own their fetch logic. | Keep the Axios client in `libs/api`, but create per-feature adapters (`api/query.ts`, `api/mutation.ts`) to encapsulate endpoints and query keys. |
-| Domain configuration | Institution data and helper functions live in `src/config/institutions.ts` [lines 26-160], far from any feature. | Wrap brand logic in a `theme` feature (e.g., `features/theme/config`) that provides hooks plus the config object, leaving `src/config` with environment-only data. |
+| Components folder          | `src/components/header` now ships with `index.tsx`, `types.ts`, and `styles.module.scss`, matching the HFSA contract for dumb UI primitives.                                               | Use the header implementation as the template and audit remaining components to ensure they follow the same structure.                                                  |
+| Theming provider           | `src/components/InstitutionThemeProvider.tsx` lives as a loose file with business logic in the components root [lines 1-55].                                                               | Convert into `src/features/theme/institution-theme-provider/` or move under `src/features/theme` with the standard file layout.                                         |
+| Feature directory usage    | `src/features/theme` only contains `__tests__/institution-theme.integration.spec.tsx` and no production code [lines 1-158].                                                                | Populate `src/features/theme` (or new feature folders) with UI, hooks, and API files; keep tests colocated.                                                             |
+| API ownership              | `src/libs/api/axios.ts` declares `query` and `mutate` helpers globally [lines 5-70], so features do not own their fetch logic.                                                             | Keep the Axios client in `libs/api`, but create per-feature adapters (`api/query.ts`, `api/mutation.ts`) to encapsulate endpoints and query keys.                       |
+| Domain configuration       | Institution data and helper functions live in `src/config/institutions.ts` [lines 26-160], far from any feature.                                                                           | Wrap brand logic in a `theme` feature (e.g., `features/theme/config`) that provides hooks plus the config object, leaving `src/config` with environment-only data.      |
 
 ## Next Steps
 

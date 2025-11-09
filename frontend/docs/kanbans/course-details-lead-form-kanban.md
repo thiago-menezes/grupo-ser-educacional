@@ -8,10 +8,12 @@
 **Estimated Effort**: 2-3 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/curso.jpg` (right sidebar)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Sticky sidebar on desktop
 - Enrollment process banner: "Processo seletivo 2026.1 - Comece em Fevereiro"
 - Form fields:
@@ -35,6 +37,7 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Client Component for form)
 - Reshaped UI (TextField, Button, Card)
 - TypeScript
@@ -42,11 +45,13 @@
 - React Hook Form + Zod (validation)
 
 ### Data Sources
+
 - **Props/Context**: Selected modality, entry method from hero
 - **Courses API**: Course info (pre-loaded)
 - **Enrollment Process API**: Active process info
 
 ### Key Components
+
 ```typescript
 <LeadForm>
   <EnrollmentBanner />
@@ -68,6 +73,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (inline or bottom sheet)
 - Desktop: >= 768px (sticky sidebar, width ~350px)
 
@@ -76,11 +82,13 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review lead form design
 - [ ] Define validation rules
 - [ ] Plan lead submission flow
 
 ### To Do
+
 - [ ] **Task 1**: Create lead form container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -197,12 +205,15 @@
   - **Figma Support**: N/A
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -210,11 +221,13 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Leads API (POST endpoint)
 - [ ] Course hero selectors (provide modality/entry method)
 - [ ] Enrollment process API/Strapi
 
 ### Blocks
+
 - [ ] Lead enrichment form (next step after submission)
 
 ---
@@ -254,11 +267,13 @@
 ## 📦 API Integration
 
 ### Leads API Endpoint
+
 ```
 POST /api/leads
 ```
 
 **Request Body**:
+
 ```typescript
 {
   course_id: string
@@ -281,6 +296,7 @@ POST /api/leads
 ```
 
 **Response**:
+
 ```typescript
 {
   lead_id: string
@@ -291,16 +307,17 @@ POST /api/leads
 ```
 
 ### Zod Schema
+
 ```typescript
-import { z } from 'zod'
+import { z } from 'zod';
 
 export const leadFormSchema = z.object({
   full_name: z.string().min(3, 'Nome muito curto').max(100),
   email: z.string().email('E-mail inválido'),
-  phone: z.string().regex(/^\(\d{2}\) \d{4,5}-\d{4}$/, 'Telefone inválido')
-})
+  phone: z.string().regex(/^\(\d{2}\) \d{4,5}-\d{4}$/, 'Telefone inválido'),
+});
 
-export type LeadFormData = z.infer<typeof leadFormSchema>
+export type LeadFormData = z.infer<typeof leadFormSchema>;
 ```
 
 ---
@@ -329,29 +346,34 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance
+
 - Debounce validation (300ms)
 - Optimize re-renders
 - Memoize course info display
 
 ### Accessibility
+
 - Labels for all inputs
 - Error messages with `aria-describedby`
 - Loading state announced
 - Focus on first error field
 
 ### UX
+
 - Clear, helpful error messages
 - Show password strength (if adding password field later)
 - Autofocus first field on mobile
 - Smooth scroll to errors
 
 ### Security
+
 - Client + server-side validation
 - Rate limiting on API
 - Honeypot field (hidden, catch bots)
 - Sanitize inputs
 
 ### Conversion Optimization
+
 - Minimal fields (only essential info)
 - Social proof (optional: "X alunos se inscreveram hoje")
 - Trust indicators (secure badge, privacy note)

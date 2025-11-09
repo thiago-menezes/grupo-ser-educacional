@@ -8,10 +8,12 @@
 **Estimated Effort**: 3-4 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/busca.jpg` (left sidebar)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Collapsible filter sidebar
 - Active filters display with clear all
 - Filter categories:
@@ -32,6 +34,7 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Client Component for interactivity)
 - Reshaped UI (Checkbox, Slider, TextField, Button, Badge)
 - TypeScript
@@ -40,10 +43,12 @@
 - URL state management (useSearchParams)
 
 ### Data Sources
+
 - **URL Search Params**: Current filter state
 - **Static**: Filter options (can be from Strapi later)
 
 ### Key Components
+
 ```typescript
 <CourseFilters>
   <ActiveFilters />
@@ -75,6 +80,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (filters in drawer/modal)
 - Desktop: >= 768px (sidebar visible)
 
@@ -83,11 +89,13 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review filters design in mockup
 - [ ] Define filter options and data types
 - [ ] Plan URL state management strategy
 
 ### To Do
+
 - [ ] **Task 1**: Create filters sidebar container
   - **Assignee**: TBD
   - **Effort**: 0.5 day
@@ -243,12 +251,15 @@
   - **Figma Support**: N/A
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -256,10 +267,12 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Course search results component (to display filtered courses)
 - [ ] Courses API with filter support
 
 ### Blocks
+
 - [ ] Course search results (depends on filter state)
 
 ---
@@ -298,37 +311,40 @@
 ## 📦 URL State Schema
 
 ### URL Format
+
 ```
 /uninassau/cursos?degree_type=Graduação&city=São+José+dos+Campos&radius=600&modality=Presencial,EAD&min_price=800&max_price=2000&shift=Manhã,Noite&search=Engenharia
 ```
 
 ### TypeScript Types
+
 ```typescript
 type CourseFilters = {
-  degree_type?: 'Graduação' | 'Pós-Graduação'
-  city?: string
-  radius?: number // meters
-  search?: string
-  modality?: Array<'Presencial' | 'Semipresencial' | 'EAD'>
-  min_price?: number
-  max_price?: number
-  shift?: Array<'Manhã' | 'Tarde' | 'Noite' | 'Virtual'>
-  duration_years?: number[]
-}
+  degree_type?: 'Graduação' | 'Pós-Graduação';
+  city?: string;
+  radius?: number; // meters
+  search?: string;
+  modality?: Array<'Presencial' | 'Semipresencial' | 'EAD'>;
+  min_price?: number;
+  max_price?: number;
+  shift?: Array<'Manhã' | 'Tarde' | 'Noite' | 'Virtual'>;
+  duration_years?: number[];
+};
 ```
 
 ### Hook Usage
+
 ```typescript
-const { filters, updateFilter, clearFilters } = useFilters()
+const { filters, updateFilter, clearFilters } = useFilters();
 
 // Update single filter
-updateFilter('city', 'São Paulo')
+updateFilter('city', 'São Paulo');
 
 // Update array filter
-updateFilter('modality', ['Presencial', 'EAD'])
+updateFilter('modality', ['Presencial', 'EAD']);
 
 // Clear all
-clearFilters()
+clearFilters();
 ```
 
 ---
@@ -358,18 +374,21 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance Considerations
+
 - Debounce text inputs (500ms)
 - Debounce sliders (300ms)
 - Memoize filter components
 - Optimize URL updates (batch changes)
 
 ### Accessibility
+
 - All filters keyboard accessible
 - Sliders work with arrow keys
 - Screen reader announces filter changes
 - Mobile drawer traps focus
 
 ### UX
+
 - Show course count for each filter option (optional)
 - Disable options with 0 results (optional)
 - Smooth animations for filter changes

@@ -8,10 +8,12 @@
 **Estimated Effort**: 2-3 days
 
 ### Design Reference
+
 - **Mockup**: All pages in `/docs/*.jpg`
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Institution logo and branding
 - Social media links (Instagram, Facebook, Twitter, WhatsApp)
 - Multi-column navigation links
@@ -27,16 +29,19 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Server Component)
 - Reshaped UI components
 - TypeScript
 - SCSS Modules
 
 ### Data Sources
+
 - **Strapi**: Institution logo, social links, navigation, legal text
 - **Props**: `institutionSlug` from route params
 
 ### Key Components
+
 ```typescript
 <Footer institutionSlug={string}>
   <FooterBrand />
@@ -48,6 +53,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (single column, stacked)
 - Tablet: 768px - 1024px (2 columns)
 - Desktop: > 1024px (4 columns + brand)
@@ -57,11 +63,13 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review footer design in all mockups
 - [ ] Define Strapi schema for footer content
 - [ ] Identify all link categories
 
 ### To Do
+
 - [ ] **Task 1**: Create base footer structure
   - **Assignee**: TBD
   - **Effort**: 0.5 day
@@ -152,12 +160,15 @@
   - **Figma Support**: Mobile footer screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -165,11 +176,13 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Strapi Institution schema finalized
 - [ ] Institution theming system working
 - [ ] Header component (for shared styles)
 
 ### Blocks
+
 - [ ] None (footer is non-blocking)
 
 ---
@@ -207,11 +220,13 @@
 ## 📦 Strapi Integration
 
 ### API Endpoint
+
 ```
 GET /api/institutions/:slug?populate[logo_footer]=*&populate[footer_navigation]=*&populate[social_media]=*&populate[emec_qr]=*
 ```
 
 ### Expected Response
+
 ```typescript
 {
   data: {
@@ -262,6 +277,7 @@ GET /api/institutions/:slug?populate[logo_footer]=*&populate[footer_navigation]=
 ```
 
 ### React Query Hook
+
 ```typescript
 // src/features/navigation/hooks/useFooter.ts
 export function useFooter(institutionSlug: string) {
@@ -269,7 +285,7 @@ export function useFooter(institutionSlug: string) {
     queryKey: ['footer', institutionSlug],
     queryFn: () => fetchFooter(institutionSlug),
     staleTime: 30 * 60 * 1000, // 30 minutes
-  })
+  });
 }
 ```
 
@@ -301,22 +317,26 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance Considerations
+
 - Server Component (no client-side JS needed)
 - Optimize QR code image (WebP format)
 - SVG icons inline (no external requests)
 
 ### Accessibility
+
 - Semantic HTML (`<footer>`)
 - Nav sections use `<nav>` with aria-label
 - Social links have descriptive aria-labels
 - Sufficient color contrast
 
 ### SEO
+
 - Internal links help crawlability
 - Legal links (privacy, terms) important for trust
 - Structured data for organization info
 
 ### Theme Integration
+
 - Use institution primary color for background
 - White text with proper contrast
 - QR code section maintains brand colors

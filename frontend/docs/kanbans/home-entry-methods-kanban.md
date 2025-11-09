@@ -8,10 +8,12 @@
 **Estimated Effort**: 1.5 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/home.jpg` (section showing admission methods)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Section title: "Conheça nossas formas de ingresso"
 - Subtitle text
 - 4 entry method cards:
@@ -32,15 +34,18 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Server Component)
 - Reshaped UI (Card)
 - TypeScript
 - SCSS Modules
 
 ### Data Sources
+
 - **Strapi**: Entry methods section content
 
 ### Key Components
+
 ```typescript
 <EntryMethodsSection>
   <SectionHeader />
@@ -54,6 +59,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (1 column)
 - Tablet: 768px - 1024px (2 columns)
 - Desktop: > 1024px (4 columns)
@@ -63,10 +69,12 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review entry methods section design
 - [ ] Define Strapi entry_methods component
 
 ### To Do
+
 - [ ] **Task 1**: Create entry methods section container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -132,12 +140,15 @@
   - **Figma Support**: Mobile screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -145,9 +156,11 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Strapi Home Page with entry_methods section
 
 ### Blocks
+
 - [ ] None (self-contained section)
 
 ---
@@ -178,11 +191,13 @@
 ## 📦 Strapi Integration
 
 ### API Endpoint
+
 ```
 GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[entry_methods][populate]=*
 ```
 
 ### Expected Response
+
 ```typescript
 {
   data: {
@@ -255,15 +270,18 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance
+
 - Server Component (no client JS)
 - Icons as inline SVG
 
 ### Accessibility
+
 - Semantic headings
 - Descriptive link text
 - Icons decorative with aria-hidden (text is primary)
 
 ### SEO
+
 - Internal links
 - Descriptive text
 

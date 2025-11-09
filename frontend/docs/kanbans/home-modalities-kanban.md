@@ -8,10 +8,12 @@
 **Estimated Effort**: 1-2 days
 
 ### Design Reference
+
 - **Mockup**: `/docs/home.jpg` (blue section with 3 cards)
 - **Figma**: Awaiting JSON export
 
 ### Features
+
 - Section with dark blue background
 - Title: "Nossas modalidades de Graduação"
 - Subtitle text
@@ -31,15 +33,18 @@
 ## 🎯 Technical Requirements
 
 ### Stack
+
 - Next.js 15 (Server Component)
 - Reshaped UI (Card, Button)
 - TypeScript
 - SCSS Modules
 
 ### Data Sources
+
 - **Strapi**: Modalities section content
 
 ### Key Components
+
 ```typescript
 <ModalitiesSection>
   <SectionHeader />
@@ -52,6 +57,7 @@
 ```
 
 ### Responsive Breakpoints
+
 - Mobile: < 768px (1 column)
 - Tablet: 768px - 1024px (2 columns, 1 on second row)
 - Desktop: > 1024px (3 columns)
@@ -61,10 +67,12 @@
 ## 📊 Tasks
 
 ### Backlog
+
 - [ ] Review modalities section design
 - [ ] Define Strapi modalities component
 
 ### To Do
+
 - [ ] **Task 1**: Create modalities section container
   - **Assignee**: TBD
   - **Effort**: 0.25 day
@@ -141,12 +149,15 @@
   - **Figma Support**: Mobile screenshot
 
 ### In Progress
+
 <!-- Tasks being actively worked on -->
 
 ### Review
+
 <!-- Tasks pending code review or testing -->
 
 ### Done
+
 <!-- Completed tasks -->
 
 ---
@@ -154,10 +165,12 @@
 ## 🔗 Dependencies
 
 ### Blocked By
+
 - [ ] Strapi Home Page with modalities_section component
 - [ ] Institution theming working
 
 ### Blocks
+
 - [ ] None (self-contained section)
 
 ---
@@ -188,11 +201,13 @@
 ## 📦 Strapi Integration
 
 ### API Endpoint
+
 ```
 GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[modalities_section][populate]=*
 ```
 
 ### Expected Response
+
 ```typescript
 {
   data: {
@@ -258,15 +273,18 @@ When this task is assigned, the following will be provided:
 ## 📝 Implementation Notes
 
 ### Performance
+
 - Server Component (no client JS needed)
 - Icons as inline SVG (no external requests)
 
 ### Accessibility
+
 - Section has aria-label
 - Cards keyboard accessible
 - Sufficient color contrast
 
 ### SEO
+
 - Semantic HTML
 - Descriptive link text
 - Section heading (h2)

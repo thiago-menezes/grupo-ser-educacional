@@ -25,6 +25,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 **Descrição**: Configurações e dados da instituição
 
 **Campos**:
+
 ```typescript
 {
   slug: string (unique, required)           // "uninassau", "ung"
@@ -71,6 +72,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 **Descrição**: Conteúdo da página inicial (uma por instituição)
 
 **Campos**:
+
 ```typescript
 {
   institution: relation<Institution> (required, unique)
@@ -122,6 +124,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 **Descrição**: Conteúdo adicional para cursos (complementa dados da API externa)
 
 **Campos**:
+
 ```typescript
 {
   // Identificação
@@ -159,11 +162,13 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 **Índices**:
+
 - `course_id` (unique)
 - `institution` + `is_featured`
 - `institution` + `is_popular`
 
 **API Endpoint**:
+
 - `/api/course-enrichments?filters[course_id][$eq]=123&populate=*`
 - `/api/course-enrichments?filters[institution][slug][$eq]=uninassau&filters[is_featured][$eq]=true`
 
@@ -174,6 +179,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 **Descrição**: Processos seletivos ativos
 
 **Campos**:
+
 ```typescript
 {
   // Identificação
@@ -207,6 +213,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 **Descrição**: Configuração global do formulário de leads
 
 **Campos**:
+
 ```typescript
 {
   // Campos Obrigatórios
@@ -237,17 +244,19 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ## 4. Components
 
 ### 4.1 Contact
+
 ```typescript
 {
-  phone: string
-  whatsapp: string
-  email: string
-  address: text
-  support_hours: string                     // "Seg-Sex: 8h às 18h"
+  phone: string;
+  whatsapp: string;
+  email: string;
+  address: text;
+  support_hours: string; // "Seg-Sex: 8h às 18h"
 }
 ```
 
 ### 4.2 Social Media
+
 ```typescript
 {
   platform: enum ["Instagram", "Facebook", "Twitter", "LinkedIn", "YouTube", "TikTok"]
@@ -257,6 +266,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.3 SEO
+
 ```typescript
 {
   meta_title: string (max: 60)
@@ -272,6 +282,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.4 Hero Section
+
 ```typescript
 {
   title: richtext (required)
@@ -284,6 +295,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.5 CTA Button
+
 ```typescript
 {
   label: string (required)
@@ -296,18 +308,20 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.6 Promotional Banner
+
 ```typescript
 {
-  title: string (required)
-  description: text
-  image: media (required)
-  link: string
-  cta_text: string
-  background_color: string
+  title: string(required);
+  description: text;
+  image: media(required);
+  link: string;
+  cta_text: string;
+  background_color: string;
 }
 ```
 
 ### 4.7 Modalities Section
+
 ```typescript
 {
   title: string                             // "Nossas modalidades de Graduação"
@@ -317,6 +331,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.8 Modality
+
 ```typescript
 {
   type: enum ["Presencial", "Semipresencial", "EAD"]
@@ -329,6 +344,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.9 Areas Section
+
 ```typescript
 {
   title: string                             // "Já sabe que área seguir então busque o curso ideal"
@@ -337,26 +353,29 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.10 Study Area
+
 ```typescript
 {
-  name: string (required)                   // "Engenharia & Tecnologia"
-  image: media (required)
-  icon: media
-  courses_count: number                     // Exibir "X cursos"
-  filter_tag: string                        // Tag usada no filtro de busca
+  name: string(required); // "Engenharia & Tecnologia"
+  image: media(required);
+  icon: media;
+  courses_count: number; // Exibir "X cursos"
+  filter_tag: string; // Tag usada no filtro de busca
 }
 ```
 
 ### 4.11 Career Decision Section
+
 ```typescript
 {
-  title: string                             // "Escolha o caminho que combina com você"
-  graduation: component<PathOption>
-  post_graduation: component<PathOption>
+  title: string; // "Escolha o caminho que combina com você"
+  graduation: component<PathOption>;
+  post_graduation: component<PathOption>;
 }
 ```
 
 ### 4.12 Path Option
+
 ```typescript
 {
   title: string
@@ -369,6 +388,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.13 Entry Methods Section
+
 ```typescript
 {
   title: string                             // "Conheça nossas formas de ingresso"
@@ -378,6 +398,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.14 Entry Method
+
 ```typescript
 {
   type: enum ["Vestibular", "ENEM", "Transferência", "Outro diploma"]
@@ -390,6 +411,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.15 Infrastructure Section
+
 ```typescript
 {
   title: string                             // "Conheça nossa infraestrutura"
@@ -401,6 +423,7 @@ Este documento define a estrutura de dados no Strapi para o sistema multi-instit
 ```
 
 ### 4.16 Form Question
+
 ```typescript
 {
   field_name: string (required)             // "has_enem"
@@ -448,6 +471,7 @@ Course Enrichment (N) ───> (N) Course Enrichment (related_courses)
 Para evitar over-fetching, definir níveis de populate:
 
 **Nível 1 - Homepage**:
+
 ```
 ?populate[hero][populate]=*
 &populate[promotional_banners][populate]=*
@@ -461,6 +485,7 @@ Para evitar over-fetching, definir níveis de populate:
 ```
 
 **Nível 2 - Course Enrichment**:
+
 ```
 ?populate[hero_image]=*
 &populate[gallery]=*
@@ -469,6 +494,7 @@ Para evitar over-fetching, definir níveis de populate:
 ```
 
 **Nível 3 - Institution**:
+
 ```
 ?populate[logo]=*
 &populate[logo_footer]=*
@@ -491,9 +517,9 @@ Usar React Query com `staleTime` e `cacheTime` configurados:
 const { data } = useQuery({
   queryKey: ['home', institutionSlug],
   queryFn: () => fetchHomePage(institutionSlug),
-  staleTime: 5 * 60 * 1000,  // 5 minutos
+  staleTime: 5 * 60 * 1000, // 5 minutos
   cacheTime: 10 * 60 * 1000, // 10 minutos
-})
+});
 ```
 
 ---
@@ -544,6 +570,7 @@ Adicionar em cada collection type:
 Exemplos de validações no Strapi:
 
 **beforeCreate/beforeUpdate - Course Enrichment**:
+
 ```javascript
 // Validar que course_id existe na API externa
 async beforeCreate(event) {
@@ -556,6 +583,7 @@ async beforeCreate(event) {
 ```
 
 **beforeCreate - Home Page**:
+
 ```javascript
 // Garantir apenas uma homepage por instituição
 async beforeCreate(event) {
@@ -611,7 +639,7 @@ const institutions = require('./seeds/institutions.json');
 async function seed() {
   for (const inst of institutions) {
     await strapi.db.query('api::institution.institution').create({
-      data: inst
+      data: inst,
     });
   }
 }
@@ -626,11 +654,13 @@ seed();
 ### 11.1 GET Home Page
 
 **Request**:
+
 ```
 GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate=deep
 ```
 
 **Response**:
+
 ```json
 {
   "data": {
@@ -682,12 +712,14 @@ GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate=deep
 ## 12. Checklist de Implementação
 
 ### Setup Inicial
+
 - [ ] Criar projeto Strapi
 - [ ] Configurar banco de dados (PostgreSQL recomendado)
 - [ ] Instalar plugins necessários (Upload, SEO, etc.)
 - [ ] Configurar CORS para frontend
 
 ### Collection Types
+
 - [ ] Criar Institution (Single Type)
 - [ ] Criar Home Page
 - [ ] Criar Course Enrichment
@@ -695,22 +727,26 @@ GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate=deep
 - [ ] Criar Lead Form Configuration
 
 ### Components
+
 - [ ] Criar todos os components listados na seção 4
 - [ ] Validar campos e tipos
 - [ ] Configurar media library
 
 ### Permissões
+
 - [ ] Configurar roles e permissões
 - [ ] Implementar multi-tenancy plugin
 - [ ] Testar acesso por instituição
 
 ### Testes
+
 - [ ] Popular dados de teste
 - [ ] Testar populate queries
 - [ ] Validar performance
 - [ ] Testar workflow de publicação
 
 ### Deploy
+
 - [ ] Configurar variáveis de ambiente
 - [ ] Deploy em staging
 - [ ] Treinar time de conteúdo
