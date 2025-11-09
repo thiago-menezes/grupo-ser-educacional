@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import { Button } from 'reshaped';
+import { Button, DropdownMenu } from 'reshaped';
 import { Icon } from '@/components/icon';
 import styles from './styles.module.scss';
 
@@ -21,6 +21,14 @@ export const Header = () => {
         <div className={styles.container}>
           <div className={styles.topBarContent}>
             <nav className={styles.utilityNav}>
+              <Button
+                icon={<Icon name="brand-whatsapp" size={16} />}
+                href="#whatsapp"
+                variant="ghost"
+                className={styles.utilityLink}
+              >
+                Whatsapp
+              </Button>
               <Link href="#whatsapp" className={styles.utilityLink}>
                 <Icon name="brand-whatsapp" size={16} />
                 Whatsapp
@@ -58,40 +66,89 @@ export const Header = () => {
 
             <div className={styles.rightContainer}>
               <nav className={styles.desktopNav} aria-label="Main navigation">
-                <Link
-                  href={`/${institution}/graduacao`}
-                  className={styles.navLink}
-                >
-                  Graduação
+                <Link href={`/`}>
+                  <Button size="large" variant="ghost">
+                    Graduação
+                  </Button>
                 </Link>
 
-                <Link
-                  href={`/${institution}/pos-graduacao`}
-                  className={styles.navLink}
-                >
-                  Pós-Graduação
+                <Link href={`/${institution}/pos-graduacao`}>
+                  <Button size="large" variant="ghost">
+                    Pós-Graduação
+                  </Button>
                 </Link>
-                <button className={styles.navDropdown} aria-haspopup="true">
-                  Nossos cursos
-                  <Icon name="chevron-down" size={16} />
-                </button>
-                <button className={styles.navDropdown} aria-haspopup="true">
-                  A {institutionName}
-                  <Icon name="chevron-down" size={16} />
-                </button>
-                <button className={styles.navDropdown} aria-haspopup="true">
-                  Formas de ingresso
-                  <Icon name="chevron-down" size={16} />
-                </button>
+
+                <DropdownMenu>
+                  <DropdownMenu.Trigger>
+                    {(attributes) => (
+                      <Button
+                        size="large"
+                        variant="ghost"
+                        attributes={attributes}
+                        aria-haspopup="true"
+                        endIcon={<Icon name="chevron-down" />}
+                      >
+                        Nossos cursos
+                      </Button>
+                    )}
+                  </DropdownMenu.Trigger>
+
+                  <DropdownMenu.Content>
+                    <DropdownMenu.Item>Mais acessados</DropdownMenu.Item>
+                    <DropdownMenu.Item>Vestibular 2025</DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu>
+
+                <DropdownMenu>
+                  <DropdownMenu.Trigger>
+                    {(attributes) => (
+                      <Button
+                        size="large"
+                        variant="ghost"
+                        attributes={attributes}
+                        aria-haspopup="true"
+                        endIcon={<Icon name="chevron-down" />}
+                      >
+                        A {institutionName}
+                      </Button>
+                    )}
+                  </DropdownMenu.Trigger>
+
+                  <DropdownMenu.Content>
+                    <DropdownMenu.Item>Endereço</DropdownMenu.Item>
+                    <DropdownMenu.Item>Contato</DropdownMenu.Item>
+                    <DropdownMenu.Item>Sobre nós</DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu>
+
+                <DropdownMenu>
+                  <DropdownMenu.Trigger>
+                    {(attributes) => (
+                      <Button
+                        size="large"
+                        variant="ghost"
+                        attributes={attributes}
+                        aria-haspopup="true"
+                        endIcon={<Icon name="chevron-down" />}
+                      >
+                        Formas de ingresso
+                      </Button>
+                    )}
+                  </DropdownMenu.Trigger>
+
+                  <DropdownMenu.Content>
+                    <DropdownMenu.Item>FIES</DropdownMenu.Item>
+                    <DropdownMenu.Item>Prouni</DropdownMenu.Item>
+                    <DropdownMenu.Item>Vestibular</DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu>
               </nav>
 
-              <Button
-                href={`/${institution}/inscreva-se`}
-                size="large"
-                color="primary"
-              >
-                Inscreva-se
-              </Button>
+              <Link href={`/${institution}/inscreva-se`}>
+                <Button size="large" color="primary">
+                  Inscreva-se
+                </Button>
+              </Link>
 
               <button
                 className={styles.mobileMenuButton}
@@ -116,24 +173,28 @@ export const Header = () => {
               >
                 Graduação
               </Link>
+
               <Link
                 href={`/${institution}/pos-graduacao`}
                 className={styles.mobileNavLink}
               >
                 Pós-Graduação
               </Link>
+
               <Link
                 href={`/${institution}/cursos`}
                 className={styles.mobileNavLink}
               >
                 Nossos cursos
               </Link>
+
               <Link
                 href={`/${institution}/sobre`}
                 className={styles.mobileNavLink}
               >
                 A {institutionName}
               </Link>
+
               <Link
                 href={`/${institution}/ingresso`}
                 className={styles.mobileNavLink}

@@ -4,7 +4,7 @@ export type IconProps = {
   name: IconNames;
   className?: string;
   filled?: boolean;
-  size?: number | string;
+  size?: number;
   style?: React.CSSProperties;
 };
 

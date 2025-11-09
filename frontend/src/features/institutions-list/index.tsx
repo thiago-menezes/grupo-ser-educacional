@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Text } from 'reshaped';
-import { INSTITUTIONS } from './const';
+import { INSTITUTIONS } from './constants';
 import { InstitutionCard } from './institution-card';
 import styles from './styles.module.scss';
 
@@ -13,7 +13,7 @@ export const InstitutionsList = () => {
             <Image
               src="/logos/grupo-ser.png"
               alt="Ser Educacional"
-              width={180}
+              width={205}
               height={88}
               priority
             />

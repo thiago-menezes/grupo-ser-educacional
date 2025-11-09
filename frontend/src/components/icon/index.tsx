@@ -4,7 +4,7 @@ export const Icon = ({
   name,
   className = '',
   filled = false,
-  size = 24,
+  size,
   style,
 }: IconProps) => {
   const baseClass = filled ? `ti ti-${name}-filled` : `ti ti-${name}`;
@@ -14,7 +14,7 @@ export const Icon = ({
       className={`${baseClass} ${className}`}
       style={
         {
-          fontSize: typeof size === 'number' ? `${size}px` : size,
+          fontSize: typeof size === 'number' ? size : '',
           ...style,
         } as React.CSSProperties
       }
