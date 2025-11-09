@@ -4,11 +4,14 @@ import localFont from 'next/font/local';
 import Providers from './providers';
 import './icon/tabler-300.css';
 import '@/styles/global.scss';
-import '@/themes/tokens.scss';
-import '@/themes/unama.scss';
-import '@/themes/ung.scss';
-import '@/themes/uninassau.scss';
-import '@/themes/uninorte.scss';
+import '@/styles/themes/grupo-ser.scss';
+import '@/styles/tokens.scss';
+import '@/styles/themes/unama.scss';
+import '@/styles/themes/ung.scss';
+import '@/styles/themes/uninassau.scss';
+import '@/styles/themes/uninorte.scss';
+import '@/styles/themes/uni7.scss';
+import '@/styles/themes/unifael.scss';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -37,7 +40,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className={tablerIcons.variable}>
-      <link rel="icon" href="/favicon/grupo-ser.ico" />
+      <link rel="icon" href="/favicons/grupo-ser.ico" />
 
       <body className={inter.className}>
         <Providers>{children}</Providers>

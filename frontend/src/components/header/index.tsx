@@ -46,7 +46,7 @@ export const Header = () => {
           <div className={styles.mainNavContent}>
             <Link href={`/${institution}`} className={styles.logo}>
               <Image
-                src={`/logos/${institution}.svg`}
+                src={`/logos/${institution}.png`}
                 alt={`Logo ${institutionName}`}
                 className={styles.logoImage}
                 width={200}

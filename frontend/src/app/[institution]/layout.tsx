@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { isValidInstitution } from '@/config/institutions';
+import { isValidInstitution } from '@/utils/verify-institution';
 
 type InstitutionLayoutProps = {
   children: React.ReactNode;
@@ -12,13 +12,15 @@ export default async function InstitutionLayout({
 }: InstitutionLayoutProps) {
   const { institution } = await params;
 
+  if (!institution) return null;
+
   if (!isValidInstitution(institution)) {
     return notFound();
   }
 
   return (
     <>
-      <link rel="icon" href={`/favicon/${institution}.ico`} sizes="any" />
+      <link rel="icon" href={`/favicons/${institution}.ico`} sizes="any" />
       {children}
     </>
   );

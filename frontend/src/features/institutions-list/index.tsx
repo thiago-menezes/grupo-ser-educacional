@@ -11,7 +11,7 @@ export const InstitutionsList = () => {
         <header className={styles.hero}>
           <div className={styles.heroLogo}>
             <Image
-              src="/logos/grupo-ser.svg"
+              src="/logos/grupo-ser.png"
               alt="Ser Educacional"
               width={180}
               height={88}
