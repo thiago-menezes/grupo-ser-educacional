@@ -5,13 +5,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
-import { Button, DropdownMenu } from 'reshaped';
+import { Button, DropdownMenu, useTheme } from 'reshaped';
 import { Icon } from '@/components/icon';
 import styles from './styles.module.scss';
 
 export const Header = () => {
   const { institution } = useParams<{ institution: string }>();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { invertColorMode, colorMode } = useTheme();
 
   const institutionName = institution.toUpperCase();
 
@@ -21,22 +22,24 @@ export const Header = () => {
         <div className={styles.container}>
           <div className={styles.topBarContent}>
             <nav className={styles.utilityNav}>
-              <Button
-                icon={<Icon name="brand-whatsapp" size={16} />}
-                href="#whatsapp"
-                variant="ghost"
+              <Link
+                href=""
+                onClick={invertColorMode}
                 className={styles.utilityLink}
               >
-                Whatsapp
-              </Button>
+                <Icon name={colorMode === 'dark' ? 'sun' : 'moon'} size={16} />
+              </Link>
+
               <Link href="#whatsapp" className={styles.utilityLink}>
                 <Icon name="brand-whatsapp" size={16} />
                 Whatsapp
               </Link>
+
               <Link href="#portal" className={styles.utilityLink}>
                 <Icon name="user" size={16} />
                 Sou aluno
               </Link>
+
               <Link
                 href="#track"
                 className={clsx(styles.utilityLink, styles.trackEnrollment)}

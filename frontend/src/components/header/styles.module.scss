@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: var(--rs-color-white);
+  background: var(--rs-color-background-page);
   box-shadow: 0 1px 4px
     rgba(from var(--rs-color-on-background-neutral) r g b / 0.08);
 }
@@ -15,7 +15,7 @@
 
 /* Top Utility Bar */
 .topBar {
-  background: var(--rs-color-white);
+  background: var(--rs-color-background-page);
   border-bottom: 1px solid
     rgba(from var(--rs-color-background-neutral) r g b / 0.6);
 }
@@ -54,7 +54,7 @@
 
 /* Main Navigation */
 .mainNav {
-  background: var(--rs-color-white);
+  background: var(--rs-color-background-page);
 }
 
 .rightContainer {
@@ -161,8 +161,8 @@
 
 /* Mobile Navigation */
 .mobileNav {
-  background: var(--rs-color-white);
-  border-top: var(--rs-unit-x1) solid rgba(0, 0, 0, 0.08);
+  background: var(--rs-color-background-page);
+  border-top: 1px solid rgb(from var(--rs-color-background-neutral) r g b / 0.6);
   animation: slideDown 0.3s ease;
 }
 
