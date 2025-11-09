@@ -20,7 +20,7 @@ export const InstitutionsList = () => {
           </div>
 
           <div className={styles.heroCopy}>
-            <Text as="h1" variant="title-5" color="primary">
+            <Text as="h1" variant="title-5" color="neutral">
               Conheça Nossas Instituições de Ensino
             </Text>
             <Text as="p" variant="body-1" color="neutral-faded">

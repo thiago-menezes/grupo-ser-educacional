@@ -1,3 +1,12 @@
+@import './tokens';
+@import './themes/uninassau';
+@import './themes/uni7';
+@import './themes/unifael';
+@import './themes/uninorte';
+@import './themes/unama';
+@import './themes/ung';
+@import './themes/grupo-ser';
+
 body {
   background-color: rgb(
     from var(--rs-color-background-primary-faded) r g b / 0.3

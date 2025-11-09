@@ -4,14 +4,6 @@ import localFont from 'next/font/local';
 import Providers from './providers';
 import './icon/tabler-300.css';
 import '@/styles/global.scss';
-import '@/styles/themes/grupo-ser.scss';
-import '@/styles/tokens.scss';
-import '@/styles/themes/unama.scss';
-import '@/styles/themes/ung.scss';
-import '@/styles/themes/uninassau.scss';
-import '@/styles/themes/uninorte.scss';
-import '@/styles/themes/uni7.scss';
-import '@/styles/themes/unifael.scss';
 
 const inter = Inter({
   subsets: ['latin'],

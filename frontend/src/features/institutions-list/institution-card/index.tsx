@@ -12,7 +12,7 @@ export const InstitutionCard = ({
   return (
     <article className={styles.card}>
       <header className={styles.cardHeader}>
-        <Text as="h3" variant="featured-2" weight="bold" color="primary">
+        <Text as="h3" variant="featured-2" weight="bold" color="neutral">
           {name}
         </Text>
         <Text as="p" variant="body-2" color="neutral-faded">
