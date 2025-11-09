@@ -1,0 +1,28 @@
+[data-rs-theme*=' uninorte '],
+[data-rs-theme='uninorte'] {
+  --rs-color-brand: #bc4c1c;
+  --rs-color-on-background-primary: oklch(1 0 0);
+  --rs-color-on-brand: oklch(1 0 0);
+}
+
+[data-rs-theme*=' uninorte '][data-rs-color-mode='light'],
+[data-rs-theme='uninorte'][data-rs-color-mode='light'] {
+  --rs-color-background-primary: #bc4c1c;
+  --rs-color-background-primary-faded: #f5e4dd;
+  --rs-color-border-primary: #8d3915;
+  --rs-color-border-primary-faded: #ebc9bb;
+  --rs-color-foreground-primary: #cd7955;
+  --rs-color-rgb-background-primary: 188, 76, 28;
+  --rs-color-rgb-background-primary-faded: 245, 228, 221;
+}
+
+[data-rs-theme*=' uninorte '][data-rs-color-mode='dark'],
+[data-rs-theme='uninorte'][data-rs-color-mode='dark'] {
+  --rs-color-background-primary: #a94419;
+  --rs-color-background-primary-faded: #260f06;
+  --rs-color-border-primary: #d79477;
+  --rs-color-border-primary-faded: #4b1e0b;
+  --rs-color-foreground-primary: #dea68e;
+  --rs-color-rgb-background-primary: 169, 68, 25;
+  --rs-color-rgb-background-primary-faded: 38, 15, 6;
+}

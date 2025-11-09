@@ -4,9 +4,9 @@ export default function NotFoundPage() {
   return (
     <main>
       <div>
-        <h1>Page not found</h1>
-        <p>The page you’re looking for doesn’t exist.</p>
-        <Link href="/">Go back home</Link>
+        <h1>Página não encontrada</h1>
+        <p>A página que você está procurando não existe.</p>
+        <Link href="/">Voltar para a página inicial</Link>
       </div>
     </main>
   );

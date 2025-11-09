@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import { isValidInstitution } from '@/config/institutions';
-import { generateThemeInjectionScript } from '@/libs/themes/script-generator';
 
 type InstitutionLayoutProps = {
   children: React.ReactNode;
@@ -13,28 +12,12 @@ export default async function InstitutionLayout({
 }: InstitutionLayoutProps) {
   const { institution } = await params;
 
-  // Validate institution slug - return 404 if invalid
   if (!isValidInstitution(institution)) {
     return notFound();
   }
 
-  // Generate theme injection script with institution slug
-  // This prevents FOUC by injecting CSS before first paint
-  const themeScript = generateThemeInjectionScript(institution);
-
   return (
     <>
-      {/*
-        CRITICAL: Blocking script that injects institution theme CSS.
-        - Runs synchronously before React hydration
-        - Prevents FOUC (Flash of Unstyled Content)
-        - Do NOT add async or defer attributes
-        - Small performance cost (~1-5ms) vs visual flash (~50-200ms)
-      */}
-      <script
-        id="institution-theme-injection"
-        dangerouslySetInnerHTML={{ __html: themeScript }}
-      />
       <link rel="icon" href={`/favicon/${institution}.ico`} sizes="any" />
       {children}
     </>

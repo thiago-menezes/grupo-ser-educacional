@@ -1,8 +1,7 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { Text } from 'reshaped';
-import { Icon } from '@/components/icon';
 import { INSTITUTIONS } from './const';
+import { InstitutionCard } from './institution-card';
 import styles from './styles.module.scss';
 
 export const InstitutionsList = () => {
@@ -32,26 +31,7 @@ export const InstitutionsList = () => {
 
         <div className={styles.grid}>
           {INSTITUTIONS.map((institution) => (
-            <article key={institution.name} className={styles.card}>
-              <header className={styles.cardHeader}>
-                <Text
-                  as="h3"
-                  variant="featured-2"
-                  weight="bold"
-                  color="primary"
-                >
-                  {institution.name}
-                </Text>
-                <Text as="p" variant="body-2" color="neutral-faded">
-                  {institution.description}
-                </Text>
-              </header>
-
-              <Link href={`/${institution.slug}`} className={styles.cardCta}>
-                Inscreva-se
-                <Icon name="arrow-right" size={18} />
-              </Link>
-            </article>
+            <InstitutionCard key={institution.slug} {...institution} />
           ))}
         </div>
       </div>

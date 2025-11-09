@@ -1,0 +1,28 @@
+[data-rs-theme*=' grupo-ser '],
+[data-rs-theme='grupo-ser'] {
+  --rs-color-brand: #828fc4;
+  --rs-color-on-background-primary: oklch(1 0 0);
+  --rs-color-on-brand: oklch(1 0 0);
+}
+
+[data-rs-theme*=' grupo-ser '][data-rs-color-mode='light'],
+[data-rs-theme='grupo-ser'][data-rs-color-mode='light'] {
+  --rs-color-background-primary: #828fc4;
+  --rs-color-background-primary-faded: #eceef6;
+  --rs-color-border-primary: #626b93;
+  --rs-color-border-primary-faded: #dadded;
+  --rs-color-foreground-primary: #a1abd3;
+  --rs-color-rgb-background-primary: 130, 143, 196;
+  --rs-color-rgb-background-primary-faded: 236, 238, 246;
+}
+
+[data-rs-theme*=' grupo-ser '][data-rs-color-mode='dark'],
+[data-rs-theme='grupo-ser'][data-rs-color-mode='dark'] {
+  --rs-color-background-primary: #7581b0;
+  --rs-color-background-primary-faded: #1a1d27;
+  --rs-color-border-primary: #b4bcdc;
+  --rs-color-border-primary-faded: #34394e;
+  --rs-color-foreground-primary: #c0c7e2;
+  --rs-color-rgb-background-primary: 117, 129, 176;
+  --rs-color-rgb-background-primary-faded: 26, 29, 39;
+}
