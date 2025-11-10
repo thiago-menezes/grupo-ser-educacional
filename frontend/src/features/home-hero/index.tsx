@@ -37,6 +37,7 @@ function HomeHeroContent({ institutionSlug }: HomeHeroProps) {
           <div className={styles.heroCard}>
             <HeroBanner
               imageUrl={content.backgroundImage?.url || '/placeholder-hero.jpg'}
+              imageUrlMobile={content.backgroundImageMobile?.url}
               imageAlt={content.backgroundImage?.alternativeText}
             />
 
