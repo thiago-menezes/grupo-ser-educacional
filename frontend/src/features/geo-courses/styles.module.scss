@@ -52,7 +52,7 @@
 .coursesScroll {
   display: flex;
   gap: var(--rs-unit-x4);
-  padding: 0 var(--rs-unit-x6);
+  padding: var(--rs-unit-x1) var(--rs-unit-x6);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
