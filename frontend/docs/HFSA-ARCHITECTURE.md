@@ -19,8 +19,7 @@ src/
 │   └── button/
 │       ├── index.tsx
 │       ├── styles.module.scss
-│       ├── types.ts
-│       └── README.md (optional usage notes)
+│       └── types.ts
 ├── features/                    # Vertical slices with full ownership
 │   └── enrollment-form/
 │       ├── index.tsx            # Feature entry component
@@ -29,13 +28,12 @@ src/
 │       ├── constants.ts         # Static maps, copy decks
 │       ├── styles.module.scss   # Feature-scoped styles
 │       ├── types.ts             # UI/domain types (local)
-│       ├── api/
-│       │   ├── query.ts         # Data fetchers wrapped in query keys
-│       │   ├── mutation.ts      # Write operations
-│       │   └── types.ts         # API contracts (DTOs)
-│       ├── __tests__/
-│       │   └── enrollment.integration.spec.tsx
-│       └── README.md
+│       ├── test.spec.ts         # UI/domain types (local)
+│       └── api/
+│           ├── query.ts         # Data fetchers wrapped in query keys
+│           ├── mutation.ts      # Write operations
+│           └── types.ts         # API contracts (DTOs)
+│
 ├── libs/                        # Cross-feature tooling (API client, auth, testing)
 ├── config/                      # Global configuration (tokens, env parsing)
 └── types/                       # Project-wide ambient type declarations
