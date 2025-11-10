@@ -86,10 +86,11 @@
   width: var(--rs-unit-x2);
   height: var(--rs-unit-x2);
   border-radius: 8px;
-  background: var(--rs-color-text-color-primary);
+  background: var(--rs-color-text-primary);
   cursor: pointer;
   transition: background var(--rs-duration-medium) var(--rs-easing-standard);
   opacity: 0.4;
+  border: 0;
 
   &.active {
     width: var(--rs-unit-x6);

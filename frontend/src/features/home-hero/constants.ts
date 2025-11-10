@@ -4,7 +4,7 @@ export const HOME_HERO_QUERY_KEY = ['home-hero'] as const;
 
 export const DEFAULT_HERO_CONTENT: HeroContent = {
   backgroundImage: {
-    url: 'https://placehold.co/1400x600.png',
+    url: 'https://placehold.co/1232x520.png',
     alternativeText: 'Hero banner background',
   },
   backgroundImageMobile: {

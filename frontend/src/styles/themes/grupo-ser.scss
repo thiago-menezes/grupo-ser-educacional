@@ -14,6 +14,7 @@
   --rs-color-foreground-primary: #a1abd3;
   --rs-color-rgb-background-primary: 130, 143, 196;
   --rs-color-rgb-background-primary-faded: 236, 238, 246;
+  --rs-color-text-primary: #828fc4;
 }
 
 [data-rs-theme*=' grupo-ser '][data-rs-color-mode='dark'],
@@ -25,4 +26,5 @@
   --rs-color-foreground-primary: #c0c7e2;
   --rs-color-rgb-background-primary: 117, 129, 176;
   --rs-color-rgb-background-primary-faded: 26, 29, 39;
+  --rs-color-text-primary: #c0c7e2;
 }

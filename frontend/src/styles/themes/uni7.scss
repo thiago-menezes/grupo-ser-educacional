@@ -14,6 +14,7 @@
   --rs-color-foreground-primary: #40aa80;
   --rs-color-rgb-background-primary: 0, 142, 86;
   --rs-color-rgb-background-primary-faded: 217, 238, 230;
+  --rs-color-text-primary: #008e56;
 }
 
 [data-rs-theme*=' uni7 '][data-rs-color-mode='dark'],
@@ -25,4 +26,5 @@
   --rs-color-foreground-primary: #80c6aa;
   --rs-color-rgb-background-primary: 0, 128, 77;
   --rs-color-rgb-background-primary-faded: 0, 28, 17;
+  --rs-color-text-primary: #80c6aa;
 }

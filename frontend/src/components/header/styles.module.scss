@@ -134,6 +134,15 @@
   flex-direction: column;
   gap: var(--rs-unit-x1);
   padding: var(--rs-unit-x4) 0;
+  position: absolute;
+  top: 72px;
+  background-color: var(--rs-color-background-page);
+  z-index: 9999;
+  width: 100%;
+  left: 0;
+  padding: 16px;
+  border-top: 1px solid
+    rgba(from var(--rs-color-background-neutral) r g b / 0.6);
 }
 
 .mobileNavLink {

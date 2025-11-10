@@ -14,6 +14,7 @@
   --rs-color-foreground-primary: #6481a4;
   --rs-color-rgb-background-primary: 49, 87, 134;
   --rs-color-rgb-background-primary-faded: 224, 230, 237;
+  --rs-color-text-primary: #315786;
 }
 
 [data-rs-theme*=' ung '][data-rs-color-mode='dark'],
@@ -25,4 +26,5 @@
   --rs-color-foreground-primary: #98abc2;
   --rs-color-rgb-background-primary: 44, 78, 121;
   --rs-color-rgb-background-primary-faded: 10, 17, 27;
+  --rs-color-text-primary: #98abc2;
 }
