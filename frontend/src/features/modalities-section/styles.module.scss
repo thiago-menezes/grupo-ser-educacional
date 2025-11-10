@@ -74,30 +74,6 @@ $breakpoint-desktop: 1024px;
   color: var(--rs-color-foreground-neutral-faded);
 }
 
-.cta {
-  margin-top: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--rs-unit-x2);
-  color: var(
-    --rs-color-text-primary,
-    var(--rs-color-background-primary, #052b82)
-  );
-  font-weight: var(--rs-font-weight-semibold);
-  text-decoration: none;
-  width: fit-content;
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-
-  &:hover,
-  &:focus-visible {
-    text-decoration: underline;
-    outline: none;
-  }
-}
-
 .ctaIcon {
   color: inherit;
 }

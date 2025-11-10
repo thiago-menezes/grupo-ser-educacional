@@ -1,7 +1,8 @@
 import { Header } from '@/components/header';
 import { GeoCoursesSection } from '@/features/geo-courses';
 import { HomeHero } from '@/features/home-hero';
-import { ModalitiesSection } from '@/features/home-hero/modalities-section';
+import { ModalitiesSection } from '@/features/modalities-section';
+import { PromotionalBanners } from '@/features/promotional-banners';
 
 const HomePage = () => {
   return (
@@ -9,6 +10,7 @@ const HomePage = () => {
       <Header />
       <HomeHero />
       <GeoCoursesSection />
+      <PromotionalBanners />
       <ModalitiesSection />
     </main>
   );
