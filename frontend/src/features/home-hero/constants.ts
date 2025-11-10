@@ -7,6 +7,8 @@ export const DEFAULT_HERO_CONTENT: HeroContent = {
     url: 'https://placehold.co/1232x520.png',
     alternativeText: 'Hero banner background',
   },
+  showCarouselControls: true,
+  showQuickSearch: true,
 };
 
 export const CAROUSEL_CONFIG = {

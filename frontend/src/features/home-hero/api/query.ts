@@ -31,6 +31,10 @@ async function fetchHeroContent(institutionSlug: string): Promise<HeroContent> {
           data.data.attributes.hero.attributes.backgroundImage.data.attributes
             .alternativeText,
       },
+      showCarouselControls:
+        data.data.attributes.hero.attributes.showCarouselControls ?? true,
+      showQuickSearch:
+        data.data.attributes.hero.attributes.showQuickSearch ?? true,
     };
   } catch {
     return DEFAULT_HERO_CONTENT;

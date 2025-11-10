@@ -5,4 +5,6 @@ export type HeroBannerImage = {
 
 export type HeroContent = {
   backgroundImage?: HeroBannerImage;
+  showCarouselControls?: boolean;
+  showQuickSearch?: boolean;
 };

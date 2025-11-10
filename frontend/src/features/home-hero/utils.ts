@@ -2,6 +2,7 @@ export function buildSearchParams(data: {
   city?: string;
   course?: string;
   modalities?: string[];
+  courseLevel?: string;
 }): URLSearchParams {
   const params = new URLSearchParams();
 
@@ -11,6 +12,10 @@ export function buildSearchParams(data: {
 
   if (data.course?.trim()) {
     params.append('course', data.course.trim());
+  }
+
+  if (data.courseLevel) {
+    params.append('courseLevel', data.courseLevel);
   }
 
   if (data.modalities?.length) {

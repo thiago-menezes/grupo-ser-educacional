@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { Button } from 'reshaped';
+import { Icon } from '@/components/icon';
 import styles from './styles.module.scss';
 import type { CarouselControlsProps } from './types';
 
@@ -32,27 +34,15 @@ export function CarouselControls({
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <button
+      <Button
         className={styles.arrowButton}
         onClick={() => {
           onPrevious();
           onToggleAutoAdvance?.(false);
         }}
-        aria-label="Previous slide"
-        title="Previous slide (or press ← arrow)"
-        type="button"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-      </button>
+        aria-label="Previous slide (or press ← arrow)"
+        icon={<Icon name="chevron-left" />}
+      />
 
       <div className={styles.indicators}>
         {Array.from({ length: totalSlides }).map((_, index) => (
@@ -70,27 +60,15 @@ export function CarouselControls({
         ))}
       </div>
 
-      <button
+      <Button
         className={styles.arrowButton}
         onClick={() => {
           onNext();
           onToggleAutoAdvance?.(false);
         }}
-        aria-label="Next slide"
-        title="Next slide (or press → arrow)"
-        type="button"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-        >
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
-      </button>
+        aria-label="Next slide (or press → arrow)"
+        icon={<Icon name="chevron-right" />}
+      />
     </div>
   );
 }

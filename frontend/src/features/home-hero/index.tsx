@@ -40,18 +40,22 @@ function HomeHeroContent({ institutionSlug }: HomeHeroProps) {
               imageAlt={content.backgroundImage?.alternativeText}
             />
 
-            <CarouselControls
-              currentSlide={currentSlide}
-              totalSlides={1}
-              onPrevious={previousSlide}
-              onNext={nextSlide}
-              onToggleAutoAdvance={setIsAutoAdvancing}
-            />
+            {content.showCarouselControls && (
+              <CarouselControls
+                currentSlide={currentSlide}
+                totalSlides={1}
+                onPrevious={previousSlide}
+                onNext={nextSlide}
+                onToggleAutoAdvance={setIsAutoAdvancing}
+              />
+            )}
           </div>
 
-          <div className={styles.searchFormContainer}>
-            <QuickSearchForm institutionSlug={institutionSlug} />
-          </div>
+          {content.showQuickSearch && (
+            <div className={styles.searchFormContainer}>
+              <QuickSearchForm institutionSlug={institutionSlug} />
+            </div>
+          )}
         </div>
       </div>
     </div>
