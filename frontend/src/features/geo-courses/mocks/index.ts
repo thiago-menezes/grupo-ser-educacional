@@ -1,0 +1,141 @@
+import type { CourseDTO } from '../api/types';
+import { transformCourseDTO } from '../course-card/types';
+import type { GeoCoursesData } from '../types';
+
+// Mock DTOs (como viriam da API)
+const MOCK_COURSES_DTO: CourseDTO[] = [
+  {
+    id: '1',
+    name: 'Engenharia civil',
+    category: 'Engenharia & Tecnologia',
+    degree: 'Bacharelado',
+    duration: '5 anos (10 semestres)',
+    modalities: ['presencial'],
+    price: 95010, // R$ 950,10
+    campus: {
+      name: 'Unidade Aquarius',
+      city: 'São José dos Campos',
+      state: 'SP',
+      coordinates: {
+        latitude: -23.1813,
+        longitude: -45.8877,
+      },
+    },
+    slug: 'engenharia-civil',
+  },
+  {
+    id: '2',
+    name: 'Sociologia',
+    category: 'Ciências Humanas',
+    degree: 'Licenciatura',
+    duration: '4 anos (8 semestres)',
+    modalities: ['ead'],
+    price: 32090, // R$ 320,90
+    campus: {
+      name: 'Polo Centro',
+      city: 'São José dos Campos',
+      state: 'SP',
+      coordinates: {
+        latitude: -23.1815,
+        longitude: -45.8888,
+      },
+    },
+    slug: 'sociologia',
+  },
+  {
+    id: '3',
+    name: 'Enfermagem',
+    category: 'Ciências da Saúde',
+    degree: 'Bacharelado',
+    duration: '5 anos (10 semestres)',
+    modalities: ['presencial', 'semipresencial'],
+    price: 120040, // R$ 1.200,40
+    campus: {
+      name: 'Unidade Aquarius',
+      city: 'São José dos Campos',
+      state: 'SP',
+      coordinates: {
+        latitude: -23.1813,
+        longitude: -45.8877,
+      },
+    },
+    slug: 'enfermagem',
+  },
+  {
+    id: '4',
+    name: 'Análise e desenvolvimento de sistemas',
+    category: 'Engenharia & Tecnologia',
+    degree: 'Bacharelado',
+    duration: '5 anos (10 semestres)',
+    modalities: ['ead'],
+    price: 45090, // R$ 450,90
+    campus: {
+      name: 'Polo Centro',
+      city: 'São José dos Campos',
+      state: 'SP',
+      coordinates: {
+        latitude: -23.1815,
+        longitude: -45.8888,
+      },
+    },
+    slug: 'analise-desenvolvimento-sistemas',
+  },
+  {
+    id: '5',
+    name: 'Administração',
+    category: 'Gestão & Negócios',
+    degree: 'Bacharelado',
+    duration: '4 anos (8 semestres)',
+    modalities: ['presencial', 'semipresencial', 'ead'],
+    price: 55090, // R$ 550,90
+    campus: {
+      name: 'Unidade Aquarius',
+      city: 'São José dos Campos',
+      state: 'SP',
+      coordinates: {
+        latitude: -23.1813,
+        longitude: -45.8877,
+      },
+    },
+    slug: 'administracao',
+  },
+  {
+    id: '6',
+    name: 'Psicologia',
+    category: 'Ciências Humanas',
+    degree: 'Bacharelado',
+    duration: '5 anos (10 semestres)',
+    modalities: ['presencial'],
+    price: 78090, // R$ 780,90
+    campus: {
+      name: 'Polo Centro',
+      city: 'São José dos Campos',
+      state: 'SP',
+      coordinates: {
+        latitude: -23.1815,
+        longitude: -45.8888,
+      },
+    },
+    slug: 'psicologia',
+  },
+];
+
+// Transformar DTOs em dados internos
+const MOCK_COURSES_DATA = MOCK_COURSES_DTO.map(transformCourseDTO);
+
+export const MOCK_GEO_COURSES_DATA: GeoCoursesData = {
+  title: 'Encontre o seu curso e transforme sua carreira!',
+  description: 'Explore nossa ampla variedade de cursos de qualidade',
+  location: {
+    city: 'São José dos Campos',
+    state: 'SP',
+    coordinates: {
+      latitude: -23.1814,
+      longitude: -45.8883,
+    },
+  },
+  courses: MOCK_COURSES_DATA,
+};
+
+// Exportar DTOs também para testes de API
+export { MOCK_COURSES_DTO };

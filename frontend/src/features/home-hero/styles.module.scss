@@ -4,7 +4,12 @@ $breakpoint-desktop: 1024px;
 .wrapper {
   width: 100%;
   position: relative;
-  padding: 80px var(--rs-unit-x4);
+  padding: calc(var(--rs-unit-x10) * 2) var(--rs-unit-x4);
+  padding-bottom: calc(var(--rs-unit-x10) * 7);
+
+  @media (min-width: 768px) {
+    padding-bottom: calc(var(--rs-unit-x10) * 3);
+  }
 }
 
 .container {
