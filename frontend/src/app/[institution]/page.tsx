@@ -1,3 +1,4 @@
+import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { GeoCoursesSection } from '@/features/geo-courses';
 import { HomeHero } from '@/features/home-hero';
@@ -12,6 +13,7 @@ const HomePage = () => {
       <GeoCoursesSection />
       <PromotionalBanners />
       <ModalitiesSection />
+      <Footer />
     </main>
   );
 };
