@@ -41,7 +41,6 @@ export function QuickSearchForm({
         onSubmit(searchData);
       }
 
-      // Build URL and navigate
       const params = buildSearchParams(searchData);
       router.push(`/${institutionSlug}/cursos?${params.toString()}`);
     } catch (error) {

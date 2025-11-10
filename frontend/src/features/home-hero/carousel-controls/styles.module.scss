@@ -50,7 +50,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--rs-color-brand);
+    outline: 2px solid var(--rs-color-text-color-primary);
     outline-offset: 2px;
   }
 
@@ -111,13 +111,13 @@
   }
 
   &.active {
-    background: var(--rs-color-brand);
+    background: var(--rs-color-text-color-primary);
     width: calc(var(--rs-unit-x2) + 2px);
     height: calc(var(--rs-unit-x2) + 2px);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--rs-color-brand);
+    outline: 2px solid var(--rs-color-text-color-primary);
     outline-offset: 2px;
   }
 

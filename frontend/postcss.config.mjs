@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Manually resolve the media.css path from reshaped
 const themeMediaCSSPath = path.resolve(
   __dirname,
   'node_modules/reshaped/dist/themes/reshaped/media.css',

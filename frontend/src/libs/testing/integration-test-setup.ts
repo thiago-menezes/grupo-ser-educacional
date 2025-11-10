@@ -1,16 +1,6 @@
-/**
- * Integration test utilities for mocked axios client
- */
-
-/**
- * Sets up Prism integration by mocking the axios client
- * Call this at the top of your integration test files
- * @param _baseUrl - Override the default Prism server URL
- */
 export function setupPrismIntegration() {
   vi.doMock('@/libs/api/axios', () => ({
     query: async (url: string) => {
-      // For integration tests, return mock data based on the endpoint
       if (url === '/products/search') {
         return {
           results: [
@@ -43,16 +33,11 @@ export function setupPrismIntegration() {
         };
       }
 
-      // Default fallback for other endpoints
       throw new Error(`Mock not configured for endpoint: ${url}`);
     },
   }));
 }
 
-/**
- * Quick setup for integration tests - just call this one function
- * @param options - Configuration options
- */
 export function setupIntegrationTest(options?: {
   baseUrl?: string;
   mockError?: boolean;
@@ -65,10 +50,6 @@ export function setupIntegrationTest(options?: {
   }
 }
 
-/**
- * Sets up Prism integration with error simulation
- * Useful for testing error handling
- */
 export function setupPrismIntegrationWithError(errorMessage = 'Network error') {
   vi.doMock('@/libs/api/axios', () => ({
     query: async () => {
@@ -77,14 +58,8 @@ export function setupPrismIntegrationWithError(errorMessage = 'Network error') {
   }));
 }
 
-/**
- * Default timeout for integration tests
- */
 export const INTEGRATION_TEST_TIMEOUT = 15000;
 
-/**
- * Default waitFor options for integration tests
- */
 export const INTEGRATION_WAIT_OPTIONS = {
   timeout: 10000,
   interval: 500,

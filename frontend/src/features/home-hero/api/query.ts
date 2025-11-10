@@ -45,7 +45,7 @@ export function useHeroContent(institutionSlug: string) {
   return useQuery({
     queryKey: [...HOME_HERO_QUERY_KEY, institutionSlug],
     queryFn: () => fetchHeroContent(institutionSlug),
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
     retry: 2,
   });
 }
@@ -85,6 +85,6 @@ export function useCoursesSearch(
     queryKey: [...HOME_HERO_QUERY_KEY, 'search', params],
     queryFn: () => searchCourses(params),
     enabled,
-    staleTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 10 * 60 * 1000,
   });
 }

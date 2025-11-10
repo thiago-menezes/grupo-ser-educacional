@@ -14,6 +14,7 @@
   --rs-color-foreground-primary: #4460a1;
   --rs-color-rgb-background-primary: 5, 43, 130;
   --rs-color-rgb-background-primary-faded: 218, 223, 236;
+  --rs-color-text-color-primary: #052b82;
 }
 
 [data-rs-theme*='uninassau'][data-rs-color-mode='dark'],
@@ -25,4 +26,5 @@
   --rs-color-foreground-primary: #8295c0;
   --rs-color-rgb-background-primary: 4, 39, 117;
   --rs-color-rgb-background-primary-faded: 1, 9, 26;
+  --rs-color-text-color-primary: #929fbd;
 }

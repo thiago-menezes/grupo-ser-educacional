@@ -2,7 +2,6 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { resolve, join, relative, dirname } from 'node:path';
 import { parse } from '@typescript-eslint/parser';
 
-// Type definitions for AST nodes (using any to avoid complex type issues)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ASTNode = any;
 
