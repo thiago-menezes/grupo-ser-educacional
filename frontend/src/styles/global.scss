@@ -1,11 +1,11 @@
-@import './tokens';
-@import './themes/uninassau';
-@import './themes/uni7';
-@import './themes/unifael';
-@import './themes/uninorte';
-@import './themes/unama';
-@import './themes/ung';
-@import './themes/grupo-ser';
+@use './tokens';
+@use './themes/uninassau';
+@use './themes/uni7';
+@use './themes/unifael';
+@use './themes/uninorte';
+@use './themes/unama';
+@use './themes/ung';
+@use './themes/grupo-ser';
 
 body {
   background-color: rgb(

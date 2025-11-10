@@ -1,367 +1,72 @@
-# Home Hero Section - Kanban
+# Home Hero Section Kanban
 
-## 📋 Component Overview
+## 📛 Item
 
-**Component**: Homepage Hero Section
-**Page**: `/[institution]` (Homepage)
-**Priority**: High
-**Estimated Effort**: 2-3 days
-
-### Design Reference
-
-- **Mockup**: `/docs/home.jpg` (top section)
-- **Figma**: Awaiting JSON export
-
-### Features
-
-- Large background image/video
-- Headline with branded typography
-- Subheadline text
-- Multiple CTA buttons (Graduação, Pós-graduação)
-- Quick search form (inline)
-  - "Qual curso quer estudar?" input
-  - "Em que cidade quer estudar?" input
-  - Search button
-- Institution logo overlay
-- Navigation arrows (carousel)
-- Responsive layout
+- **Type**: Feature
+- **Name**: Home Hero Section
+- **Description**: Large hero section with background image/video, headline, CTA buttons, quick search form, carousel controls, and animations. Part of the institution homepage (`/[institution]`).
+- **Owner**: TBD
+- **Status**: Backlog
+- **Updated**: 2025-11-09
 
 ---
 
-## 🎯 Technical Requirements
+## ✅ Checklist
 
-### Stack
+- [ ] Create feature structure and entry point
+  - Create `src/features/home-hero/` with `index.tsx`, `types.ts`, `constants.ts`, `hooks.ts`, `utils.ts`, `styles.module.scss`
+  - Create API layer: `api/query.ts`, `api/mutation.ts`, `api/types.ts`
+  - Full viewport height section with proper z-index layering and responsiveness
+  - Effort: 0.5 day
 
-- Next.js 15 (Client Component for interactivity)
-- Reshaped UI (Button, TextField)
-- TypeScript
-- SCSS Modules
-- Framer Motion (animations)
+- [ ] Build hero banner component
+  - Create `src/features/home-hero/components/hero-banner/` with `index.tsx`, `styles.module.scss`, `types.ts`
+  - next/image for static images, overlay gradient, autoplay (muted, loop), lazy load
+  - Effort: 1 day
 
-### Data Sources
+- [ ] Build CTA buttons component
+  - Create `src/features/home-hero/components/hero-ctas/` with `index.tsx`, `styles.module.scss`, `types.ts`
+  - Multiple button styles (primary, secondary), "GRADUAÇÃO E EAD" and "PÓS-GRADUAÇÃO" buttons, hover animations, configurable from Strapi
+  - Effort: 0.5 day
 
-- **Strapi**: Hero content (title, subtitle, background, CTAs)
-- **Client State**: Form inputs
+- [ ] Build quick search form component
+  - Create `src/features/home-hero/components/quick-search-form/` with `index.tsx`, `styles.module.scss`, `types.ts`, `hooks.ts`
+  - Two inputs (course name, city), autocomplete support (optional), form submission to `/[institution]/cursos` with filters, validation, loading state
+  - Effort: 1 day
 
-### Key Components
+- [ ] Build carousel controls component
+  - Create `src/features/home-hero/components/carousel-controls/` with `index.tsx`, `styles.module.scss`, `types.ts`
+  - Left/right arrows, dot indicators, auto-advance every 5 seconds, pause on hover, keyboard navigation (arrow keys)
+  - Effort: 0.5 day
 
-```typescript
-<HomeHero>
-  <HeroBackground />
-  <HeroContent>
-    <HeroTitle />
-    <HeroSubtitle />
-    <HeroCTAs />
-    <QuickSearchForm />
-  </HeroContent>
-  <CarouselControls />
-</HomeHero>
-```
+- [ ] Implement animations
+  - Add Framer Motion variants in `hooks.ts` for composition in parent components
+  - Title (fade + slide up, 0.3s delay), subtitle (fade in, 0.5s delay), CTAs (fade in, 0.7s delay), form (fade in, 0.9s delay)
+  - Use GPU-accelerated properties (transform, opacity); respect `prefers-reduced-motion`
+  - Effort: 0.5 day
 
-### Responsive Breakpoints
+- [ ] Make fully responsive
+  - Mobile (< 768px), tablet (768px - 1024px), desktop (> 1024px), touch-friendly controls
+  - Update `styles.module.scss` with breakpoint utilities
+  - Effort: 0.5 day
 
-- Mobile: < 768px (stacked, full-width)
-- Tablet: 768px - 1024px (condensed spacing)
-- Desktop: > 1024px (full layout with sidebar form)
+- [ ] Add integration tests
+  - Create `src/features/home-hero/__tests__/home-hero.integration.spec.tsx` using Vitest + Testing Library
+  - Form validation, search button navigation, carousel auto-advance, Strapi content loading, video playback logic
+  - Effort: 0.5 day
 
----
-
-## 📊 Tasks
-
-### Backlog
-
-- [ ] Review hero section design
-- [ ] Define Strapi hero component schema
-- [ ] Research video background best practices
-
-### To Do
-
-- [ ] **Task 1**: Create hero container structure
-  - **Assignee**: TBD
-  - **Effort**: 0.5 day
-  - **Deliverables**:
-    - `src/features/home/components/HomeHero/HomeHero.tsx`
-    - `src/features/home/components/HomeHero/HomeHero.module.scss`
-  - **Acceptance Criteria**:
-    - Full viewport height section
-    - Proper z-index layering
-    - Responsive container
-  - **Figma Support**: Screenshot + JSON export
-
-- [ ] **Task 2**: Implement background image/video
-  - **Assignee**: TBD
-  - **Effort**: 1 day
-  - **Deliverables**:
-    - `src/features/home/components/HomeHero/HeroBackground.tsx`
-  - **Acceptance Criteria**:
-    - next/image for static images
-    - Video background with fallback image
-    - Overlay gradient for text readability
-    - Autoplay video (muted, loop)
-    - Lazy load video
-  - **Figma Support**: Background image specs
-
-- [ ] **Task 3**: Build headline and subtitle
-  - **Assignee**: TBD
-  - **Effort**: 0.25 day
-  - **Deliverables**:
-    - `src/features/home/components/HomeHero/HeroTitle.tsx`
-  - **Acceptance Criteria**:
-    - Animated entrance (fade + slide up)
-    - Branded typography (from Strapi richtext)
-    - Highlighted text styling (green background in mockup)
-    - Responsive font sizes
-  - **Figma Support**: Typography specs and animations
-
-- [ ] **Task 4**: Create CTA buttons
-  - **Assignee**: TBD
-  - **Effort**: 0.5 day
-  - **Deliverables**:
-    - `src/features/home/components/HomeHero/HeroCTAs.tsx`
-  - **Acceptance Criteria**:
-    - Multiple button styles (primary, secondary)
-    - "GRADUAÇÃO E EAD" and "PÓS-GRADUAÇÃO" buttons
-    - Links to respective pages
-    - Hover animations
-    - Configurable from Strapi
-  - **Figma Support**: Button specs (colors, spacing)
-
-- [ ] **Task 5**: Build quick search form
-  - **Assignee**: TBD
-  - **Effort**: 1 day
-  - **Deliverables**:
-    - `src/features/home/components/HomeHero/QuickSearchForm.tsx`
-  - **Acceptance Criteria**:
-    - Two inputs: course name, city
-    - Autocomplete for courses (optional)
-    - Search button
-    - Form submission navigates to `/[institution]/cursos` with filters
-    - Validation (at least one field required)
-    - Loading state
-  - **Figma Support**: Form design screenshot
-
-- [ ] **Task 6**: Add carousel controls (if multiple slides)
-  - **Assignee**: TBD
-  - **Effort**: 0.5 day
-  - **Deliverables**:
-    - `src/features/home/components/HomeHero/CarouselControls.tsx`
-  - **Acceptance Criteria**:
-    - Left/right arrows
-    - Dot indicators
-    - Auto-advance every 5 seconds
-    - Pause on hover
-    - Keyboard navigation (arrow keys)
-  - **Figma Support**: Control icons and positioning
-
-- [ ] **Task 7**: Implement animations
-  - **Assignee**: TBD
-  - **Effort**: 0.5 day
-  - **Deliverables**:
-    - Framer Motion variants
-  - **Acceptance Criteria**:
-    - Title fades in + slides up (0.3s delay)
-    - Subtitle fades in (0.5s delay)
-    - CTAs fade in (0.7s delay)
-    - Form fades in (0.9s delay)
-    - Smooth transitions
-  - **Figma Support**: Animation specs (durations, easings)
-
-- [ ] **Task 8**: Make fully responsive
-  - **Assignee**: TBD
-  - **Effort**: 0.5 day
-  - **Deliverables**:
-    - Mobile-optimized layout
-    - Touch-friendly controls
-  - **Acceptance Criteria**:
-    - Form stacks on mobile
-    - Font sizes scale appropriately
-    - CTA buttons full-width on mobile
-    - Background image crops correctly
-  - **Figma Support**: Mobile hero screenshot
-
-### In Progress
-
-<!-- Tasks being actively worked on -->
-
-### Review
-
-<!-- Tasks pending code review or testing -->
-
-### Done
-
-<!-- Completed tasks -->
+- [ ] Accessibility and performance validation
+  - Keyboard navigation (carousel, form), color contrast (WCAG AA), ARIA labels, role attributes
+  - LCP < 2.5s, image optimization (WebP), video lazy load via Intersection Observer
+  - Effort: 0.5 day
 
 ---
 
 ## 🔗 Dependencies
 
-### Blocked By
+**Blocked by**:
 
-- [ ] Header component (for proper z-index)
-- [ ] Strapi Home Page collection type created
-- [ ] Institution theming working
+- Header component (for proper z-index)
+- Strapi Home Page collection type
 
-### Blocks
-
-- [ ] None (hero is self-contained)
-
----
-
-## 🧪 Testing Checklist
-
-- [ ] **Unit Tests**
-  - [ ] Form validation works
-  - [ ] Search button navigates correctly
-  - [ ] Carousel advances automatically
-
-- [ ] **Integration Tests**
-  - [ ] Strapi hero content loads
-  - [ ] Search form submits to correct URL with params
-  - [ ] Video plays on desktop, shows image on mobile
-
-- [ ] **Visual Tests**
-  - [ ] Screenshot all hero slides
-  - [ ] Test with long/short headlines
-  - [ ] All breakpoints captured
-
-- [ ] **Accessibility Tests**
-  - [ ] Carousel controls keyboard accessible
-  - [ ] Form inputs labeled correctly
-  - [ ] Color contrast on overlay text
-  - [ ] Video has no audio (or muted)
-
-- [ ] **Performance Tests**
-  - [ ] Largest Contentful Paint (LCP) < 2.5s
-  - [ ] Video lazy loads
-  - [ ] Images optimized (WebP)
-
----
-
-## 📦 Strapi Integration
-
-### API Endpoint
-
-```
-GET /api/home-pages?filters[institution][slug][$eq]=uninassau&populate[hero][populate]=*
-```
-
-### Expected Response
-
-```typescript
-{
-  data: {
-    attributes: {
-      hero: {
-        title: string // richtext
-        subtitle: string
-        background_image: {
-          data: {
-            attributes: {
-              url: string
-              alternativeText: string
-              formats: { ... }
-            }
-          }
-        },
-        background_video_url?: string
-        cta_buttons: [
-          {
-            label: string
-            url: string
-            variant: "primary" | "secondary"
-          }
-        ],
-        show_quick_search: boolean
-      }
-    }
-  }
-}
-```
-
-### React Query Hook
-
-```typescript
-// src/features/home/hooks/useHomePage.ts
-export function useHomePage(institutionSlug: string) {
-  return useQuery({
-    queryKey: ['home', institutionSlug],
-    queryFn: () => fetchHomePage(institutionSlug),
-    staleTime: 5 * 60 * 1000,
-  });
-}
-```
-
----
-
-## 🎨 Figma Integration Workflow
-
-When this task is assigned, the following will be provided:
-
-1. **Screenshots**:
-   - Hero desktop view
-   - Hero mobile view
-   - Form focus states
-   - CTA hover states
-
-2. **Figma JSON Export**:
-   - Spacing (padding, margins)
-   - Typography (headline, subtitle, form labels)
-   - Colors (overlay gradient, text colors)
-   - Button styles
-
-3. **Assets**:
-   - Background images (all carousel slides)
-   - Background video (if applicable)
-   - Institution logo overlay
-   - Icons for form inputs
-
----
-
-## 📝 Implementation Notes
-
-### Performance Considerations
-
-- Use `priority` prop on next/image for hero image (LCP)
-- Lazy load video (Intersection Observer)
-- Optimize video (compressed, multiple formats)
-- Debounce autocomplete search
-
-### Accessibility
-
-- Carousel has `role="region"` with `aria-label`
-- Auto-advance carousel can be paused
-- Form inputs have visible labels
-- Sufficient color contrast on overlay
-
-### SEO
-
-- H1 tag for main headline
-- Alt text on background image
-- Descriptive CTA link text
-
-### Animation Best Practices
-
-- Respect `prefers-reduced-motion`
-- Use GPU-accelerated properties (transform, opacity)
-- Keep animations < 500ms
-
----
-
-## ✅ Definition of Done
-
-- [ ] Code merged to main branch
-- [ ] All tests passing
-- [ ] Accessibility audit passed
-- [ ] Works on all breakpoints
-- [ ] Tested with all institution themes
-- [ ] Strapi integration working
-- [ ] Video background working (with fallback)
-- [ ] Animations smooth and performant
-- [ ] Search form submits correctly
-- [ ] Code reviewed and approved
-
----
-
-**Created**: 2025-11-07
-**Last Updated**: 2025-11-07
-**Status**: To Do
+**Blocks**: None (self-contained component)
