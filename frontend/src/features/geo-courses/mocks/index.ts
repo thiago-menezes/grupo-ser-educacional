@@ -2,7 +2,6 @@ import type { CourseDTO } from '../api/types';
 import { transformCourseDTO } from '../course-card/types';
 import type { GeoCoursesData } from '../types';
 
-// Mock DTOs (como viriam da API)
 const MOCK_COURSES_DTO: CourseDTO[] = [
   {
     id: '1',
@@ -11,7 +10,7 @@ const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modalities: ['presencial'],
-    price: 95010, // R$ 950,10
+    price: 95010,
     campus: {
       name: 'Unidade Aquarius',
       city: 'São José dos Campos',
@@ -30,7 +29,7 @@ const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Licenciatura',
     duration: '4 anos (8 semestres)',
     modalities: ['ead'],
-    price: 32090, // R$ 320,90
+    price: 32090,
     campus: {
       name: 'Polo Centro',
       city: 'São José dos Campos',
@@ -49,7 +48,7 @@ const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modalities: ['presencial', 'semipresencial'],
-    price: 120040, // R$ 1.200,40
+    price: 120040,
     campus: {
       name: 'Unidade Aquarius',
       city: 'São José dos Campos',
@@ -68,7 +67,7 @@ const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modalities: ['ead'],
-    price: 45090, // R$ 450,90
+    price: 45090,
     campus: {
       name: 'Polo Centro',
       city: 'São José dos Campos',
@@ -87,7 +86,7 @@ const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '4 anos (8 semestres)',
     modalities: ['presencial', 'semipresencial', 'ead'],
-    price: 55090, // R$ 550,90
+    price: 55090,
     campus: {
       name: 'Unidade Aquarius',
       city: 'São José dos Campos',
@@ -106,7 +105,7 @@ const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modalities: ['presencial'],
-    price: 78090, // R$ 780,90
+    price: 78090,
     campus: {
       name: 'Polo Centro',
       city: 'São José dos Campos',
@@ -120,7 +119,6 @@ const MOCK_COURSES_DTO: CourseDTO[] = [
   },
 ];
 
-// Transformar DTOs em dados internos
 const MOCK_COURSES_DATA = MOCK_COURSES_DTO.map(transformCourseDTO);
 
 export const MOCK_GEO_COURSES_DATA: GeoCoursesData = {
@@ -137,5 +135,4 @@ export const MOCK_GEO_COURSES_DATA: GeoCoursesData = {
   courses: MOCK_COURSES_DATA,
 };
 
-// Exportar DTOs também para testes de API
 export { MOCK_COURSES_DTO };

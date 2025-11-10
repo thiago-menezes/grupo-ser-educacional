@@ -1,8 +1,6 @@
-// Main components
 export { GeoCoursesSection } from './index';
 export { CourseCard } from './course-card';
 
-// Types
 export type {
   GeoCourseSectionProps,
   GeoCoursesData,
@@ -15,7 +13,6 @@ export type {
   CourseModality,
 } from './api/types';
 
-// Utilities
 export { useGeoCourses } from './hooks';
 export {
   fetchGeoCoursesSection,
@@ -24,5 +21,4 @@ export {
 } from './api';
 export { transformCourseDTO } from './course-card/types';
 
-// Mocks
 export { MOCK_GEO_COURSES_DATA, MOCK_COURSES_DTO } from './mocks';

@@ -30,7 +30,6 @@ export function useGeoCourses({
 
         const dto = await fetchGeoCoursesSection(city, state);
 
-        // Transform DTOs to internal data format
         const transformedCourses = dto.courses.map(transformCourseDTO);
 
         const geoData: GeoCoursesData = {
@@ -61,7 +60,6 @@ export function useGeoCourses({
 
       const dto = await fetchGeoCoursesSection(city, state);
 
-      // Transform DTOs to internal data format
       const transformedCourses = dto.courses.map(transformCourseDTO);
 
       const geoData: GeoCoursesData = {

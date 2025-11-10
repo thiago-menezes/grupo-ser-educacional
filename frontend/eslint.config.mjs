@@ -8,7 +8,6 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
 
 const eslintConfig = [
-  // Ignore patterns
   {
     ignores: [
       '**/node_modules/**',
@@ -27,13 +26,10 @@ const eslintConfig = [
     ],
   },
 
-  // Base ESLint recommended
   js.configs.recommended,
 
-  // TypeScript ESLint recommended configs
   ...tseslint.configs.recommended,
 
-  // React plugin config
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
@@ -52,7 +48,6 @@ const eslintConfig = [
     },
   },
 
-  // Next.js plugin config
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
@@ -64,7 +59,6 @@ const eslintConfig = [
     },
   },
 
-  // Import plugin config
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
@@ -115,7 +109,6 @@ const eslintConfig = [
     },
   },
 
-  // Prettier config (must be last)
   prettierConfig,
   {
     plugins: {
@@ -126,7 +119,6 @@ const eslintConfig = [
     },
   },
 
-  // Custom rules overrides
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
     rules: {

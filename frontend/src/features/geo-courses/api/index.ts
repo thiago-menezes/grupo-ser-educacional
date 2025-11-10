@@ -1,6 +1,5 @@
 import type { GeoCoursesSectionDTO } from './types';
 
-// API endpoint configuration
 const GEO_COURSES_API_BASE =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 const GEO_COURSES_ENDPOINT = '/api/courses/geo';
@@ -60,7 +59,6 @@ export async function fetchCourseBySlug(slug: string) {
   return data;
 }
 
-// Query keys for React Query / TanStack Query
 export const GEO_COURSES_QUERY_KEYS = {
   all: ['geo-courses'] as const,
   lists: () => [...GEO_COURSES_QUERY_KEYS.all, 'list'] as const,

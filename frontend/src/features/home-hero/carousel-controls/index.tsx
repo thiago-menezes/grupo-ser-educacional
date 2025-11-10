@@ -50,7 +50,6 @@ export function CarouselControls({
             key={index}
             className={`${styles.dot} ${index === currentSlide ? styles.active : ''}`}
             onClick={() => {
-              // Could implement goToSlide if needed
               onToggleAutoAdvance?.(false);
             }}
             aria-label={`Go to slide ${index + 1}`}
