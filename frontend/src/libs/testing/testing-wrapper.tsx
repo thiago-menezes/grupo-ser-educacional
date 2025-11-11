@@ -3,9 +3,9 @@ import { render, RenderOptions } from '@testing-library/react';
 import { ReactElement, ReactNode } from 'react';
 import Providers from '@/app/providers';
 
-interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
+type CustomRenderOptions = {
   queryClient?: QueryClient;
-}
+} & Omit<RenderOptions, 'wrapper'>;
 
 const createTestQueryClient = () =>
   new QueryClient({

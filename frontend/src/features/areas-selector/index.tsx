@@ -7,12 +7,9 @@ import { Icon } from '@/components/icon';
 import { Pagination } from '@/components/pagination';
 import { usePagination } from '@/hooks/usePagination';
 import { DEFAULT_AREAS_CONTENT } from './constants';
-import { useAreaHandlers } from './hooks';
+import { useAreaSelector } from './hooks';
 import styles from './styles.module.scss';
-
-type AreasSelectorProps = {
-  content?: typeof DEFAULT_AREAS_CONTENT;
-};
+import { AreasSelectorProps } from './types';
 
 export function AreasSelector({
   content = DEFAULT_AREAS_CONTENT,
@@ -24,7 +21,7 @@ export function AreasSelector({
     gap: 24,
   });
 
-  const { handleCourseClick, handleAllCourses } = useAreaHandlers();
+  const { handleCourseClick, handleAllCourses } = useAreaSelector();
 
   return (
     <section className={styles.section} aria-label="Selecione áreas de estudo">

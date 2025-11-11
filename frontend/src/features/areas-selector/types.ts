@@ -1,3 +1,9 @@
+import { DEFAULT_AREAS_CONTENT } from './constants';
+
+export type AreasSelectorProps = {
+  content?: typeof DEFAULT_AREAS_CONTENT;
+};
+
 export type AreaCourse = {
   id: string;
   name: string;

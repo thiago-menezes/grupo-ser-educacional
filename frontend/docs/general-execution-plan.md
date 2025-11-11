@@ -644,6 +644,6 @@ Course Enrichment (N) ────> (N) Course Enrichment (related)
 
 ---
 
-**Última atualização**: 2025-11-07
-**Versão**: 1.0
+**Última atualização**: 2025-11-11
+**Versão**: 1.1
 **Autor**: Claude (Anthropic)

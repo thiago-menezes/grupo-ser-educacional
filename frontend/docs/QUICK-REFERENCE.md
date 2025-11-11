@@ -17,7 +17,7 @@ Follow these steps when implementing a new feature or fixing a bug:
    ```
 5. **Update tracking** - Mark the task as complete in the appropriate kanban file (`docs/kanbans/*.md`)
 
-PS: Don't run `pnpm build` more
+PS: Never run `pnpm build` when checking tests - it breaks the app
 
 ---
 
@@ -56,6 +56,14 @@ src/
 ---
 
 ## 🎨 Reshaped Components Cheat Sheet
+
+### Available Components
+
+**Main Components**: ActionBar, Alert, Autocomplete, Avatar, Badge, Breadcrumbs, Button, Calendar, Card, Carousel, Checkbox, CheckboxGroup, ContextMenu, Divider, DropdownMenu, FileUpload, Hotkey, Link, Loader, MenuItem, Modal, NumberField, Pagination, PinField, Popover, Progress, ProgressIndicator, Radio, RadioGroup, Resizable, Scrim, Select, Skeleton, Slider, Stepper, Switch, Table, Tabs, TextArea, TextField, Timeline, Toast, ToggleButton, ToggleButtonGroup, Tooltip
+
+**Utility Components**: Accordion, Actionable, Container, Dismissible, Flyout, FormControl, Grid, Hidden, HiddenVisually, Icon, Image, Overlay, Reshaped, ScrollArea, Text, Theme, View
+
+**Storybook**: https://main--5ed400f96e43cc00226d4df6.chromatic.com/
 
 ### Commonly Used Components
 

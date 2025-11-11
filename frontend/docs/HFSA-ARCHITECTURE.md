@@ -108,6 +108,28 @@ export default function EnrollmentPage({ params }: Props) {
 | API ownership              | `src/libs/api/axios.ts` declares `query` and `mutate` helpers globally [lines 5-70], so features do not own their fetch logic.                                                             | Keep the Axios client in `libs/api`, but create per-feature adapters (`api/query.ts`, `api/mutation.ts`) to encapsulate endpoints and query keys.                       |
 | Domain configuration       | Institution data and helper functions live in `src/config/institutions.ts` [lines 26-160], far from any feature.                                                                           | Wrap brand logic in a `theme` feature (e.g., `features/theme/config`) that provides hooks plus the config object, leaving `src/config` with environment-only data.      |
 
+## Implementation Progress
+
+### ✅ Completed
+
+- Basic HFSA structure established in `src/features/`
+- Component contracts defined for `src/components/`
+- Testing utilities in `src/libs/testing`
+- API client foundation in `src/libs/api`
+
+### 🔄 In Progress
+
+- Migration of existing components to HFSA structure
+- Feature-based API adapters
+- Theme provider refactoring
+
+### 📋 Next Steps
+
+1. Audit existing components for HFSA compliance
+2. Create feature adapters for API calls
+3. Migrate theme logic to feature structure
+4. Update documentation to reflect current state
+
 ## Next Steps
 
 1. Pick the first feature to migrate (the `[institution]` themed landing page is a good candidate).

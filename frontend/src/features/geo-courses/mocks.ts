@@ -1,8 +1,8 @@
-import type { CourseDTO } from '../api/types';
-import { transformCourseDTO } from '../course-card/types';
-import type { GeoCoursesData } from '../types';
+import type { CourseDTO } from './api/types';
+import { transformCourseDTO } from './course-card/types';
+import type { GeoCoursesData } from './types';
 
-const MOCK_COURSES_DTO: CourseDTO[] = [
+export const MOCK_COURSES_DTO: CourseDTO[] = [
   {
     id: '1',
     name: 'Engenharia civil',
@@ -134,5 +134,3 @@ export const MOCK_GEO_COURSES_DATA: GeoCoursesData = {
   },
   courses: MOCK_COURSES_DATA,
 };
-
-export { MOCK_COURSES_DTO };

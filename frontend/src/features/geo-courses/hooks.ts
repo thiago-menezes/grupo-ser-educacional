@@ -5,11 +5,11 @@ import { fetchGeoCoursesSection } from './api';
 import { transformCourseDTO } from './course-card/types';
 import type { GeoCoursesData } from './types';
 
-interface UseGeoCoursesOptions {
+type UseGeoCoursesOptions = {
   city?: string;
   state?: string;
   enabled?: boolean;
-}
+};
 
 export function useGeoCourses({
   city = 'São José dos Campos',

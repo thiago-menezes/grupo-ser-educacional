@@ -2,9 +2,9 @@
 
 ## Project Documentation Index
 
-**Last Updated**: 2025-11-07
-**Version**: 1.0
-**Status**: Planning Phase
+**Last Updated**: 2025-11-11
+**Version**: 1.1
+**Status**: Development Phase
 
 ---
 
@@ -26,7 +26,74 @@ This project aims to build a unified, multi-institutional website system for uni
 
 ## 📖 Core Documents
 
-### 1. [General Execution Plan](./general-execution-plan.md)
+### 1. [Quick Development Guide](./QUICK-DEVELOPMENT-GUIDE.md)
+
+**Purpose**: Essential coding standards and project rules
+
+**Key Sections**:
+
+- TypeScript rules (always use `type`, never `interface`)
+- Component structure and file organization
+- Design System (Reshaped) usage guidelines
+- Styling guidelines with tokens
+- Project structure examples
+- Important notes and commands
+
+**When to use**:
+
+- Daily development work
+- Code reviews
+- Onboarding new developers
+- Ensuring consistency across the codebase
+
+---
+
+### 2. [Quick Reference](./QUICK-REFERENCE.md)
+
+**Purpose**: Developer cheat sheet for common patterns
+
+**Key Sections**:
+
+- Development workflow
+- File structure reference
+- Reshaped components examples
+- API integration patterns
+- Form validation patterns
+- Testing patterns
+- Common commands and solutions
+
+**When to use**:
+
+- Quick syntax reminders
+- Pattern implementation
+- Troubleshooting common issues
+- API integration reference
+
+---
+
+### 3. [HFSA Architecture](./HFSA-ARCHITECTURE.md)
+
+**Purpose**: Project structure and organization principles
+
+**Key Sections**:
+
+- Feature-based organization
+- Component vs feature boundaries
+- File naming conventions
+- API ownership patterns
+- Current state analysis
+- Migration steps
+
+**When to use**:
+
+- Understanding project architecture
+- Creating new features
+- Code organization decisions
+- Migration planning
+
+---
+
+### 4. [General Execution Plan](./general-execution-plan.md)
 
 **Purpose**: High-level roadmap, timeline, and business strategy
 
@@ -49,7 +116,7 @@ This project aims to build a unified, multi-institutional website system for uni
 
 ---
 
-### 2. [Strapi Content Strategy](./strapi-content-strategy.md)
+### 5. [Strapi Content Strategy](./strapi-content-strategy.md)
 
 **Purpose**: Complete guide to CMS architecture and data modeling
 
@@ -450,7 +517,9 @@ When you encounter blockers:
 
 ### For New Team Members
 
-- [ ] Read [CLAUDE.md](../CLAUDE.md) (project overview)
+- [ ] Read [QUICK-DEVELOPMENT-GUIDE.md](./QUICK-DEVELOPMENT-GUIDE.md) (coding standards)
+- [ ] Read [QUICK-REFERENCE.md](./QUICK-REFERENCE.md) (developer cheat sheet)
+- [ ] Review [HFSA-ARCHITECTURE.md](./HFSA-ARCHITECTURE.md) (project structure)
 - [ ] Review [general-execution-plan.md](./general-execution-plan.md) (big picture)
 - [ ] Skim [strapi-content-strategy.md](./strapi-content-strategy.md) (data architecture)
 - [ ] Look at mockups in `/docs` folder

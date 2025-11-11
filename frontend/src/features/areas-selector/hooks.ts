@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { useCurrentInstitution } from '@/hooks/useInstitution';
 import type { AreaCard } from './types';
 
-export function useAreaHandlers() {
+export function useAreaSelector() {
   const { institutionId } = useCurrentInstitution();
   const router = useRouter();
 
