@@ -1,20 +1,24 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import type { UsePaginationOptions, PaginationState } from './types';
-
-const CARD_WIDTH = 290;
-const GAP = 16;
-const CARD_TOTAL_WIDTH = CARD_WIDTH + GAP;
+import type {
+  UsePaginationOptions,
+  PaginationState,
+} from './usePagination.types';
+import { DEFAULT_CARD_WIDTH, DEFAULT_GAP } from './usePagination.constants';
 
 export function usePagination({
   totalItems,
   containerRef,
+  cardWidth = DEFAULT_CARD_WIDTH,
+  gap = DEFAULT_GAP,
 }: UsePaginationOptions): PaginationState {
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isScrollable, setIsScrollable] = useState(false);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
+  const cardTotalWidth = cardWidth + gap;
 
   useEffect(() => {
     const updateItemsPerPage = () => {
@@ -22,13 +26,20 @@ export function usePagination({
       if (!container) return;
 
       const containerWidth = container.clientWidth;
+      // Calculate how many items can fit, accounting that the last item doesn't need gap after it
       const calculatedItemsPerPage = Math.max(
         1,
-        Math.floor(containerWidth / CARD_TOTAL_WIDTH),
+        Math.floor((containerWidth + gap) / cardTotalWidth),
       );
 
+      const calculatedTotalPages = Math.ceil(
+        totalItems / calculatedItemsPerPage,
+      );
+      const scrollable = calculatedTotalPages > 1;
+
       setItemsPerPage(calculatedItemsPerPage);
-      setTotalPages(Math.ceil(totalItems / calculatedItemsPerPage));
+      setTotalPages(calculatedTotalPages);
+      setIsScrollable(scrollable);
       setCurrentPage(0);
     };
 
@@ -44,7 +55,7 @@ export function usePagination({
         resizeObserverRef.current.disconnect();
       }
     };
-  }, [totalItems, containerRef]);
+  }, [totalItems, containerRef, cardTotalWidth]);
 
   const goToPage = (page: number) => {
     const container = containerRef.current;
@@ -52,7 +63,7 @@ export function usePagination({
 
     const clampedPage = Math.max(0, Math.min(page, totalPages - 1));
     const firstItemIndex = clampedPage * itemsPerPage;
-    const scrollPosition = firstItemIndex * CARD_TOTAL_WIDTH;
+    const scrollPosition = firstItemIndex * cardTotalWidth;
 
     container.scrollTo({
       left: scrollPosition,
@@ -66,6 +77,7 @@ export function usePagination({
     currentPage,
     totalPages,
     itemsPerPage,
+    isScrollable,
     goToPage,
   };
 }

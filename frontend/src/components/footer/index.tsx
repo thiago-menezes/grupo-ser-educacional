@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Text } from 'reshaped';
 import { Icon } from '@/components/icon';
 import { DEFAULT_FOOTER_CONTENT } from './constants';
 import styles from './styles.module.scss';
@@ -41,7 +42,14 @@ export function Footer({ content = DEFAULT_FOOTER_CONTENT }: FooterProps) {
           <div className={styles.sections}>
             {sections.map((section) => (
               <div key={section.title} className={styles.section}>
-                <h3 className={styles.sectionTitle}>{section.title}</h3>
+                <Text
+                  as="h3"
+                  variant="featured-2"
+                  weight="bold"
+                  className={styles.sectionTitle}
+                >
+                  {section.title}
+                </Text>
                 <ul className={styles.links}>
                   {section.links.map((link) => (
                     <li key={link.label}>
@@ -56,7 +64,9 @@ export function Footer({ content = DEFAULT_FOOTER_CONTENT }: FooterProps) {
           </div>
 
           <div className={styles.badge}>
-            <p className={styles.badgeTitle}>{badge.title}</p>
+            <Text as="p" variant="body-3" className={styles.badgeTitle}>
+              {badge.title}
+            </Text>
 
             <Link href={badge.href || '#'} aria-label={badge.title}>
               <Image

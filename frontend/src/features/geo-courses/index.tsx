@@ -3,8 +3,9 @@
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components/icon';
+import { Pagination } from '@/components/pagination';
+import { usePagination } from '@/hooks/usePagination';
 import { CourseCard } from './course-card';
-import { usePagination } from './hooks/usePagination';
 import { MOCK_GEO_COURSES_DATA } from './mocks';
 import styles from './styles.module.scss';
 
@@ -12,7 +13,7 @@ export function GeoCoursesSection() {
   const data = MOCK_GEO_COURSES_DATA;
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const { currentPage, totalPages, goToPage } = usePagination({
+  const { currentPage, totalPages, goToPage, isScrollable } = usePagination({
     totalItems: data.courses.length,
     containerRef: scrollContainerRef as React.RefObject<HTMLDivElement>,
   });
@@ -66,21 +67,12 @@ export function GeoCoursesSection() {
             ))}
           </div>
 
-          {totalPages > 1 && (
-            <div className={styles.pagination}>
-              {Array.from({ length: totalPages }).map((_, pageIndex) => (
-                <button
-                  key={`pagination-${pageIndex}`}
-                  className={`${styles.paginationDot} ${
-                    pageIndex === currentPage ? styles.active : ''
-                  }`}
-                  onClick={() => goToPage(pageIndex)}
-                  aria-label={`Go to page ${pageIndex + 1}`}
-                  aria-current={pageIndex === currentPage ? 'true' : 'false'}
-                  type="button"
-                />
-              ))}
-            </div>
+          {isScrollable && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChangeAction={goToPage}
+            />
           )}
         </div>
       </div>
