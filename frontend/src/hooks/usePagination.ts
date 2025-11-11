@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { DEFAULT_CARD_WIDTH, DEFAULT_GAP } from './usePagination.constants';
 import type {
   UsePaginationOptions,
   PaginationState,
 } from './usePagination.types';
-import { DEFAULT_CARD_WIDTH, DEFAULT_GAP } from './usePagination.constants';
 
 export function usePagination({
   totalItems,
@@ -55,6 +55,7 @@ export function usePagination({
         resizeObserverRef.current.disconnect();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalItems, containerRef, cardTotalWidth]);
 
   const goToPage = (page: number) => {
