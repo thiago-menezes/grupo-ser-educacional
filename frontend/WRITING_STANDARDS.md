@@ -155,22 +155,32 @@ import { Icon } from '@/components/icon';
 
 ### Componentes
 ```typescript
-// PascalCase, match filename
-export function CarouselControls() { }
-// Arquivo: carousel-controls/index.tsx
+// ✅ CORRETO - Use const com arrow function
+export const ComponentName = () => { }
+// Arquivo: component-name/index.tsx
+
+// ❌ ERRADO - Não use function declaration
+export function ComponentName() { }
 ```
 
 ### Tipos
 ```typescript
-// ComponentNameProps para props
-export type CarouselControlsProps = { }
-
-// ComponentNameData para dados
-export type QuickSearchFormData = { }
-
-// Enums/Unions para opções
+// ✅ CORRETO - Todos os tipos devem estar em types.ts
+// Arquivo: types.ts
+export type ComponentNameProps = { }
+export type ComponentNameData = { }
 export type CourseLevel = 'graduation' | 'postgraduate';
+
+// ❌ ERRADO - NUNCA defina tipos dentro do arquivo do componente
+// Arquivo: index.tsx
+type ComponentNameProps = { } // ❌ ERRADO!
 ```
+
+**Regra importante**: Todos os tipos TypeScript devem ser definidos no arquivo `types.ts` do feature, nunca dentro do arquivo do componente (`index.tsx`). Isso inclui:
+- Props types (`ComponentNameProps`)
+- Data types (`ComponentNameData`)
+- Enums e unions
+- Qualquer outro tipo exportado ou usado pelo componente
 
 ### Constantes
 ```typescript

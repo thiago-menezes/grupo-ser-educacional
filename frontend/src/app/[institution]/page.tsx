@@ -5,6 +5,7 @@ import { CareerPath } from '@/features/career-path';
 import { EntryFormsSection } from '@/features/entry-forms';
 import { GeoCoursesSection } from '@/features/geo-courses';
 import { HomeHero } from '@/features/home-hero';
+import { InfrastructureSection } from '@/features/infrastructure';
 import { ModalitiesSection } from '@/features/modalities-section';
 import { PromotionalBanners } from '@/features/promotional-banners';
 
@@ -19,6 +20,7 @@ const HomePage = () => {
       <AreasSelector />
       <CareerPath />
       <EntryFormsSection />
+      <InfrastructureSection />
       <Footer />
     </main>
   );
