@@ -1,11 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { DEFAULT_CARD_WIDTH, DEFAULT_GAP } from './usePagination.constants';
-import type {
-  UsePaginationOptions,
-  PaginationState,
-} from './usePagination.types';
+import { DEFAULT_CARD_WIDTH, DEFAULT_GAP } from './constants';
+import type { UsePaginationOptions, PaginationState } from './types';
 
 export function usePagination({
   totalItems,

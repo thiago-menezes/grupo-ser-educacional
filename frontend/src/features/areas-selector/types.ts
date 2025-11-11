@@ -16,5 +16,3 @@ export type AreasSelectorContent = {
   title: string;
   areas: AreaCard[];
 };
-
-export type { UsePaginationOptions } from '@/hooks/usePagination.types';
