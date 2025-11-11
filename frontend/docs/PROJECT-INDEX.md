@@ -33,9 +33,11 @@ This project aims to build a unified, multi-institutional website system for uni
 **Key Sections**:
 
 - TypeScript rules (always use `type`, never `interface`)
+- **Type organization**: DO NOT create types in component, hook, or context files - only in `types.ts` files
 - Component structure and file organization
 - Design System (Reshaped) usage guidelines
-- Styling guidelines with tokens
+- Styling guidelines with tokens (use Reshaped tokens, never custom SCSS variables)
+- Viewport breakpoints (use PostCSS custom media queries)
 - Project structure examples
 - Important notes and commands
 

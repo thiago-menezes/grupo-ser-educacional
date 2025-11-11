@@ -245,20 +245,33 @@ export function useFilters() {
 ```scss
 // Component.module.scss
 .container {
-  padding: var(--rs-space-4);
+  padding: var(--rs-unit-x4);
   background: var(--rs-color-background-primary);
 }
 
 .title {
-  font-size: var(--rs-font-size-heading-2);
-  color: var(--rs-color-foreground-primary);
+  font-size: var(--rs-font-size-featured-1);
+  color: var(--rs-color-foreground-neutral);
 }
 
-// Institution-specific color
-.institutionColor {
-  background: var(--institution-primary-color);
+// Use Reshaped color tokens
+.buttonPrimary {
+  color: var(--rs-color-background-primary);
+  background: var(--rs-color-background-primary-faded);
+}
+
+.buttonCritical {
+  color: var(--rs-color-background-critical);
+  background: var(--rs-color-background-critical-faded);
 }
 ```
+
+### Design Tokens Rules
+
+- **Always use Reshaped design tokens** - never create custom SCSS variables
+- **Never create custom breakpoint variables** - use `@media (--rs-viewport-m)` instead
+- **Never create custom color variables** - use `var(--rs-color-background-primary)` etc.
+- All tokens are defined in `src/styles/tokens.scss` and theme files
 
 ### Accessing Institution Theme
 
@@ -321,26 +334,35 @@ it('loads courses from API', async () => {
 
 ## 📱 Responsive Breakpoints
 
+Use Reshaped PostCSS custom media queries:
+
 ```scss
-// Mobile first
+// ✅ CORRECT - Use PostCSS custom media queries
 .component {
   // Mobile: default styles
 
-  @media (min-width: 768px) {
-    // Tablet
+  @media (--rs-viewport-m) {
+    // Medium viewport (≥660px)
   }
 
-  @media (min-width: 1024px) {
-    // Desktop
+  @media (--rs-viewport-l) {
+    // Large viewport (≥900px)
+  }
+
+  @media (--rs-viewport-xl) {
+    // Extra large viewport (≥1280px)
   }
 }
 ```
 
-**Breakpoint Values**:
+**Available Viewport Tokens**:
 
-- Mobile: < 768px
-- Tablet: 768px - 1024px
-- Desktop: > 1024px
+- `--rs-viewport-s` - Small (mobile, max-width: 659px)
+- `--rs-viewport-m` - Medium (≥660px)
+- `--rs-viewport-l` - Large (≥900px)
+- `--rs-viewport-xl` - Extra Large (≥1280px)
+
+**DO NOT** create custom breakpoint variables or use `calc()` with viewport tokens.
 
 ---
 

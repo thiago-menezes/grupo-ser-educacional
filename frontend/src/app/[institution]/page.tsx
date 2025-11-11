@@ -1,6 +1,7 @@
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { AreasSelector } from '@/features/areas-selector';
+import { CareerPath } from '@/features/career-path';
 import { GeoCoursesSection } from '@/features/geo-courses';
 import { HomeHero } from '@/features/home-hero';
 import { ModalitiesSection } from '@/features/modalities-section';
@@ -15,6 +16,7 @@ const HomePage = () => {
       <PromotionalBanners />
       <ModalitiesSection />
       <AreasSelector />
+      <CareerPath />
       <Footer />
     </main>
   );

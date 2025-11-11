@@ -5,7 +5,7 @@
 ### TypeScript Types
 
 - **Always use `type`** instead of `interface`
-- All types go in `types.ts` files
+- **DO NOT create types in component, hook, or context files** - all types must go in `types.ts` files
 - Only use `interface` for global definitions:
   - `env` files
   - `next-env.d.ts` files
@@ -68,10 +68,65 @@ component-name/
 
 ### Design System Tokens
 
-- Always use tokens from:
-  - `tokens.scss`
+- **Always use Reshaped design tokens** - never create custom SCSS variables for colors or breakpoints
+- Use tokens from:
+  - `tokens.scss` (Reshaped design tokens)
   - Theme files (grupo-ser.scss, uninassau.scss, etc.)
 - **Never use hardcoded colors** (supports light/dark themes)
+- **Never create custom breakpoint variables** - use Reshaped viewport tokens instead
+
+### Viewport Breakpoints
+
+- Use PostCSS custom media queries provided by Reshaped:
+  ```scss
+  // ✅ CORRECT - Use PostCSS custom media queries
+  @media (--rs-viewport-m) {
+    // Styles for medium viewport (≥660px)
+  }
+  
+  @media (--rs-viewport-l) {
+    // Styles for large viewport (≥900px)
+  }
+  
+  @media (--rs-viewport-xl) {
+    // Styles for extra large viewport (≥1280px)
+  }
+  ```
+
+- **DO NOT** create custom breakpoint variables:
+  ```scss
+  // ❌ WRONG - Don't create custom breakpoint variables
+  $breakpoint-tablet: 768px;
+  $breakpoint-desktop: 1024px;
+  
+  // ❌ WRONG - Don't use calc() with viewport tokens
+  @media (min-width: calc(var(--rs-viewport-m-min) * 1px)) {
+  }
+  ```
+
+### Color Tokens
+
+- Use Reshaped color tokens directly:
+  ```scss
+  // ✅ CORRECT - Use Reshaped color tokens
+  .button {
+    color: var(--rs-color-background-primary);
+    background: var(--rs-color-background-primary-faded);
+  }
+  
+  .critical {
+    color: var(--rs-color-background-critical);
+    background: var(--rs-color-background-critical-faded);
+  }
+  ```
+
+- **DO NOT** create custom color variables:
+  ```scss
+  // ❌ WRONG - Don't create custom color variables
+  $blue-primary: #052b82;
+  $blue-light: #e7efff;
+  $red-primary: #e2052c;
+  ```
 
 ### RGB Transparency
 
