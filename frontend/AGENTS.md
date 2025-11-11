@@ -1,5 +1,14 @@
 # AGENTS.md
 
+## Documentation
+
+For project understanding and development guidelines, read:
+
+1. **[HFSA-ARCHITECTURE.md](./docs/HFSA-ARCHITECTURE.md)** - Project structure and organization principles
+2. **[PROJECT-INDEX.md](./docs/PROJECT-INDEX.md)** - Complete project documentation index
+3. **[QUICK-DEVELOPMENT-GUIDE.md](./docs/QUICK-DEVELOPMENT-GUIDE.md)** - Essential coding standards and rules
+4. **[QUICK-REFERENCE.md](./docs/QUICK-REFERENCE.md)** - Developer cheat sheet and patterns
+
 ## Commands
 
 - `pnpm dev` - Start development server with Turbopack
@@ -53,6 +62,9 @@ export type { ComponentProps };
 - Use design tokens (`var(--rs-*)`)
 - Conditional rendering with `&&` operator
 - List keys must be unique IDs, not indices
+- **Always use `type` instead of `interface`** (except for global definitions)
+- All types go in `types.ts` files
+- Only export component from `index.ts`
 
 ### Testing
 
