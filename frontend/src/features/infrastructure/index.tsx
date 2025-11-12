@@ -59,7 +59,7 @@ export const InfrastructureSection = ({
                   {content.location} - {content.locationState}
                 </Text>
                 <Icon
-                  name="map-pin"
+                  name="current-location"
                   size={16}
                   className={styles.locationIcon}
                 />

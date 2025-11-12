@@ -35,10 +35,10 @@ export function GeoCoursesSection() {
               <Text as="span" variant="body-2">
                 Cursos perto de você
               </Text>
-              <Icon name="map-pin" size={16} aria-hidden="true" />
               <Text as="span" variant="body-2" weight="medium">
                 {data.location.city} - {data.location.state}
               </Text>
+              <Icon name="current-location" size={16} aria-hidden="true" />
             </div>
           </div>
           <Button
