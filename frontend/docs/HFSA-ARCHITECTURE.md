@@ -41,31 +41,31 @@ src/
 
 ### Component Module Contract (`src/components/<name>`)
 
-| File                 | Responsibility                                                                                                                                  |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `index.tsx`          | Export of the stateless component. May import hooks from sibling `hooks.ts` only if the logic is presentation-related (e.g., focus management). |
-| `styles.module.scss` | Styling with CSS modules. Name it exactly `styles.module.scss` for parity with the boilerplate.                                                 |
+| File                 | Responsibility                                                                                                                                                             |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index.tsx`          | Export of the stateless component. May import hooks from sibling `hooks.ts` only if the logic is presentation-related (e.g., focus management).                            |
+| `styles.module.scss` | Styling with CSS modules. Name it exactly `styles.module.scss` for parity with the boilerplate.                                                                            |
 | `types.ts`           | **ONLY** file where types are defined. Public props (`<Component>Props`), discriminated unions for variants. **DO NOT create types in component, hook, or context files.** |
-| `constants.ts`       | Copy decks, icon maps, tokens used by the component.                                                                                            |
-| `utils.ts`           | Pure helpers (formatters, class builders).                                                                                                      |
-| `hooks.ts`           | Optional component-level hooks (no data fetching, only presentation logic).                                                                     |
-| `api/*`              | **Only for stateful widgets**. If a “component” owns remote data, promote it to `src/features`.                                                 |
+| `constants.ts`       | Copy decks, icon maps, tokens used by the component.                                                                                                                       |
+| `utils.ts`           | Pure helpers (formatters, class builders).                                                                                                                                 |
+| `hooks.ts`           | Optional component-level hooks (no data fetching, only presentation logic).                                                                                                |
+| `api/*`              | **Only for stateful widgets**. If a “component” owns remote data, promote it to `src/features`.                                                                            |
 
 ### Feature Module Contract (`src/features/<feature>`)
 
-| File/Folder          | Responsibility                                                                                                    |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `index.tsx`          | Composes the UI, wires hooks, and exports a single public component/hook for route usage.                         |
-| `hooks.ts`           | React Query hooks (`useEnrollmentsQuery`, `useCreateEnrollmentMutation`) plus derived-state helpers.              |
-| `constants.ts`       | Static labels, query keys, feature flags.                                                                         |
+| File/Folder          | Responsibility                                                                                                                                                                  |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `index.tsx`          | Composes the UI, wires hooks, and exports a single public component/hook for route usage.                                                                                       |
+| `hooks.ts`           | React Query hooks (`useEnrollmentsQuery`, `useCreateEnrollmentMutation`) plus derived-state helpers.                                                                            |
+| `constants.ts`       | Static labels, query keys, feature flags.                                                                                                                                       |
 | `types.ts`           | **ONLY** file where types are defined. Feature-scoped view models and discriminated unions that are not API DTOs. **DO NOT create types in component, hook, or context files.** |
-| `utils.ts`           | Pure transformers (e.g., map API DTO → view model).                                                               |
-| `styles.module.scss` | Feature styles (optionally split into smaller SCSS partials imported here).                                       |
-| `api/query.ts`       | Read operations. Each function wraps `libs/api/queryClient` and exposes the hook-friendly contract.               |
-| `api/mutation.ts`    | Write operations and side effects.                                                                                |
-| `api/types.ts`       | DTOs and server contracts.                                                                                        |
-| `api/mock.ts`        | Optional MSW handlers or fixtures.                                                                                |
-| `__tests__/`         | Vitest specs (unit, hook, and integration). Name them `<feature>.integration.spec.tsx` when exercising the route. |
+| `utils.ts`           | Pure transformers (e.g., map API DTO → view model).                                                                                                                             |
+| `styles.module.scss` | Feature styles (optionally split into smaller SCSS partials imported here).                                                                                                     |
+| `api/query.ts`       | Read operations. Each function wraps `libs/api/queryClient` and exposes the hook-friendly contract.                                                                             |
+| `api/mutation.ts`    | Write operations and side effects.                                                                                                                                              |
+| `api/types.ts`       | DTOs and server contracts.                                                                                                                                                      |
+| `api/mock.ts`        | Optional MSW handlers or fixtures.                                                                                                                                              |
+| `__tests__/`         | Vitest specs (unit, hook, and integration). Name them `<feature>.integration.spec.tsx` when exercising the route.                                                               |
 
 ### Routing Contract
 

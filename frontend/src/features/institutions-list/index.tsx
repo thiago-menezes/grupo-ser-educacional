@@ -6,10 +6,21 @@ import styles from './styles.module.scss';
 
 export const InstitutionsList = () => {
   return (
-    <section className={styles.section}>
-      <div className={styles.container}>
-        <header className={styles.hero}>
-          <div className={styles.heroLogo}>
+    <div className={styles.container}>
+      <div className={styles.imageSide}>
+        <Image
+          src="https://unsplash.it/1200/700?random"
+          alt="Instituições de ensino"
+          width={1200}
+          height={700}
+          className={styles.heroImage}
+          priority
+        />
+      </div>
+
+      <div className={styles.contentSide}>
+        <div className={styles.header}>
+          <div className={styles.logoWrapper}>
             <Image
               src="/logos/grupo-ser.png"
               alt="Ser Educacional"
@@ -18,16 +29,23 @@ export const InstitutionsList = () => {
               priority
             />
           </div>
-
-          <div className={styles.heroCopy}>
-            <Text as="h1" variant="title-5" color="neutral">
-              Conheça Nossas Instituições de Ensino
-            </Text>
-            <Text as="p" variant="body-1" color="neutral-faded">
-              Descubra a instituição ideal para o seu futuro.
-            </Text>
-          </div>
-        </header>
+          <Text
+            as="h1"
+            variant="title-5"
+            color="neutral"
+            className={styles.title}
+          >
+            Conheça Nossas Instituições de Ensino
+          </Text>
+          <Text
+            as="p"
+            variant="body-1"
+            color="neutral-faded"
+            className={styles.subtitle}
+          >
+            Descubra a instituição ideal para o seu futuro.
+          </Text>
+        </div>
 
         <div className={styles.grid}>
           {INSTITUTIONS.map((institution) => (
@@ -35,6 +53,6 @@ export const InstitutionsList = () => {
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };

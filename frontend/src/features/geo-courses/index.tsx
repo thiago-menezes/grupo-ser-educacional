@@ -8,9 +8,13 @@ import { usePagination } from '@/hooks/usePagination';
 import { CourseCard } from './course-card';
 import { MOCK_GEO_COURSES_DATA } from './mocks';
 import styles from './styles.module.scss';
+import type { GeoCourseSectionProps } from './types';
 
-export function GeoCoursesSection() {
-  const data = MOCK_GEO_COURSES_DATA;
+export { MOCK_POPULAR_COURSES_DATA } from './mocks';
+
+export function GeoCoursesSection({
+  data = MOCK_GEO_COURSES_DATA,
+}: Partial<GeoCourseSectionProps>) {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   const { currentPage, totalPages, goToPage, isScrollable } = usePagination({

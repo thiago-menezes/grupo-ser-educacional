@@ -78,27 +78,29 @@ component-name/
 ### Viewport Breakpoints
 
 - Use PostCSS custom media queries provided by Reshaped:
+
   ```scss
   // ✅ CORRECT - Use PostCSS custom media queries
   @media (--rs-viewport-m) {
     // Styles for medium viewport (≥660px)
   }
-  
+
   @media (--rs-viewport-l) {
     // Styles for large viewport (≥900px)
   }
-  
+
   @media (--rs-viewport-xl) {
     // Styles for extra large viewport (≥1280px)
   }
   ```
 
 - **DO NOT** create custom breakpoint variables:
+
   ```scss
   // ❌ WRONG - Don't create custom breakpoint variables
   $breakpoint-tablet: 768px;
   $breakpoint-desktop: 1024px;
-  
+
   // ❌ WRONG - Don't use calc() with viewport tokens
   @media (min-width: calc(var(--rs-viewport-m-min) * 1px)) {
   }
@@ -107,13 +109,14 @@ component-name/
 ### Color Tokens
 
 - Use Reshaped color tokens directly:
+
   ```scss
   // ✅ CORRECT - Use Reshaped color tokens
   .button {
     color: var(--rs-color-background-primary);
     background: var(--rs-color-background-primary-faded);
   }
-  
+
   .critical {
     color: var(--rs-color-background-critical);
     background: var(--rs-color-background-critical-faded);

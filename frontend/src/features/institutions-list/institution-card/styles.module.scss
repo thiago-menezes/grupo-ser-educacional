@@ -2,34 +2,8 @@
   background-color: var(--rs-color-white);
   display: flex;
   flex-direction: column;
-  gap: var(--rs-unit-x4);
-  padding: var(--rs-unit-x4);
+  gap: var(--rs-unit-x2);
+  padding: var(--rs-unit-x3);
   border: 1px solid var(--rs-color-border-neutral);
   border-radius: var(--rs-radius-large);
-}
-
-.cardCta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--rs-unit-x2);
-  padding: var(--rs-unit-x3) var(--rs-unit-x6);
-  width: fit-content;
-  border-radius: var(--rs-radius-large);
-  font-weight: var(--rs-font-weight-semibold);
-  font-size: var(--rs-font-size-body-2);
-  background: var(--rs-color-background-primary);
-  color: var(--rs-color-on-background-primary);
-  text-decoration: none;
-  box-shadow: 0 12px 20px rgba(var(--rs-color-rgb-background-primary), 0.25);
-  transition:
-    background var(--rs-duration-fast) var(--rs-easing-standard),
-    transform var(--rs-duration-fast) var(--rs-easing-standard),
-    box-shadow var(--rs-duration-fast) var(--rs-easing-standard);
-
-  &:hover {
-    background: var(--rs-color-border-primary);
-    transform: translateY(-1px);
-    box-shadow: 0 18px 28px rgba(var(--rs-color-rgb-background-primary), 0.35);
-  }
 }

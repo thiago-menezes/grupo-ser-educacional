@@ -17,7 +17,7 @@ export type GeoCoursesData = {
 };
 
 export type GeoCourseSectionProps = {
-  data?: GeoCoursesData | null;
+  data?: GeoCoursesData;
   isLoading?: boolean;
   error?: string | null;
   city?: string;

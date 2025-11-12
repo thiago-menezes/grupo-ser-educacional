@@ -34,6 +34,7 @@ export type { ComponentProps };
 ```
 
 **Ordem de importações:**
+
 1. React/Next built-ins
 2. Bibliotecas externas (node_modules)
 3. Componentes locais
@@ -154,65 +155,77 @@ import { Icon } from '@/components/icon';
 ## 🔤 Convenções de Nomenclatura
 
 ### Componentes
+
 ```typescript
 // ✅ CORRETO - Use const com arrow function
-export const ComponentName = () => { }
+export const ComponentName = () => {};
 // Arquivo: component-name/index.tsx
 
 // ❌ ERRADO - Não use function declaration
-export function ComponentName() { }
+export function ComponentName() {}
 ```
 
 ### Tipos
+
 ```typescript
 // ✅ CORRETO - Todos os tipos devem estar em types.ts
 // Arquivo: types.ts
-export type ComponentNameProps = { }
-export type ComponentNameData = { }
+export type ComponentNameProps = {};
+export type ComponentNameData = {};
 export type CourseLevel = 'graduation' | 'postgraduate';
 
 // ❌ ERRADO - NUNCA defina tipos dentro do arquivo do componente
 // Arquivo: index.tsx
-type ComponentNameProps = { } // ❌ ERRADO!
+type ComponentNameProps = {}; // ❌ ERRADO!
 ```
 
 **Regra importante**: Todos os tipos TypeScript devem ser definidos no arquivo `types.ts` do feature, nunca dentro do arquivo do componente (`index.tsx`). Isso inclui:
+
 - Props types (`ComponentNameProps`)
 - Data types (`ComponentNameData`)
 - Enums e unions
 - Qualquer outro tipo exportado ou usado pelo componente
 
 ### Constantes
+
 ```typescript
 // UPPER_SNAKE_CASE
-export const DEFAULT_HERO_CONTENT = { };
-export const CAROUSEL_CONFIG = { };
+export const DEFAULT_HERO_CONTENT = {};
+export const CAROUSEL_CONFIG = {};
 export const HOME_HERO_QUERY_KEY = ['home-hero'] as const;
 ```
 
 ### Classes CSS
+
 ```scss
 // camelCase
-.container { }
-.arrowButton { }
-.dot { }
-.active { } // estado
-.disabled { } // estado
+.container {
+}
+.arrowButton {
+}
+.dot {
+}
+.active {
+} // estado
+.disabled {
+} // estado
 ```
 
 ### Variáveis/Funções
+
 ```typescript
 // camelCase
 const currentSlide = 0;
-function handleKeyDown() { }
-const buildSearchParams = () => { };
+function handleKeyDown() {}
+const buildSearchParams = () => {};
 ```
 
 ### Hooks Customizados
+
 ```typescript
 // useFeatureName
-export function useHeroCarousel() { }
-export function useQuickSearchForm() { }
+export function useHeroCarousel() {}
+export function useQuickSearchForm() {}
 ```
 
 ---
@@ -223,10 +236,10 @@ export function useQuickSearchForm() { }
 
 ```typescript
 // ✅ CORRETO
-function Component({ name, age }: { name: string; age: number }) { }
+function Component({ name, age }: { name: string; age: number }) {}
 
 // Ou melhor ainda:
-function Component(props: ComponentProps) { }
+function Component(props: ComponentProps) {}
 ```
 
 ### Tipos de Dados (DTOs)
@@ -494,10 +507,10 @@ count++;
 
 ```typescript
 // ❌ ERRADO
-function handle(data: any) { }
+function handle(data: any) {}
 
 // ✅ CORRETO
-function handle(data: SearchData) { }
+function handle(data: SearchData) {}
 ```
 
 ### Use Union Types
@@ -514,10 +527,10 @@ type CourseLevel = string;
 
 ```typescript
 // ✅ CORRETO - para valores que podem ser false, 0, ''
-showCarousel ?? true
+showCarousel ?? true;
 
 // ❌ ERRADO - pega também valores falsos válidos
-showCarousel || true
+showCarousel || true;
 ```
 
 ---
@@ -528,7 +541,7 @@ Sempre exporte tipos publicamente:
 
 ```typescript
 // ✅ CORRETO
-export function Component(props: ComponentProps) { }
+export function Component(props: ComponentProps) {}
 export type { ComponentProps };
 
 // Permite: import type { ComponentProps } from './component'
@@ -538,17 +551,17 @@ export type { ComponentProps };
 
 ## 🚀 Resumo Rápido
 
-| Item | Padrão |
-|------|--------|
-| **Componentes** | PascalCase, arquivo kebab-case |
-| **Tipos de Props** | `ComponentNameProps` |
-| **Dados** | `ComponentNameData` |
-| **Constantes** | `UPPER_SNAKE_CASE` |
-| **Funções** | `camelCase` |
-| **Classes CSS** | `camelCase` |
-| **Estilo** | CSS Modules, design tokens |
-| **UI Components** | Reshaped (não custom HTML) |
-| **Ícones** | `Icon` component (não SVGs) |
-| **Renderização** | Condicional com `&&` |
-| **Acessibilidade** | ARIA labels, semântica HTML |
-| **Hooks** | `useFeatureName` |
+| Item               | Padrão                         |
+| ------------------ | ------------------------------ |
+| **Componentes**    | PascalCase, arquivo kebab-case |
+| **Tipos de Props** | `ComponentNameProps`           |
+| **Dados**          | `ComponentNameData`            |
+| **Constantes**     | `UPPER_SNAKE_CASE`             |
+| **Funções**        | `camelCase`                    |
+| **Classes CSS**    | `camelCase`                    |
+| **Estilo**         | CSS Modules, design tokens     |
+| **UI Components**  | Reshaped (não custom HTML)     |
+| **Ícones**         | `Icon` component (não SVGs)    |
+| **Renderização**   | Condicional com `&&`           |
+| **Acessibilidade** | ARIA labels, semântica HTML    |
+| **Hooks**          | `useFeatureName`               |

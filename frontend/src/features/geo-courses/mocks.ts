@@ -134,3 +134,22 @@ export const MOCK_GEO_COURSES_DATA: GeoCoursesData = {
   },
   courses: MOCK_COURSES_DATA,
 };
+
+export const MOCK_POPULAR_COURSES_DATA: GeoCoursesData = {
+  title: 'Os cursos mais procurados em sua região',
+  description: 'Explore nossa ampla variedade de cursos de qualidade',
+  location: {
+    city: 'São José dos Campos',
+    state: 'SP',
+    coordinates: {
+      latitude: -23.1814,
+      longitude: -45.8883,
+    },
+  },
+  courses: [
+    MOCK_COURSES_DATA[0], // Engenharia civil
+    MOCK_COURSES_DATA[2], // Enfermagem
+    MOCK_COURSES_DATA[3], // Análise e desenvolvimento de sistemas
+    MOCK_COURSES_DATA[4], // Administração
+  ],
+};
