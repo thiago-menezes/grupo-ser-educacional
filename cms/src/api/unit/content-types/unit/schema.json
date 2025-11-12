@@ -8,7 +8,7 @@
     "description": "Infrastructure units (campuses) for institutions"
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {

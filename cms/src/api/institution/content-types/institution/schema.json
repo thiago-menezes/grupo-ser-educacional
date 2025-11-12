@@ -8,7 +8,7 @@
     "description": "Educational institutions in the Grupo SER network"
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {

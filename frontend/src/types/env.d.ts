@@ -2,6 +2,7 @@ declare namespace NodeJS {
   interface ProcessEnv {
     // API Configuration
     NEXT_PUBLIC_API_BASE_URL: string;
+    NEXT_PUBLIC_STRAPI_URL?: string;
     NEXT_PUBLIC_APP_BASE_URL?: string;
     NEXT_PUBLIC_INSTITUTION?: string;
 

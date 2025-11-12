@@ -2,73 +2,34 @@
 
 import { clsx } from 'clsx';
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components/icon';
-import { useGeolocation } from '@/hooks/useGeolocation';
+import { useInfrastructure } from './hooks';
 import { ImageModal } from './image-modal';
-import { MOCK_INFRASTRUCTURE_CONTENT } from './mocks';
 import styles from './styles.module.scss';
-import type { InfrastructureSectionProps } from './types';
-import { markClosestUnit } from './utils';
 
-export const InfrastructureSection = ({
-  content = MOCK_INFRASTRUCTURE_CONTENT,
-}: InfrastructureSectionProps) => {
-  const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
-  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+export const InfrastructureSection = () => {
   const {
     city,
     state,
-    coordinates,
     permissionDenied,
     requestPermission,
     isLoading,
-  } = useGeolocation();
+    sortedUnits,
+    handleUnitClick,
+    mainImage,
+    sideImages,
+    handleImageClick,
+    handleCloseModal,
+    selectedImageId,
+    selectedUnitId,
+    selectedImage,
+  } = useInfrastructure();
 
-  // Sort units by proximity and mark the closest one
-  const sortedUnits = useMemo(
-    () => markClosestUnit(content.units, coordinates),
-    [content.units, coordinates],
-  );
-
-  // Get the active unit (manually selected or closest one)
-  const activeUnit = useMemo(() => {
-    if (selectedUnitId) {
-      return sortedUnits.find((unit) => unit.id === selectedUnitId);
-    }
-    return sortedUnits.find((unit) => unit.isActive);
-  }, [sortedUnits, selectedUnitId]);
-
-  // Get images for the active unit
-  const unitImages = useMemo(() => {
-    if (!activeUnit?.imageIds || activeUnit.imageIds.length === 0) {
-      // If unit has no images, show all images
-      return content.images;
-    }
-    return content.images.filter((img) =>
-      activeUnit.imageIds?.includes(img.id),
-    );
-  }, [activeUnit, content.images]);
-
-  const selectedImage = content.images.find(
-    (img) => img.id === selectedImageId,
-  );
-
-  const handleImageClick = (imageId: string) => {
-    setSelectedImageId(imageId);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedImageId(null);
-  };
-
-  const handleUnitClick = (unitId: string) => {
-    setSelectedUnitId(unitId);
-  };
-
-  const mainImage = unitImages[0] || content.images[0];
-  const sideImages = unitImages.slice(1, 5);
+  // Safety check: don't render if no images
+  if (!mainImage) {
+    return null;
+  }
 
   return (
     <section

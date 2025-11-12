@@ -17,8 +17,8 @@
 
 .closeButton {
   position: absolute;
-  top: var(--rs-unit-x4);
-  right: var(--rs-unit-x4);
+  top: 0;
+  right: 0;
   width: calc(var(--rs-unit-x1) * 12);
   height: calc(var(--rs-unit-x1) * 12);
   border-radius: 50%;
