@@ -2,7 +2,7 @@ import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { AreasSelector } from '@/features/areas-selector';
 import { CareerPath } from '@/features/career-path';
-import { EntryFormsSection } from '@/features/entry-methods';
+import { EntryMethodsSection } from '@/features/entry-methods';
 import { GeoCoursesSection } from '@/features/geo-courses';
 import { HomeHero } from '@/features/home-hero';
 import { InfrastructureSection } from '@/features/infrastructure';
@@ -19,7 +19,7 @@ const HomePage = () => {
       <ModalitiesSection />
       <AreasSelector />
       <CareerPath />
-      <EntryFormsSection />
+      <EntryMethodsSection />
       <InfrastructureSection />
       <Footer />
     </main>

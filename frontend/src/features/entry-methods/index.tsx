@@ -6,13 +6,13 @@ import { Icon } from '@/components/icon';
 import { DEFAULT_ENTRY_METHODS } from './constants';
 import styles from './styles.module.scss';
 
-export function EntryFormsSection() {
+export function EntryMethodsSection() {
   const sectionClassName = clsx(styles.section);
 
   return (
     <section
       className={sectionClassName}
-      aria-labelledby="entry-forms-section-title"
+      aria-labelledby="entry-methods-section-title"
     >
       <div className={styles.content}>
         <div className={styles.header}>
