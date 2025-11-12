@@ -4,10 +4,11 @@ import { clsx } from 'clsx';
 import Link from 'next/link';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components/icon';
-import { DEFAULT_MODALITIES } from './constants';
+import { MOCK_MODALITIES } from './mocks';
 import styles from './styles.module.scss';
 
 export function ModalitiesSection() {
+  const modalities = MOCK_MODALITIES;
   const sectionClassName = clsx(styles.section);
 
   return (
@@ -27,7 +28,7 @@ export function ModalitiesSection() {
         </div>
 
         <div className={styles.cards} role="list">
-          {DEFAULT_MODALITIES.map((modality) => (
+          {modalities.map((modality) => (
             <article key={modality.id} className={styles.card} role="listitem">
               <div className={styles.cardHeader}>
                 <Icon name={modality.icon} size={24} className={styles.icon} />

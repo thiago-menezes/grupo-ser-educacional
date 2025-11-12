@@ -3,7 +3,7 @@
 import { clsx } from 'clsx';
 import { Text } from 'reshaped';
 import { Icon } from '@/components/icon';
-import { DEFAULT_ENTRY_FORMS } from './constants';
+import { DEFAULT_ENTRY_METHODS } from './constants';
 import styles from './styles.module.scss';
 
 export function EntryFormsSection() {
@@ -20,7 +20,6 @@ export function EntryFormsSection() {
             as="h2"
             variant="featured-1"
             weight="bold"
-            id="entry-forms-section-title"
             className={styles.title}
           >
             Conheça nossas formas de ingresso
@@ -32,7 +31,7 @@ export function EntryFormsSection() {
         </div>
 
         <div className={styles.cards} role="list">
-          {DEFAULT_ENTRY_FORMS.map((form) => (
+          {DEFAULT_ENTRY_METHODS.map((form) => (
             <article key={form.id} className={styles.card} role="listitem">
               <div className={styles.cardHeader}>
                 <Icon name={form.icon} size={24} className={styles.icon} />
@@ -46,11 +45,7 @@ export function EntryFormsSection() {
                 </Text>
               </div>
 
-              <Text
-                as="p"
-                variant="body-2"
-                className={styles.cardDescription}
-              >
+              <Text as="p" variant="body-2" className={styles.cardDescription}>
                 {form.description}
               </Text>
             </article>
@@ -60,4 +55,3 @@ export function EntryFormsSection() {
     </section>
   );
 }
-

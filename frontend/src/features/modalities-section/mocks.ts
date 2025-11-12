@@ -1,6 +1,6 @@
 import type { ModalityHighlight } from './types';
 
-export const DEFAULT_MODALITIES: ModalityHighlight[] = [
+export const MOCK_MODALITIES: ModalityHighlight[] = [
   {
     id: 'presencial',
     title: 'Presencial',

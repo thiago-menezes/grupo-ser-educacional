@@ -19,6 +19,5 @@ export type AreaCard = {
 };
 
 export type AreasSelectorContent = {
-  title: string;
   areas: AreaCard[];
 };

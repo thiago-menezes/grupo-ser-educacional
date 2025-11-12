@@ -1,6 +1,4 @@
-import type { EntryForm } from './types';
-
-export const DEFAULT_ENTRY_FORMS: EntryForm[] = [
+export const DEFAULT_ENTRY_METHODS = [
   {
     id: 'vestibular',
     title: 'Vestibular',
@@ -25,5 +23,4 @@ export const DEFAULT_ENTRY_FORMS: EntryForm[] = [
     description: 'Utilize seu diploma para ingressar',
     icon: 'certificate',
   },
-];
-
+] as const;

@@ -5,13 +5,13 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components/icon';
-import { DEFAULT_INFRASTRUCTURE_CONTENT } from './constants';
 import { ImageModal } from './image-modal';
+import { MOCK_INFRASTRUCTURE_CONTENT } from './mocks';
 import styles from './styles.module.scss';
 import type { InfrastructureSectionProps } from './types';
 
 export const InfrastructureSection = ({
-  content = DEFAULT_INFRASTRUCTURE_CONTENT,
+  content = MOCK_INFRASTRUCTURE_CONTENT,
 }: InfrastructureSectionProps) => {
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const selectedImage = content.images.find(
@@ -43,11 +43,11 @@ export const InfrastructureSection = ({
               weight="bold"
               className={styles.title}
             >
-              {content.title}
+              Conheça nossa infraestrutura
             </Text>
             <div className={styles.locationInfo}>
               <Text as="span" variant="body-2">
-                {content.locationLabel}
+                Unidades próximas a você
               </Text>
               <div className={styles.location}>
                 <Text
@@ -70,9 +70,9 @@ export const InfrastructureSection = ({
             variant="ghost"
             color="primary"
             onClick={() => console.log('Ver todas as unidades')}
-            aria-label={content.viewAllButtonLabel}
+            aria-label="Ver todas as unidades"
           >
-            {content.viewAllButtonLabel}
+            Ver todas as unidades
           </Button>
         </div>
 

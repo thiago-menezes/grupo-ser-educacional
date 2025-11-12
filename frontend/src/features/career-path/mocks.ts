@@ -1,6 +1,6 @@
 import type { CareerPathContent } from './types';
 
-export const DEFAULT_CAREER_PATH_CONTENT: CareerPathContent = {
+export const MOCK_CAREER_PATH_CONTENT: CareerPathContent = {
   cards: [
     {
       id: 'graduation',

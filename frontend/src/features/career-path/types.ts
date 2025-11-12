@@ -15,8 +15,6 @@ export type CareerPathCard = {
 };
 
 export type CareerPathContent = {
-  title: string;
-  subtitle: string;
   cards: CareerPathCard[];
 };
 

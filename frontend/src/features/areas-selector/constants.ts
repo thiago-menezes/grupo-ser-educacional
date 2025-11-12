@@ -3,7 +3,6 @@ import type { AreasSelectorContent } from './types';
 const PLACEHOLDER_IMAGE = 'https://placehold.co/320x180.png';
 
 export const DEFAULT_AREAS_CONTENT: AreasSelectorContent = {
-  title: 'Já sabe que área seguir então busque o curso ideal',
   areas: [
     {
       id: 'engineering',

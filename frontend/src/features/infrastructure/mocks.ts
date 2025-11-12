@@ -1,11 +1,8 @@
 import type { InfrastructureContent } from './types';
 
-export const DEFAULT_INFRASTRUCTURE_CONTENT: InfrastructureContent = {
-  title: 'Conheça nossa infraestrutura',
-  locationLabel: 'Unidades próximas a você',
+export const MOCK_INFRASTRUCTURE_CONTENT: InfrastructureContent = {
   location: 'São José dos Campos',
   locationState: 'SP',
-  viewAllButtonLabel: 'Ver todas as unidades',
   units: [
     {
       id: 'sao-jose-aquarios',

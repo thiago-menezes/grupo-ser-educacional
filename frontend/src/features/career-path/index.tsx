@@ -4,12 +4,15 @@ import Link from 'next/link';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components/icon';
 import { DEFAULT_CAREER_PATH_CONTENT } from './constants';
+import { MOCK_CAREER_PATH_CONTENT } from './mocks';
 import styles from './styles.module.scss';
 import type { CareerPathProps } from './types';
 
 export function CareerPath({
   content = DEFAULT_CAREER_PATH_CONTENT,
 }: CareerPathProps) {
+  const displayContent =
+    content.cards.length > 0 ? content : MOCK_CAREER_PATH_CONTENT;
   return (
     <section className={styles.section} aria-labelledby="career-path-title">
       <div className={styles.container}>
@@ -21,15 +24,15 @@ export function CareerPath({
               weight="bold"
               className={styles.title}
             >
-              {content.title}
+              Escolha o caminho que combina com você
             </Text>
             <Text as="p" variant="body-2" className={styles.subtitle}>
-              {content.subtitle}
+              Aqui você encontra a trilha ideal para chegar no seu objetivo!
             </Text>
           </header>
 
           <div className={styles.cards} role="list">
-            {content.cards.map((card) => (
+            {displayContent.cards.map((card) => (
               <article key={card.id} className={styles.card} role="listitem">
                 <div className={styles.cardHeader}>
                   <div className={styles.cardTitleRow}>

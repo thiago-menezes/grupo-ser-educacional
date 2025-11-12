@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import { PROMOTIONAL_BANNERS_PLACEHOLDER } from './constants';
+import { MOCK_PROMOTIONAL_BANNERS } from './mocks';
 import styles from './styles.module.scss';
 import type { PromotionalBannersProps } from './types';
 
 export function PromotionalBanners({
-  banners = PROMOTIONAL_BANNERS_PLACEHOLDER,
+  banners = MOCK_PROMOTIONAL_BANNERS,
 }: PromotionalBannersProps) {
   if (!banners.length) {
     return null;

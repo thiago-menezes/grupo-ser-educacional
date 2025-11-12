@@ -2,7 +2,7 @@ import type { PromotionalBanner } from './types';
 
 const PLACEHOLDER_IMAGE = 'https://placehold.co/625x250.png';
 
-export const PROMOTIONAL_BANNERS_PLACEHOLDER: PromotionalBanner[] = [
+export const MOCK_PROMOTIONAL_BANNERS: PromotionalBanner[] = [
   {
     id: 'stripe-placeholder-1',
     imageUrl: PLACEHOLDER_IMAGE,

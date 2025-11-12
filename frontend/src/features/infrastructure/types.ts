@@ -11,11 +11,8 @@ export type InfrastructureUnit = {
 };
 
 export type InfrastructureContent = {
-  title: string;
-  locationLabel: string;
   location: string;
   locationState: string;
-  viewAllButtonLabel: string;
   units: InfrastructureUnit[];
   images: InfrastructureImage[];
 };

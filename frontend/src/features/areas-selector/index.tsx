@@ -27,7 +27,9 @@ export function AreasSelector({
     <section className={styles.section} aria-label="Selecione áreas de estudo">
       <div className={styles.container}>
         <header className={styles.header}>
-          <h2 className={styles.title}>{content.title}</h2>
+          <h2 className={styles.title}>
+            Já sabe que área seguir então busque o curso ideal
+          </h2>
         </header>
 
         <div className={styles.carousel}>
