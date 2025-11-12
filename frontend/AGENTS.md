@@ -11,18 +11,18 @@ For project understanding and development guidelines, read:
 
 ## Commands
 
-- `pnpm dev` - Start development server with Turbopack
-- `pnpm build` - Build for production
-- `pnpm typecheck` - Run TypeScript type checking
-- `pnpm lint` - Run ESLint
-- `pnpm lint:fix` - Fix ESLint issues automatically
-- `pnpm format` - Format code with Prettier and fix linting
-- `pnpm test` - Run all tests with Vitest
-- `pnpm test:unit` - Run unit tests only (`src/**/*.spec.{ts,tsx}`)
-- `pnpm test:integration` - Run integration tests only (`src/**/*.integration.spec.{ts,tsx}`)
-- `pnpm test:ui` - Run tests with UI interface
-- `pnpm test:coverage` - Generate coverage report
-- `pnpm test src/path/to/test.spec.tsx` - Run single test file
+- `yarn dev:frontend` - Start development server with Turbopack
+- `yarn build:frontend` - Build for production
+- `yarn workspace frontend typecheck` - Run TypeScript type checking
+- `yarn workspace frontend lint` - Run ESLint
+- `yarn workspace frontend lint:fix` - Fix ESLint issues automatically
+- `yarn format` - Format code with Prettier and fix linting
+- `yarn workspace frontend test` - Run all tests with Vitest
+- `yarn workspace frontend test:unit` - Run unit tests only (`src/**/*.spec.{ts,tsx}`)
+- `yarn workspace frontend test:integration` - Run integration tests only (`src/**/*.integration.spec.{ts,tsx}`)
+- `yarn workspace frontend test:ui` - Run tests with UI interface
+- `yarn workspace frontend test:coverage` - Generate coverage report
+- `yarn workspace frontend test src/path/to/test.spec.tsx` - Run single test file
 
 ## Code Style Guidelines
 

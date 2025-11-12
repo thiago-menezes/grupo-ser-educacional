@@ -16,8 +16,8 @@ limpa orientada pela identidade visual das instituições.
 ## Como rodar
 
 1. Copie `.env.example` para `.env.local` (já existe um arquivo de referência).
-2. Instale dependências: `pnpm install`.
-3. Suba o projeto: `pnpm dev`.
+2. Instale dependências: `yarn install`.
+3. Suba o projeto: `yarn dev:frontend`.
 4. Acesse uma das rotas institucionais:
    - `http://localhost:3000/ung` - UNG
    - `http://localhost:3000/uninassau` - UNINASSAU
@@ -30,7 +30,7 @@ limpa orientada pela identidade visual das instituições.
 
 ### Checkers úteis
 
-- `pnpm lint:styles`: varre os arquivos `*.module.scss` e acusa classes não utilizadas nos componentes que importam cada módulo.
+- `yarn workspace frontend lint:styles`: varre os arquivos `*.module.scss` e acusa classes não utilizadas nos componentes que importam cada módulo.
 
 ## Estrutura atual
 

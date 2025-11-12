@@ -11,13 +11,13 @@ Follow these steps when implementing a new feature or fixing a bug:
 3. **Implement** - Write code, tests, and documentation together
 4. **Validate** - Run all checks before committing:
    ```bash
-   pnpm test              # Run all tests
-   pnpm lint              # Check code style
-   pnpm typecheck         # Verify TypeScript types
+   yarn workspace frontend test              # Run all tests
+   yarn workspace frontend lint              # Check code style
+   yarn workspace frontend typecheck         # Verify TypeScript types
    ```
 5. **Update tracking** - Mark the task as complete in the appropriate kanban file (`docs/kanbans/*.md`)
 
-PS: Never run `pnpm build` when checking tests - it breaks the app
+PS: Never run `yarn build` when checking tests - it breaks the app
 
 ---
 
@@ -370,23 +370,23 @@ Use Reshaped PostCSS custom media queries:
 
 ```bash
 # Development
-pnpm dev
+yarn dev:frontend
 
 # Type checking
-pnpm typecheck
+yarn workspace frontend typecheck
 
 # Linting
-pnpm lint
+yarn workspace frontend lint
 
 # Testing
-pnpm test                    # All tests
-pnpm test:unit              # Unit tests only
-pnpm test:integration       # Integration tests
-pnpm test -- CourseCard     # Specific test file
+yarn workspace frontend test                    # All tests
+yarn workspace frontend test:unit              # Unit tests only
+yarn workspace frontend test:integration       # Integration tests
+yarn workspace frontend test -- CourseCard     # Specific test file
 
 # Build
-pnpm build
-pnpm start                  # Serve production build
+yarn build:frontend
+yarn start:frontend                  # Serve production build
 ```
 
 ---
@@ -439,9 +439,9 @@ Default institution: `uninassau`
 
 Before committing:
 
-- [ ] `pnpm typecheck` passes
-- [ ] `pnpm lint` passes
-- [ ] `pnpm test` passes
+- [ ] `yarn workspace frontend typecheck` passes
+- [ ] `yarn workspace frontend lint` passes
+- [ ] `yarn workspace frontend test` passes
 - [ ] Component works at all breakpoints
 - [ ] Accessibility tested (keyboard, screen reader)
 - [ ] No console errors
@@ -453,7 +453,7 @@ Before committing:
 
 ### Issue: "Module not found"
 
-**Solution**: Check import path is correct, run `pnpm install`
+**Solution**: Check import path is correct, run `yarn install`
 
 ### Issue: TypeScript errors in tests
 

@@ -141,17 +141,17 @@ component-name/
 
 ## Important Notes
 
-- **Never run `pnpm build`** when checking tests - it breaks the app
+- **Never run `yarn build`** when checking tests - it breaks the app
 - Always follow the existing code patterns and conventions
 - Check existing components before creating new ones
 
 ## Development Commands
 
-- `pnpm dev` - Start development server
-- `pnpm typecheck` - Run TypeScript checking
-- `pnpm lint` - Run ESLint
-- `pnpm lint:fix` - Fix ESLint issues
-- `pnpm format` - Format with Prettier
-- `pnpm test` - Run all tests
-- `pnpm test:unit` - Run unit tests
-- `pnpm test:integration` - Run integration tests
+- `yarn dev:frontend` - Start development server
+- `yarn workspace frontend typecheck` - Run TypeScript checking
+- `yarn workspace frontend lint` - Run ESLint
+- `yarn workspace frontend lint:fix` - Fix ESLint issues
+- `yarn format` - Format with Prettier
+- `yarn workspace frontend test` - Run all tests
+- `yarn workspace frontend test:unit` - Run unit tests
+- `yarn workspace frontend test:integration` - Run integration tests

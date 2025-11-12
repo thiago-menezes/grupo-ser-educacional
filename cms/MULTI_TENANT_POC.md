@@ -94,7 +94,7 @@ Blocos de conteúdo flexíveis para diferentes seções do site, organizados por
 ### 1. Acessar o Admin Panel
 
 ```bash
-npm run dev
+yarn dev:cms
 ```
 
 Acesse: http://localhost:1337/admin
