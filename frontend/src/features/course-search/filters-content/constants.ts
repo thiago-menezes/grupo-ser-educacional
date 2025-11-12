@@ -1,0 +1,1 @@
+export const FILTERS_CONTENT_HEIGHT_TO_UPDATE = 206;

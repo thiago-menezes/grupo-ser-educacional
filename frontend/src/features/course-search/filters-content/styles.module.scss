@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--rs-unit-x6);
+  margin-top: var(--rs-unit-x2);
 
   [role='tablist'] {
     > div:last-child {
@@ -15,10 +16,38 @@
   }
 }
 
-.courseLevelTabs {
-  margin-top: var(--rs-unit-x4);
-}
-
 .priceRangeLabels {
   width: 100%;
+}
+
+.formInputsContainer {
+  margin: calc(0px - var(--rs-unit-x6));
+  padding: var(--rs-unit-x6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x4);
+  overflow-y: auto;
+  height: calc(60vh - var(--rs-unit-x6));
+  transition: height 300ms ease-in-out;
+}
+
+.formInputsUpdatedHeight {
+  height: calc(87vh - var(--rs-unit-x6));
+}
+
+.viewPortMedium {
+  margin-top: -24px;
+  height: initial;
+}
+
+.activeFiltersHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--rs-unit-x2);
+}
+
+.activeFiltersSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x4);
 }

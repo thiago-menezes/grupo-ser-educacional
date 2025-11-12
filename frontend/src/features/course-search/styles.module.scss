@@ -34,16 +34,11 @@
   }
 }
 
-.title {
-  margin: 0;
-}
-
-// Filters Button Section - Only visible when sidebar is hidden
 .filtersButtonSection {
   display: block;
 
   @media (--rs-viewport-l) {
-    display: none; // Hidden on desktop when sidebar is visible
+    display: none;
   }
 }
 
@@ -51,14 +46,13 @@
   white-space: nowrap;
 }
 
-// Active Filters Section - Mobile/Tablet (outside sidebar)
 .activeFiltersSection {
   display: flex;
   flex-direction: column;
   gap: var(--rs-unit-x3);
 
   @media (--rs-viewport-l) {
-    display: none; // Hidden on desktop, shown inside sidebar
+    display: none;
   }
 }
 
@@ -69,90 +63,9 @@
   align-items: center;
 }
 
-.clearAllLink {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--rs-unit-x2);
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--rs-color-foreground-neutral);
-  text-decoration: underline;
-  cursor: pointer;
-  width: fit-content;
-
-  &:hover {
-    color: var(--rs-color-foreground-primary);
-  }
-}
-
-// Active Filters Sidebar - Desktop (inside sidebar)
-.activeFiltersSidebar {
-  display: none; // Hidden on mobile/tablet
-
-  @media (--rs-viewport-l) {
-    display: flex;
-    flex-direction: column;
-    gap: var(--rs-unit-x4);
-    margin-bottom: var(--rs-unit-x6);
-  }
-}
-
-.activeFiltersHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--rs-unit-x2);
-}
-
-.clearAllLinkSidebar {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--rs-unit-x2);
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--rs-color-white);
-  text-decoration: underline;
-  cursor: pointer;
-  width: fit-content;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
-
-.activeFiltersTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--rs-unit-x2);
-  align-items: center;
-}
-
 .searchBar {
-  display: flex;
-  flex-direction: column;
-  gap: var(--rs-unit-x4);
-
-  @media (--rs-viewport-m) {
-    flex-direction: row;
-    align-items: flex-end;
-    gap: var(--rs-unit-x4);
-  }
-
   @media (--rs-viewport-l) {
-    display: none; // Hidden on desktop
-  }
-}
-
-.searchInput {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--rs-unit-x2);
-
-  @media (--rs-viewport-m) {
-    flex-direction: row;
-    align-items: flex-end;
-    gap: var(--rs-unit-x3);
+    display: none;
   }
 }
 
@@ -182,9 +95,8 @@
   }
 }
 
-// Blue Container - Filters Sidebar
 .filtersSidebar {
-  display: none; // Hidden on mobile/tablet, shown via modal
+  display: none;
   width: 100%;
   min-height: 600px;
   background: var(--rs-color-background-elevation-base);
@@ -195,22 +107,22 @@
   @media (--rs-viewport-l) {
     position: sticky;
     top: 24px;
+    bottom: 0;
     display: block;
     width: 360px;
     flex-shrink: 0;
   }
 }
 
-// Filters Modal Content
 .filtersModalContent {
-  width: 360px;
+  width: calc(100vw - var(--rs-unit-x8));
+  max-width: 480px;
   min-height: 600px;
   background: var(--rs-color-background-elevation-base);
   border-radius: var(--rs-radius-large);
-  padding: var(--rs-unit-x6);
+  padding: var(--rs-unit-x4);
 }
 
-// Course Grid Container
 .coursesGridContainer {
   flex: 1;
   display: flex;
@@ -219,7 +131,6 @@
   width: 100%;
 }
 
-// Pink Containers - Course Cards Grid
 .coursesGrid {
   width: 100%;
 
@@ -232,10 +143,9 @@
   }
 }
 
-// Pink Container - Course Card
 .courseCard {
   min-height: 420px;
-  background: #ec4899; // Pink color for visualization
+  background: #ec4899;
   border-radius: var(--rs-radius-large);
   padding: var(--rs-unit-x4);
   display: flex;
@@ -245,10 +155,9 @@
   font-weight: var(--rs-font-weight-bold);
 }
 
-// Green Container - Banner/Image Container
 .bannerContainer {
   min-height: 200px;
-  background: #10b981; // Green color for visualization
+  background: #10b981;
   border-radius: var(--rs-radius-large);
   padding: var(--rs-unit-x4);
   display: flex;
@@ -270,4 +179,8 @@
   @media (--rs-viewport-xl) {
     grid-column: span 3;
   }
+}
+
+.filtersModal {
+  padding: 0;
 }

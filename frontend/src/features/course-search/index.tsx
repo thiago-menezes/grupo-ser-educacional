@@ -63,6 +63,33 @@ export function CourseSearchPage() {
           </Text>
         </View>
 
+        {/* Search Bar - Mobile/Tablet */}
+        <Grid
+          columns={'1fr auto'}
+          gap={2}
+          align="end"
+          maxWidth="400px"
+          className={styles.searchBar}
+        >
+          <FormControl>
+            <FormControl.Label>Qual curso quer estudar?</FormControl.Label>
+            <TextField
+              name="course"
+              placeholder="Exemplo: Java"
+              size="medium"
+            />
+          </FormControl>
+
+          <Button
+            variant="solid"
+            color="primary"
+            size="medium"
+            icon={<Icon name="search" />}
+          >
+            Buscar
+          </Button>
+        </Grid>
+
         {/* Filters Button - Only when sidebar is hidden */}
         <View className={styles.filtersButtonSection}>
           <Badge.Container>
@@ -93,6 +120,7 @@ export function CourseSearchPage() {
               {activeFilters.map((filter) => (
                 <Badge
                   key={filter.id}
+                  variant="outline"
                   color="primary"
                   onDismiss={() => handleRemoveFilter(filter.id)}
                   dismissAriaLabel={`Remover filtro ${filter.label}`}
@@ -101,84 +129,35 @@ export function CourseSearchPage() {
                 </Badge>
               ))}
             </View>
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.preventDefault();
-                handleClearAllFilters();
-              }}
-              endIcon={<Icon name="trash" size={14} />}
-            >
-              Limpar todos
-            </Button>
+
+            <div>
+              <Button
+                variant="outline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClearAllFilters();
+                }}
+                endIcon={<Icon name="trash" size={14} />}
+              >
+                Limpar todos
+              </Button>
+            </div>
           </View>
         )}
-
-        {/* Search Bar - Mobile/Tablet */}
-        <View className={styles.searchBar}>
-          <View className={styles.searchInput}>
-            <FormControl>
-              <FormControl.Label>Qual curso quer estudar?</FormControl.Label>
-              <TextField
-                name="course"
-                placeholder="Exemplo: Java"
-                size="medium"
-              />
-            </FormControl>
-            <Button
-              variant="solid"
-              color="primary"
-              size="medium"
-              icon={<Icon name="search" />}
-            >
-              Buscar
-            </Button>
-          </View>
-        </View>
 
         {/* Main Content Area */}
         <View className={styles.mainContent}>
           {/* Filters Sidebar - Blue Container */}
           <View className={styles.filtersSidebar}>
             {/* Active Filters Tags - Desktop (inside sidebar) */}
-            {activeFilters.length > 0 && (
-              <View className={styles.activeFiltersSidebar}>
-                <View className={styles.activeFiltersHeader}>
-                  <Text variant="body-2" color="neutral" weight="medium">
-                    Filtros aplicados
-                  </Text>
-                  <Badge color="critical" size="small" rounded>
-                    {activeFiltersCount}
-                  </Badge>
-                </View>
 
-                <div>
-                  <Button
-                    variant="outline"
-                    size="small"
-                    color="neutral"
-                    icon={<Icon name="trash" size={14} />}
-                    onClick={handleClearAllFilters}
-                  >
-                    Limpar todos
-                  </Button>
-                </div>
-
-                <View className={styles.activeFiltersTags}>
-                  {activeFilters.map((filter) => (
-                    <Badge
-                      key={filter.id}
-                      color="primary"
-                      onDismiss={() => handleRemoveFilter(filter.id)}
-                      dismissAriaLabel={`Remover filtro ${filter.label}`}
-                    >
-                      {filter.label}
-                    </Badge>
-                  ))}
-                </View>
-              </View>
-            )}
-            <FiltersContent hasActiveFilters={activeFilters.length > 0} />
+            <FiltersContent
+              activeFilters={activeFilters}
+              activeFiltersCount={activeFiltersCount}
+              handleClearAllFilters={handleClearAllFilters}
+              handleRemoveFilter={handleRemoveFilter}
+              isInModal={false}
+            />
           </View>
 
           {/* Course Grid Container */}
@@ -234,9 +213,16 @@ export function CourseSearchPage() {
         active={isFiltersModalOpen}
         onClose={() => setIsFiltersModalOpen(false)}
         size="large"
+        className={styles.filtersModal}
       >
         <View className={styles.filtersModalContent}>
-          <FiltersContent hasActiveFilters={activeFilters.length > 0} />
+          <FiltersContent
+            activeFilters={activeFilters}
+            activeFiltersCount={activeFiltersCount}
+            handleClearAllFilters={handleClearAllFilters}
+            handleRemoveFilter={handleRemoveFilter}
+            isInModal={true}
+          />
         </View>
       </Modal>
     </View>
