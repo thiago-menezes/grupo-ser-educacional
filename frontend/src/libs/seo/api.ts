@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { query } from '../api/strapi';
 import type { StrapiSeo, StrapiSeoResponse } from './types';
 
 export async function getSeoFromStrapi(
@@ -13,15 +12,20 @@ export async function getSeoFromStrapi(
       return null;
     }
 
-    // Use fetch directly for ISR support
-    const response = await query<StrapiSeoResponse>(
+    const response = await fetch(
       `${STRAPI_URL}/api/seos?filters[instituicao][slug][$eq]=${institutionSlug}&populate=instituicao`,
       {
-        next: { revalidate: 3600 }, // ISR - revalida a cada hora
+        next: { revalidate: 3600 },
       },
     );
 
-    if (!response.data) {
+    if (!response.ok) {
+      throw new Error(`Failed to fetch SEO: ${response.statusText}`);
+    }
+
+    const data: StrapiSeoResponse = await response.json();
+
+    if (!data.data || data.data.length === 0) {
       return {
         metadata: {
           title: 'Grupo SER - Portal Institucional',
@@ -31,7 +35,7 @@ export async function getSeoFromStrapi(
       } as StrapiSeo;
     }
 
-    return response.data?.[0] || null;
+    return data.data[0];
   } catch (error) {
     console.warn(`Failed to fetch SEO data for ${institutionSlug}:`, error);
     return {
