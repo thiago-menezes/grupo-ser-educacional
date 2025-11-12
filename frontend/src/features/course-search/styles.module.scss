@@ -26,6 +26,14 @@
   gap: var(--rs-unit-x4);
 }
 
+.homeLink {
+  color: var(--rs-color-foreground-neutral-faded);
+  text-decoration: none;
+  &:hover {
+    color: var(--rs-color-foreground-primary);
+  }
+}
+
 .title {
   margin: 0;
 }
@@ -43,11 +51,15 @@
   white-space: nowrap;
 }
 
-// Active Filters Section - Always visible when filters are active
+// Active Filters Section - Mobile/Tablet (outside sidebar)
 .activeFiltersSection {
   display: flex;
   flex-direction: column;
   gap: var(--rs-unit-x3);
+
+  @media (--rs-viewport-l) {
+    display: none; // Hidden on desktop, shown inside sidebar
+  }
 }
 
 .activeFilters {
@@ -71,6 +83,48 @@
   &:hover {
     color: var(--rs-color-foreground-primary);
   }
+}
+
+// Active Filters Sidebar - Desktop (inside sidebar)
+.activeFiltersSidebar {
+  display: none; // Hidden on mobile/tablet
+
+  @media (--rs-viewport-l) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rs-unit-x4);
+    margin-bottom: var(--rs-unit-x6);
+  }
+}
+
+.activeFiltersHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rs-unit-x2);
+}
+
+.clearAllLinkSidebar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rs-unit-x2);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--rs-color-white);
+  text-decoration: underline;
+  cursor: pointer;
+  width: fit-content;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.activeFiltersTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rs-unit-x2);
+  align-items: center;
 }
 
 .searchBar {
@@ -133,15 +187,16 @@
   display: none; // Hidden on mobile/tablet, shown via modal
   width: 100%;
   min-height: 600px;
-  background: #3b82f6; // Blue color for visualization
+  background: var(--rs-color-background-elevation-base);
   border-radius: var(--rs-radius-large);
   padding: var(--rs-unit-x6);
+  border: 1px solid var(--rs-color-border-neutral);
 
   @media (--rs-viewport-l) {
     position: sticky;
     top: 24px;
     display: block;
-    width: 320px;
+    width: 360px;
     flex-shrink: 0;
   }
 }
@@ -150,7 +205,7 @@
 .filtersModalContent {
   width: 360px;
   min-height: 600px;
-  background: #3b82f6; // Blue color for visualization
+  background: var(--rs-color-background-elevation-base);
   border-radius: var(--rs-radius-large);
   padding: var(--rs-unit-x6);
 }

@@ -15,6 +15,7 @@ import {
 } from 'reshaped';
 import { Icon } from '@/components/icon';
 import { useCurrentInstitution } from '@/hooks/useInstitution';
+import { FiltersContent } from './filters-content';
 import styles from './styles.module.scss';
 
 export function CourseSearchPage() {
@@ -44,7 +45,10 @@ export function CourseSearchPage() {
         {/* Header Section */}
         <View className={styles.header}>
           <Text variant="body-2" color="neutral-faded">
-            <Link href={`/${institutionId}`}>Home</Link> /{' '}
+            <Link className={styles.homeLink} href={`/${institutionId}`}>
+              Home
+            </Link>{' '}
+            /{' '}
             <Text as="strong" color="primary" weight="bold">
               Lista de cursos
             </Text>
@@ -82,7 +86,7 @@ export function CourseSearchPage() {
           </Badge.Container>
         </View>
 
-        {/* Active Filters Tags - Always visible when filters are active */}
+        {/* Active Filters Tags - Mobile/Tablet (outside sidebar) */}
         {activeFilters.length > 0 && (
           <View className={styles.activeFiltersSection}>
             <View className={styles.activeFilters}>
@@ -97,17 +101,16 @@ export function CourseSearchPage() {
                 </Badge>
               ))}
             </View>
-            <Link
-              href="#"
-              className={styles.clearAllLink}
+            <Button
+              variant="outline"
               onClick={(e) => {
                 e.preventDefault();
                 handleClearAllFilters();
               }}
+              endIcon={<Icon name="trash" size={14} />}
             >
               Limpar todos
-              <Icon name="trash" size={14} />
-            </Link>
+            </Button>
           </View>
         )}
 
@@ -137,7 +140,45 @@ export function CourseSearchPage() {
         <View className={styles.mainContent}>
           {/* Filters Sidebar - Blue Container */}
           <View className={styles.filtersSidebar}>
-            {/* Filter content will go here */}
+            {/* Active Filters Tags - Desktop (inside sidebar) */}
+            {activeFilters.length > 0 && (
+              <View className={styles.activeFiltersSidebar}>
+                <View className={styles.activeFiltersHeader}>
+                  <Text variant="body-2" color="neutral" weight="medium">
+                    Filtros aplicados
+                  </Text>
+                  <Badge color="critical" size="small" rounded>
+                    {activeFiltersCount}
+                  </Badge>
+                </View>
+
+                <div>
+                  <Button
+                    variant="outline"
+                    size="small"
+                    color="neutral"
+                    icon={<Icon name="trash" size={14} />}
+                    onClick={handleClearAllFilters}
+                  >
+                    Limpar todos
+                  </Button>
+                </div>
+
+                <View className={styles.activeFiltersTags}>
+                  {activeFilters.map((filter) => (
+                    <Badge
+                      key={filter.id}
+                      color="primary"
+                      onDismiss={() => handleRemoveFilter(filter.id)}
+                      dismissAriaLabel={`Remover filtro ${filter.label}`}
+                    >
+                      {filter.label}
+                    </Badge>
+                  ))}
+                </View>
+              </View>
+            )}
+            <FiltersContent hasActiveFilters={activeFilters.length > 0} />
           </View>
 
           {/* Course Grid Container */}
@@ -195,7 +236,7 @@ export function CourseSearchPage() {
         size="large"
       >
         <View className={styles.filtersModalContent}>
-          {/* Filter content will go here */}
+          <FiltersContent hasActiveFilters={activeFilters.length > 0} />
         </View>
       </Modal>
     </View>
