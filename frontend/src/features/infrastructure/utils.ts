@@ -72,7 +72,7 @@ export function sortUnitsByProximity(
 
 /**
  * Sort units by proximity and mark the closest one as active
- * If location is not available, returns units without marking any as active
+ * If location is not available, marks the first unit as active
  */
 export function markClosestUnit(
   units: InfrastructureUnit[],
@@ -81,10 +81,10 @@ export function markClosestUnit(
   const sortedUnits = sortUnitsByProximity(units, userCoordinates);
 
   if (!userCoordinates) {
-    // When location is not available, don't mark any unit as active
-    return sortedUnits.map((unit) => ({
+    // When location is not available, mark the first unit as active
+    return sortedUnits.map((unit, index) => ({
       ...unit,
-      isActive: false,
+      isActive: index === 0,
     }));
   }
 
@@ -98,9 +98,9 @@ export function markClosestUnit(
     }));
   }
 
-  // No units with coordinates, return sorted units without marking any as active
-  return sortedUnits.map((unit) => ({
+  // No units with coordinates, mark the first unit as active
+  return sortedUnits.map((unit, index) => ({
     ...unit,
-    isActive: false,
+    isActive: index === 0,
   }));
 }
