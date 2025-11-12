@@ -16,7 +16,8 @@
     "test:unit": "vitest run src/**/*.spec.{ts,tsx}",
     "test:integration": "vitest run src/**/*.integration.spec.{ts,tsx}",
     "test:coverage": "vitest --coverage",
-    "test:coverage:ui": "vitest --coverage --ui"
+    "test:coverage:ui": "vitest --coverage --ui",
+    "clean": "rm -rf .next node_modules/.cache coverage"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

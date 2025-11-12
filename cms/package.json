@@ -13,7 +13,8 @@
     "start": "strapi start",
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+    "upgrade:dry": "npx @strapi/upgrade latest --dry",
+    "clean": "rm -rf dist .cache build"
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.30.1",
@@ -35,8 +36,8 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=18.0.0 <=22.x.x",
-    "npm": ">=6.0.0"
+    "node": ">=22.0.0 <=22.x.x",
+    "yarn": ">=4.0.0"
   },
   "strapi": {
     "uuid": "afe641d2-3521-4189-8319-19c1f7754495",
