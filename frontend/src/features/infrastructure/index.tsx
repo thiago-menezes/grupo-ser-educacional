@@ -2,18 +2,55 @@
 
 import { clsx } from 'clsx';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components/icon';
+import { useGeolocation } from '@/hooks/useGeolocation';
 import { ImageModal } from './image-modal';
 import { MOCK_INFRASTRUCTURE_CONTENT } from './mocks';
 import styles from './styles.module.scss';
 import type { InfrastructureSectionProps } from './types';
+import { markClosestUnit } from './utils';
 
 export const InfrastructureSection = ({
   content = MOCK_INFRASTRUCTURE_CONTENT,
 }: InfrastructureSectionProps) => {
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+  const {
+    city,
+    state,
+    coordinates,
+    permissionDenied,
+    requestPermission,
+    isLoading,
+  } = useGeolocation();
+
+  // Sort units by proximity and mark the closest one
+  const sortedUnits = useMemo(
+    () => markClosestUnit(content.units, coordinates),
+    [content.units, coordinates],
+  );
+
+  // Get the active unit (manually selected or closest one)
+  const activeUnit = useMemo(() => {
+    if (selectedUnitId) {
+      return sortedUnits.find((unit) => unit.id === selectedUnitId);
+    }
+    return sortedUnits.find((unit) => unit.isActive);
+  }, [sortedUnits, selectedUnitId]);
+
+  // Get images for the active unit
+  const unitImages = useMemo(() => {
+    if (!activeUnit?.imageIds || activeUnit.imageIds.length === 0) {
+      // If unit has no images, show all images
+      return content.images;
+    }
+    return content.images.filter((img) =>
+      activeUnit.imageIds?.includes(img.id),
+    );
+  }, [activeUnit, content.images]);
+
   const selectedImage = content.images.find(
     (img) => img.id === selectedImageId,
   );
@@ -26,8 +63,12 @@ export const InfrastructureSection = ({
     setSelectedImageId(null);
   };
 
-  const mainImage = content.images[0];
-  const sideImages = content.images.slice(1, 5);
+  const handleUnitClick = (unitId: string) => {
+    setSelectedUnitId(unitId);
+  };
+
+  const mainImage = unitImages[0] || content.images[0];
+  const sideImages = unitImages.slice(1, 5);
 
   return (
     <section
@@ -50,19 +91,34 @@ export const InfrastructureSection = ({
                 Unidades próximas a você
               </Text>
               <div className={styles.location}>
-                <Text
-                  as="span"
-                  variant="body-2"
-                  weight="medium"
-                  className={styles.locationText}
-                >
-                  {content.location} - {content.locationState}
-                </Text>
-                <Icon
-                  name="current-location"
-                  size={16}
-                  className={styles.locationIcon}
-                />
+                {permissionDenied ? (
+                  <Button
+                    variant="ghost"
+                    size="small"
+                    onClick={requestPermission}
+                    disabled={isLoading}
+                    className={styles.locationButton}
+                  >
+                    <Icon name="current-location" size={16} />
+                    Permitir localização
+                  </Button>
+                ) : (
+                  <>
+                    <Text
+                      as="span"
+                      variant="body-2"
+                      weight="medium"
+                      className={styles.locationText}
+                    >
+                      {city} - {state}
+                    </Text>
+                    <Icon
+                      name="current-location"
+                      size={16}
+                      className={styles.locationIcon}
+                    />
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -77,16 +133,20 @@ export const InfrastructureSection = ({
         </div>
 
         <div className={styles.tags}>
-          {content.units.map((unit) => (
-            <button
-              key={unit.id}
-              className={clsx(styles.tag, unit.isActive && styles.tagActive)}
-              onClick={() => console.log('Unit selected:', unit.id)}
-              type="button"
-            >
-              {unit.name}
-            </button>
-          ))}
+          {sortedUnits.map((unit) => {
+            const isActive =
+              selectedUnitId === unit.id || (!selectedUnitId && unit.isActive);
+            return (
+              <button
+                key={unit.id}
+                className={clsx(styles.tag, isActive && styles.tagActive)}
+                onClick={() => handleUnitClick(unit.id)}
+                type="button"
+              >
+                {unit.name}
+              </button>
+            );
+          })}
         </div>
 
         <div className={styles.gallery}>

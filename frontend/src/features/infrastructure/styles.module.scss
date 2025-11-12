@@ -58,6 +58,12 @@
   color: var(--rs-color-text-primary);
 }
 
+.locationButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rs-unit-x1);
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;

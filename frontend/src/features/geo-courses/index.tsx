@@ -4,21 +4,30 @@ import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components/icon';
 import { Pagination } from '@/components/pagination';
+import { useGeolocation } from '@/hooks/useGeolocation';
 import { usePagination } from '@/hooks/usePagination';
 import { CourseCard } from './course-card';
+import { CourseCardSkeleton } from './course-card/skeleton';
 import { MOCK_GEO_COURSES_DATA } from './mocks';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';
 
 export { MOCK_POPULAR_COURSES_DATA } from './mocks';
 
+const SKELETON_COUNT = 4;
+
 export function GeoCoursesSection({
   data = MOCK_GEO_COURSES_DATA,
 }: Partial<GeoCourseSectionProps>) {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const { city, state, permissionDenied, requestPermission, isLoading } =
+    useGeolocation();
+
+  const showSkeletons = permissionDenied || isLoading;
+  const coursesToShow = showSkeletons ? [] : data.courses;
 
   const { currentPage, totalPages, goToPage, isScrollable } = usePagination({
-    totalItems: data.courses.length,
+    totalItems: showSkeletons ? SKELETON_COUNT : coursesToShow.length,
     containerRef: scrollContainerRef as React.RefObject<HTMLDivElement>,
   });
 
@@ -39,10 +48,25 @@ export function GeoCoursesSection({
               <Text as="span" variant="body-2">
                 Cursos perto de você
               </Text>
-              <Text as="span" variant="body-2" weight="medium">
-                {data.location.city} - {data.location.state}
-              </Text>
-              <Icon name="current-location" size={16} aria-hidden="true" />
+              {permissionDenied ? (
+                <Button
+                  variant="ghost"
+                  size="small"
+                  onClick={requestPermission}
+                  disabled={isLoading}
+                  className={styles.locationButton}
+                >
+                  <Icon name="current-location" size={16} />
+                  Permitir localização
+                </Button>
+              ) : (
+                <>
+                  <Text as="span" variant="body-2" weight="medium">
+                    {city} - {state}
+                  </Text>
+                  <Icon name="current-location" size={16} aria-hidden="true" />
+                </>
+              )}
             </div>
           </div>
           <Button
@@ -61,17 +85,27 @@ export function GeoCoursesSection({
             onScroll={handleScroll}
             role="list"
           >
-            {data.courses.map((course) => (
-              <div key={course.id} className={styles.card} role="listitem">
-                <CourseCard
-                  course={course}
-                  onClick={() => console.log('Curso clicado:', course.slug)}
-                />
-              </div>
-            ))}
+            {showSkeletons
+              ? Array.from({ length: SKELETON_COUNT }).map((_, index) => (
+                  <div
+                    key={`skeleton-${index}`}
+                    className={styles.card}
+                    role="listitem"
+                  >
+                    <CourseCardSkeleton />
+                  </div>
+                ))
+              : coursesToShow.map((course) => (
+                  <div key={course.id} className={styles.card} role="listitem">
+                    <CourseCard
+                      course={course}
+                      onClick={() => console.log('Curso clicado:', course.slug)}
+                    />
+                  </div>
+                ))}
           </div>
 
-          {isScrollable && (
+          {isScrollable && !showSkeletons && (
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

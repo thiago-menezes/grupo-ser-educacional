@@ -47,25 +47,11 @@ export function useQuickSearchForm() {
   const [modalities, setModalities] = useState<
     Array<'presencial' | 'semi' | 'ead'>
   >(['presencial', 'semi', 'ead']);
-  const [errors, setErrors] = useState<{ city?: string; course?: string }>({});
-
-  const validateForm = useCallback(() => {
-    const newErrors: typeof errors = {};
-
-    if (!city.trim() && !course.trim()) {
-      newErrors.city = 'At least one field is required';
-      newErrors.course = 'At least one field is required';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  }, [city, course]);
 
   const reset = useCallback(() => {
     setCity('');
     setCourse('');
     setModalities(['presencial', 'semi', 'ead']);
-    setErrors({});
   }, []);
 
   const toggleModality = useCallback(
@@ -86,8 +72,6 @@ export function useQuickSearchForm() {
     setCourse,
     modalities,
     toggleModality,
-    errors,
-    validateForm,
     reset,
   };
 }

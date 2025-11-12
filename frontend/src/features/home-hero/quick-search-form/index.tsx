@@ -14,23 +14,11 @@ export function QuickSearchForm({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<CourseLevel>('graduation');
-  const {
-    city,
-    setCity,
-    course,
-    setCourse,
-    modalities,
-    toggleModality,
-    validateForm,
-    errors,
-  } = useQuickSearchForm();
+  const { city, setCity, course, setCourse, modalities, toggleModality } =
+    useQuickSearchForm();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
 
     setIsLoading(true);
 
@@ -77,7 +65,7 @@ export function QuickSearchForm({
       </div>
 
       <div className={styles.inputsContainer}>
-        <FormControl hasError={!!errors.city} disabled={isLoading}>
+        <FormControl disabled={isLoading}>
           <FormControl.Label>Em que cidade quer estudar?</FormControl.Label>
           <TextField
             name="city"
@@ -87,10 +75,9 @@ export function QuickSearchForm({
             disabled={isLoading}
             size="large"
           />
-          {errors.city && <FormControl.Error>{errors.city}</FormControl.Error>}
         </FormControl>
 
-        <FormControl hasError={!!errors.course} disabled={isLoading}>
+        <FormControl disabled={isLoading}>
           <FormControl.Label>Qual curso quer estudar?</FormControl.Label>
           <TextField
             name="course"
@@ -100,9 +87,6 @@ export function QuickSearchForm({
             disabled={isLoading}
             size="large"
           />
-          {errors.course && (
-            <FormControl.Error>{errors.course}</FormControl.Error>
-          )}
         </FormControl>
 
         <Button

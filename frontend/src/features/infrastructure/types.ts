@@ -8,6 +8,11 @@ export type InfrastructureUnit = {
   id: string;
   name: string;
   isActive?: boolean;
+  coordinates?: {
+    lat: number;
+    lng: number;
+  };
+  imageIds?: string[];
 };
 
 export type InfrastructureContent = {

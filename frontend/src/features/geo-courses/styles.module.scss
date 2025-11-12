@@ -41,6 +41,12 @@
   flex-wrap: wrap;
 }
 
+.locationButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rs-unit-x1);
+}
+
 .coursesContainer {
   position: relative;
   margin: 0 calc(-var(--rs-unit-x6));

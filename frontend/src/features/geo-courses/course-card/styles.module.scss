@@ -22,6 +22,16 @@
   }
 }
 
+.skeletonCard {
+  cursor: default;
+  pointer-events: none;
+
+  &:hover {
+    box-shadow: none;
+    transform: none;
+  }
+}
+
 .header {
   display: flex;
   flex-direction: column;
