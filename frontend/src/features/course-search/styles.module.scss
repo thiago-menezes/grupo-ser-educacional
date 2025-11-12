@@ -1,0 +1,218 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: var(--rs-unit-x6) var(--rs-unit-x4);
+
+  @media (--rs-viewport-m) {
+    padding: var(--rs-unit-x8) var(--rs-unit-x6);
+  }
+
+  @media (--rs-viewport-l) {
+    padding: var(--rs-unit-x10) var(--rs-unit-x8);
+  }
+}
+
+.container {
+  max-width: 1366px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x6);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x4);
+}
+
+.title {
+  margin: 0;
+}
+
+// Filters Button Section - Only visible when sidebar is hidden
+.filtersButtonSection {
+  display: block;
+
+  @media (--rs-viewport-l) {
+    display: none; // Hidden on desktop when sidebar is visible
+  }
+}
+
+.filtersButton {
+  white-space: nowrap;
+}
+
+// Active Filters Section - Always visible when filters are active
+.activeFiltersSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x3);
+}
+
+.activeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rs-unit-x2);
+  align-items: center;
+}
+
+.clearAllLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rs-unit-x2);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--rs-color-foreground-neutral);
+  text-decoration: underline;
+  cursor: pointer;
+  width: fit-content;
+
+  &:hover {
+    color: var(--rs-color-foreground-primary);
+  }
+}
+
+.searchBar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x4);
+
+  @media (--rs-viewport-m) {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--rs-unit-x4);
+  }
+
+  @media (--rs-viewport-l) {
+    display: none; // Hidden on desktop
+  }
+}
+
+.searchInput {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x2);
+
+  @media (--rs-viewport-m) {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--rs-unit-x3);
+  }
+}
+
+.resultsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--rs-unit-x4);
+  flex-wrap: wrap;
+}
+
+.sortContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--rs-unit-x2);
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x6);
+
+  @media (--rs-viewport-l) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--rs-unit-x8);
+  }
+}
+
+// Blue Container - Filters Sidebar
+.filtersSidebar {
+  display: none; // Hidden on mobile/tablet, shown via modal
+  width: 100%;
+  min-height: 600px;
+  background: #3b82f6; // Blue color for visualization
+  border-radius: var(--rs-radius-large);
+  padding: var(--rs-unit-x6);
+
+  @media (--rs-viewport-l) {
+    position: sticky;
+    top: 24px;
+    display: block;
+    width: 320px;
+    flex-shrink: 0;
+  }
+}
+
+// Filters Modal Content
+.filtersModalContent {
+  width: 360px;
+  min-height: 600px;
+  background: #3b82f6; // Blue color for visualization
+  border-radius: var(--rs-radius-large);
+  padding: var(--rs-unit-x6);
+}
+
+// Course Grid Container
+.coursesGridContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x4);
+  width: 100%;
+}
+
+// Pink Containers - Course Cards Grid
+.coursesGrid {
+  width: 100%;
+
+  @media (--rs-viewport-m) {
+    gap: var(--rs-unit-x5);
+  }
+
+  @media (--rs-viewport-l) {
+    gap: var(--rs-unit-x6);
+  }
+}
+
+// Pink Container - Course Card
+.courseCard {
+  min-height: 420px;
+  background: #ec4899; // Pink color for visualization
+  border-radius: var(--rs-radius-large);
+  padding: var(--rs-unit-x4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rs-color-white);
+  font-weight: var(--rs-font-weight-bold);
+}
+
+// Green Container - Banner/Image Container
+.bannerContainer {
+  min-height: 200px;
+  background: #10b981; // Green color for visualization
+  border-radius: var(--rs-radius-large);
+  padding: var(--rs-unit-x4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rs-color-white);
+  font-weight: var(--rs-font-weight-bold);
+
+  @media (--rs-viewport-m) {
+    grid-column: span 2;
+    min-height: 250px;
+  }
+
+  @media (--rs-viewport-l) {
+    grid-column: span 2;
+    min-height: 300px;
+  }
+
+  @media (--rs-viewport-xl) {
+    grid-column: span 3;
+  }
+}

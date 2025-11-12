@@ -1,5 +1,3 @@
-import { Footer } from '@/components/footer';
-import { Header } from '@/components/header';
 import { AreasSelector } from '@/features/areas-selector';
 import { CareerPath } from '@/features/career-path';
 import { EntryMethodsSection } from '@/features/entry-methods';
@@ -15,7 +13,6 @@ import { PromotionalBanners } from '@/features/promotional-banners';
 const HomePage = () => {
   return (
     <main>
-      <Header />
       <HomeHero />
       <GeoCoursesSection />
       <PromotionalBanners />
@@ -25,7 +22,6 @@ const HomePage = () => {
       <EntryMethodsSection />
       <GeoCoursesSection data={MOCK_POPULAR_COURSES_DATA} />
       <InfrastructureSection />
-      <Footer />
     </main>
   );
 };

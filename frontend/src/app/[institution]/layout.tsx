@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { Footer } from '@/components/footer';
+import { Header } from '@/components/header';
 import { generateJsonLd, getSeoFromStrapi } from '@/libs/seo';
 import { isValidInstitution } from '@/utils/verify-institution';
 
@@ -46,15 +48,16 @@ export default async function InstitutionLayout({
 
   return (
     <>
+      <Header />
       {jsonLd && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
-
       <link rel="icon" href={`/favicons/${institution}.ico`} sizes="any" />
       {children}
+      <Footer />
     </>
   );
 }
