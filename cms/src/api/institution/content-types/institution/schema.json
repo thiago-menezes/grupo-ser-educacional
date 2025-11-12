@@ -4,7 +4,7 @@
   "info": {
     "singularName": "institution",
     "pluralName": "institutions",
-    "displayName": "Institution",
+    "displayName": "Instituição",
     "description": "Educational institutions in the Grupo SER network"
   },
   "options": {
@@ -24,9 +24,9 @@
     },
     "code": {
       "type": "string",
+      "maxLength": 20,
       "required": true,
-      "unique": true,
-      "maxLength": 20
+      "unique": true
     },
     "description": {
       "type": "text"
@@ -35,7 +35,9 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "website": {
       "type": "string"
@@ -64,6 +66,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::page-content.page-content",
+      "mappedBy": "institution"
+    },
+    "units": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::unit.unit",
       "mappedBy": "institution"
     }
   }

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "page-content",
     "pluralName": "page-contents",
-    "displayName": "Page Content",
+    "displayName": "Página inicial",
     "description": "Flexible content blocks for different pages and institutions"
   },
   "options": {
@@ -22,6 +22,7 @@
     },
     "category": {
       "type": "enumeration",
+      "required": true,
       "enum": [
         "home-hero",
         "home-about",
@@ -34,8 +35,7 @@
         "contact-info",
         "footer",
         "custom"
-      ],
-      "required": true
+      ]
     },
     "order": {
       "type": "integer",
