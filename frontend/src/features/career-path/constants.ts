@@ -8,7 +8,7 @@ export const DEFAULT_CAREER_PATH_CONTENT: CareerPathContent = {
       description:
         'Primeiro passo da sua carreira. Formando profissionais prontos para o mercado, com base teórica e prática na área escolhida.',
       icon: 'school',
-      colorTheme: 'blue',
+      colorTheme: 'primary',
       modalities: [
         { id: 'presencial', label: 'Presencial' },
         { id: 'semipresencial', label: 'Semipresencial' },
@@ -23,7 +23,7 @@ export const DEFAULT_CAREER_PATH_CONTENT: CareerPathContent = {
       description:
         'Aprofunde seus conhecimentos. Voltada a quem já tem diploma superior e quer se especializar ou crescer na carreira.',
       icon: 'briefcase',
-      colorTheme: 'red',
+      colorTheme: 'secondary',
       modalities: [
         { id: 'ao-vivo', label: 'Ao vivo' },
         { id: 'digital', label: 'Digital' },

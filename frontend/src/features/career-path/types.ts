@@ -8,7 +8,7 @@ export type CareerPathCard = {
   title: string;
   description: string;
   icon: 'school' | 'briefcase';
-  colorTheme: 'blue' | 'red';
+  colorTheme: 'primary' | 'secondary';
   modalities: ModalityBadge[];
   ctaLabel: string;
   ctaHref: string;

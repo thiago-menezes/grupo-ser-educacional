@@ -119,25 +119,6 @@
   padding-top: var(--rs-unit-x3);
 }
 
-.allCoursesButton {
-  width: 100%;
-  border: none;
-  background: transparent;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--rs-unit-x2);
-  font-weight: var(--rs-font-weight-medium);
-  color: var(--rs-color-background-primary);
-  cursor: pointer;
-  padding: var(--rs-unit-x2) 0 var(--rs-unit-x3);
-
-  &:hover,
-  &:focus-visible {
-    text-decoration: underline;
-  }
-}
-
 @media (max-width: 767px) {
   .section {
     padding-block: var(--rs-unit-x8);

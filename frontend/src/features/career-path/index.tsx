@@ -1,18 +1,16 @@
 'use client';
 
+import { clsx } from 'clsx';
 import Link from 'next/link';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components/icon';
 import { DEFAULT_CAREER_PATH_CONTENT } from './constants';
-import { MOCK_CAREER_PATH_CONTENT } from './mocks';
 import styles from './styles.module.scss';
 import type { CareerPathProps } from './types';
 
 export function CareerPath({
   content = DEFAULT_CAREER_PATH_CONTENT,
 }: CareerPathProps) {
-  const displayContent =
-    content.cards.length > 0 ? content : MOCK_CAREER_PATH_CONTENT;
   return (
     <section className={styles.section} aria-labelledby="career-path-title">
       <div className={styles.container}>
@@ -32,7 +30,7 @@ export function CareerPath({
           </header>
 
           <div className={styles.cards} role="list">
-            {displayContent.cards.map((card) => (
+            {content.cards.map((card) => (
               <article key={card.id} className={styles.card} role="listitem">
                 <div className={styles.cardHeader}>
                   <div className={styles.cardTitleRow}>
@@ -40,9 +38,9 @@ export function CareerPath({
                       name={card.icon}
                       size={24}
                       className={`${styles.icon} ${
-                        card.colorTheme === 'blue'
-                          ? styles.iconBlue
-                          : styles.iconRed
+                        card.colorTheme === 'primary'
+                          ? styles.iconPrimary
+                          : styles.iconSecondary
                       }`}
                       aria-hidden="true"
                     />
@@ -51,9 +49,9 @@ export function CareerPath({
                       variant="featured-2"
                       weight="bold"
                       className={`${styles.cardTitle} ${
-                        card.colorTheme === 'blue'
-                          ? styles.cardTitleBlue
-                          : styles.cardTitleRed
+                        card.colorTheme === 'primary'
+                          ? styles.cardTitlePrimary
+                          : styles.cardTitleSecondary
                       }`}
                     >
                       {card.title}
@@ -82,9 +80,9 @@ export function CareerPath({
                       <span
                         key={modality.id}
                         className={`${styles.badge} ${
-                          card.colorTheme === 'blue'
-                            ? styles.badgeBlue
-                            : styles.badgeRed
+                          card.colorTheme === 'primary'
+                            ? styles.badgePrimary
+                            : styles.badgeSecondary
                         }`}
                       >
                         {modality.label}
@@ -95,15 +93,19 @@ export function CareerPath({
 
                 <div
                   className={`${styles.buttonWrapper} ${
-                    card.colorTheme === 'blue'
-                      ? styles.buttonBlue
-                      : styles.buttonRed
+                    card.colorTheme === 'primary'
+                      ? styles.buttonPrimary
+                      : styles.buttonSecondary
                   }`}
                 >
                   <Link href={card.ctaHref} className={styles.link}>
                     <Button
                       variant="outline"
-                      className={styles.button}
+                      className={clsx('button', {
+                        [styles.buttonPrimary]: card.colorTheme === 'primary',
+                        [styles.buttonSecondary]:
+                          card.colorTheme === 'secondary',
+                      })}
                       fullWidth
                       endIcon={
                         <Icon

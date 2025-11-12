@@ -32,7 +32,7 @@
 }
 
 .title {
-  color: var(--rs-color-foreground-neutral);
+  color: var(--rs-color-text-primary);
   font-size: var(--rs-font-size-featured-1);
   font-weight: var(--rs-font-weight-bold);
   line-height: var(--rs-line-height-featured-1);
@@ -84,12 +84,12 @@
   flex-shrink: 0;
 }
 
-.iconBlue {
-  color: var(--rs-color-background-primary);
+.iconPrimary {
+  color: var(--rs-color-text-primary);
 }
 
-.iconRed {
-  color: var(--rs-color-background-critical);
+.iconSecondary {
+  color: var(--rs-color-text-secondary);
 }
 
 .cardTitle {
@@ -98,12 +98,12 @@
   line-height: var(--rs-line-height-featured-2);
 }
 
-.cardTitleBlue {
-  color: var(--rs-color-background-primary);
+.cardTitlePrimary {
+  color: var(--rs-color-text-primary);
 }
 
-.cardTitleRed {
-  color: var(--rs-color-background-critical);
+.cardTitleSecondary {
+  color: var(--rs-color-text-secondary);
 }
 
 .cardDescription {
@@ -140,14 +140,14 @@
   white-space: nowrap;
 }
 
-.badgeBlue {
-  background: var(--rs-color-background-primary-faded);
-  color: var(--rs-color-background-primary);
+.badgePrimary {
+  background: rgb(from var(--rs-color-text-primary) r g b / 0.1);
+  color: var(--rs-color-text-primary);
 }
 
-.badgeRed {
-  background: var(--rs-color-background-critical-faded);
-  color: var(--rs-color-background-critical);
+.badgeSecondary {
+  background: rgb(from var(--rs-color-text-secondary) r g b / 0.1);
+  color: var(--rs-color-text-secondary);
 }
 
 .buttonWrapper {
@@ -159,30 +159,30 @@
   display: block;
 }
 
-.button {
-  width: 100%;
-}
-
-.buttonBlue {
-  :global(button) {
-    border-color: var(--rs-color-background-primary) !important;
-    color: var(--rs-color-background-primary) !important;
+.buttonPrimary {
+  :global(.button) {
+    border-color: var(--rs-color-text-primary) !important;
+    color: var(--rs-color-text-primary) !important;
 
     &:hover {
-      background: var(--rs-color-background-primary-faded) !important;
-      border-color: var(--rs-color-background-primary) !important;
+      background: rgb(
+        from var(--rs-color-text-primary) r g b / 0.05
+      ) !important;
+      border-color: var(--rs-color-text-primary) !important;
     }
   }
 }
 
-.buttonRed {
-  :global(button) {
-    border-color: var(--rs-color-background-critical) !important;
-    color: var(--rs-color-background-critical) !important;
+.buttonSecondary {
+  :global(.button) {
+    border-color: var(--rs-color-text-secondary) !important;
+    color: var(--rs-color-text-secondary) !important;
 
     &:hover {
-      background: var(--rs-color-background-critical-faded) !important;
-      border-color: var(--rs-color-background-critical) !important;
+      background: rgb(
+        from var(--rs-color-text-secondary) r g b / 0.05
+      ) !important;
+      border-color: var(--rs-color-text-secondary) !important;
     }
   }
 }

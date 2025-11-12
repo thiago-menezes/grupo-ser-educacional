@@ -45,11 +45,10 @@
 }
 
 .trackEnrollment {
-  font-weight: 600;
-  color: var(--rs-color-foreground-critical);
+  font-weight: var(--rs-font-weight-medium);
+  color: var(--rs-color-text-secondary);
 }
 
-/* Main Navigation */
 .mainNav {
   background: var(--rs-color-background-page);
 }

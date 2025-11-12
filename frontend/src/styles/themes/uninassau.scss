@@ -15,6 +15,14 @@
   --rs-color-rgb-background-primary: 5, 43, 130;
   --rs-color-rgb-background-primary-faded: 218, 223, 236;
   --rs-color-text-primary: #052b82;
+  --rs-color-background-secondary: #1a4da8;
+  --rs-color-background-secondary-faded: #e0e6f2;
+  --rs-color-border-secondary: #133a7d;
+  --rs-color-border-secondary-faded: #c2cfe5;
+  --rs-color-foreground-secondary: #5a7bc4;
+  --rs-color-rgb-background-secondary: 26, 77, 168;
+  --rs-color-rgb-background-secondary-faded: 224, 230, 242;
+  --rs-color-text-secondary: #1a4da8;
 }
 
 [data-rs-theme*='uninassau'][data-rs-color-mode='dark'],
@@ -27,4 +35,12 @@
   --rs-color-rgb-background-primary: 4, 39, 117;
   --rs-color-rgb-background-primary-faded: 1, 9, 26;
   --rs-color-text-primary: #929fbd;
+  --rs-color-background-secondary: #153a96;
+  --rs-color-background-secondary-faded: #020d1f;
+  --rs-color-border-secondary: #7d94c8;
+  --rs-color-border-secondary-faded: #031a3d;
+  --rs-color-foreground-secondary: #9aabd6;
+  --rs-color-rgb-background-secondary: 21, 58, 150;
+  --rs-color-rgb-background-secondary-faded: 2, 13, 31;
+  --rs-color-text-secondary: #9aabd6;
 }

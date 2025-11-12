@@ -32,6 +32,51 @@ const walk = (dir: string, fileHandler: (filePath: string) => void) => {
   }
 };
 
+const removeGlobalBlocks = (content: string): string => {
+  let result = '';
+  let i = 0;
+  let depth = 0;
+  let inGlobal = false;
+
+  while (i < content.length) {
+    // Check if we're starting a :global block
+    if (!inGlobal && content.slice(i).match(/^:global\s*[({]/)) {
+      inGlobal = true;
+      // Find the opening bracket/brace
+      const match = content.slice(i).match(/^:global\s*([({])/);
+      if (match) {
+        depth = 1;
+        i += match[0].length;
+        continue;
+      }
+    }
+
+    if (inGlobal) {
+      // Track depth for nested blocks
+      if (content[i] === '(' || content[i] === '{') {
+        depth++;
+      } else if (content[i] === ')' || content[i] === '}') {
+        depth--;
+        if (depth === 0) {
+          // End of global block, skip it
+          inGlobal = false;
+          i++;
+          continue;
+        }
+      }
+      // Skip content inside global blocks
+      i++;
+      continue;
+    }
+
+    // Add non-global content to result
+    result += content[i];
+    i++;
+  }
+
+  return result;
+};
+
 const collectCssClasses = () => {
   walk(sourceDir, (filePath) => {
     if (!cssModulePattern.test(filePath)) {
@@ -40,9 +85,14 @@ const collectCssClasses = () => {
 
     const content = readFileSync(filePath, 'utf8');
     const classNames = new Set<string>();
+
+    // Remove all :global() blocks before parsing classes
+    const contentWithoutGlobals = removeGlobalBlocks(content);
+
+    // Now collect classes from the cleaned content
     let match: RegExpExecArray | null;
 
-    while ((match = classNamePattern.exec(content))) {
+    while ((match = classNamePattern.exec(contentWithoutGlobals))) {
       const [, className] = match;
       if (!className || className.startsWith(':')) {
         continue;
