@@ -11,9 +11,6 @@ import { HomeHero } from '@/features/home-hero';
 import { InfrastructureSection } from '@/features/infrastructure';
 import { ModalitiesSection } from '@/features/modalities-section';
 import { PromotionalBanners } from '@/features/promotional-banners';
-import { generateMetadata } from '@/libs/seo/metadata';
-
-export { generateMetadata as metadata };
 
 const HomePage = () => {
   return (

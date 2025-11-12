@@ -1,11 +1,13 @@
 import { notFound } from 'next/navigation';
-import { generateJsonLd } from '@/libs/seo/json-ld';
+import { generateMetadata, generateJsonLd } from '@/libs/seo';
 import { isValidInstitution } from '@/utils/verify-institution';
 
 type InstitutionLayoutProps = {
   children: React.ReactNode;
   params: Promise<{ institution: string }>;
 };
+
+export { generateMetadata as metadata };
 
 export default async function InstitutionLayout({
   children,
@@ -19,14 +21,16 @@ export default async function InstitutionLayout({
     return notFound();
   }
 
-  const jsonLd = generateJsonLd(institution);
+  const jsonLd = await generateJsonLd(institution);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
 
       <link rel="icon" href={`/favicons/${institution}.ico`} sizes="any" />
       {children}
