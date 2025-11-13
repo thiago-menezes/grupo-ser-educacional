@@ -1,9 +1,7 @@
-.coursesGrid {
-  width: 100%;
-
-  @media screen and (max-width: 1100px) {
-    background-color: green;
-  }
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x4);
 }
 
 .bannerContainer {

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCoursesDTO } from '@/dto/courses';
 import { useCurrentInstitution } from '@/hooks/useInstitution';
+import { query } from '@/libs/api/axios';
+import { CoursesResponse } from './types';
 
 export const useQueryCourses = (
   state: string,
@@ -12,6 +13,13 @@ export const useQueryCourses = (
 
   return useQuery({
     queryKey: ['courses', institutionId, state, city, page, perPage],
-    queryFn: () => getCoursesDTO(institutionId, state, city, page, perPage),
+    queryFn: async () =>
+      query<CoursesResponse>(`/courses`, {
+        institution: institutionId,
+        state,
+        city,
+        page,
+        perPage,
+      }),
   });
 };

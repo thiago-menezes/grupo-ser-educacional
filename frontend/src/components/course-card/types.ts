@@ -1,4 +1,4 @@
-import { CourseData } from '@/dto/courses/types';
+import { CourseData } from '@/features/course-search/course-grid/api/types';
 
 export type CourseCardProps = {
   course: CourseData;

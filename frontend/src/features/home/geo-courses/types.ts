@@ -1,4 +1,4 @@
-import { CourseData } from '@/dto/courses/types';
+import { CourseData } from '@/types/courses';
 
 export type LocationData = {
   city: string;

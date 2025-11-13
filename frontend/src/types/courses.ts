@@ -13,14 +13,3 @@ export type CourseData = {
   campusState: string;
   slug: string;
 };
-
-export type CoursesResponseDTO = {
-  institution: string;
-  state: string;
-  city: string;
-  total: number;
-  currentPage: number;
-  totalPages: number;
-  perPage: number;
-  courses: CourseData[];
-};

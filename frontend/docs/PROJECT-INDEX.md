@@ -141,6 +141,27 @@ This project aims to build a unified, multi-institutional website system for uni
 
 ---
 
+### 6. [DTO & API Reference](./dto-api-reference.md)
+
+**Purpose**: Quick reference for DTO layer and API integration
+
+**Key Sections**:
+
+- DTO structure and patterns
+- Type definitions
+- API route handlers
+- Data flow diagrams
+- Integration points
+
+**When to use**:
+
+- Understanding data fetching patterns
+- Working with course/unit APIs
+- Adding new DTO modules
+- Debugging API calls
+
+---
+
 ## 🎯 Component Kanbans
 
 All Kanban files follow a consistent structure:

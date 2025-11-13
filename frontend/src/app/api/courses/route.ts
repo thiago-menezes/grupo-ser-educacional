@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { CourseData } from '@/dto/courses/types';
+import { CourseData } from '@/types/courses';
 import { formatPrice } from '@/utils/format-price';
 import { CoursesDTO } from './types';
 
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
   if (!BASE_URL) {
     return NextResponse.json(
       {
-        error: 'NEXT_PUBLIC_API_MOCK environment variable is not configured',
+        error: 'API_MOCK_BASE_URL environment variable is not configured',
       },
       { status: 500 },
     );
