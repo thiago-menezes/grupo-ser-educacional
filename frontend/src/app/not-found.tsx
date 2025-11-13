@@ -1,13 +1,5 @@
-import Link from 'next/link';
+import { PageNotFound } from '@/components/page-not-found';
 
 export default function NotFoundPage() {
-  return (
-    <main>
-      <div>
-        <h1>Página não encontrada</h1>
-        <p>A página que você está procurando não existe.</p>
-        <Link href="/">Voltar para a página inicial</Link>
-      </div>
-    </main>
-  );
+  return <PageNotFound />;
 }

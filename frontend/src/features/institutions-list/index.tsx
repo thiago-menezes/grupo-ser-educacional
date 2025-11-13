@@ -24,18 +24,18 @@ export const InstitutionsList = () => {
             <Image
               src="/logos/grupo-ser.png"
               alt="Ser Educacional"
-              width={205}
-              height={88}
+              width={160}
+              height={72}
               priority
             />
           </div>
           <Text
             as="h1"
-            variant="title-5"
+            variant="featured-1"
             color="neutral"
             className={styles.title}
           >
-            Conheça Nossas Instituições de Ensino
+            Conheça Nossas <br /> Instituições de Ensino
           </Text>
           <Text
             as="p"
