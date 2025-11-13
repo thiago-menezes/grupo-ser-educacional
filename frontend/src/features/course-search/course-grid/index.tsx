@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import { Grid, Pagination, View } from 'reshaped';
+import { Pagination, View } from 'reshaped';
 import { CourseCard, CourseCardSkeleton } from '@/components/course-card';
 import { useQueryCourses } from './api/query';
 import { ITEMS_PER_PAGE } from './constants';
@@ -30,35 +30,25 @@ export function CourseGrid() {
   return (
     <View gap={6}>
       {isLoading ? (
-        <Grid
-          gap={4}
-          columns={{
-            xl: 'repeat(3, 1fr)',
-            l: 'repeat(2, 1fr)',
-            m: 'repeat(1, 1fr)',
-          }}
-        >
+        <View gap={4} wrap direction="row" align="center" justify="center">
           {[...Array(3)].map((_, idx) => (
-            <CourseCardSkeleton key={idx} />
-          ))}
-        </Grid>
-      ) : (
-        <Grid
-          gap={4}
-          columns={{
-            xl: 'repeat(3, 1fr)',
-            l: 'repeat(2, 1fr)',
-            m: 'repeat(1, 1fr)',
-          }}
-        >
-          {cardsBeforeBanner.map((course) => (
-            <View key={course.id} align="center">
-              <CourseCard
-                course={course}
-                onClick={(slug) => console.log('Course clicked:', slug)}
-              />
+            <View key={idx} width="100%" maxWidth="312px">
+              <CourseCardSkeleton />
             </View>
           ))}
+        </View>
+      ) : (
+        <>
+          <View gap={4} wrap direction="row" align="center" justify="center">
+            {cardsBeforeBanner.map((course) => (
+              <View key={course.id} width="100%" maxWidth="312px">
+                <CourseCard
+                  course={course}
+                  onClick={(slug) => console.log('Course clicked:', slug)}
+                />
+              </View>
+            ))}
+          </View>
 
           <View className={styles.bannerContainer}>
             <Image
@@ -70,14 +60,18 @@ export function CourseGrid() {
             />
           </View>
 
-          {cardsAfterBanner.map((course) => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              onClick={(slug) => console.log('Course clicked:', slug)}
-            />
-          ))}
-        </Grid>
+          <View gap={4} wrap direction="row" align="center" justify="center">
+            {cardsAfterBanner.map((course) => (
+              <View key={course.id} width="100%" maxWidth="312px">
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  onClick={(slug) => console.log('Course clicked:', slug)}
+                />
+              </View>
+            ))}
+          </View>
+        </>
       )}
 
       {courses.length > totalPages && (

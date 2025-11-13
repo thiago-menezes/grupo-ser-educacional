@@ -5,7 +5,9 @@ import { SORT_OPTIONS } from './constants';
 import styles from './styles.module.scss';
 import { ResultsHeaderProps } from './types';
 
-export function ResultsHeader({ totalResults = 150 }: ResultsHeaderProps) {
+export function ResultsHeader({ totalResults }: ResultsHeaderProps) {
+  if (!totalResults) return null;
+
   return (
     <View className={styles.resultsHeader}>
       <Text variant="body-2" color="neutral">
