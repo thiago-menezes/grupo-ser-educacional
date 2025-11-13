@@ -1,4 +1,4 @@
-import type { CourseCardData } from './course-card/types';
+import type { CourseCardData } from '@/components/course-card';
 
 export type LocationData = {
   city: string;

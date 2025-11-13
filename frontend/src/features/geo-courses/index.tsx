@@ -2,17 +2,16 @@
 
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
+import { CourseCard, CourseCardSkeleton } from '@/components/course-card';
 import { Icon } from '@/components/icon';
 import { Pagination } from '@/components/pagination';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { usePagination } from '@/hooks/usePagination';
-import { CourseCard } from './course-card';
-import { CourseCardSkeleton } from './course-card/skeleton';
-import { MOCK_GEO_COURSES_DATA } from './mocks';
+import { MOCK_GEO_COURSES_DATA } from './api/mocks';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';
 
-export { MOCK_POPULAR_COURSES_DATA } from './mocks';
+export { MOCK_POPULAR_COURSES_DATA } from './api/mocks';
 
 const SKELETON_COUNT = 4;
 

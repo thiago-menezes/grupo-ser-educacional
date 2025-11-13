@@ -1,6 +1,6 @@
-import type { CourseDTO } from './api/types';
-import { transformCourseDTO } from './course-card/types';
-import type { GeoCoursesData } from './types';
+import type { GeoCoursesData } from '../types';
+import type { CourseDTO } from './types';
+import { transformCourseDTO } from './utils';
 
 export const MOCK_COURSES_DTO: CourseDTO[] = [
   {

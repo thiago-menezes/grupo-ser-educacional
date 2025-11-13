@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { fetchGeoCoursesSection } from './api';
-import { transformCourseDTO } from './course-card/types';
+import { transformCourseDTO } from './api/utils';
 import type { GeoCoursesData } from './types';
 
 type UseGeoCoursesOptions = {

@@ -1,13 +1,8 @@
 import { Button } from 'reshaped';
 import { Icon } from '@/components/icon';
+import { MODALITY_LABELS } from './constants';
 import styles from './styles.module.scss';
 import type { CourseCardProps } from './types';
-
-const MODALITY_LABELS: Record<string, string> = {
-  presencial: 'Presencial',
-  semipresencial: 'Semipresencial',
-  ead: 'EAD',
-};
 
 export function CourseCard({ course, onClick }: CourseCardProps) {
   const handleClick = () => {
@@ -69,4 +64,5 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
   );
 }
 
-export type { CourseCardProps };
+export { CourseCardSkeleton } from './skeleton';
+export type { CourseCardProps, CourseCardData } from './types';
