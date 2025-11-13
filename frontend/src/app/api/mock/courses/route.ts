@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CourseData } from '@/dto/courses/types';
+import { formatPrice } from '@/utils/format-price';
 import { CoursesDTO } from './types';
 
 const BASE_URL = process.env.API_MOCK_BASE_URL;
@@ -71,7 +72,7 @@ export async function GET(request: NextRequest) {
               | 'ead',
           ]
         : [],
-      priceFrom: 'NAO TEMOS INFORMACAO AINDA',
+      priceFrom: formatPrice(45590),
       campusName: 'NAO TEMOS INFORMACAO AINDA',
       campusCity: city,
       campusState: state,
