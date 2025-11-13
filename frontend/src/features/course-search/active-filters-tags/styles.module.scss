@@ -1,0 +1,17 @@
+.activeFiltersSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x3);
+
+  @media (--rs-viewport-l) {
+    display: none;
+  }
+}
+
+.activeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rs-unit-x2);
+  align-items: center;
+}
+
