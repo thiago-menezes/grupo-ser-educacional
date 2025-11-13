@@ -3,12 +3,10 @@
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
-  useEffect,
-  useMemo,
   useState,
 } from 'react';
-import { useForm } from 'react-hook-form';
 import { DEFAULT_FILTERS } from './filters-content/constants';
 import type {
   CourseFiltersContextValues,
@@ -20,17 +18,9 @@ const CourseFiltersContext = createContext<CourseFiltersContextValues>(
 );
 
 export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
-  const { control, handleSubmit, reset, watch, setValue } =
-    useForm<CourseFiltersFormValues>({
-      defaultValues: DEFAULT_FILTERS,
-      mode: 'onChange',
-    });
-
-  const filters = useMemo(() => watch(), [watch]);
-
-  useEffect(() => {
-    reset(filters, { keepDefaultValues: false });
-  }, [filters, reset]);
+  // Applied filters - these trigger the search/API call
+  const [appliedFilters, setAppliedFilters] =
+    useState<CourseFiltersFormValues>(DEFAULT_FILTERS);
 
   const [activeFilters, setActiveFilters] = useState<
     { id: string; label: string }[]
@@ -38,34 +28,37 @@ export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
 
   const activeFiltersCount = activeFilters.length;
 
-  const resetFilters = () => {
-    reset(DEFAULT_FILTERS);
+  const applyFilters = useCallback((filters: CourseFiltersFormValues) => {
+    setAppliedFilters(filters);
+    // TODO: Trigger API call here or via useEffect watching appliedFilters
+    // TODO: Update activeFilters based on applied filter values
+  }, []);
+
+  const resetFilters = useCallback(() => {
+    setAppliedFilters(DEFAULT_FILTERS);
     setActiveFilters([]);
-  };
+  }, []);
 
-  const handleRemoveFilter = (filterId: string) => {
+  const handleRemoveFilter = useCallback((filterId: string) => {
     setActiveFilters((prev) => prev.filter((f) => f.id !== filterId));
-  };
+    // TODO: Update appliedFilters when removing a filter tag
+  }, []);
 
-  const handleClearAllFilters = () => {
+  const handleClearAllFilters = useCallback(() => {
     resetFilters();
-  };
+  }, [resetFilters]);
 
-  const contextValues: CourseFiltersContextValues = useMemo(
-    () => ({
-      filters,
-      activeFilters,
-      activeFiltersCount,
-      updateFilters: setValue,
-      resetFilters,
-      handleRemoveFilter,
-      handleClearAllFilters,
-      control,
-      handleSubmit,
-    }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [filters, activeFilters, activeFiltersCount],
-  );
+  console.log('appliedFilters', appliedFilters);
+
+  const contextValues: CourseFiltersContextValues = {
+    filters: appliedFilters,
+    activeFilters,
+    activeFiltersCount,
+    applyFilters,
+    resetFilters,
+    handleRemoveFilter,
+    handleClearAllFilters,
+  };
 
   return (
     <CourseFiltersContext.Provider value={contextValues}>

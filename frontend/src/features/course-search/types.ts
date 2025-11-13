@@ -1,5 +1,3 @@
-import { Control, UseFormHandleSubmit, UseFormSetValue } from 'react-hook-form';
-
 export type CourseLevel = 'graduation' | 'postgraduate';
 
 export type CourseModality = 'presencial' | 'semipresencial' | 'ead';
@@ -33,13 +31,11 @@ export type CourseFiltersFormValues = {
 };
 
 export type CourseFiltersContextValues = {
-  filters: CourseFiltersFormValues;
+  filters: CourseFiltersFormValues; // Applied filters (trigger search)
   activeFilters: ActiveFilter[];
   activeFiltersCount: number;
-  updateFilters: UseFormSetValue<CourseFiltersFormValues>;
+  applyFilters: (filters: CourseFiltersFormValues) => void;
   resetFilters: () => void;
   handleRemoveFilter: (filterId: string) => void;
   handleClearAllFilters: () => void;
-  control: Control<CourseFiltersFormValues>;
-  handleSubmit: UseFormHandleSubmit<CourseFiltersFormValues>;
 };

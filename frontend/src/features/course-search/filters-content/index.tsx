@@ -2,7 +2,7 @@
 
 import { clsx } from 'clsx';
 import { useEffect, useState } from 'react';
-import { Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import {
   Badge,
   Button,
@@ -22,19 +22,32 @@ import type { CourseFiltersFormValues } from '../types';
 import { FILTERS_CONTENT_HEIGHT_TO_UPDATE } from './constants';
 import styles from './styles.module.scss';
 
-export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
+export function FiltersContent({
+  handleCloseModal,
+}: {
+  handleCloseModal?: () => void;
+}) {
   const {
+    filters: appliedFilters,
     activeFilters,
     activeFiltersCount,
-    updateFilters,
     handleRemoveFilter,
     handleClearAllFilters,
-    resetFilters,
-    control,
-    handleSubmit,
+    applyFilters,
   } = useCourseFiltersContext();
 
+  // Local form state - user edits here before applying
+  const { control, handleSubmit, reset } = useForm<CourseFiltersFormValues>({
+    defaultValues: appliedFilters,
+    mode: 'onChange',
+  });
+
   const [scrollTop, setScrollTop] = useState(0);
+
+  // Sync local form with applied filters when they change externally
+  useEffect(() => {
+    reset(appliedFilters);
+  }, [appliedFilters, reset]);
 
   // Handle scroll for dynamic height
   useEffect(() => {
@@ -49,18 +62,7 @@ export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
   }, []);
 
   const onSubmit = (data: CourseFiltersFormValues) => {
-    updateFilters('city', data.city);
-    updateFilters('radius', data.radius);
-    updateFilters('courseName', data.courseName);
-    updateFilters('modalities', data.modalities);
-    updateFilters('priceRange', data.priceRange);
-    updateFilters('shifts', data.shifts);
-    updateFilters('durations', data.durations);
-    updateFilters('courseLevel', data.courseLevel);
-  };
-
-  const onCancel = () => {
-    resetFilters();
+    applyFilters(data);
   };
 
   return (
@@ -69,7 +71,7 @@ export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
         className={clsx(styles.formInputsContainer, {
           [styles.formInputsUpdatedHeight]:
             scrollTop > FILTERS_CONTENT_HEIGHT_TO_UPDATE,
-          [styles.viewPortMedium]: isInModal,
+          [styles.viewPortMedium]: handleCloseModal,
         })}
       >
         {activeFilters.length > 0 && (
@@ -120,23 +122,15 @@ export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
           render={({ field }) => (
             <Tabs
               variant="pills-elevated"
-              defaultValue="graduation"
-              onChange={(value) => {
-                console.log('value', value);
-                field.onChange(value);
-              }}
+              value={field.value}
+              onChange={({ value }) => field.onChange(value)}
             >
               <Tabs.List>
-                <Tabs.Item
-                  data-id="graduation"
-                  value="graduation"
-                  icon={<Icon name="school" />}
-                >
+                <Tabs.Item value="graduation" icon={<Icon name="school" />}>
                   Graduação
                 </Tabs.Item>
 
                 <Tabs.Item
-                  data-id="postgraduate"
                   value="postgraduate"
                   icon={<Icon name="briefcase" />}
                 >
@@ -151,17 +145,14 @@ export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
         <Controller
           name="city"
           control={control}
-          render={({ field: { onChange, value, name } }) => (
+          render={({ field }) => (
             <FormControl>
               <FormControl.Label>Em que cidade quer estudar?</FormControl.Label>
               <TextField
-                name={name}
+                name={field.name}
                 placeholder="Ex: Fortaleza"
-                value={value}
-                onChange={({ value }) => {
-                  console.log('value', value);
-                  onChange(value);
-                }}
+                value={field.value}
+                onChange={({ value }) => field.onChange(value)}
               />
             </FormControl>
           )}
@@ -489,14 +480,22 @@ export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
       <Divider />
 
       <View gap={2} direction="row" justify="end">
-        <Button variant="outline" color="neutral" onClick={onCancel}>
-          Cancelar
-        </Button>
+        {handleCloseModal && (
+          <Button variant="outline" color="neutral" onClick={handleCloseModal}>
+            Cancelar
+          </Button>
+        )}
 
         <Button
           variant="solid"
           color="primary"
-          onClick={handleSubmit(onSubmit)}
+          onClick={() => {
+            handleSubmit(onSubmit)();
+
+            if (handleCloseModal) {
+              handleCloseModal();
+            }
+          }}
         >
           Aplicar filtros
         </Button>

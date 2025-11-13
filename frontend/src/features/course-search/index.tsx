@@ -143,7 +143,7 @@ function CourseSearchPageContent() {
           <View className={styles.filtersSidebar}>
             {/* Active Filters Tags - Desktop (inside sidebar) */}
 
-            <FiltersContent isInModal={false} />
+            <FiltersContent />
           </View>
 
           {/* Course Grid Container */}
@@ -202,7 +202,9 @@ function CourseSearchPageContent() {
         className={styles.filtersModal}
       >
         <View className={styles.filtersModalContent}>
-          <FiltersContent isInModal={true} />
+          <FiltersContent
+            handleCloseModal={() => setIsFiltersModalOpen(false)}
+          />
         </View>
       </Modal>
     </View>
