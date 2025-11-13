@@ -1,18 +1,23 @@
 'use client';
 
 import { Grid, View } from 'reshaped';
+import { CourseCard } from '@/components/course-card';
+import type { CourseCardData } from '@/components/course-card';
+import { MOCK_COURSE_CARDS } from './mocks';
 import styles from './styles.module.scss';
 
 export type CourseGridProps = {
-  courses?: unknown[];
-  banner?: unknown;
+  courses?: CourseCardData[];
+  banner?: React.ReactNode;
 };
 
-// TODO: remove this once we have the actual courses
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function CourseGrid({ courses = [], banner }: CourseGridProps) {
-  // For now, render placeholder cards
-  const placeholderCards = Array.from({ length: 12 });
+export function CourseGrid({
+  courses = MOCK_COURSE_CARDS,
+  banner,
+}: CourseGridProps) {
+  // Insert banner after 6th card
+  const cardsBeforeBanner = courses.slice(0, 6);
+  const cardsAfterBanner = courses.slice(6);
 
   return (
     <Grid
@@ -21,22 +26,28 @@ export function CourseGrid({ courses = [], banner }: CourseGridProps) {
       className={styles.coursesGrid}
     >
       {/* First 6 course cards */}
-      {placeholderCards.slice(0, 6).map((_, index) => (
-        <View key={index} className={styles.courseCard}>
-          {/* Course card content */}
-        </View>
+      {cardsBeforeBanner.map((course) => (
+        <CourseCard
+          key={course.id}
+          course={course}
+          onClick={(slug) => console.log('Course clicked:', slug)}
+        />
       ))}
 
-      {/* Banner Container - Always render for now */}
-      <View className={styles.bannerContainer}>
-        {/* Banner content will go here */}
-      </View>
+      {/* Banner Container */}
+      {banner && (
+        <View className={styles.bannerContainer}>
+          {/* Banner content will go here */}
+        </View>
+      )}
 
       {/* Remaining course cards */}
-      {placeholderCards.slice(6).map((_, index) => (
-        <View key={`more-${index}`} className={styles.courseCard}>
-          {/* Course card content */}
-        </View>
+      {cardsAfterBanner.map((course) => (
+        <CourseCard
+          key={course.id}
+          course={course}
+          onClick={(slug) => console.log('Course clicked:', slug)}
+        />
       ))}
     </Grid>
   );
