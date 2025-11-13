@@ -65,4 +65,4 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
 }
 
 export { CourseCardSkeleton } from './skeleton';
-export type { CourseCardProps, CourseCardData } from './types';
+export type { CourseCardProps } from './types';

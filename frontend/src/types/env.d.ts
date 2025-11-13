@@ -3,7 +3,7 @@ declare namespace NodeJS {
     // API Configuration
     NEXT_PUBLIC_API_BASE_URL: string;
     NEXT_PUBLIC_STRAPI_URL?: string;
-    NEXT_PUBLIC_APP_BASE_URL?: string;
+    API_MOCK_BASE_URL: string;
 
     // NextAuth
     AUTH_URL: string;

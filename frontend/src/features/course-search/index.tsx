@@ -20,11 +20,8 @@ function CourseSearchPageContent() {
     <View className={styles.page}>
       <View className={styles.container}>
         <CourseSearchHeader />
-
         <CourseSearchBar />
-
         <FiltersButton onClick={() => setIsFiltersModalOpen(true)} />
-
         <ActiveFiltersTags variant="mobile" />
 
         <View className={styles.mainContent}>

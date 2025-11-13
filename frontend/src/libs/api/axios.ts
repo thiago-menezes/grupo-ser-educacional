@@ -3,9 +3,10 @@ import { signOut } from 'next-auth/react';
 import { getAccessToken } from './token';
 
 export const createApiClient = (addAuthInterceptor: boolean = false) => {
-  const baseURL = process.env.development
-    ? process.env.NEXT_PUBLIC_API_MOCK
-    : process.env.NEXT_PUBLIC_API_BASE_URL;
+  const baseURL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/api/mock'
+      : process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const client = axios.create({
     baseURL,
