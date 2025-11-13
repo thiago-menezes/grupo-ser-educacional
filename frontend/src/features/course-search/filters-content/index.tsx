@@ -2,7 +2,7 @@
 
 import { clsx } from 'clsx';
 import { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import {
   Badge,
   Button,
@@ -16,6 +16,7 @@ import {
   View,
 } from 'reshaped';
 import { Icon } from '@/components/icon';
+import { formatPrice } from '@/utils/format-price';
 import { useCourseFiltersContext } from '../context';
 import type { CourseFiltersFormValues } from '../types';
 import { FILTERS_CONTENT_HEIGHT_TO_UPDATE } from './constants';
@@ -23,24 +24,19 @@ import styles from './styles.module.scss';
 
 export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
   const {
-    filters,
     activeFilters,
     activeFiltersCount,
     updateFilters,
     handleRemoveFilter,
     handleClearAllFilters,
+    resetFilters,
+    control,
+    handleSubmit,
   } = useCourseFiltersContext();
-
-  const { control, handleSubmit, reset } = useForm<CourseFiltersFormValues>({
-    defaultValues: filters,
-  });
 
   const [scrollTop, setScrollTop] = useState(0);
 
-  const formatPrice = (value: number) => {
-    return `R$ ${value.toLocaleString('pt-BR')}`;
-  };
-
+  // Handle scroll for dynamic height
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setScrollTop(window.scrollY);
@@ -52,19 +48,19 @@ export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
     }
   }, []);
 
-  useEffect(() => {
-    reset(filters);
-  }, [filters, reset]);
-
   const onSubmit = (data: CourseFiltersFormValues) => {
-    updateFilters(data);
+    updateFilters('city', data.city);
+    updateFilters('radius', data.radius);
+    updateFilters('courseName', data.courseName);
+    updateFilters('modalities', data.modalities);
+    updateFilters('priceRange', data.priceRange);
+    updateFilters('shifts', data.shifts);
+    updateFilters('durations', data.durations);
+    updateFilters('courseLevel', data.courseLevel);
   };
 
   const onCancel = () => {
-    reset(filters);
-    if (isInModal) {
-      // Close modal logic will be handled by parent
-    }
+    resetFilters();
   };
 
   return (
@@ -124,8 +120,11 @@ export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
           render={({ field }) => (
             <Tabs
               variant="pills-elevated"
-              value={field.value}
-              onChange={(value) => field.onChange(value)}
+              defaultValue="graduation"
+              onChange={(value) => {
+                console.log('value', value);
+                field.onChange(value);
+              }}
             >
               <Tabs.List>
                 <Tabs.Item
@@ -152,14 +151,17 @@ export function FiltersContent({ isInModal }: { isInModal?: boolean }) {
         <Controller
           name="city"
           control={control}
-          render={({ field }) => (
+          render={({ field: { onChange, value, name } }) => (
             <FormControl>
               <FormControl.Label>Em que cidade quer estudar?</FormControl.Label>
               <TextField
-                name={field.name}
-                placeholder="São José dos Campos"
-                value={field.value}
-                onChange={({ value }) => field.onChange(value)}
+                name={name}
+                placeholder="Ex: Fortaleza"
+                value={value}
+                onChange={({ value }) => {
+                  console.log('value', value);
+                  onChange(value);
+                }}
               />
             </FormControl>
           )}

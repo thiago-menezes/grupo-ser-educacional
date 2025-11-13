@@ -4,9 +4,11 @@ import {
   createContext,
   PropsWithChildren,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
+import { useForm } from 'react-hook-form';
 import { DEFAULT_FILTERS } from './filters-content/constants';
 import type {
   CourseFiltersContextValues,
@@ -18,8 +20,17 @@ const CourseFiltersContext = createContext<CourseFiltersContextValues>(
 );
 
 export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
-  const [filters, setFilters] =
-    useState<CourseFiltersFormValues>(DEFAULT_FILTERS);
+  const { control, handleSubmit, reset, watch, setValue } =
+    useForm<CourseFiltersFormValues>({
+      defaultValues: DEFAULT_FILTERS,
+      mode: 'onChange',
+    });
+
+  const filters = useMemo(() => watch(), [watch]);
+
+  useEffect(() => {
+    reset(filters, { keepDefaultValues: false });
+  }, [filters, reset]);
 
   const [activeFilters, setActiveFilters] = useState<
     { id: string; label: string }[]
@@ -27,19 +38,13 @@ export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
 
   const activeFiltersCount = activeFilters.length;
 
-  const updateFilters = (newFilters: Partial<CourseFiltersFormValues>) => {
-    setFilters((prev) => ({ ...prev, ...newFilters }));
-    // TODO: Update activeFilters based on new filter values
-  };
-
   const resetFilters = () => {
-    setFilters(DEFAULT_FILTERS);
+    reset(DEFAULT_FILTERS);
     setActiveFilters([]);
   };
 
   const handleRemoveFilter = (filterId: string) => {
     setActiveFilters((prev) => prev.filter((f) => f.id !== filterId));
-    // TODO: Update filters state when removing a filter
   };
 
   const handleClearAllFilters = () => {
@@ -51,10 +56,12 @@ export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
       filters,
       activeFilters,
       activeFiltersCount,
-      updateFilters,
+      updateFilters: setValue,
       resetFilters,
       handleRemoveFilter,
       handleClearAllFilters,
+      control,
+      handleSubmit,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [filters, activeFilters, activeFiltersCount],
