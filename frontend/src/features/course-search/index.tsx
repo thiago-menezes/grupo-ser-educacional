@@ -15,27 +15,19 @@ import {
 } from 'reshaped';
 import { Icon } from '@/components/icon';
 import { useCurrentInstitution } from '@/hooks/useInstitution';
+import { CourseFiltersProvider, useCourseFiltersContext } from './context';
 import { FiltersContent } from './filters-content';
 import styles from './styles.module.scss';
 
-export function CourseSearchPage() {
-  // Mock data - will be replaced with real state management
-  const [activeFilters, setActiveFilters] = useState([
-    { id: '1', label: 'R$ 800 a R$ 2.000' },
-    { id: '2', label: 'Turno' },
-  ]);
+function CourseSearchPageContent() {
+  const {
+    activeFilters,
+    activeFiltersCount,
+    handleRemoveFilter,
+    handleClearAllFilters,
+  } = useCourseFiltersContext();
 
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
-
-  const activeFiltersCount = activeFilters.length;
-
-  const handleRemoveFilter = (filterId: string) => {
-    setActiveFilters((prev) => prev.filter((f) => f.id !== filterId));
-  };
-
-  const handleClearAllFilters = () => {
-    setActiveFilters([]);
-  };
 
   const { institutionId } = useCurrentInstitution();
 
@@ -151,13 +143,7 @@ export function CourseSearchPage() {
           <View className={styles.filtersSidebar}>
             {/* Active Filters Tags - Desktop (inside sidebar) */}
 
-            <FiltersContent
-              activeFilters={activeFilters}
-              activeFiltersCount={activeFiltersCount}
-              handleClearAllFilters={handleClearAllFilters}
-              handleRemoveFilter={handleRemoveFilter}
-              isInModal={false}
-            />
+            <FiltersContent isInModal={false} />
           </View>
 
           {/* Course Grid Container */}
@@ -216,15 +202,17 @@ export function CourseSearchPage() {
         className={styles.filtersModal}
       >
         <View className={styles.filtersModalContent}>
-          <FiltersContent
-            activeFilters={activeFilters}
-            activeFiltersCount={activeFiltersCount}
-            handleClearAllFilters={handleClearAllFilters}
-            handleRemoveFilter={handleRemoveFilter}
-            isInModal={true}
-          />
+          <FiltersContent isInModal={true} />
         </View>
       </Modal>
     </View>
+  );
+}
+
+export function CourseSearchPage() {
+  return (
+    <CourseFiltersProvider>
+      <CourseSearchPageContent />
+    </CourseFiltersProvider>
   );
 }
