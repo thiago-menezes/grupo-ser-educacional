@@ -31,7 +31,7 @@ export type CourseFiltersFormValues = {
 };
 
 export type CourseFiltersContextValues = {
-  filters: CourseFiltersFormValues; // Applied filters (trigger search)
+  filters: CourseFiltersFormValues;
   activeFilters: ActiveFilter[];
   activeFiltersCount: number;
   applyFilters: (filters: CourseFiltersFormValues) => void;
