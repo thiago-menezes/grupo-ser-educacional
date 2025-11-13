@@ -17,9 +17,11 @@ Institution (base)
 ### Content Types Criados
 
 #### 1. Institution (Instituição)
+
 Representa cada instituição do Grupo SER.
 
 **Campos principais:**
+
 - `name` (string, único, obrigatório) - Nome da instituição
 - `slug` (uid, obrigatório) - Identificador URL-friendly (auto-gerado)
 - `code` (string, único, obrigatório) - Código curto (ex: "FEX", "UNI")
@@ -31,9 +33,11 @@ Representa cada instituição do Grupo SER.
 - `active` (boolean, default: true) - Instituição ativa/inativa
 
 #### 2. Course (Curso)
+
 Cursos oferecidos por cada instituição.
 
 **Campos principais:**
+
 - `name` (string, obrigatório) - Nome do curso
 - `slug` (uid) - Identificador URL-friendly
 - `description` (text) - Descrição curta
@@ -49,6 +53,7 @@ Cursos oferecidos por cada instituição.
 - `institution` (relation - many-to-one) - **Instituição vinculada**
 
 **Enumerações:**
+
 - `sector`: saude | tecnologia | gestao | educacao | direito | engenharia | outros
 - `level`: tecnico | graduacao | pos-graduacao | extensao | curso-livre
 - `modality`: presencial | ead | hibrido
@@ -56,9 +61,11 @@ Cursos oferecidos por cada instituição.
 **Draft & Publish:** ✅ Habilitado
 
 #### 3. Page Content (Conteúdo de Página)
+
 Blocos de conteúdo flexíveis para diferentes seções do site, organizados por categoria.
 
 **Campos principais:**
+
 - `title` (string, obrigatório) - Título do conteúdo
 - `slug` (uid) - Identificador URL-friendly
 - `category` (enumeration, obrigatório) - Categoria do conteúdo
@@ -69,6 +76,7 @@ Blocos de conteúdo flexíveis para diferentes seções do site, organizados por
 - `institution` (relation - many-to-one) - **Instituição vinculada**
 
 **Categorias disponíveis:**
+
 - `home-hero` - Hero da homepage
 - `home-about` - Seção sobre na homepage
 - `home-courses` - Showcase de cursos na homepage
@@ -82,6 +90,7 @@ Blocos de conteúdo flexíveis para diferentes seções do site, organizados por
 - `custom` - Conteúdo customizado
 
 **Blocos dinâmicos disponíveis:**
+
 - `shared.media` - Upload de mídia única
 - `shared.quote` - Citações
 - `shared.rich-text` - Texto rico
@@ -134,6 +143,7 @@ Repita para as 7 instituições.
 7. Salve e publique
 
 **Exemplo:** Para criar o hero da homepage de cada instituição:
+
 - Crie 7 entries com categoria `home-hero`
 - Cada uma vinculada a uma instituição diferente
 - Use blocos `rich-text` ou `media` para conteúdo
@@ -167,9 +177,9 @@ const INSTITUTION_SLUG = process.env.NEXT_PUBLIC_INSTITUTION_SLUG;
 export async function getCourses() {
   const res = await fetch(
     `${STRAPI_URL}/api/courses?` +
-    `filters[institution][slug][$eq]=${INSTITUTION_SLUG}&` +
-    `filters[publishedAt][$notNull]=true&` +
-    `populate=*`
+      `filters[institution][slug][$eq]=${INSTITUTION_SLUG}&` +
+      `filters[publishedAt][$notNull]=true&` +
+      `populate=*`,
   );
   return res.json();
 }
@@ -177,11 +187,11 @@ export async function getCourses() {
 export async function getHomeHero() {
   const res = await fetch(
     `${STRAPI_URL}/api/page-contents?` +
-    `filters[institution][slug][$eq]=${INSTITUTION_SLUG}&` +
-    `filters[category][$eq]=home-hero&` +
-    `filters[active][$eq]=true&` +
-    `populate=deep&` +
-    `sort=order:asc`
+      `filters[institution][slug][$eq]=${INSTITUTION_SLUG}&` +
+      `filters[category][$eq]=home-hero&` +
+      `filters[active][$eq]=true&` +
+      `populate=deep&` +
+      `sort=order:asc`,
   );
   return res.json();
 }
@@ -189,8 +199,8 @@ export async function getHomeHero() {
 export async function getInstitution() {
   const res = await fetch(
     `${STRAPI_URL}/api/institutions?` +
-    `filters[slug][$eq]=${INSTITUTION_SLUG}&` +
-    `populate=logo`
+      `filters[slug][$eq]=${INSTITUTION_SLUG}&` +
+      `populate=logo`,
   );
   const data = await res.json();
   return data.data[0];
@@ -199,10 +209,10 @@ export async function getInstitution() {
 export async function getFeaturedCourses() {
   const res = await fetch(
     `${STRAPI_URL}/api/courses?` +
-    `filters[institution][slug][$eq]=${INSTITUTION_SLUG}&` +
-    `filters[featured][$eq]=true&` +
-    `filters[enrollmentOpen][$eq]=true&` +
-    `populate=*`
+      `filters[institution][slug][$eq]=${INSTITUTION_SLUG}&` +
+      `filters[featured][$eq]=true&` +
+      `filters[enrollmentOpen][$eq]=true&` +
+      `populate=*`,
   );
   return res.json();
 }

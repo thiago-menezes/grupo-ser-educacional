@@ -96,30 +96,36 @@ Frontend App
 ### Query Examples
 
 **Site da Faculdade Tech:**
+
 ```javascript
 // .env
-INSTITUTION_SLUG=fac-tech
+INSTITUTION_SLUG = fac - tech;
 
 // Retorna apenas cursos da Faculdade Tech
-fetch('/api/courses?filters[institution][slug][$eq]=fac-tech')
+fetch("/api/courses?filters[institution][slug][$eq]=fac-tech");
 // → Web Dev, Data Science, UX Design
 
 // Retorna hero específico da Faculdade Tech
-fetch('/api/page-contents?filters[institution][slug][$eq]=fac-tech&filters[category][$eq]=home-hero')
+fetch(
+  "/api/page-contents?filters[institution][slug][$eq]=fac-tech&filters[category][$eq]=home-hero",
+);
 // → "Tecnologia do Futuro"
 ```
 
 **Site do Instituto Saúde:**
+
 ```javascript
 // .env
-INSTITUTION_SLUG=inst-saude
+INSTITUTION_SLUG = inst - saude;
 
 // Retorna apenas cursos do Instituto Saúde
-fetch('/api/courses?filters[institution][slug][$eq]=inst-saude')
+fetch("/api/courses?filters[institution][slug][$eq]=inst-saude");
 // → Enfermagem, Nutrição, Fisioterapia
 
 // Retorna hero específico do Instituto Saúde
-fetch('/api/page-contents?filters[institution][slug][$eq]=inst-saude&filters[category][$eq]=home-hero')
+fetch(
+  "/api/page-contents?filters[institution][slug][$eq]=inst-saude&filters[category][$eq]=home-hero",
+);
 // → "Cuidar de Vidas"
 ```
 
@@ -164,26 +170,31 @@ src/api/
 ## Benefícios da Arquitetura
 
 ### ✅ Isolamento de Dados
+
 - Cada instituição tem seus próprios cursos e conteúdos
 - Impossível misturar dados entre instituições acidentalmente
 - Queries sempre filtram por instituição
 
 ### ✅ Branding Personalizado
+
 - Logo único por instituição
 - Cores primária/secundária configuráveis
 - Frontend aplica branding dinamicamente
 
 ### ✅ Gestão Centralizada
+
 - Um único painel admin para tudo
 - Equipe pode gerenciar múltiplas instituições
 - Atualizações de código beneficiam todas
 
 ### ✅ Escalabilidade
+
 - Adicionar 8ª, 9ª instituição é trivial
 - Sem duplicação de infraestrutura
 - Performance não degrada com mais instituições
 
 ### ✅ Flexibilidade de Conteúdo
+
 - Cada instituição customiza livremente
 - Categorias pré-definidas mantêm consistência
 - Dynamic zones permitem layouts únicos
@@ -212,12 +223,14 @@ Outros
 ## Campos de Course (Detalhamento)
 
 ### Informações Básicas
+
 - `name`: Nome do curso
 - `slug`: URL-friendly identifier
 - `description`: Descrição curta (para cards)
 - `detailedDescription`: Descrição longa (página do curso)
 
 ### Dados Acadêmicos
+
 - `curriculum`: Grade curricular completa (rich text)
 - `workload`: Carga horária em horas
 - `duration`: Duração textual ("2 anos", "360h")
@@ -226,15 +239,18 @@ Outros
 - `modality`: Formato de ensino
 
 ### Comercial
+
 - `price`: Valor do curso
 - `enrollmentOpen`: Matrícula disponível?
 - `featured`: Destacar na home?
 
 ### Mídia
+
 - `coverImage`: Imagem principal
 - `gallery`: Galeria de fotos
 
 ### Relação
+
 - `institution`: Vínculo com instituição (obrigatório via UI)
 
 ## Próximos Passos Recomendados

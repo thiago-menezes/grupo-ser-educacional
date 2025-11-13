@@ -4,12 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [
-        "dist/**",
-        ".next/**",
-        "!.next/cache/**",
-        "build/**"
-      ],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "build/**"],
       "env": [
         "NODE_ENV",
         "NEXT_PUBLIC_*",
@@ -32,29 +27,19 @@
     },
     "lint": {
       "dependsOn": ["^build"],
-      "outputs": [
-        ".eslintcache"
-      ]
+      "outputs": [".eslintcache"]
     },
     "typecheck": {
       "dependsOn": ["^build"],
-      "outputs": [
-        "tsconfig.tsbuildinfo"
-      ]
+      "outputs": ["tsconfig.tsbuildinfo"]
     },
     "test": {
       "dependsOn": ["^build"],
-      "outputs": [
-        "coverage/**"
-      ]
+      "outputs": ["coverage/**"]
     },
     "clean": {
       "cache": false
     }
   },
-  "globalDependencies": [
-    "tsconfig.json",
-    ".env*"
-  ]
+  "globalDependencies": ["tsconfig.json", ".env*"]
 }
-

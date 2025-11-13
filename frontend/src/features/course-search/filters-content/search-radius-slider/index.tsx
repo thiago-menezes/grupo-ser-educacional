@@ -1,8 +1,8 @@
 'use client';
 
 import { Controller } from 'react-hook-form';
-import { FormControl, Slider, Text, View } from 'reshaped';
 import type { Control } from 'react-hook-form';
+import { FormControl, Slider, Text, View } from 'reshaped';
 import type { CourseFiltersFormValues } from '../../types';
 
 export type SearchRadiusSliderProps = {
@@ -40,4 +40,3 @@ export function SearchRadiusSlider({ control }: SearchRadiusSliderProps) {
     />
   );
 }
-

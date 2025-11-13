@@ -17,6 +17,7 @@ This CMS manages content for **7 different educational institutions** within Gru
 ## Development Commands
 
 ### Running the application
+
 ```bash
 yarn dev:cms         # Start with hot-reload (development) - from root
 yarn develop         # Start with hot-reload (development) - from cms directory
@@ -27,11 +28,13 @@ yarn build           # Build the admin panel - from cms directory
 ```
 
 ### Database seeding
+
 ```bash
 yarn workspace cms seed:example # Seed database with example data from data/data.json
 ```
 
 ### Strapi CLI
+
 ```bash
 yarn workspace cms strapi       # Access Strapi CLI
 yarn workspace cms console      # Open Strapi console
@@ -39,6 +42,7 @@ yarn workspace cms deploy       # Deploy to Strapi Cloud
 ```
 
 ### Upgrades
+
 ```bash
 yarn workspace cms upgrade      # Upgrade Strapi to latest version
 yarn workspace cms upgrade:dry  # Check what would be upgraded
@@ -47,6 +51,7 @@ yarn workspace cms upgrade:dry  # Check what would be upgraded
 ## Architecture
 
 ### Database Configuration
+
 - **Default:** SQLite (stored in `.tmp/data.db`)
 - **Supported:** MySQL, PostgreSQL, SQLite
 - Database client is configured via `DATABASE_CLIENT` environment variable
@@ -59,6 +64,7 @@ This project follows Strapi's standard architecture:
 
 **API Endpoints** (`src/api/`):
 Each content type has a dedicated folder with:
+
 - `content-types/`: Schema definitions (JSON)
 - `controllers/`: Request handlers (uses Strapi factories)
 - `services/`: Business logic (uses Strapi factories)
@@ -66,12 +72,14 @@ Each content type has a dedicated folder with:
 
 **Content Types:**
 
-*Multi-Tenant Core:*
+_Multi-Tenant Core:_
+
 - `institution`: Educational institutions (7 total) with slug, code, branding (logo, colors), active status
 - `course`: Academic courses with detailed info (price, curriculum, sector, level, modality, workload) - **many-to-one** relation to institution
 - `page-content`: Flexible page content blocks categorized by section (home-hero, about-mission, etc) - **many-to-one** relation to institution
 
-*Legacy Blog Example:*
+_Legacy Blog Example:_
+
 - `article`: Blog articles with dynamic blocks (media, quotes, rich-text, sliders), relations to author/category, draft/publish workflow
 - `author`: Article authors with avatars and email
 - `category`: Article categories with descriptions
@@ -79,6 +87,7 @@ Each content type has a dedicated folder with:
 - `global`: Single-type for site-wide settings (SEO, favicon)
 
 **Shared Components** (`src/components/shared/`):
+
 - `media`: Single media upload component
 - `quote`: Text quote with title and body
 - `rich-text`: Rich text editor content
@@ -92,12 +101,14 @@ Articles and About page use Strapi's **dynamic zones** (`blocks` field) allowing
 ### Application Lifecycle
 
 The main entry point is [src/index.ts](src/index.ts), which exports:
+
 - `register()`: Runs before app initialization for extending Strapi
 - `bootstrap()`: Runs before app start for setup logic
 
 ### Admin Panel Customization
 
 Admin panel customization files are in `src/admin/`:
+
 - `app.example.tsx`: Example admin panel customizations
 - `vite.config.example.ts`: Example Vite config for admin builds
 - Admin panel is built separately from the server
@@ -105,6 +116,7 @@ Admin panel customization files are in `src/admin/`:
 ### Environment Variables
 
 Copy `.env.example` to `.env` and configure:
+
 - `HOST`, `PORT`: Server configuration
 - `APP_KEYS`: Application encryption keys (array)
 - `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `JWT_SECRET`: Security tokens
@@ -123,34 +135,41 @@ Copy `.env.example` to `.env` and configure:
 ### Creating Content Types
 
 Use Strapi CLI or admin panel to generate:
+
 ```bash
 yarn workspace cms strapi generate
 ```
 
 Controllers, services, and routes use Strapi's factory pattern:
+
 ```typescript
 // Controller
-export default factories.createCoreController('api::article.article');
+export default factories.createCoreController("api::article.article");
 
 // Service
-export default factories.createCoreService('api::article.article');
+export default factories.createCoreService("api::article.article");
 ```
 
 ### Customizing Controllers/Services
 
 Extend factory methods to add custom logic:
+
 ```typescript
-export default factories.createCoreController('api::article.article', ({ strapi }) => ({
-  async find(ctx) {
-    // Custom logic
-    return super.find(ctx);
-  }
-}));
+export default factories.createCoreController(
+  "api::article.article",
+  ({ strapi }) => ({
+    async find(ctx) {
+      // Custom logic
+      return super.find(ctx);
+    },
+  }),
+);
 ```
 
 ### Seeding Data
 
 The seed script ([scripts/seed.js](scripts/seed.js)):
+
 - Loads data from `data/data.json`
 - Uploads files from `data/uploads/`
 - Sets public permissions for content types
@@ -160,6 +179,7 @@ The seed script ([scripts/seed.js](scripts/seed.js)):
 ### Relations
 
 Relations are defined in schema.json:
+
 - `manyToOne`: Many articles to one author/category
 - `oneToMany`: One author/category to many articles
 - Use `inversedBy` and `mappedBy` for bidirectional relations
@@ -175,6 +195,7 @@ Enabled on articles via `"draftAndPublish": true` in schema. Content must be exp
 Frontend applications should:
 
 1. **Set institution in ENV**:
+
    ```env
    INSTITUTION_SLUG=faculdade-exemplo
    # or
@@ -182,6 +203,7 @@ Frontend applications should:
    ```
 
 2. **Filter API queries by institution**:
+
    ```javascript
    // Get all courses for an institution
    GET /api/courses?filters[institution][slug][$eq]=faculdade-exemplo&populate=*
@@ -202,6 +224,7 @@ Frontend applications should:
 ### Page Content Categories
 
 The `page-content` type uses predefined categories for organizing content:
+
 - `home-hero`: Hero section for homepage
 - `home-about`: About section on homepage
 - `home-courses`: Courses showcase section
@@ -219,11 +242,13 @@ Each institution creates its own content for these categories. Use the `order` f
 ### Course Schema Details
 
 **Enumerations:**
+
 - `sector`: saude, tecnologia, gestao, educacao, direito, engenharia, outros
 - `level`: tecnico, graduacao, pos-graduacao, extensao, curso-livre
 - `modality`: presencial, ead, hibrido
 
 **Key Fields:**
+
 - `curriculum`: Rich text for detailed course structure/syllabus
 - `workload`: Integer for total hours
 - `enrollmentOpen`: Boolean to control visibility of enrollment CTAs

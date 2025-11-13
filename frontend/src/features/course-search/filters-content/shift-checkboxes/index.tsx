@@ -1,8 +1,8 @@
 'use client';
 
 import { Controller } from 'react-hook-form';
-import { Checkbox, FormControl, View } from 'reshaped';
 import type { Control } from 'react-hook-form';
+import { Checkbox, FormControl, View } from 'reshaped';
 import type { CourseFiltersFormValues } from '../../types';
 
 export type ShiftCheckboxesProps = {
@@ -25,9 +25,7 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
                 if (checked) {
                   field.onChange([...field.value, 'morning']);
                 } else {
-                  field.onChange(
-                    field.value.filter((s) => s !== 'morning'),
-                  );
+                  field.onChange(field.value.filter((s) => s !== 'morning'));
                 }
               }}
             >
@@ -40,9 +38,7 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
                 if (checked) {
                   field.onChange([...field.value, 'afternoon']);
                 } else {
-                  field.onChange(
-                    field.value.filter((s) => s !== 'afternoon'),
-                  );
+                  field.onChange(field.value.filter((s) => s !== 'afternoon'));
                 }
               }}
             >
@@ -68,9 +64,7 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
                 if (checked) {
                   field.onChange([...field.value, 'fulltime']);
                 } else {
-                  field.onChange(
-                    field.value.filter((s) => s !== 'fulltime'),
-                  );
+                  field.onChange(field.value.filter((s) => s !== 'fulltime'));
                 }
               }}
             >
@@ -83,9 +77,7 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
                 if (checked) {
                   field.onChange([...field.value, 'virtual']);
                 } else {
-                  field.onChange(
-                    field.value.filter((s) => s !== 'virtual'),
-                  );
+                  field.onChange(field.value.filter((s) => s !== 'virtual'));
                 }
               }}
             >
@@ -97,4 +89,3 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
     />
   );
 }
-

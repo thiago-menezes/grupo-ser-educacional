@@ -243,14 +243,14 @@ RUN yarn build
 
 ## Key Differences from Previous Setup
 
-| Aspect | Before | After |
-|--------|--------|-------|
-| CMS package manager | npm | Yarn 4 |
-| Frontend package manager | pnpm | Yarn 4 |
-| Monorepo tool | None | TurboRepo |
-| Lock files | `package-lock.json`, `pnpm-lock.yaml` | `yarn.lock` |
-| Node version | Mixed (18-22, 24) | Standardized (22) |
-| Workspace management | Separate | Unified |
+| Aspect                   | Before                                | After             |
+| ------------------------ | ------------------------------------- | ----------------- |
+| CMS package manager      | npm                                   | Yarn 4            |
+| Frontend package manager | pnpm                                  | Yarn 4            |
+| Monorepo tool            | None                                  | TurboRepo         |
+| Lock files               | `package-lock.json`, `pnpm-lock.yaml` | `yarn.lock`       |
+| Node version             | Mixed (18-22, 24)                     | Standardized (22) |
+| Workspace management     | Separate                              | Unified           |
 
 ## Resources
 
@@ -262,7 +262,7 @@ RUN yarn build
 ## Questions?
 
 Check the documentation links above or review the configuration files:
+
 - `package.json` (root) - Workspace and script configuration
 - `turbo.json` - Pipeline and caching configuration
 - `.yarnrc.yml` - Yarn-specific settings
-
