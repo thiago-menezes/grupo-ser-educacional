@@ -165,14 +165,12 @@ Para que o frontend possa consumir os dados:
 
 ```javascript
 // .env.local
-NEXT_PUBLIC_INSTITUTION_SLUG=faculdade-exemplo
 NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 ```
 
 ```javascript
 // lib/strapi.js
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
-const INSTITUTION_SLUG = process.env.NEXT_PUBLIC_INSTITUTION_SLUG;
 
 export async function getCourses() {
   const res = await fetch(

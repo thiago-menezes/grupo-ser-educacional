@@ -15,7 +15,7 @@ export type HomeHeroProps = {
   showPlaceholder?: boolean;
 };
 
-function HomeHeroContent({ institutionSlug }: HomeHeroProps) {
+function HeroContent({ institutionSlug }: HomeHeroProps) {
   const { data: heroContent, error } = useHeroContent(institutionSlug);
 
   const content = useMemo(
@@ -63,8 +63,8 @@ function HomeHeroContent({ institutionSlug }: HomeHeroProps) {
   );
 }
 
-export function HomeHero() {
+export function HeroSection() {
   const { institutionId } = useCurrentInstitution();
 
-  return <HomeHeroContent institutionSlug={institutionId} />;
+  return <HeroContent institutionSlug={institutionId} />;
 }

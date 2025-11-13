@@ -1,7 +1,7 @@
 import type { CourseCardData } from '@/components/course-card';
-import { MOCK_COURSES_DTO } from '@/features/geo-courses/api/mocks';
-import { transformCourseDTO } from '@/features/geo-courses/api/utils';
-import { CourseDTO } from '../../geo-courses/api/types';
+import { MOCK_COURSES_DTO } from '@/features/home/geo-courses/api/mocks';
+import { transformCourseDTO } from '@/features/home/geo-courses/api/utils';
+import { CourseDTO } from '../../home/geo-courses/api/types';
 
 const BASE_COURSES_DTO = [
   ...MOCK_COURSES_DTO,

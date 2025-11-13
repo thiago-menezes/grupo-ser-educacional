@@ -3,8 +3,12 @@ import { signOut } from 'next-auth/react';
 import { getAccessToken } from './token';
 
 export const createApiClient = (addAuthInterceptor: boolean = false) => {
+  const baseURL = process.env.development
+    ? process.env.NEXT_PUBLIC_API_MOCK
+    : process.env.NEXT_PUBLIC_API_BASE_URL;
+
   const client = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    baseURL,
     headers: { 'Content-Type': 'application/json' },
     timeout: 50000,
     withCredentials: true,

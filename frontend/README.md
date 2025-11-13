@@ -24,10 +24,6 @@ limpa orientada pela identidade visual das instituições.
    - `http://localhost:3000/uninorte` - UNINORTE
    - `http://localhost:3000/` - Redireciona para a instituição padrão
 
-> **Nota:** A tematização agora funciona por **slug na URL** (`/ung`, `/uninassau`)
-> em vez de variável de ambiente. A var `NEXT_PUBLIC_INSTITUTION` ainda funciona
-> como fallback legacy, mas não é mais necessária.
-
 ### Checkers úteis
 
 - `yarn workspace frontend lint:styles`: varre os arquivos `*.module.scss` e acusa classes não utilizadas nos componentes que importam cada módulo.
