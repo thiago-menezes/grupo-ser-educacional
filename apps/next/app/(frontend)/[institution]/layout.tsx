@@ -1,7 +1,12 @@
+import {
+  Footer,
+  Header,
+  generateJsonLd,
+  getSeoFromStrapi,
+} from '@grupo-ser/frontend';
 import { isValidInstitution } from '@grupo-ser/utils';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Footer, Header, generateJsonLd, getSeoFromStrapi } from '@grupo-ser/frontend';
 
 type InstitutionLayoutProps = {
   children: React.ReactNode;

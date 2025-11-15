@@ -1,6 +1,6 @@
 import { handleUnits } from '@grupo-ser/bff';
 import { NextRequest, NextResponse } from 'next/server';
-import { getStrapiClient } from '@root/app/api/services/bff';
+import { getStrapiClient } from '../services/bff';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
