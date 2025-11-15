@@ -13,3 +13,16 @@ export type CourseData = {
   campusState: string;
   slug: string;
 };
+
+/**
+ * Response from BFF /api/courses endpoint
+ * This is the single source of truth for the API response format
+ * The BFF transforms data to this format before returning to frontend
+ */
+export type CoursesResponse = {
+  total: number;
+  currentPage: number;
+  totalPages: number;
+  perPage: number;
+  courses: CourseData[];
+};

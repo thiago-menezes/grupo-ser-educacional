@@ -4,9 +4,9 @@ import { clsx } from 'clsx';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { View } from 'reshaped';
+import { ActiveFilters } from '../active-filters';
 import { useCourseFiltersContext } from '../context';
 import type { CourseFiltersFormValues } from '../types';
-import { ActiveFiltersSidebar } from './active-filters-sidebar';
 import { CityInput } from './city-input';
 import { FILTERS_CONTENT_HEIGHT_TO_UPDATE } from './constants';
 import { CourseDurationCheckboxes } from './course-duration-checkboxes';
@@ -68,7 +68,7 @@ export function FiltersContent({
           [styles.viewPortMedium]: handleCloseModal,
         })}
       >
-        <ActiveFiltersSidebar />
+        <ActiveFilters variant="sidebar" />
 
         <CourseLevelTabs control={control} />
 

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
-import { getStrapiMediaUrl } from '@/libs/api/strapi';
+import { getMediaUrl } from '@/utils/media-url';
 import { MOCK_STRAPI_UNITS_RESPONSE } from './api/mocks';
 import { useQueryInfrastructure } from './api/query';
 import type { StrapiUnitsResponse } from './api/types';
@@ -23,7 +23,7 @@ function transformStrapiResponse(response: StrapiUnitsResponse) {
   const images: InfrastructureImage[] = data.flatMap((unit) =>
     (unit.photos || []).map((photo) => ({
       id: photo.id.toString(),
-      src: getStrapiMediaUrl(photo.url),
+      src: getMediaUrl(photo.url),
       alt: photo.alternativeText || photo.caption || `${unit.name} - Foto`,
     })),
   );

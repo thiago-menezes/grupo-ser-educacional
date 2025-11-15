@@ -1,4 +1,4 @@
-import { CourseModality } from '@/features/course-search/course-grid/api/types';
+import { CourseModality } from '@/types/courses';
 
 export const MODALITY_LABELS: Record<CourseModality, string> = {
   presencial: 'Presencial',

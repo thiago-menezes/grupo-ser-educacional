@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { View } from 'reshaped';
-import { ActiveFiltersTags } from './active-filters-tags';
+import { ActiveFilters } from './active-filters';
 import { CourseFiltersProvider } from './context';
 import { CourseGrid } from './course-grid';
 import { FiltersButton } from './filters-button';
@@ -22,7 +22,7 @@ function CourseSearchPageContent() {
         <CourseSearchHeader />
         <CourseSearchBar />
         <FiltersButton onClick={() => setIsFiltersModalOpen(true)} />
-        <ActiveFiltersTags variant="mobile" />
+        <ActiveFilters variant="mobile" />
 
         <View className={styles.mainContent}>
           <View className={styles.filtersSidebar}>

@@ -8,7 +8,6 @@ import styles from './styles.module.scss';
 
 export function CourseGrid() {
   const {
-    courses,
     totalPages,
     isLoading,
     cardsBeforeBanner,
@@ -59,7 +58,7 @@ export function CourseGrid() {
         </>
       )}
 
-      {courses.length > totalPages && (
+      {totalPages > 1 && (
         <View align="center">
           <Pagination
             total={totalPages}

@@ -1,58 +1,55 @@
 import Image from 'next/image';
-import { Text } from 'reshaped';
+import { Container, Grid, Text, View } from 'reshaped';
 import { INSTITUTIONS } from './constants';
 import { InstitutionCard } from './institution-card';
 import styles from './styles.module.scss';
 
 export const InstitutionsList = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.imageSide}>
-        <Image
-          src="https://unsplash.it/1200/700?random"
-          alt="Instituições de ensino"
-          width={1200}
-          height={700}
-          className={styles.heroImage}
-          priority
-        />
-      </div>
+    <Container className={styles.container}>
+      <View direction="column" gap={8} className={styles.contentSide}>
+        <View direction="column" gap={4}>
+          <View.Item>
+            <div className={styles.logoWrapper}>
+              <Image
+                src="/logos/grupo-ser.png"
+                alt="Ser Educacional"
+                width={160}
+                height={72}
+                priority
+              />
+            </div>
+          </View.Item>
 
-      <div className={styles.contentSide}>
-        <div className={styles.header}>
-          <div className={styles.logoWrapper}>
-            <Image
-              src="/logos/grupo-ser.png"
-              alt="Ser Educacional"
-              width={160}
-              height={72}
-              priority
-            />
-          </div>
-          <Text
-            as="h1"
-            variant="featured-1"
-            color="neutral"
-            className={styles.title}
-          >
-            Conheça Nossas <br /> Instituições de Ensino
-          </Text>
-          <Text
-            as="p"
-            variant="body-1"
-            color="neutral-faded"
-            className={styles.subtitle}
-          >
-            Descubra a instituição ideal para o seu futuro.
-          </Text>
-        </div>
+          <View.Item>
+            <Text
+              as="h1"
+              variant="featured-1"
+              color="neutral"
+              className={styles.title}
+            >
+              Conheça Nossas <br /> Instituições de Ensino
+            </Text>
+          </View.Item>
 
-        <div className={styles.grid}>
+          <View.Item>
+            <Text
+              as="p"
+              variant="body-1"
+              color="neutral-faded"
+              className={styles.subtitle}
+            >
+              Descubra a instituição ideal para o seu futuro.
+            </Text>
+          </View.Item>
+        </View>
+
+        <Grid columns={{ s: 1, m: 2 }} gap={4}>
           {INSTITUTIONS.map((institution) => (
             <InstitutionCard key={institution.slug} {...institution} />
           ))}
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </View>
+    </Container>
   );
 };
