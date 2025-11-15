@@ -3,20 +3,20 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "cms",
-    "frontend"
+    "strapi",
+    "next"
   ],
   "packageManager": "yarn@4.9.4",
   "scripts": {
     "dev": "turbo run dev",
-    "dev:cms": "turbo run dev --filter=cms",
-    "dev:frontend": "turbo run dev --filter=frontend",
+    "dev:strapi": "turbo run dev --filter=cms",
+    "dev:next": "turbo run dev --filter=next",
     "build": "turbo run build",
-    "build:cms": "turbo run build --filter=cms",
-    "build:frontend": "turbo run build --filter=frontend",
+    "build:strapi": "turbo run build --filter=cms",
+    "build:next": "turbo run build --filter=next",
     "start": "turbo run start",
-    "start:cms": "turbo run start --filter=cms",
-    "start:frontend": "turbo run start --filter=frontend",
+    "start:strapi": "turbo run start --filter=cms",
+    "start:next": "turbo run start --filter=next",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",

@@ -147,11 +147,11 @@ component-name/
 
 ## Development Commands
 
-- `yarn dev:frontend` - Start development server
-- `yarn workspace frontend typecheck` - Run TypeScript checking
-- `yarn workspace frontend lint` - Run ESLint
-- `yarn workspace frontend lint:fix` - Fix ESLint issues
+- `yarn dev:next` - Start development server
+- `yarn workspace next typecheck` - Run TypeScript checking
+- `yarn workspace next lint` - Run ESLint
+- `yarn workspace next lint:fix` - Fix ESLint issues
 - `yarn format` - Format with Prettier
-- `yarn workspace frontend test` - Run all tests
-- `yarn workspace frontend test:unit` - Run unit tests
-- `yarn workspace frontend test:integration` - Run integration tests
+- `yarn workspace next test` - Run all tests
+- `yarn workspace next test:unit` - Run unit tests
+- `yarn workspace next test:integration` - Run integration tests

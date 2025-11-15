@@ -1,6 +1,6 @@
 # HFSA Architecture Adoption Guide
 
-This document translates the Hybrid Feature Scope Architecture (HFSA) described in `/Users/thiago/Projects/hfsa-monorepo/articles/hfsa-english.md` into an actionable plan for the `grupo-ser/frontend` codebase. Use the boilerplate implementation in `/Users/thiago/Projects/hfsa-monorepo/apps/boilerplate` as the living reference for folder layout, naming, and file responsibilities.
+This document translates the Hybrid Feature Scope Architecture (HFSA) described in `/Users/thiago/Projects/hfsa-monorepo/articles/hfsa-english.md` into an actionable plan for the `grupo-ser/next` codebase. Use the boilerplate implementation in `/Users/thiago/Projects/hfsa-monorepo/apps/boilerplate` as the living reference for folder layout, naming, and file responsibilities.
 
 ## Guiding Principles
 

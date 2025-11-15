@@ -19,33 +19,33 @@ This CMS manages content for **7 different educational institutions** within Gru
 ### Running the application
 
 ```bash
-yarn dev:cms         # Start with hot-reload (development) - from root
+yarn dev:strapi         # Start with hot-reload (development) - from root
 yarn develop         # Start with hot-reload (development) - from cms directory
-yarn start:cms       # Start in production mode (no hot-reload) - from root
+yarn start:strapi       # Start in production mode (no hot-reload) - from root
 yarn start           # Start in production mode (no hot-reload) - from cms directory
-yarn build:cms       # Build the admin panel - from root
+yarn build:strapi       # Build the admin panel - from root
 yarn build           # Build the admin panel - from cms directory
 ```
 
 ### Database seeding
 
 ```bash
-yarn workspace cms seed:example # Seed database with example data from data/data.json
+yarn workspace strapi seed:example # Seed database with example data from data/data.json
 ```
 
 ### Strapi CLI
 
 ```bash
-yarn workspace cms strapi       # Access Strapi CLI
-yarn workspace cms console      # Open Strapi console
-yarn workspace cms deploy       # Deploy to Strapi Cloud
+yarn workspace strapi strapi       # Access Strapi CLI
+yarn workspace strapi console      # Open Strapi console
+yarn workspace strapi deploy       # Deploy to Strapi Cloud
 ```
 
 ### Upgrades
 
 ```bash
-yarn workspace cms upgrade      # Upgrade Strapi to latest version
-yarn workspace cms upgrade:dry  # Check what would be upgraded
+yarn workspace strapi upgrade      # Upgrade Strapi to latest version
+yarn workspace strapi upgrade:dry  # Check what would be upgraded
 ```
 
 ## Architecture
@@ -137,7 +137,7 @@ Copy `.env.example` to `.env` and configure:
 Use Strapi CLI or admin panel to generate:
 
 ```bash
-yarn workspace cms strapi generate
+yarn workspace strapi strapi generate
 ```
 
 Controllers, services, and routes use Strapi's factory pattern:

@@ -11,9 +11,9 @@ Follow these steps when implementing a new feature or fixing a bug:
 3. **Implement** - Write code, tests, and documentation together
 4. **Validate** - Run all checks before committing:
    ```bash
-   yarn workspace frontend test              # Run all tests
-   yarn workspace frontend lint              # Check code style
-   yarn workspace frontend typecheck         # Verify TypeScript types
+   yarn workspace next test              # Run all tests
+   yarn workspace next lint              # Check code style
+   yarn workspace next typecheck         # Verify TypeScript types
    ```
 5. **Update tracking** - Mark the task as complete in the appropriate kanban file (`docs/kanbans/*.md`)
 
@@ -370,23 +370,23 @@ Use Reshaped PostCSS custom media queries:
 
 ```bash
 # Development
-yarn dev:frontend
+yarn dev:next
 
 # Type checking
-yarn workspace frontend typecheck
+yarn workspace next typecheck
 
 # Linting
-yarn workspace frontend lint
+yarn workspace next lint
 
 # Testing
-yarn workspace frontend test                    # All tests
-yarn workspace frontend test:unit              # Unit tests only
-yarn workspace frontend test:integration       # Integration tests
-yarn workspace frontend test -- CourseCard     # Specific test file
+yarn workspace next test                    # All tests
+yarn workspace next test:unit              # Unit tests only
+yarn workspace next test:integration       # Integration tests
+yarn workspace next test -- CourseCard     # Specific test file
 
 # Build
-yarn build:frontend
-yarn start:frontend                  # Serve production build
+yarn build:next
+yarn start:next                  # Serve production build
 ```
 
 ---
@@ -439,9 +439,9 @@ Default institution: `uninassau`
 
 Before committing:
 
-- [ ] `yarn workspace frontend typecheck` passes
-- [ ] `yarn workspace frontend lint` passes
-- [ ] `yarn workspace frontend test` passes
+- [ ] `yarn workspace next typecheck` passes
+- [ ] `yarn workspace next lint` passes
+- [ ] `yarn workspace next test` passes
 - [ ] Component works at all breakpoints
 - [ ] Accessibility tested (keyboard, screen reader)
 - [ ] No console errors

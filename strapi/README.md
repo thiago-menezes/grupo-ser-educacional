@@ -7,7 +7,7 @@ Strapi comes with a full featured [Command Line Interface](https://docs.strapi.i
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
 
 ```bash
-yarn dev:cms
+yarn dev:strapi
 # or from cms directory
 yarn develop
 ```
@@ -17,7 +17,7 @@ yarn develop
 Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
 
 ```bash
-yarn start:cms
+yarn start:strapi
 # or from cms directory
 yarn start
 ```
@@ -27,7 +27,7 @@ yarn start
 Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
 
 ```bash
-yarn build:cms
+yarn build:strapi
 # or from cms directory
 yarn build
 ```

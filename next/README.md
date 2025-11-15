@@ -1,4 +1,4 @@
-# Grupo SER Frontend
+# Grupo SER next
 
 Base em Next.js 15 configurada exclusivamente com o fluxo de tematização
 dinâmica do Reshaped. Todo o código legado de artigos, Strapi e Mock Server
@@ -17,7 +17,7 @@ limpa orientada pela identidade visual das instituições.
 
 1. Copie `.env.example` para `.env.local` (já existe um arquivo de referência).
 2. Instale dependências: `yarn install`.
-3. Suba o projeto: `yarn dev:frontend`.
+3. Suba o projeto: `yarn dev:next`.
 4. Acesse uma das rotas institucionais:
    - `http://localhost:3000/ung` - UNG
    - `http://localhost:3000/uninassau` - UNINASSAU
@@ -26,7 +26,7 @@ limpa orientada pela identidade visual das instituições.
 
 ### Checkers úteis
 
-- `yarn workspace frontend lint:styles`: varre os arquivos `*.module.scss` e acusa classes não utilizadas nos componentes que importam cada módulo.
+- `yarn workspace next lint:styles`: varre os arquivos `*.module.scss` e acusa classes não utilizadas nos componentes que importam cada módulo.
 
 ## Estrutura atual
 

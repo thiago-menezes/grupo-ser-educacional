@@ -103,7 +103,7 @@ Blocos de conteúdo flexíveis para diferentes seções do site, organizados por
 ### 1. Acessar o Admin Panel
 
 ```bash
-yarn dev:cms
+yarn dev:strapi
 ```
 
 Acesse: http://localhost:1337/admin
