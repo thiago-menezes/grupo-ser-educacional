@@ -1,5 +1,3 @@
-'use client';
-
 import { useCallback, useEffect, useState } from 'react';
 import { fetchGeoCoursesSection } from './api';
 import { transformCourseDTO } from './api/utils';

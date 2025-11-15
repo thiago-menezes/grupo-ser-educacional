@@ -1,3 +1,5 @@
+'use client';
+
 import { AreasSelector } from '@/features/home/areas-selector';
 import { CareerPath } from '@/features/home/career-path';
 import { EntryMethodsSection } from '@/features/home/entry-methods';

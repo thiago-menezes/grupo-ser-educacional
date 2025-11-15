@@ -1,5 +1,3 @@
-'use client';
-
 import { formatPrice } from '@grupo-ser/shared';
 import { Button, TextField, View } from 'reshaped';
 import type { CourseDetails } from '../hooks/useCourseDetails';

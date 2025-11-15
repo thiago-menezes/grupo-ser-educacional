@@ -1,5 +1,3 @@
-'use client';
-
 import { Badge, Button, View } from 'reshaped';
 import { Icon } from '@/components/icon';
 import { useCourseFiltersContext } from '../context';

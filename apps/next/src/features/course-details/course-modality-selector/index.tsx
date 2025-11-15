@@ -1,5 +1,3 @@
-'use client';
-
 import { Tabs, View } from 'reshaped';
 import type { CourseDetails } from '../hooks/useCourseDetails';
 import styles from './styles.module.scss';

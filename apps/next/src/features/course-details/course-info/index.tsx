@@ -1,5 +1,3 @@
-'use client';
-
 import { Button, View } from 'reshaped';
 import { Icon } from '@/components/icon';
 import type { CourseDetails } from '../hooks/useCourseDetails';

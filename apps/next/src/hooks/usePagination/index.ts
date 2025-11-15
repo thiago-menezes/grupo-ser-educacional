@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useRef, useState } from 'react';
 import { DEFAULT_CARD_WIDTH, DEFAULT_GAP } from './constants';
 import type { UsePaginationOptions, PaginationState } from './types';

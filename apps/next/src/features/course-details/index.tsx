@@ -1,5 +1,3 @@
-'use client';
-
 import { Container, View } from 'reshaped';
 import { Breadcrumb } from '@/components/breadcrumb';
 import { CourseDetailsContent } from './course-details-content';

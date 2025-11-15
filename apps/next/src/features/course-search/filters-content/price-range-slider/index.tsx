@@ -1,5 +1,3 @@
-'use client';
-
 import { formatPrice } from '@grupo-ser/shared';
 import { Controller } from 'react-hook-form';
 import type { Control } from 'react-hook-form';

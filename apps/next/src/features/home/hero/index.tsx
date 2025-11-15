@@ -1,5 +1,3 @@
-'use client';
-
 import { useMemo } from 'react';
 import { useCurrentInstitution } from '@/hooks/useInstitution';
 import { useHeroContent } from './api/query';

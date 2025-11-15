@@ -1,5 +1,3 @@
-'use client';
-
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
 import { CourseCard, CourseCardSkeleton } from '@/components/course-card';

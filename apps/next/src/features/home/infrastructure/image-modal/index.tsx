@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import { Modal } from 'reshaped';
 import { Icon } from '@/components/icon';

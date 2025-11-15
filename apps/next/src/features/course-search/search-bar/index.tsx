@@ -1,5 +1,3 @@
-'use client';
-
 import { startTransition, useCallback, useEffect, useState } from 'react';
 import { Button, FormControl, Grid, TextField } from 'reshaped';
 import { Icon } from '@/components/icon';

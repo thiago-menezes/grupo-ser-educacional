@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { Breadcrumbs } from 'reshaped';
 import { Icon } from '@/components/icon';

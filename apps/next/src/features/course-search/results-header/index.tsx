@@ -1,5 +1,3 @@
-'use client';
-
 import { Select, Text, View } from 'reshaped';
 import { SORT_OPTIONS } from './constants';
 import styles from './styles.module.scss';
