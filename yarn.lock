@@ -1615,6 +1615,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@grupo-ser/bff@workspace:*, @grupo-ser/bff@workspace:packages/bff":
+  version: 0.0.0-use.local
+  resolution: "@grupo-ser/bff@workspace:packages/bff"
+  dependencies:
+    "@grupo-ser/shared": "workspace:*"
+    "@types/node": "npm:^24.10.1"
+    typescript: "npm:^5.9.3"
+    vitest: "npm:^4.0.9"
+  languageName: unknown
+  linkType: soft
+
+"@grupo-ser/shared@workspace:*, @grupo-ser/shared@workspace:packages/shared":
+  version: 0.0.0-use.local
+  resolution: "@grupo-ser/shared@workspace:packages/shared"
+  dependencies:
+    "@eslint/eslintrc": "npm:^3.3.1"
+    "@eslint/js": "npm:^9.39.1"
+    "@types/node": "npm:^24.10.1"
+    eslint: "npm:^9.39.1"
+    eslint-config-prettier: "npm:^10.1.8"
+    eslint-plugin-import-x: "npm:^4.16.1"
+    eslint-plugin-prettier: "npm:^5.5.4"
+    prettier: "npm:^3.6.2"
+    typescript: "npm:^5.9.3"
+    typescript-eslint: "npm:^8.46.4"
+  languageName: unknown
+  linkType: soft
+
 "@hapi/bourne@npm:^3.0.0":
   version: 3.0.0
   resolution: "@hapi/bourne@npm:3.0.0"
@@ -11132,16 +11160,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"grupo-ser-monorepo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "grupo-ser-monorepo@workspace:."
-  dependencies:
-    prettier: "npm:^3.6.2"
-    turbo: "npm:^2.6.1"
-    typescript: "npm:5.9.3"
-  languageName: unknown
-  linkType: soft
-
 "gzip-size@npm:^6.0.0":
   version: 6.0.0
   resolution: "gzip-size@npm:6.0.0"
@@ -14634,6 +14652,8 @@ __metadata:
   dependencies:
     "@eslint/eslintrc": "npm:^3.3.1"
     "@eslint/js": "npm:^9.39.1"
+    "@grupo-ser/bff": "workspace:*"
+    "@grupo-ser/shared": "workspace:*"
     "@hookform/resolvers": "npm:^5.2.2"
     "@next/eslint-plugin-next": "npm:^16.0.3"
     "@tanstack/react-query": "npm:^5.90.9"
@@ -17489,6 +17509,16 @@ __metadata:
   checksum: 10c0/427216da71c1ce7fefb0bef75f94c301afd858ac27e35898e098c2da5977325fa54c2edda867caf9675c8abfa8d8d94efa99c482fa04f5cd91f3a740112d4f4f
   languageName: node
   linkType: hard
+
+"root-workspace-0b6124@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "root-workspace-0b6124@workspace:."
+  dependencies:
+    prettier: "npm:^3.6.2"
+    turbo: "npm:^2.6.1"
+    typescript: "npm:5.9.3"
+  languageName: unknown
+  linkType: soft
 
 "run-async@npm:^2.4.0":
   version: 2.4.1

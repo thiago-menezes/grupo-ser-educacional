@@ -32,6 +32,12 @@
       ],
       "@root/*": [
         "./*"
+      ],
+      "@grupo-ser/bff": [
+        "../../packages/bff/src"
+      ],
+      "@grupo-ser/shared": [
+        "../../packages/shared/src"
       ]
     },
     "baseUrl": "."

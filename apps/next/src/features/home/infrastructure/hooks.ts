@@ -1,6 +1,6 @@
+import { getMediaUrl } from '@grupo-ser/shared';
 import { useMemo, useState } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
-import { getMediaUrl } from '@/utils/media-url';
 import { useQueryInfrastructure } from './api/query';
 import type { StrapiUnitsResponse } from './api/types';
 import type { InfrastructureImage, InfrastructureUnit } from './types';

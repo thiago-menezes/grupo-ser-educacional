@@ -1,6 +1,6 @@
+import { handleSeo } from '@grupo-ser/bff';
 import { NextRequest, NextResponse } from 'next/server';
-import type { StrapiSeoResponse } from '@/libs/seo/types';
-import { fetchFromStrapi } from '../services/strapi';
+import { getStrapiClient } from '@/app/api/services/bff';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -15,23 +15,12 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    console.log('[SEO Route] Fetching SEO for institution:', institutionSlug);
-    const data = await fetchFromStrapi<StrapiSeoResponse>(
-      'seos',
-      {
-        filters: {
-          instituicao: {
-            slug: { $eq: institutionSlug },
-          },
-        },
-        populate: 'instituicao',
-      },
+    const strapiClient = getStrapiClient();
+    const data = await handleSeo(strapiClient, {
+      institutionSlug,
       noCache,
-    );
+    });
 
-    console.log('[SEO Route] Received data:', JSON.stringify(data, null, 2));
-
-    // In development, use shorter cache or no cache
     const cacheControl =
       process.env.NODE_ENV === 'development' || noCache
         ? 'no-store, no-cache, must-revalidate, proxy-revalidate'

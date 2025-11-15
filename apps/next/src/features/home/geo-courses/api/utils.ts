@@ -1,4 +1,4 @@
-import { formatPrice } from '@/utils/format-price';
+import { formatPrice } from '@grupo-ser/shared';
 import { CourseDTO } from './types';
 
 export function transformCourseDTO(dto: CourseDTO) {

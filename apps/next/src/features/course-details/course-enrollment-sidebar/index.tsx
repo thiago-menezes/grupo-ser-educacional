@@ -1,7 +1,7 @@
 'use client';
 
+import { formatPrice } from '@grupo-ser/shared';
 import { Button, TextField, View } from 'reshaped';
-import { formatPrice } from '@/utils/format-price';
 import type { CourseDetails } from '../hooks/useCourseDetails';
 import styles from './styles.module.scss';
 

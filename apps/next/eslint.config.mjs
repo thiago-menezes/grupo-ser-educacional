@@ -1,34 +1,14 @@
-import js from '@eslint/js';
 import nextPlugin from '@next/eslint-plugin-next';
-import importPlugin from 'eslint-plugin-import-x';
-import prettierConfig from 'eslint-config-prettier';
-import prettierPlugin from 'eslint-plugin-prettier';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
-import tseslint from 'typescript-eslint';
+import sharedConfig from '../../packages/shared/eslint.config.mjs';
 
 const eslintConfig = [
+  ...sharedConfig,
+
   {
-    ignores: [
-      '**/node_modules/**',
-      '**/.next/**',
-      '**/out/**',
-      '**/build/**',
-      '**/dist/**',
-      '**/coverage/**',
-      '**/.turbo/**',
-      '**/.vercel/**',
-      '**/styled-system/**',
-      '**/styled-system-studio/**',
-      '**/storybook-static/**',
-      '*.openapi-tmp',
-      'next-env.d.ts',
-    ],
+    ignores: ['next-env.d.ts'],
   },
-
-  js.configs.recommended,
-
-  ...tseslint.configs.recommended,
 
   {
     files: ['**/*.{js,jsx,ts,tsx}'],
@@ -56,84 +36,6 @@ const eslintConfig = [
     rules: {
       ...nextPlugin.configs.recommended.rules,
       ...nextPlugin.configs['core-web-vitals'].rules,
-    },
-  },
-
-  {
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    plugins: {
-      'import-x': importPlugin,
-    },
-    settings: {
-      'import-x/resolver': {
-        typescript: {
-          alwaysTryTypes: true,
-        },
-        node: true,
-      },
-    },
-    rules: {
-      'import-x/order': [
-        'error',
-        {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-          ],
-          pathGroups: [
-            {
-              pattern: 'react',
-              group: 'external',
-              position: 'before',
-            },
-            {
-              pattern: '@/**',
-              group: 'internal',
-              position: 'after',
-            },
-          ],
-          'newlines-between': 'never',
-          alphabetize: {
-            order: 'asc',
-            caseInsensitive: true,
-          },
-        },
-      ],
-      'import-x/no-duplicates': 'error',
-      'import-x/first': 'error',
-      'import-x/newline-after-import': 'error',
-    },
-  },
-
-  prettierConfig,
-  {
-    plugins: {
-      prettier: prettierPlugin,
-    },
-    rules: {
-      'prettier/prettier': 'error',
-    },
-  },
-
-  {
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    rules: {
-      'no-undef': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_' },
-      ],
-    },
-  },
-
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    rules: {
-      'no-unused-vars': 'off',
     },
   },
 ];

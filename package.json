@@ -1,5 +1,4 @@
 {
-  "name": "grupo-ser-monorepo",
   "private": true,
   "scripts": {
     "dev": "turbo run dev",

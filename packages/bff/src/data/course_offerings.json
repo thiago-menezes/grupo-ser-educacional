@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "courseId": 1,
+    "unitId": 1,
+    "modalityId": 1,
+    "periodId": 3,
+    "price": 812.07,
+    "duration": "5 anos (10 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 2,
+    "courseId": 1,
+    "unitId": 1,
+    "modalityId": 3,
+    "periodId": 1,
+    "price": 780.0,
+    "duration": "5 anos (10 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 3,
+    "courseId": 1,
+    "unitId": 1,
+    "modalityId": 2,
+    "periodId": 5,
+    "price": 750.0,
+    "duration": "5 anos (10 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 4,
+    "courseId": 1,
+    "unitId": 2,
+    "modalityId": 2,
+    "periodId": 5,
+    "price": 650.0,
+    "duration": "4 anos (8 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 5,
+    "courseId": 2,
+    "unitId": 2,
+    "modalityId": 2,
+    "periodId": 5,
+    "price": 320.9,
+    "duration": "4 anos (8 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 6,
+    "courseId": 3,
+    "unitId": 2,
+    "modalityId": 2,
+    "periodId": 5,
+    "price": 450.9,
+    "duration": "5 anos (10 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 7,
+    "courseId": 1,
+    "unitId": 3,
+    "modalityId": 1,
+    "periodId": 2,
+    "price": 720.0,
+    "duration": "5 anos (10 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 8,
+    "courseId": 3,
+    "unitId": 3,
+    "modalityId": 2,
+    "periodId": 5,
+    "price": 420.0,
+    "duration": "4 anos (8 semestres)",
+    "enrollmentOpen": false,
+    "active": true
+  },
+  {
+    "id": 9,
+    "courseId": 4,
+    "unitId": 1,
+    "modalityId": 1,
+    "periodId": 4,
+    "price": 950.0,
+    "duration": "5 anos (10 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 10,
+    "courseId": 5,
+    "unitId": 1,
+    "modalityId": 1,
+    "periodId": 4,
+    "price": 3500.0,
+    "duration": "6 anos (12 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 11,
+    "courseId": 6,
+    "unitId": 1,
+    "modalityId": 1,
+    "periodId": 3,
+    "price": 850.0,
+    "duration": "5 anos (10 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  },
+  {
+    "id": 12,
+    "courseId": 6,
+    "unitId": 1,
+    "modalityId": 2,
+    "periodId": 5,
+    "price": 750.0,
+    "duration": "5 anos (10 semestres)",
+    "enrollmentOpen": true,
+    "active": true
+  }
+]
