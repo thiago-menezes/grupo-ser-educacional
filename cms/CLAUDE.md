@@ -119,7 +119,7 @@ Copy `.env.example` to `.env` and configure:
 
 - `HOST`, `PORT`: Server configuration
 - `APP_KEYS`: Application encryption keys (array)
-- `API_TOKEN_SALT`, `ADMIN_JWT_SECRET`, `TRANSFER_TOKEN_SALT`, `JWT_SECRET`: Security tokens
+- `API_TOKEN_SALT`, `TRANSFER_TOKEN_SALT`, `JWT_SECRET`: Security tokens
 - `ENCRYPTION_KEY`: Data encryption key
 - Database configuration variables (see [config/database.ts](config/database.ts))
 

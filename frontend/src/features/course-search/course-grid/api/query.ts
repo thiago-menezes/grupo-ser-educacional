@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCurrentInstitution } from '@/hooks/useInstitution';
-import { publicApiClient } from '@/libs/api/axios';
+import { query } from '@/libs/api/axios';
 import type { CoursesResponse } from '@/types/courses';
 
 type CourseFilters = {
@@ -132,11 +132,7 @@ export const useQueryCourses = (
         params.course = filters.courseName;
       }
 
-      const { data } = await publicApiClient.get<CoursesResponse>('/courses', {
-        params,
-      });
-
-      return data;
+      return query<CoursesResponse>('/courses', { params });
     },
   });
 };

@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { getMediaUrl } from '@/utils/media-url';
-import { MOCK_STRAPI_UNITS_RESPONSE } from './api/mocks';
 import { useQueryInfrastructure } from './api/query';
 import type { StrapiUnitsResponse } from './api/types';
 import type { InfrastructureImage, InfrastructureUnit } from './types';
@@ -34,8 +33,12 @@ function transformStrapiResponse(response: StrapiUnitsResponse) {
 }
 
 export const useInfrastructure = () => {
-  const { data: response = MOCK_STRAPI_UNITS_RESPONSE } =
-    useQueryInfrastructure();
+  const {
+    data: response = {
+      data: [],
+      meta: { pagination: { page: 1, pageSize: 10, pageCount: 1, total: 0 } },
+    },
+  } = useQueryInfrastructure();
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const {
@@ -47,13 +50,8 @@ export const useInfrastructure = () => {
     isLoading,
   } = useGeolocation();
 
-  // Use response or fallback to mock
-  const { units, images, location } = useMemo(
-    () => transformStrapiResponse(response),
-    [response],
-  );
+  const { units, images, location } = transformStrapiResponse(response);
 
-  // Check if we have data
   const hasData = units.length > 0 && images.length > 0;
 
   const sortedUnits = useMemo(

@@ -1,12 +1,16 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Pagination, View } from 'reshaped';
 import { CourseCard, CourseCardSkeleton } from '@/components/course-card';
+import { useCurrentInstitution } from '@/hooks/useInstitution';
 import { useCourseGrid } from './hooks';
 import styles from './styles.module.scss';
 
 export function CourseGrid() {
+  const router = useRouter();
+  const { institutionId } = useCurrentInstitution();
   const {
     totalPages,
     isLoading,
@@ -15,6 +19,10 @@ export function CourseGrid() {
     handlePageChange,
     currentPage,
   } = useCourseGrid();
+
+  const handleCourseClick = (slug: string) => {
+    router.push(`/${institutionId}/cursos/${slug}`);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -30,7 +38,7 @@ export function CourseGrid() {
             {cardsBeforeBanner.map((course) => (
               <CourseCard
                 course={course}
-                onClick={(slug) => console.log('Course clicked:', slug)}
+                onClick={handleCourseClick}
                 key={course.id}
               />
             ))}
@@ -51,7 +59,7 @@ export function CourseGrid() {
               <CourseCard
                 key={course.id}
                 course={course}
-                onClick={(slug) => console.log('Course clicked:', slug)}
+                onClick={handleCourseClick}
               />
             ))}
           </View>

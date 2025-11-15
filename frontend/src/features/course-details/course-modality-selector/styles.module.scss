@@ -1,0 +1,20 @@
+.selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x4);
+}
+
+.label {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  color: var(--rs-color-text-primary);
+  margin: 0;
+}
+
+.tabItem {
+  flex: 1;
+}
+
+
+

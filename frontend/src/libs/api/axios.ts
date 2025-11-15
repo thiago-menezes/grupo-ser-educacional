@@ -1,8 +1,6 @@
 import axios from 'axios';
-import { signOut } from 'next-auth/react';
-import { getAccessToken } from './token';
 
-export const createApiClient = (addAuthInterceptor: boolean = false) => {
+export const createApiClient = () => {
   const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const client = axios.create({
@@ -14,15 +12,6 @@ export const createApiClient = (addAuthInterceptor: boolean = false) => {
 
   client.interceptors.request.use(async (config) => {
     try {
-      if (addAuthInterceptor && typeof window !== 'undefined') {
-        const token = await getAccessToken();
-        if (token) {
-          config.headers = config.headers ?? {};
-          (config.headers as Record<string, string>).Authorization =
-            `Bearer ${token}`;
-        }
-      }
-
       const controller = new AbortController();
       config.signal = controller.signal;
       const timeoutMs = config.timeout ?? 50000;
@@ -40,9 +29,6 @@ export const createApiClient = (addAuthInterceptor: boolean = false) => {
       if (process.env.NODE_ENV === 'development') {
         throw new Error(`Request error: ${error}`);
       }
-      if (error?.response?.status === 401 && typeof window !== 'undefined') {
-        await signOut({ callbackUrl: '/auth/signin' });
-      }
       return Promise.reject(error);
     },
   );
@@ -50,10 +36,7 @@ export const createApiClient = (addAuthInterceptor: boolean = false) => {
   return client;
 };
 
-export const apiClient = createApiClient(true);
-
-export const publicApiClient = createApiClient(false);
-export default apiClient;
+export const apiClient = createApiClient();
 
 export const query = async <T>(
   endpoint: string,

@@ -25,6 +25,9 @@ const tablerIcons = localFont({
 export const metadata: Metadata = {
   title: 'Grupo SER - Portal Institucional',
   description: 'Portal multi-institucional do Grupo SER Educacional',
+  icons: {
+    icon: '/favicons/grupo-ser.ico',
+  },
 };
 
 export default function RootLayout({
@@ -32,8 +35,6 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR" className={tablerIcons.variable}>
-      <link rel="icon" href="/favicons/grupo-ser.ico" />
-
       <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>

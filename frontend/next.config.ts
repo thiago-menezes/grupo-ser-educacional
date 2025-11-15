@@ -9,7 +9,10 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['reshaped'],
   },
   reactStrictMode: true,
+  compress: true,
+  poweredByHeader: false,
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'http',
@@ -26,6 +29,9 @@ const nextConfig: NextConfig = {
         hostname: 'unsplash.it',
       },
     ],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
 };
 
