@@ -1,8 +1,6 @@
-import { CourseDetailsPage } from '@/features/course-details';
+'use client';
 
-type CourseDetailsPageProps = {
-  params: Promise<{ institution: string; slug: string }>;
-};
+import { CourseDetailsPage } from '@/features/course-details';
 
 // export async function generateMetadata({ params }: CourseDetailsPageProps) {
 //   const { institution, slug } = await params;
@@ -39,10 +37,6 @@ type CourseDetailsPageProps = {
 //   }
 // }
 
-export default async function CourseDetailsRoute({
-  params,
-}: CourseDetailsPageProps) {
-  const { institution, slug } = await params;
-
-  return <CourseDetailsPage institution={institution} courseSlug={slug} />;
+export default function CourseDetailsRoute() {
+  return <CourseDetailsPage />;
 }
