@@ -515,7 +515,7 @@ Usar React Query com `staleTime` e `cacheTime` configurados:
 
 ```typescript
 const { data } = useQuery({
-  queryKey: ['home', institutionSlug],
+  queryKey: ["home", institutionSlug],
   queryFn: () => fetchHomePage(institutionSlug),
   staleTime: 5 * 60 * 1000, // 5 minutos
   cacheTime: 10 * 60 * 1000, // 10 minutos
@@ -634,11 +634,11 @@ Criar arquivo `seeds/institutions.json`:
 
 ```javascript
 // scripts/seed.js
-const institutions = require('./seeds/institutions.json');
+const institutions = require("./seeds/institutions.json");
 
 async function seed() {
   for (const inst of institutions) {
-    await strapi.db.query('api::institution.institution').create({
+    await strapi.db.query("api::institution.institution").create({
       data: inst,
     });
   }

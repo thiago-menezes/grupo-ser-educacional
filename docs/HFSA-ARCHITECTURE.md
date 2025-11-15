@@ -74,7 +74,7 @@ src/
 
 ```tsx
 // src/app/(marketing)/enrollment/page.tsx
-import { EnrollmentFeature } from '@/features/enrollment-form';
+import { EnrollmentFeature } from "@/features/enrollment-form";
 
 export default function EnrollmentPage({ params }: Props) {
   return <EnrollmentFeature institution={params.institution} />;

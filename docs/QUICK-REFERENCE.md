@@ -118,14 +118,14 @@ import {
 
 ```typescript
 // src/features/[feature]/hooks/use[Feature].ts
-import { useQuery } from '@tanstack/react-query';
-import { apiClient } from '@/libs/api/axios';
+import { useQuery } from "@tanstack/react-query";
+import { apiClient } from "@/libs/api/axios";
 
 export function useCourses(filters: CourseFilters) {
   return useQuery({
-    queryKey: ['courses', filters],
+    queryKey: ["courses", filters],
     queryFn: async () => {
-      const { data } = await apiClient.get('/courses', { params: filters });
+      const { data } = await apiClient.get("/courses", { params: filters });
       return data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -134,18 +134,18 @@ export function useCourses(filters: CourseFilters) {
 }
 
 // Usage in component
-const { data, isLoading, error } = useCourses({ institution: 'uninassau' });
+const { data, isLoading, error } = useCourses({ institution: "uninassau" });
 ```
 
 ### Mutation Pattern
 
 ```typescript
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 
 export function useLeadSubmission() {
   return useMutation({
     mutationFn: async (leadData: LeadFormData) => {
-      const { data } = await apiClient.post('/leads', leadData);
+      const { data } = await apiClient.post("/leads", leadData);
       return data;
     },
     onSuccess: (data) => {
@@ -207,16 +207,16 @@ const onSubmit = (data: FormData) => {
 ### useSearchParams Pattern
 
 ```typescript
-'use client';
-import { useSearchParams, useRouter } from 'next/navigation';
+"use client";
+import { useSearchParams, useRouter } from "next/navigation";
 
 export function useFilters() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const filters = {
-    city: searchParams.get('city') || '',
-    modality: searchParams.getAll('modality'),
+    city: searchParams.get("city") || "",
+    modality: searchParams.getAll("modality"),
   };
 
   const updateFilter = (key: string, value: string | string[]) => {
@@ -278,8 +278,8 @@ export function useFilters() {
 ```typescript
 // Theme is injected via CSS variables
 const styles = {
-  backgroundColor: 'var(--institution-primary-color)',
-  color: 'var(--institution-secondary-color)',
+  backgroundColor: "var(--institution-primary-color)",
+  color: "var(--institution-secondary-color)",
 };
 ```
 
@@ -423,11 +423,11 @@ PUT /api/leads/:id
 
 ```typescript
 const institutions = {
-  uninassau: 'UNINASSAU',
-  ung: 'UNG',
-  uninorte: 'UNINORTE',
-  unifael: 'UNIFAEL',
-  unama: 'UNAMA',
+  uninassau: "UNINASSAU",
+  ung: "UNG",
+  uninorte: "UNINORTE",
+  unifael: "UNIFAEL",
+  unama: "UNAMA",
 };
 ```
 
@@ -496,7 +496,7 @@ Before committing:
 
 ```tsx
 // app/[institution]/page.tsx
-import { Suspense } from 'react';
+import { Suspense } from "react";
 
 export default async function HomePage({
   params,
@@ -516,8 +516,8 @@ export default async function HomePage({
 ### Client Component
 
 ```tsx
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 export function InteractiveComponent() {
   const [count, setCount] = useState(0);
@@ -530,7 +530,7 @@ export function InteractiveComponent() {
 
 ```tsx
 // app/[institution]/error.tsx
-'use client';
+"use client";
 
 export default function Error({
   error,

@@ -27,7 +27,7 @@
   "dependencies": {
     "@grupo-ser/utils": "workspace:*",
     "@hookform/resolvers": "^5.2.2",
-    "@tanstack/react-query": "^5.90.0",
+    "@tanstack/react-query": "^5.90.9",
     "axios": "^1.13.2",
     "clsx": "^2.1.1",
     "react-hook-form": "^7.66.0",
@@ -36,12 +36,12 @@
   "devDependencies": {
     "@grupo-ser/eslint": "workspace:*",
     "@grupo-ser/types": "workspace:*",
-    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/jest-dom": "^6.9.1",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.1",
-    "jsdom": "^25.0.1",
+    "jsdom": "^27.2.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3",
     "vitest": "^4.0.9"

@@ -47,7 +47,7 @@ type CoursesResponseDTO = {
   courses: CourseData[];
 };
 
-type CourseModality = 'presencial' | 'semipresencial' | 'ead';
+type CourseModality = "presencial" | "semipresencial" | "ead";
 ```
 
 **Function:**
@@ -65,9 +65,9 @@ getCourses(
 **Usage:**
 
 ```typescript
-import { getCourses } from '@/dto/courses';
+import { getCourses } from "@/dto/courses";
 
-const data = await getCourses('uninassau', 'SP', 'São Paulo', 1, 12);
+const data = await getCourses("uninassau", "SP", "São Paulo", 1, 12);
 ```
 
 ## Mock API Route
