@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { startTransition, useCallback, useEffect, useState } from 'react';
 import { Button, FormControl, Grid, TextField } from 'reshaped';
 import { Icon } from '@/components/icon';
 import { useCourseFiltersContext } from '../context';
@@ -11,8 +11,12 @@ export function CourseSearchBar() {
   const [courseName, setCourseName] = useState(filters.courseName);
 
   useEffect(() => {
-    setCourseName(filters.courseName);
-  }, [filters.courseName]);
+    if (courseName !== filters.courseName) {
+      startTransition(() => {
+        setCourseName(filters.courseName);
+      });
+    }
+  }, [filters.courseName, courseName]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {

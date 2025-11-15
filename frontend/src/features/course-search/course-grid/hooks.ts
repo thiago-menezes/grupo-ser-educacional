@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { startTransition, useEffect, useRef, useState } from 'react';
 import { useCourseFiltersContext } from '../context';
 import { useQueryCourses } from './api/query';
 import { ITEMS_PER_PAGE } from './constants';
@@ -6,14 +6,13 @@ import { ITEMS_PER_PAGE } from './constants';
 export const useCourseGrid = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { filters } = useCourseFiltersContext();
+  const prevFiltersRef = useRef<string>('');
 
   const modalitiesKey = filters.modalities.join(',');
   const shiftsKey = filters.shifts.join(',');
   const durationsKey = filters.durations.join(',');
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [
+  const filtersKey = [
     filters.city,
     modalitiesKey,
     filters.priceRange.min,
@@ -23,7 +22,19 @@ export const useCourseGrid = () => {
     filters.courseLevel,
     filters.courseName,
     filters.radius,
-  ]);
+  ].join('|');
+
+  useEffect(() => {
+    // Reset to page 1 when filters change
+    if (prevFiltersRef.current !== filtersKey) {
+      prevFiltersRef.current = filtersKey;
+      if (currentPage !== 1) {
+        startTransition(() => {
+          setCurrentPage(1);
+        });
+      }
+    }
+  }, [filtersKey, currentPage]);
 
   const { data: coursesResponse, isLoading } = useQueryCourses(
     {

@@ -32,7 +32,12 @@ export function FiltersContent({
     mode: 'onChange',
   });
 
-  const [scrollTop, setScrollTop] = useState(0);
+  const [scrollTop, setScrollTop] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.scrollY;
+    }
+    return 0;
+  });
 
   // Sync local form with applied filters when they change externally
   useEffect(() => {
@@ -42,7 +47,6 @@ export function FiltersContent({
   // Handle scroll for dynamic height
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setScrollTop(window.scrollY);
       const handleScroll = () => {
         setScrollTop(window.scrollY);
       };

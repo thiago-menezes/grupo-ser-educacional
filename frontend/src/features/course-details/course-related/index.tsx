@@ -1,5 +1,8 @@
 'use client';
 
+import { View } from 'reshaped';
+import styles from './styles.module.scss';
+
 export type CourseRelatedProps = {
   institution: string;
   currentCourseSlug: string;
@@ -14,10 +17,10 @@ export function CourseRelated({
   return null;
 
   // Future implementation:
-  // return (
-  //   <View className={styles.related}>
-  //     <h2 className={styles.title}>Cursos relacionados</h2>
-  //     {/* Course cards grid */}
-  //   </View>
-  // );
+  return (
+    <View className={styles.related}>
+      <h2 className={styles.title}>Cursos relacionados</h2>
+      {/* Course cards grid */}
+    </View>
+  );
 }
