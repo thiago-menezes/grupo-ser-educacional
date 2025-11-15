@@ -1,4 +1,4 @@
-// Types moved to @grupo-ser/shared
+// Types moved to @grupo-ser/types
 // Re-export for backward compatibility
 export type {
   CourseModality,
@@ -6,4 +6,4 @@ export type {
   CoursesResponse,
   CourseDetailsResponse,
   AutocompleteResponse,
-} from '@grupo-ser/shared';
+} from '@grupo-ser/types';

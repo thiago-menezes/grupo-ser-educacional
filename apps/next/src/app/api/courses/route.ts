@@ -50,7 +50,6 @@ export async function GET(request: NextRequest) {
     const response = handleCoursesList(params);
     return NextResponse.json(response);
   } catch (error) {
-    console.error('Error fetching courses:', error);
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
     return NextResponse.json(

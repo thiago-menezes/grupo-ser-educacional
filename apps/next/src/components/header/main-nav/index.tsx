@@ -32,7 +32,7 @@ export const MainNav = ({
 
           <div className={styles.rightContainer}>
             <nav className={styles.desktopNav} aria-label="Main navigation">
-              <Link href={`/`}>
+              <Link href={'/'}>
                 <Button size="large" variant="ghost">
                   Graduação
                 </Button>

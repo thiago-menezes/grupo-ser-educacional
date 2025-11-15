@@ -1,4 +1,4 @@
-import { formatPrice } from '@grupo-ser/shared';
+import { formatPrice } from '@grupo-ser/utils';
 import { Button, TextField, View } from 'reshaped';
 import type { CourseDetails } from '../hooks/useCourseDetails';
 import styles from './styles.module.scss';

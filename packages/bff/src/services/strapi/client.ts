@@ -28,13 +28,13 @@ function buildNestedFilter(
   Object.entries(filters).forEach(([key, value]) => {
     const fullKey = prefix ? `${prefix}[${key}]` : key;
 
-    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+    if (typeof value === "object" && value !== null && !Array.isArray(value)) {
       const valueObj = value as Record<string, unknown>;
       const keys = Object.keys(valueObj);
 
       // Check if ALL keys are operators (start with $)
       const allOperators =
-        keys.length > 0 && keys.every((k) => k.startsWith('$'));
+        keys.length > 0 && keys.every((k) => k.startsWith("$"));
 
       if (allOperators) {
         // This is a leaf object with operators, build the full path
@@ -79,7 +79,7 @@ export class StrapiClient {
 
     // Add filters with proper nested bracket notation
     if (options?.filters) {
-      const filterParts = buildNestedFilter('filters', options.filters);
+      const filterParts = buildNestedFilter("filters", options.filters);
       queryParts.push(...filterParts);
     }
 
@@ -112,14 +112,14 @@ export class StrapiClient {
       });
     }
 
-    const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
+    const queryString = queryParts.length > 0 ? `?${queryParts.join("&")}` : "";
     const url = `${this.config.baseUrl}/api/${endpoint}${queryString}`;
 
     const response = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        ...(noCache ? { 'Cache-Control': 'no-cache' } : {}),
+        "Content-Type": "application/json",
+        ...(noCache ? { "Cache-Control": "no-cache" } : {}),
       },
     });
 
@@ -150,4 +150,3 @@ export function createStrapiClient(baseUrl: string): StrapiClient {
     cacheRevalidate: 3600,
   });
 }
-

@@ -59,8 +59,7 @@ export async function getSeoFromStrapi(
     }
 
     return strapiResponse.data[0];
-  } catch (error) {
-    console.warn(`Failed to fetch SEO data for ${institutionSlug}:`, error);
+  } catch {
     return {
       metadata: {
         title: 'Grupo SER - Portal Institucional',

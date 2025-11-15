@@ -19,7 +19,6 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.error('Error fetching media from Strapi:', error);
     const statusCode =
       error instanceof Error && error.message.includes('Failed') ? 500 : 500;
     return NextResponse.json(

@@ -31,8 +31,8 @@ export function QuickSearchForm({
 
       const params = buildSearchParams(searchData);
       router.push(`/${institutionSlug}/cursos?${params.toString()}`);
-    } catch (error) {
-      console.error('[QuickSearchForm] Error submitting form:', error);
+    } catch {
+      // Silently handle form submission errors
     } finally {
       setIsLoading(false);
     }

@@ -2,8 +2,8 @@
  * Geolocation service for server-side geocoding
  */
 
-const DEFAULT_CITY = 'São José dos Campos';
-const DEFAULT_STATE = 'SP';
+const DEFAULT_CITY = "São José dos Campos";
+const DEFAULT_STATE = "SP";
 
 export interface GeolocationResult {
   city: string;
@@ -27,14 +27,17 @@ export async function reverseGeocode(
       throw new Error(`Geocoding API failed: ${response.status}`);
     }
 
-    const data = await response.json() as { city: string; locality: string; principalSubdivisionCode: string };
+    const data = (await response.json()) as {
+      city: string;
+      locality: string;
+      principalSubdivisionCode: string;
+    };
     return {
       city: data.city || data.locality || DEFAULT_CITY,
-      state:
-        data.principalSubdivisionCode?.split('-')[1] || DEFAULT_STATE,
+      state: data.principalSubdivisionCode?.split("-")[1] || DEFAULT_STATE,
     };
   } catch (error) {
-    console.error('Error in reverse geocoding:', error);
+    console.error("Error in reverse geocoding:", error);
     return { city: DEFAULT_CITY, state: DEFAULT_STATE };
   }
 }
@@ -64,4 +67,3 @@ export function getDefaultLocation(): GeolocationResult {
     coordinates: null,
   };
 }
-

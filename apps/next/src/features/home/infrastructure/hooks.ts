@@ -1,4 +1,4 @@
-import { getMediaUrl } from '@grupo-ser/shared';
+import { getMediaUrl } from '@grupo-ser/utils';
 import { useMemo, useState } from 'react';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useQueryInfrastructure } from './api/query';

@@ -1,4 +1,4 @@
-export type CourseModality = 'presencial' | 'semipresencial' | 'ead';
+export type CourseModality = "presencial" | "semipresencial" | "ead";
 
 export type CourseData = {
   id: string;
@@ -74,7 +74,7 @@ export type CourseDetailsResponse = {
 };
 
 export type AutocompleteResponse = {
-  type: 'cities' | 'courses';
+  type: "cities" | "courses";
   results: Array<
     | {
         label: string;
@@ -92,5 +92,3 @@ export type AutocompleteResponse = {
       }
   >;
 };
-
-

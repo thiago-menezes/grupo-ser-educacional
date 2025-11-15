@@ -71,8 +71,7 @@ async function searchCourses(
 
     const data = await response.json();
     return data.data || [];
-  } catch (error) {
-    console.error('[HomeHero] Failed to search courses:', error);
+  } catch {
     return [];
   }
 }

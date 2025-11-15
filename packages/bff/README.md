@@ -21,20 +21,20 @@ src/
 #### Strapi Client
 
 ```typescript
-import { createStrapiClient } from '@grupo-ser/bff';
+import { createStrapiClient } from "@grupo-ser/bff";
 
 const strapiClient = createStrapiClient(process.env.STRAPI_URL!);
 
-const data = await strapiClient.fetch('endpoint', {
-  filters: { field: { $eq: 'value' } },
-  populate: ['relation'],
+const data = await strapiClient.fetch("endpoint", {
+  filters: { field: { $eq: "value" } },
+  populate: ["relation"],
 });
 ```
 
 #### Geolocation Service
 
 ```typescript
-import { reverseGeocode, getLocationFromCoordinates } from '@grupo-ser/bff';
+import { reverseGeocode, getLocationFromCoordinates } from "@grupo-ser/bff";
 
 const location = await getLocationFromCoordinates(lat, lng);
 ```
@@ -44,37 +44,43 @@ const location = await getLocationFromCoordinates(lat, lng);
 #### Courses
 
 ```typescript
-import { handleCoursesList, handleCourseDetails, handleAutocomplete } from '@grupo-ser/bff';
+import {
+  handleCoursesList,
+  handleCourseDetails,
+  handleAutocomplete,
+} from "@grupo-ser/bff";
 
 // List courses with filters
 const courses = handleCoursesList({
-  institution: 'slug',
-  location: 'city',
+  institution: "slug",
+  location: "city",
   page: 1,
   perPage: 12,
 });
 
 // Get course details
-const course = handleCourseDetails('course-slug');
+const course = handleCourseDetails("course-slug");
 
 // Autocomplete
 const results = handleAutocomplete({
-  type: 'courses',
-  q: 'query',
+  type: "courses",
+  q: "query",
 });
 ```
 
 #### SEO, Units, Media
 
 ```typescript
-import { handleSeo, handleUnits, handleMedia } from '@grupo-ser/bff';
-import { createStrapiClient } from '@grupo-ser/bff';
+import { handleSeo, handleUnits, handleMedia } from "@grupo-ser/bff";
+import { createStrapiClient } from "@grupo-ser/bff";
 
 const strapiClient = createStrapiClient(process.env.STRAPI_URL!);
 
-const seo = await handleSeo(strapiClient, { institutionSlug: 'slug' });
-const units = await handleUnits(strapiClient, { institutionSlug: 'slug' });
-const media = await handleMedia(strapiClient, { path: ['uploads', 'file.jpg'] });
+const seo = await handleSeo(strapiClient, { institutionSlug: "slug" });
+const units = await handleUnits(strapiClient, { institutionSlug: "slug" });
+const media = await handleMedia(strapiClient, {
+  path: ["uploads", "file.jpg"],
+});
 ```
 
 ## Development
@@ -96,4 +102,3 @@ yarn dev
 ## Architecture
 
 This package is framework-agnostic and contains pure business logic. It's consumed by Next.js API routes which act as thin HTTP layers.
-

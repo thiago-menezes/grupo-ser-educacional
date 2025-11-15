@@ -5,6 +5,7 @@
     "dev:strapi": "turbo run dev --filter=cms",
     "dev:next": "turbo run dev --filter=next",
     "build": "turbo run build",
+    "build:packages": "turbo run build --filter='./packages/*'",
     "build:strapi": "turbo run build --filter=cms",
     "build:next": "turbo run build --filter=next",
     "start": "turbo run start",

@@ -1,5 +1,5 @@
-import type { CoursesQueryParams } from './types';
-import type { CoursesResponse } from '@grupo-ser/shared';
+import type { CoursesQueryParams } from "./types";
+import type { CoursesResponse } from "@grupo-ser/types";
 import {
   enrichOffering,
   courseOfferings,
@@ -7,8 +7,8 @@ import {
   institutions,
   courses,
   extractYearsFromDuration,
-} from '../../data';
-import { transformOfferingsToCourseData } from '../../transformers';
+} from "../../data";
+import { transformOfferingsToCourseData } from "../../transformers";
 
 const DEFAULT_PER_PAGE = 12;
 
@@ -47,9 +47,7 @@ function getCourseId(param: string): number | null {
 /**
  * Handle courses list request
  */
-export function handleCoursesList(
-  params: CoursesQueryParams,
-): CoursesResponse {
+export function handleCoursesList(params: CoursesQueryParams): CoursesResponse {
   let filteredOfferings = courseOfferings.filter((o) => o.active);
 
   // Filter by institution
@@ -124,13 +122,13 @@ export function handleCoursesList(
       if (years === null) return false;
 
       switch (params.durationRange) {
-        case '1-2':
+        case "1-2":
           return years >= 1 && years <= 2;
-        case '2-3':
+        case "2-3":
           return years >= 2 && years <= 3;
-        case '3-4':
+        case "3-4":
           return years >= 3 && years <= 4;
-        case '4+':
+        case "4+":
           return years > 4;
         default:
           return true;
@@ -184,4 +182,3 @@ export function handleCoursesList(
     courses: transformedCourses,
   };
 }
-

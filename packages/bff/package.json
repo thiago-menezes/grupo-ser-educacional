@@ -21,10 +21,14 @@
     "clean": "rm -rf dist node_modules/.cache"
   },
   "dependencies": {
-    "@grupo-ser/shared": "workspace:*"
+    "@grupo-ser/utils": "workspace:*"
   },
   "devDependencies": {
+    "@grupo-ser/eslint": "workspace:*",
+    "@grupo-ser/types": "workspace:*",
     "@types/node": "^24.10.1",
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
     "typescript": "^5.9.3",
     "vitest": "^4.0.9"
   }

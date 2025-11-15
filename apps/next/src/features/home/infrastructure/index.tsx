@@ -84,7 +84,6 @@ export const InfrastructureSection = () => {
           <Button
             variant="ghost"
             color="primary"
-            onClick={() => console.log('Ver todas as unidades')}
             aria-label="Ver todas as unidades"
           >
             Ver todas as unidades

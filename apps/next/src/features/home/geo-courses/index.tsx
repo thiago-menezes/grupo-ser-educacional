@@ -66,11 +66,7 @@ export function GeoCoursesSection({
               )}
             </div>
           </div>
-          <Button
-            variant="ghost"
-            onClick={() => console.log('Ver todos os cursos')}
-            aria-label="Ver todos os cursos disponíveis"
-          >
+          <Button variant="ghost" aria-label="Ver todos os cursos disponíveis">
             Ver todos os cursos
           </Button>
         </div>
@@ -94,10 +90,7 @@ export function GeoCoursesSection({
                 ))
               : coursesToShow.map((course) => (
                   <div key={course.id} className={styles.card} role="listitem">
-                    <CourseCard
-                      course={course}
-                      onClick={() => console.log('Curso clicado:', course.slug)}
-                    />
+                    <CourseCard course={course} />
                   </div>
                 ))}
           </div>

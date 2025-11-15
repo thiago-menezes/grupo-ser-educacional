@@ -33,7 +33,6 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Error fetching SEO from Strapi:', error);
     return NextResponse.json(
       {
         error: 'Failed to fetch SEO data',

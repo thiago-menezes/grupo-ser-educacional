@@ -1,0 +1,47 @@
+{
+  "name": "@grupo-ser/eslint",
+  "version": "1.0.0",
+  "description": "Shared ESLint configuration for Grupo SER monorepo",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    "./base": "./base.js",
+    "./react": "./react.js",
+    "./next": "./next.js"
+  },
+  "files": [
+    "base.js",
+    "react.js",
+    "next.js",
+    "index.js"
+  ],
+  "keywords": [
+    "eslint",
+    "config",
+    "typescript",
+    "react",
+    "nextjs"
+  ],
+  "author": "Thiago Menezes de Oliveira",
+  "license": "MIT",
+  "dependencies": {
+    "@eslint/js": "^9.39.1",
+    "@next/eslint-plugin-next": "^16.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.46.4",
+    "@typescript-eslint/parser": "^8.46.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-import-x": "^4.9.1",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-turbo": "^2.6.1",
+    "globals": "^16.5.0",
+    "typescript-eslint": "^8.46.4"
+  },
+  "peerDependencies": {
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3"
+  }
+}

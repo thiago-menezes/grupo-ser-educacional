@@ -1,10 +1,10 @@
-import categoriesData from './categories.json';
-import courseOfferingsData from './course_offerings.json';
-import coursesData from './courses.json';
-import institutionsData from './institutions.json';
-import modalitiesData from './modalities.json';
-import periodsData from './periods.json';
-import unitsData from './units.json';
+import categoriesData from "./categories.json";
+import courseOfferingsData from "./course_offerings.json";
+import coursesData from "./courses.json";
+import institutionsData from "./institutions.json";
+import modalitiesData from "./modalities.json";
+import periodsData from "./periods.json";
+import unitsData from "./units.json";
 
 // Types
 export type Institution = (typeof institutionsData)[number];
@@ -203,4 +203,3 @@ export function extractYearsFromDuration(duration: string): number | null {
   const match = duration.match(/(\d+)\s*ano/);
   return match ? parseInt(match[1], 10) : null;
 }
-

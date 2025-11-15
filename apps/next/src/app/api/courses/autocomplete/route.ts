@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
     const response = handleAutocomplete(params);
     return NextResponse.json(response);
   } catch (error) {
-    console.error('Error in autocomplete:', error);
     return NextResponse.json(
       {
         error: 'Failed to fetch autocomplete results',

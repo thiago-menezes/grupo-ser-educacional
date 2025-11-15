@@ -42,7 +42,6 @@ export function useGeoCourses({
         const errorMessage =
           err instanceof Error ? err.message : 'Failed to load courses';
         setError(errorMessage);
-        console.error('Error fetching geo courses:', err);
       } finally {
         setIsLoading(false);
       }
@@ -72,7 +71,6 @@ export function useGeoCourses({
       const errorMessage =
         err instanceof Error ? err.message : 'Failed to load courses';
       setError(errorMessage);
-      console.error('Error refetching geo courses:', err);
     } finally {
       setIsLoading(false);
     }

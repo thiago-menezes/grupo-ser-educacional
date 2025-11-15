@@ -6,10 +6,6 @@
 
 const STRAPI_URL = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
 
-if (!STRAPI_URL) {
-  console.warn('STRAPI_URL environment variable is not configured');
-}
-
 /**
  * Build Strapi query string with proper bracket notation
  * Strapi v4 requires bracket notation in keys to NOT be URL encoded
@@ -155,9 +151,6 @@ export async function fetchFromStrapi<T>(
   const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
   const url = `${STRAPI_URL}/api/${endpoint}${queryString}`;
 
-  console.log('[Strapi Service] Fetching URL:', url);
-  console.log('[Strapi Service] Query parts:', queryParts);
-
   // In development or when noCache is true, use shorter cache or no cache
   const revalidate =
     noCache || process.env.NODE_ENV === 'development' ? 0 : 3600;
@@ -174,22 +167,14 @@ export async function fetchFromStrapi<T>(
     next: { revalidate },
   });
 
-  console.log(
-    '[Strapi Service] Response status:',
-    response.status,
-    response.statusText,
-  );
-
   if (!response.ok) {
     const errorText = await response.text();
-    console.error('[Strapi Service] Error response:', errorText);
     throw new Error(
       `Strapi API request failed: ${response.status} ${response.statusText}. ${errorText}`,
     );
   }
 
   const data = await response.json();
-  console.log('[Strapi Service] Response data:', JSON.stringify(data, null, 2));
   return data;
 }
 

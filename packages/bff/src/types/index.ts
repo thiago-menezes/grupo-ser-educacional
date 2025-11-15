@@ -1,3 +1,2 @@
-// Types moved to @grupo-ser/shared
+// Types moved to @grupo-ser/types
 // Only internal BFF types remain here
-

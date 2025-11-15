@@ -7,10 +7,6 @@ import { createStrapiClient } from '@grupo-ser/bff';
 
 const STRAPI_URL = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
 
-if (!STRAPI_URL) {
-  console.warn('STRAPI_URL environment variable is not configured');
-}
-
 /**
  * Get Strapi client instance
  */
