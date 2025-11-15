@@ -1,6 +1,7 @@
-import type { CourseDetailsResponse } from "@grupo-ser/types";
-import { getCourseBySlug, getOfferingsByCourse, categories } from "../../data";
-import { formatPrice } from "@grupo-ser/utils";
+import type { CourseDetailsResponse } from '@grupo-ser/types';
+import { formatPrice } from '@grupo-ser/utils';
+
+import { getCourseBySlug, getOfferingsByCourse, categories } from '../../data';
 
 /**
  * Handle course details request
@@ -67,14 +68,14 @@ export function handleCourseDetails(slug: string): CourseDetailsResponse {
     id: course.id,
     name: course.name,
     slug: course.slug,
-    description: course.description || "",
-    type: course.type || "Não informado",
+    description: course.description || '',
+    type: course.type || 'Não informado',
     workload: course.workload ? String(course.workload) : null,
     category: {
       id: category.id,
       name: category.name,
     },
-    duration: offerings[0]?.duration || "Não informado",
+    duration: offerings[0]?.duration || 'Não informado',
     priceFrom: minPrice ? formatPrice(minPrice) : null,
     modalities,
     units,

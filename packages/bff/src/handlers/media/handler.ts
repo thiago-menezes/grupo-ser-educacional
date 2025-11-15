@@ -1,5 +1,6 @@
-import type { MediaQueryParams } from "./types";
-import type { StrapiClient } from "../../services/strapi";
+import type { StrapiClient } from '../../services/strapi';
+
+import type { MediaQueryParams } from './types';
 
 /**
  * Handle media request - fetches media from Strapi
@@ -8,12 +9,12 @@ export async function handleMedia(
   strapiClient: StrapiClient,
   params: MediaQueryParams,
 ): Promise<{ buffer: ArrayBuffer; contentType: string }> {
-  const mediaPath = `/${params.path.join("/")}`;
+  const mediaPath = `/${params.path.join('/')}`;
   const strapiBaseUrl = strapiClient.getBaseUrl();
   const strapiMediaUrl = `${strapiBaseUrl}${mediaPath}`;
 
   const response = await fetch(strapiMediaUrl, {
-    method: "GET",
+    method: 'GET',
   });
 
   if (!response.ok) {
@@ -21,7 +22,7 @@ export async function handleMedia(
   }
 
   const contentType =
-    response.headers.get("content-type") || "application/octet-stream";
+    response.headers.get('content-type') || 'application/octet-stream';
   const buffer = await response.arrayBuffer();
 
   return { buffer, contentType };

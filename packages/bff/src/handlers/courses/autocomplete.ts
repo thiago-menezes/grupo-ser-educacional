@@ -1,6 +1,8 @@
-import type { AutocompleteQueryParams } from "./types";
-import type { AutocompleteResponse } from "@grupo-ser/types";
-import { getAvailableCities, getAvailableCourses } from "../../data";
+import type { AutocompleteResponse } from '@grupo-ser/types';
+
+import { getAvailableCities, getAvailableCourses } from '../../data';
+
+import type { AutocompleteQueryParams } from './types';
 
 /**
  * Handle autocomplete request
@@ -8,9 +10,9 @@ import { getAvailableCities, getAvailableCourses } from "../../data";
 export function handleAutocomplete(
   params: AutocompleteQueryParams,
 ): AutocompleteResponse {
-  const query = params.q || "";
+  const query = params.q || '';
 
-  if (params.type === "cities") {
+  if (params.type === 'cities') {
     const cities = getAvailableCities();
     const filtered = cities.filter(
       (city) =>
@@ -19,7 +21,7 @@ export function handleAutocomplete(
     );
 
     return {
-      type: "cities",
+      type: 'cities',
       results: filtered.map((city) => ({
         label: `${city.city} - ${city.state}`,
         value: city.city,
@@ -29,14 +31,14 @@ export function handleAutocomplete(
     };
   }
 
-  if (params.type === "courses") {
+  if (params.type === 'courses') {
     const courses = getAvailableCourses();
     const filtered = courses.filter((course) =>
       course.name.toLowerCase().includes(query.toLowerCase()),
     );
 
     return {
-      type: "courses",
+      type: 'courses',
       results: filtered.map((course) => ({
         id: course.id,
         label: course.name,

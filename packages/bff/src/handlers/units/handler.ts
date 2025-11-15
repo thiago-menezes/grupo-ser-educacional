@@ -1,5 +1,6 @@
-import type { UnitsQueryParams } from "./types";
-import type { StrapiClient } from "../../services/strapi";
+import type { StrapiClient } from '../../services/strapi';
+
+import type { UnitsQueryParams } from './types';
 
 /**
  * Handle units request
@@ -11,7 +12,7 @@ export async function handleUnits(
   // First, verify the institution exists
   const institutionCheck = await strapiClient.fetch<{
     data: Array<{ id: number; slug: string; name: string }>;
-  }>("institutions", {
+  }>('institutions', {
     filters: {
       slug: { $eq: params.institutionSlug },
     },
@@ -24,13 +25,13 @@ export async function handleUnits(
   }
 
   // Fetch units with institution filter
-  const units = await strapiClient.fetch("units", {
+  const units = await strapiClient.fetch('units', {
     filters: {
       institution: {
         slug: { $eq: params.institutionSlug },
       },
     },
-    populate: ["institution"],
+    populate: ['institution'],
   });
 
   return units;
