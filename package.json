@@ -1,12 +1,6 @@
 {
   "name": "grupo-ser-monorepo",
-  "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "strapi",
-    "next"
-  ],
-  "packageManager": "yarn@4.9.4",
   "scripts": {
     "dev": "turbo run dev",
     "dev:strapi": "turbo run dev --filter=cms",
@@ -26,10 +20,15 @@
   "devDependencies": {
     "prettier": "^3.6.2",
     "turbo": "^2.6.1",
-    "typescript": "^5.9.3"
+    "typescript": "5.9.3"
   },
   "engines": {
     "node": ">=22.0.0 <=22.x.x",
     "yarn": ">=4.0.0"
-  }
+  },
+  "packageManager": "yarn@4.9.4",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
