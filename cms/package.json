@@ -21,18 +21,18 @@
     "@strapi/plugin-documentation": "^5.31.0",
     "@strapi/plugin-users-permissions": "5.31.0",
     "@strapi/strapi": "5.31.0",
-    "better-sqlite3": "^11.10.0",
-    "fs-extra": "^10.1.0",
-    "mime-types": "^2.1.35",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.2",
+    "better-sqlite3": "^12.4.1",
+    "fs-extra": "^11.3.2",
+    "mime-types": "^3.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.6",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
-    "@types/node": "^20.19.25",
-    "@types/react": "^18.3.26",
-    "@types/react-dom": "^18.3.7",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
     "typescript": "^5.9.3"
   },
   "engines": {

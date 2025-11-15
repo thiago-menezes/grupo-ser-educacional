@@ -3744,13 +3744,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.23.1":
-  version: 1.23.1
-  resolution: "@remix-run/router@npm:1.23.1"
-  checksum: 10c0/94ac9632c0070199b8275cd6dffe78eb4c02e8926328937c65561c5c30d7ddf842743df3c8f7df302f00a593dd204846d93667fbbbe3c3641437d7b8f333ed90
-  languageName: node
-  linkType: hard
-
 "@rolldown/pluginutils@npm:1.0.0-beta.47":
   version: 1.0.0-beta.47
   resolution: "@rolldown/pluginutils@npm:1.0.0-beta.47"
@@ -5637,7 +5630,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.0.0, @types/node@npm:^20.19.25":
+"@types/node@npm:^20.0.0":
   version: 20.19.25
   resolution: "@types/node@npm:20.19.25"
   dependencies:
@@ -5697,7 +5690,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.3.7":
+"@types/react-dom@npm:^18.0.0":
   version: 18.3.7
   resolution: "@types/react-dom@npm:18.3.7"
   peerDependencies:
@@ -5724,7 +5717,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:16 || 17 || 18, @types/react@npm:^18.3.26":
+"@types/react@npm:16 || 17 || 18":
   version: 18.3.26
   resolution: "@types/react@npm:18.3.26"
   dependencies:
@@ -7198,14 +7191,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"better-sqlite3@npm:^11.10.0":
-  version: 11.10.0
-  resolution: "better-sqlite3@npm:11.10.0"
+"better-sqlite3@npm:^12.4.1":
+  version: 12.4.1
+  resolution: "better-sqlite3@npm:12.4.1"
   dependencies:
     bindings: "npm:^1.5.0"
     node-gyp: "npm:latest"
     prebuild-install: "npm:^7.1.1"
-  checksum: 10c0/1fffbf9e5fc9d24847a3ecf09491bceab1c294b46ba41df1c449dc20b6f5c5d9d94ff24becd0b1632ee282bd21278b7fea53a5a6215bb99209ded0ae05eda3b0
+  checksum: 10c0/88773a75d996b4171e5690a38459b05dc814a792701b224bd9909ee084dc0b4c64aaffbdbcf4bbbc6d4e247faf19e91b2a56cf4175d746d3bd9ff14764eb05aa
   languageName: node
   linkType: hard
 
@@ -7925,15 +7918,15 @@ __metadata:
     "@strapi/plugin-documentation": "npm:^5.31.0"
     "@strapi/plugin-users-permissions": "npm:5.31.0"
     "@strapi/strapi": "npm:5.31.0"
-    "@types/node": "npm:^20.19.25"
-    "@types/react": "npm:^18.3.26"
-    "@types/react-dom": "npm:^18.3.7"
-    better-sqlite3: "npm:^11.10.0"
-    fs-extra: "npm:^10.1.0"
-    mime-types: "npm:^2.1.35"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-    react-router-dom: "npm:^6.30.2"
+    "@types/node": "npm:^24.10.1"
+    "@types/react": "npm:^19.2.5"
+    "@types/react-dom": "npm:^19.2.3"
+    better-sqlite3: "npm:^12.4.1"
+    fs-extra: "npm:^11.3.2"
+    mime-types: "npm:^3.0.1"
+    react: "npm:^19.2.0"
+    react-dom: "npm:^19.2.0"
+    react-router-dom: "npm:^7.9.6"
     styled-components: "npm:^6.1.19"
     typescript: "npm:^5.9.3"
   languageName: unknown
@@ -8253,6 +8246,13 @@ __metadata:
   version: 0.7.2
   resolution: "cookie@npm:0.7.2"
   checksum: 10c0/9596e8ccdbf1a3a88ae02cf5ee80c1c50959423e1022e4e60b91dd87c622af1da309253d8abdb258fb5e3eacb4f08e579dc58b4897b8087574eee0fd35dfa5d2
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^1.0.1":
+  version: 1.0.2
+  resolution: "cookie@npm:1.0.2"
+  checksum: 10c0/fd25fe79e8fbcfcaf6aa61cd081c55d144eeeba755206c058682257cb38c4bd6795c6620de3f064c740695bb65b7949ebb1db7a95e4636efb8357a335ad3f54b
   languageName: node
   linkType: hard
 
@@ -10683,7 +10683,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^10.0.0, fs-extra@npm:^10.1.0":
+"fs-extra@npm:^10.0.0":
   version: 10.1.0
   resolution: "fs-extra@npm:10.1.0"
   dependencies:
@@ -10691,6 +10691,17 @@ __metadata:
     jsonfile: "npm:^6.0.1"
     universalify: "npm:^2.0.0"
   checksum: 10c0/5f579466e7109719d162a9249abbeffe7f426eb133ea486e020b89bc6d67a741134076bf439983f2eb79276ceaf6bd7b7c1e43c3fd67fe889863e69072fb0a5e
+  languageName: node
+  linkType: hard
+
+"fs-extra@npm:^11.3.2, fs-extra@npm:~11.3.0":
+  version: 11.3.2
+  resolution: "fs-extra@npm:11.3.2"
+  dependencies:
+    graceful-fs: "npm:^4.2.0"
+    jsonfile: "npm:^6.0.1"
+    universalify: "npm:^2.0.0"
+  checksum: 10c0/f5d629e1bb646d5dedb4d8b24c5aad3deb8cc1d5438979d6f237146cd10e113b49a949ae1b54212c2fbc98e2d0995f38009a9a1d0520f0287943335e65fe919b
   languageName: node
   linkType: hard
 
@@ -10702,17 +10713,6 @@ __metadata:
     jsonfile: "npm:^4.0.0"
     universalify: "npm:^0.1.0"
   checksum: 10c0/259f7b814d9e50d686899550c4f9ded85c46c643f7fe19be69504888e007fcbc08f306fae8ec495b8b998635e997c9e3e175ff2eeed230524ef1c1684cc96423
-  languageName: node
-  linkType: hard
-
-"fs-extra@npm:~11.3.0":
-  version: 11.3.2
-  resolution: "fs-extra@npm:11.3.2"
-  dependencies:
-    graceful-fs: "npm:^4.2.0"
-    jsonfile: "npm:^6.0.1"
-    universalify: "npm:^2.0.0"
-  checksum: 10c0/f5d629e1bb646d5dedb4d8b24c5aad3deb8cc1d5438979d6f237146cd10e113b49a949ae1b54212c2fbc98e2d0995f38009a9a1d0520f0287943335e65fe919b
   languageName: node
   linkType: hard
 
@@ -14241,19 +14241,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime-db@npm:>= 1.43.0 < 2":
+"mime-db@npm:>= 1.43.0 < 2, mime-db@npm:^1.54.0":
   version: 1.54.0
   resolution: "mime-db@npm:1.54.0"
   checksum: 10c0/8d907917bc2a90fa2df842cdf5dfeaf509adc15fe0531e07bb2f6ab15992416479015828d6a74200041c492e42cce3ebf78e5ce714388a0a538ea9c53eece284
   languageName: node
   linkType: hard
 
-"mime-types@npm:2.1.35, mime-types@npm:^2.1.12, mime-types@npm:^2.1.18, mime-types@npm:^2.1.27, mime-types@npm:^2.1.28, mime-types@npm:^2.1.31, mime-types@npm:^2.1.35, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
+"mime-types@npm:2.1.35, mime-types@npm:^2.1.12, mime-types@npm:^2.1.18, mime-types@npm:^2.1.27, mime-types@npm:^2.1.28, mime-types@npm:^2.1.31, mime-types@npm:~2.1.24, mime-types@npm:~2.1.34":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
     mime-db: "npm:1.52.0"
   checksum: 10c0/82fb07ec56d8ff1fc999a84f2f217aa46cb6ed1033fefaabd5785b9a974ed225c90dc72fff460259e66b95b73648596dbcc50d51ed69cdf464af2d237d3149b2
+  languageName: node
+  linkType: hard
+
+"mime-types@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "mime-types@npm:3.0.1"
+  dependencies:
+    mime-db: "npm:^1.54.0"
+  checksum: 10c0/bd8c20d3694548089cf229016124f8f40e6a60bbb600161ae13e45f793a2d5bb40f96bbc61f275836696179c77c1d6bf4967b2a75e0a8ad40fe31f4ed5be4da5
   languageName: node
   linkType: hard
 
@@ -16556,15 +16565,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.3.1":
-  version: 18.3.1
-  resolution: "react-dom@npm:18.3.1"
+"react-dom@npm:^19.2.0":
+  version: 19.2.0
+  resolution: "react-dom@npm:19.2.0"
   dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.2"
+    scheduler: "npm:^0.27.0"
   peerDependencies:
-    react: ^18.3.1
-  checksum: 10c0/a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+    react: ^19.2.0
+  checksum: 10c0/fa2cae05248d01288e91523b590ce4e7635b1e13f1344e225f850d722a8da037bf0782f63b1c1d46353334e0c696909b82e582f8cad607948fde6f7646cc18d9
   languageName: node
   linkType: hard
 
@@ -16803,27 +16811,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^6.30.2":
-  version: 6.30.2
-  resolution: "react-router-dom@npm:6.30.2"
+"react-router-dom@npm:^7.9.6":
+  version: 7.9.6
+  resolution: "react-router-dom@npm:7.9.6"
   dependencies:
-    "@remix-run/router": "npm:1.23.1"
-    react-router: "npm:6.30.2"
+    react-router: "npm:7.9.6"
   peerDependencies:
-    react: ">=16.8"
-    react-dom: ">=16.8"
-  checksum: 10c0/d0c6edf4e2aa7639b4a4f64a7747f03d8861bdf4857e8981b1cff1451b7cb91fcdcd7e315a6e3df910271b2f5071825d2aec218d5f7890f2269fc074f198e42a
+    react: ">=18"
+    react-dom: ">=18"
+  checksum: 10c0/63984c46385da232655b9e3a8a99f6dd7b94c36827be6e954f246c362f83740b5f59b1de99cae81da3b0cef2220d701dcc22e4fafb4a84600541e1c0450b9d57
   languageName: node
   linkType: hard
 
-"react-router@npm:6.30.2":
-  version: 6.30.2
-  resolution: "react-router@npm:6.30.2"
+"react-router@npm:7.9.6":
+  version: 7.9.6
+  resolution: "react-router@npm:7.9.6"
   dependencies:
-    "@remix-run/router": "npm:1.23.1"
+    cookie: "npm:^1.0.1"
+    set-cookie-parser: "npm:^2.6.0"
   peerDependencies:
-    react: ">=16.8"
-  checksum: 10c0/cff5ea92d248d2230adc46d4e2ed3fbeddfaf1ae2e63411da8b7ea6ddc207d71dbc522c05c492e671e553e2153934f4ab180ac02bd36205b274e097f2cfe6fc4
+    react: ">=18"
+    react-dom: ">=18"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+  checksum: 10c0/2a177bbe19021e3b8211df849ea5b3f3a4f482327e6de3341aaeaa4f1406dc9be7b675b229eefea6761e04a59a40ccaaf8188f2ee88eb2d0b2a6b6448daea368
   languageName: node
   linkType: hard
 
@@ -16897,15 +16909,6 @@ __metadata:
     react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
     react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
   checksum: 10c0/eda9afb667d9784513dcc2755b65edf3a1412e7877975322993c1382908aaef0c0b948b7e3b2d705e353306556274d90f7ab19ac40aef2184fa39d4c1e2232ea
-  languageName: node
-  linkType: hard
-
-"react@npm:^18.3.1":
-  version: 18.3.1
-  resolution: "react@npm:18.3.1"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/283e8c5efcf37802c9d1ce767f302dd569dd97a70d9bb8c7be79a789b9902451e0d16334b05d73299b20f048cbc3c7d288bbbde10b701fa194e2089c237dbea3
   languageName: node
   linkType: hard
 
@@ -17659,12 +17662,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.2":
-  version: 0.23.2
-  resolution: "scheduler@npm:0.23.2"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/26383305e249651d4c58e6705d5f8425f153211aef95f15161c151f7b8de885f24751b377e4a0b3dd42cce09aad3f87a61dab7636859c0d89b7daf1a1e2a5c78
+"scheduler@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "scheduler@npm:0.27.0"
+  checksum: 10c0/4f03048cb05a3c8fddc45813052251eca00688f413a3cee236d984a161da28db28ba71bd11e7a3dd02f7af84ab28d39fb311431d3b3772fed557945beb00c452
   languageName: node
   linkType: hard
 
@@ -17770,6 +17771,13 @@ __metadata:
   dependencies:
     randombytes: "npm:^2.1.0"
   checksum: 10c0/2dd09ef4b65a1289ba24a788b1423a035581bef60817bea1f01eda8e3bda623f86357665fe7ac1b50f6d4f583f97db9615b3f07b2a2e8cbcb75033965f771dd2
+  languageName: node
+  linkType: hard
+
+"set-cookie-parser@npm:^2.6.0":
+  version: 2.7.2
+  resolution: "set-cookie-parser@npm:2.7.2"
+  checksum: 10c0/4381a9eb7ee951dfe393fe7aacf76b9a3b4e93a684d2162ab35594fa4053cc82a4d7d7582bf397718012c9adcf839b8cd8f57c6c42901ea9effe33c752da4a45
   languageName: node
   linkType: hard
 
