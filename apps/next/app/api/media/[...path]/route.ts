@@ -1,6 +1,6 @@
 import { handleMedia } from '@grupo-ser/bff';
 import { NextRequest, NextResponse } from 'next/server';
-import { getStrapiClient } from '@/app/api/services/bff';
+import { getStrapiClient } from '@root/app/api/services/bff';
 
 export async function GET(
   request: NextRequest,

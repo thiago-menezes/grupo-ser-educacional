@@ -1,10 +1,11 @@
-import { handleUnits } from '@grupo-ser/bff';
+import { handleSeo } from '@grupo-ser/bff';
 import { NextRequest, NextResponse } from 'next/server';
-import { getStrapiClient } from '@/app/api/services/bff';
+import { getStrapiClient } from '@root/app/api/services/bff';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const institutionSlug = searchParams.get('institutionSlug');
+  const noCache = searchParams.get('noCache') === 'true';
 
   if (!institutionSlug) {
     return NextResponse.json(
@@ -15,21 +16,29 @@ export async function GET(request: NextRequest) {
 
   try {
     const strapiClient = getStrapiClient();
-    const data = await handleUnits(strapiClient, { institutionSlug });
+    const data = await handleSeo(strapiClient, {
+      institutionSlug,
+      noCache,
+    });
+
+    const cacheControl =
+      process.env.NODE_ENV === 'development' || noCache
+        ? 'no-store, no-cache, must-revalidate, proxy-revalidate'
+        : 'public, s-maxage=3600, stale-while-revalidate=86400';
+
     return NextResponse.json(data, {
       headers: {
-        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+        'Cache-Control': cacheControl,
+        'X-Cache-Status': noCache ? 'bypassed' : 'cached',
       },
     });
   } catch (error) {
-    const statusCode =
-      error instanceof Error && error.message.includes('not found') ? 404 : 500;
     return NextResponse.json(
       {
-        error: 'Failed to fetch units',
+        error: 'Failed to fetch SEO data',
         message: error instanceof Error ? error.message : 'Unknown error',
       },
-      { status: statusCode },
+      { status: 500 },
     );
   }
 }

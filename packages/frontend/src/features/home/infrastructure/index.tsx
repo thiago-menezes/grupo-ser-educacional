@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import { Button, Text } from 'reshaped';
-import { Icon } from '../../../components/icon';
+import { Icon } from '../../../components';
 import { useInfrastructure } from './hooks';
 import { ImageModal } from './image-modal';
 import styles from './styles.module.scss';

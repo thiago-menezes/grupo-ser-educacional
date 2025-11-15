@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Text, View } from 'reshaped';
-import { useCurrentInstitution } from '../../../hooks/useInstitution';
+import { useCurrentInstitution } from '../../../hooks';
 import styles from './styles.module.scss';
 
 export function CourseSearchHeader() {

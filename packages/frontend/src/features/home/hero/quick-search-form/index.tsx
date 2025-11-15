@@ -1,7 +1,9 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Button, TextField, Checkbox, FormControl } from 'reshaped';
-import { Icon } from '../../../../components/icon';
+import { Icon } from '../../../../components';
 import { useQuickSearchForm } from '../hooks';
 import { buildSearchParams } from '../utils';
 import styles from './styles.module.scss';

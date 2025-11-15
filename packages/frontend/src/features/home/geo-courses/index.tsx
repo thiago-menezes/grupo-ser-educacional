@@ -1,13 +1,14 @@
+'use client';
+
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
 import {
   CourseCard,
   CourseCardSkeleton,
-} from '../../../components/course-card';
-import { Icon } from '../../../components/icon';
-import { Pagination } from '../../../components/pagination';
-import { useGeolocation } from '../../../hooks/useGeolocation';
-import { usePagination } from '../../../hooks/usePagination';
+  Icon,
+  Pagination,
+} from '../../../components';
+import { useGeolocation, usePagination } from '../../../hooks';
 import { MOCK_GEO_COURSES_DATA } from './api/mocks';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';

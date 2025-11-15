@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Breadcrumbs } from 'reshaped';
-import { Icon } from '../icon';
+import { Icon } from '..';
 import styles from './styles.module.scss';
 
 export type BreadcrumbItem = {

@@ -18,7 +18,7 @@
         "name": "next"
       }
     ],
-    "types": ["vitest/globals", "node"],
+    "types": ["node"],
     "paths": {
       "@/*": ["./src/*"],
       "@root/*": ["./*"],
@@ -36,11 +36,6 @@
     "**/*.d.ts",
     ".next/types/**/*.ts",
     "postcss.config.js",
-    "vitest.config.mjs",
-    "**/*/.spec.tsx",
-    "**/*/.spec.ts",
-    "**/*/*.integration.spec.tsx",
-    "**/*/*.integration.spec.ts",
     ".next/dev/types/**/*.ts",
     "../../packages/utils/src/verify-institution.ts"
   ],

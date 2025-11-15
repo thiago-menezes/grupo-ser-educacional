@@ -9,10 +9,12 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./styles/*": "./dist/styles/*"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run copy:styles",
+    "copy:styles": "mkdir -p dist/styles && cp -r src/styles/* dist/styles/ 2>/dev/null || true",
     "dev": "tsc --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --cache-location ./node_modules/.cache/eslint/",
@@ -23,7 +25,13 @@
     "clean": "rm -rf dist node_modules/.cache"
   },
   "dependencies": {
-    "@grupo-ser/utils": "workspace:*"
+    "@grupo-ser/utils": "workspace:*",
+    "@hookform/resolvers": "^5.2.2",
+    "@tanstack/react-query": "^5.90.0",
+    "axios": "^1.13.2",
+    "clsx": "^2.1.1",
+    "react-hook-form": "^7.66.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@grupo-ser/eslint": "workspace:*",
@@ -39,11 +47,9 @@
     "vitest": "^4.0.9"
   },
   "peerDependencies": {
-    "@tanstack/react-query": "^5.90.0",
     "next": "^16.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-hook-form": "^7.66.0",
     "reshaped": "^3.8.0"
   }
 }

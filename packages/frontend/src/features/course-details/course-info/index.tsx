@@ -1,5 +1,5 @@
 import { Button, View } from 'reshaped';
-import { Icon } from '../../../components/icon';
+import { Icon } from '../../../components';
 import type { CourseDetails } from '../hooks/useCourseDetails';
 import styles from './styles.module.scss';
 

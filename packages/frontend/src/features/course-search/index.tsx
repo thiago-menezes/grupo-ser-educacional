@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { View } from 'reshaped';
 import { ActiveFilters } from './active-filters';

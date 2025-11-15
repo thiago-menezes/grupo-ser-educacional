@@ -1,7 +1,9 @@
+'use client';
+
 import { Controller } from 'react-hook-form';
 import type { Control } from 'react-hook-form';
 import { Tabs } from 'reshaped';
-import { Icon } from '../../../components/icon';
+import { Icon } from '../../../../components';
 import type { CourseFiltersFormValues } from '../../types';
 
 export type CourseLevelTabsProps = {

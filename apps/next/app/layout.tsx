@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import Providers from './providers';
 import './icon/tabler-300.css';
-import '@/styles/global.scss';
+import '@grupo-ser/frontend/styles/global.scss';
 
 const inter = Inter({
   subsets: ['latin'],

@@ -1,9 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import { useRef } from 'react';
 import { Button } from 'reshaped';
-import { Icon } from '../../../components/icon';
-import { Pagination } from '../../../components/pagination';
-import { usePagination } from '../../../hooks/usePagination';
+import { Icon, Pagination } from '../../../components';
+import { usePagination } from '../../../hooks';
 import { DEFAULT_AREAS_CONTENT } from './constants';
 import { useAreaSelector } from './hooks';
 import styles from './styles.module.scss';

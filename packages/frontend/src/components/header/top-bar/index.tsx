@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import Link from 'next/link';
 import { Button, useTheme } from 'reshaped';
-import { Icon } from '../../icon';
+import { Icon } from '../..';
 import styles from '../styles.module.scss';
 
 export const TopBar = () => {

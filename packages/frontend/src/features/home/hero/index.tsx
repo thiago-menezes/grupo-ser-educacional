@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useCurrentInstitution } from '../../../../hooks/useInstitution';
+import { useCurrentInstitution } from '../../../hooks';
 import { useHeroContent } from './api/query';
 import { CarouselControls } from './carousel-controls';
 import { DEFAULT_HERO_CONTENT } from './constants';

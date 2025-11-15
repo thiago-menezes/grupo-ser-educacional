@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button, Text, View } from 'reshaped';
-import { Icon } from '../icon';
+import { Icon } from '..';
 import styles from './styles.module.scss';
 
 export function PageNotFound() {

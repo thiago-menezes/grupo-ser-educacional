@@ -1,6 +1,8 @@
+'use client';
+
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { query } from '../../../libs/api/axios';
+import { query } from '../../../../libs';
 import type { StrapiUnitsResponse } from './types';
 
 export const useQueryInfrastructure = (enabled = true) => {

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Text } from 'reshaped';
-import { Icon } from '../icon';
+import { Icon } from '..';
 import { DEFAULT_FOOTER_CONTENT } from './constants';
 import styles from './styles.module.scss';
 import type { FooterProps } from './types';

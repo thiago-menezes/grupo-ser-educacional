@@ -1,6 +1,8 @@
+'use client';
+
 import { useParams } from 'next/navigation';
 import { Container, View } from 'reshaped';
-import { Breadcrumb } from '../../components/breadcrumb';
+import { Breadcrumb } from '../../components';
 import { CourseDetailsContent } from './course-details-content';
 import { CourseDetailsSkeleton } from './course-details-skeleton';
 import { useCourseDetails } from './hooks/useCourseDetails';

@@ -1,6 +1,6 @@
 'use client';
 
-import { CourseDetailsPage } from '@/features/course-details';
+import { CourseDetailsPage } from '@grupo-ser/frontend';
 
 // export async function generateMetadata({ params }: CourseDetailsPageProps) {
 //   const { institution, slug } = await params;

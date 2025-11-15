@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Modal } from 'reshaped';
-import { Icon } from '../../../components/icon';
+import { Icon } from '../../../../components';
 import type { ImageModalProps } from '../types';
 import styles from './styles.module.scss';
 

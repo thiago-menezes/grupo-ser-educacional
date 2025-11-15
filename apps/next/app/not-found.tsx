@@ -1,6 +1,6 @@
 'use client';
 
-import { PageNotFound } from '@/components/page-not-found';
+import { PageNotFound } from '@grupo-ser/frontend';
 
 export default function NotFoundPage() {
   return <PageNotFound />;

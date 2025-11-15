@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { View } from 'reshaped';
 import { CourseAbout } from '../course-about';

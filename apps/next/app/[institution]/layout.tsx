@@ -1,9 +1,7 @@
 import { isValidInstitution } from '@grupo-ser/utils';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Footer } from '@/components/footer';
-import { Header } from '@/components/header';
-import { generateJsonLd, getSeoFromStrapi } from '@/libs/seo';
+import { Footer, Header, generateJsonLd, getSeoFromStrapi } from '@grupo-ser/frontend';
 
 type InstitutionLayoutProps = {
   children: React.ReactNode;
