@@ -23,6 +23,7 @@
       "@/*": ["./src/*"],
       "@root/*": ["./*"],
       "@grupo-ser/bff": ["../../packages/bff/src"],
+      "@grupo-ser/frontend": ["../../packages/frontend/src"],
       "@grupo-ser/types": ["../../packages/types/src"],
       "@grupo-ser/utils": ["../../packages/utils/src"]
     },
@@ -40,7 +41,8 @@
     "**/*/.spec.ts",
     "**/*/*.integration.spec.tsx",
     "**/*/*.integration.spec.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    "../../packages/utils/src/verify-institution.ts"
   ],
   "exclude": ["node_modules"]
 }

@@ -18,7 +18,7 @@ yarn add -D eslint prettier typescript
 
 ```js
 // eslint.config.js
-import { base } from '@hfsa/eslint-config';
+import { base } from "@hfsa/eslint-config";
 
 export default base;
 ```
@@ -27,7 +27,7 @@ export default base;
 
 ```js
 // eslint.config.js
-import { react } from '@hfsa/eslint-config';
+import { react } from "@hfsa/eslint-config";
 
 export default react;
 ```
@@ -36,7 +36,7 @@ export default react;
 
 ```js
 // eslint.config.js
-import { next } from '@hfsa/eslint-config';
+import { next } from "@hfsa/eslint-config";
 
 export default next;
 ```

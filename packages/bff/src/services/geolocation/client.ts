@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Geolocation service for server-side geocoding
  */

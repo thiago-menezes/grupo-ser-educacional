@@ -1,0 +1,49 @@
+{
+  "name": "@grupo-ser/frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --cache --cache-location ./node_modules/.cache/eslint/",
+    "lint:fix": "eslint . --fix --cache --cache-location ./node_modules/.cache/eslint/",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest",
+    "clean": "rm -rf dist node_modules/.cache"
+  },
+  "dependencies": {
+    "@grupo-ser/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@grupo-ser/eslint": "workspace:*",
+    "@grupo-ser/types": "workspace:*",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.1",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.9"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.90.0",
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.66.0",
+    "reshaped": "^3.8.0"
+  }
+}
