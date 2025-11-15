@@ -1,10 +1,22 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "ui": "tui",
+  "extends": ["//"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "build/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "NEXT_PUBLIC_API_BASE_URL",
+        "STRAPI_URL",
+        "API_MOCK_BASE_URL",
+        "APP_BASE_URL",
+        "AUTH_URL",
+        "AUTH_SECRET",
+        "AUTH_TRUST_HOST",
+        "AUTH0_ISSUER",
+        "AUTH0_ID",
+        "AUTH0_SECRET"
+      ]
     },
     "dev": {
       "cache": false,
@@ -17,16 +29,9 @@
     "lint": {
       "dependsOn": ["^build"]
     },
-    "typecheck": {
+    "check-types": {
       "dependsOn": ["^build"],
       "outputs": ["tsconfig.tsbuildinfo"]
-    },
-    "test": {
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
-    },
-    "clean": {
-      "cache": false
     }
   }
 }
