@@ -21,7 +21,6 @@
     "types": ["node"],
     "paths": {
       "@/*": ["./src/*"],
-      "@root/*": ["./*"],
       "@grupo-ser/bff": ["../../packages/bff/src"],
       "@grupo-ser/frontend": ["../../packages/frontend/src"],
       "@grupo-ser/types": ["../../packages/types/src"],
