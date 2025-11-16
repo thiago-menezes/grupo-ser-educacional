@@ -11,8 +11,8 @@ export interface CoursesQueryParams {
   period?: number; // Turno
   priceMin?: number;
   priceMax?: number;
-  durationRange?: '1-2' | '2-3' | '3-4' | '4+';
-  level?: 'graduacao' | 'pos-graduacao';
+  durationRange?: "1-2" | "2-3" | "3-4" | "4+";
+  level?: "graduacao" | "pos-graduacao";
   course?: string; // course slug or id
 }
 

@@ -7,4 +7,3 @@ export * from './icon';
 export * from './loading';
 export * from './page-not-found';
 export * from './pagination';
-

@@ -46,7 +46,10 @@ export function parseCoursesQueryParams(
       | '3-4'
       | '4+'
       | undefined,
-    level: searchParams.get('level') as 'graduacao' | 'pos-graduacao' | undefined,
+    level: searchParams.get('level') as
+      | 'graduacao'
+      | 'pos-graduacao'
+      | undefined,
     course: searchParams.get('course') || undefined,
   };
 }

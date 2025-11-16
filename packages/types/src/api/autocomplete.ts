@@ -1,5 +1,5 @@
 export interface AutocompleteQueryParams {
-  type: 'cities' | 'courses';
+  type: "cities" | "courses";
   q?: string;
 }
 
