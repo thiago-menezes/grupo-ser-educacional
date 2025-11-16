@@ -1,6 +1,6 @@
 import type { StrapiClient } from '../../services/strapi';
 
-import type { UnitsQueryParams } from './types';
+import type { StrapiUnitsResponse, UnitsQueryParams } from './types';
 
 /**
  * Handle units request
@@ -8,7 +8,7 @@ import type { UnitsQueryParams } from './types';
 export async function handleUnits(
   strapiClient: StrapiClient,
   params: UnitsQueryParams,
-) {
+): Promise<StrapiUnitsResponse> {
   // First, verify the institution exists
   const institutionCheck = await strapiClient.fetch<{
     data: Array<{ id: number; slug: string; name: string }>;
@@ -20,19 +20,25 @@ export async function handleUnits(
 
   if (!institutionCheck.data || institutionCheck.data.length === 0) {
     throw new Error(
-      `Institution with slug "${params.institutionSlug}" not found`,
+      `Institution with slug "${params.institutionSlug}" not found. Available institutions can be checked at: http://localhost:1337/admin/content-manager/collectionType/api::institution/institution`,
     );
   }
 
   // Fetch units with institution filter
-  const units = await strapiClient.fetch('units', {
+  const units = await strapiClient.fetch<StrapiUnitsResponse>('units', {
     filters: {
       institution: {
         slug: { $eq: params.institutionSlug },
       },
     },
-    populate: ['institution'],
+    populate: ['institution', 'photos'],
   });
+
+  if (!units.data || units.data.length === 0) {
+    throw new Error(
+      `No units found for institution "${params.institutionSlug}". Units can be managed at: http://localhost:1337/admin/content-manager/collectionType/api::unit/unit`,
+    );
+  }
 
   return units;
 }

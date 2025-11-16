@@ -24,7 +24,6 @@ export const InfrastructureSection = () => {
     selectedImage,
   } = useInfrastructure();
 
-  // Safety check: don't render if no images
   if (!mainImage) {
     return null;
   }

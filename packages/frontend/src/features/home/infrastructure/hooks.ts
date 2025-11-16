@@ -8,8 +8,18 @@ import type { StrapiUnitsResponse } from './api/types';
 import type { InfrastructureImage, InfrastructureUnit } from './types';
 import { markClosestUnit } from './utils';
 
-function transformStrapiResponse(response: StrapiUnitsResponse) {
-  const { data } = response;
+function transformStrapiResponse(response?: StrapiUnitsResponse) {
+  if (!response) {
+    throw new Error('No response from API');
+  }
+
+  const { data = [] } = response;
+
+  if (data.length === 0) {
+    throw new Error(
+      'No units found - check if units are associated with institutions in Strapi admin',
+    );
+  }
 
   const units: InfrastructureUnit[] = data.map((unit) => ({
     id: unit.id.toString(),
@@ -36,11 +46,12 @@ function transformStrapiResponse(response: StrapiUnitsResponse) {
 
 export const useInfrastructure = () => {
   const {
-    data: response = {
-      data: [],
-      meta: { pagination: { page: 1, pageSize: 10, pageCount: 1, total: 0 } },
-    },
+    data: response,
+    error,
+    isError,
+    isLoading: isQueryLoading,
   } = useQueryInfrastructure();
+
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const {
@@ -49,10 +60,21 @@ export const useInfrastructure = () => {
     coordinates,
     permissionDenied,
     requestPermission,
-    isLoading,
+    isLoading: isGeoLoading,
   } = useGeolocation();
 
-  const { units, images, location } = transformStrapiResponse(response);
+  // Only transform if there's no error and we have data
+  const { units, images, location } = useMemo(() => {
+    if (isError || !response) {
+      return { units: [], images: [], location: '' };
+    }
+    try {
+      return transformStrapiResponse(response);
+    } catch {
+      // Transform errors are handled by returning empty data
+      return { units: [], images: [], location: '' };
+    }
+  }, [isError, response]);
 
   const hasData = units.length > 0 && images.length > 0;
 
@@ -98,7 +120,7 @@ export const useInfrastructure = () => {
     location,
     permissionDenied,
     requestPermission,
-    isLoading,
+    isLoading: isQueryLoading || isGeoLoading,
     hasData,
     selectedImage,
     selectedUnitId,
@@ -111,5 +133,7 @@ export const useInfrastructure = () => {
     activeUnit,
     unitImages,
     selectedImageId,
+    error,
+    isError,
   };
 };

@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "turbo run dev",
+    "dev": "yarn build:packages && turbo run dev",
     "dev:strapi": "turbo run dev --filter=cms",
     "dev:next": "turbo run dev --filter=next",
     "build": "turbo run build",
