@@ -1,3 +1,8 @@
+export interface AutocompleteQueryParams {
+  type: 'cities' | 'courses';
+  q?: string;
+}
+
 export type AutocompleteResponse = {
   type: "cities" | "courses";
   results: Array<

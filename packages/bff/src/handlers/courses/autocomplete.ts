@@ -1,8 +1,9 @@
-import type { AutocompleteResponse } from '@grupo-ser/types';
+import type {
+  AutocompleteQueryParams,
+  AutocompleteResponse,
+} from '@grupo-ser/types';
 
 import { getAvailableCities, getAvailableCourses } from '../../data';
-
-import type { AutocompleteQueryParams } from './types';
 
 /**
  * Handle autocomplete request

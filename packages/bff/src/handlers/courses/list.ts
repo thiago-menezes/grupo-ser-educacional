@@ -1,4 +1,4 @@
-import type { CoursesResponse } from '@grupo-ser/types';
+import type { CoursesQueryParams, CoursesResponse } from '@grupo-ser/types';
 
 import {
   enrichOffering,
@@ -9,8 +9,6 @@ import {
   extractYearsFromDuration,
 } from '../../data';
 import { transformOfferingsToCourseData } from '../../transformers';
-
-import type { CoursesQueryParams } from './types';
 
 const DEFAULT_PER_PAGE = 12;
 

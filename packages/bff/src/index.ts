@@ -8,6 +8,10 @@ export {
   handleCourseDetails,
   handleAutocomplete,
 } from './handlers/courses';
+export {
+  parseCoursesQueryParams,
+  parseAutocompleteQueryParams,
+} from './handlers/courses/parsers';
 export { handleSeo } from './handlers/seos';
 export { handleUnits } from './handlers/units';
 export { handleMedia } from './handlers/media';
@@ -16,7 +20,10 @@ export { handleMedia } from './handlers/media';
 export type {
   CoursesQueryParams,
   AutocompleteQueryParams,
-} from './handlers/courses/types';
+} from '@grupo-ser/types';
 export type { SeoQueryParams } from './handlers/seos/types';
 export type { UnitsQueryParams } from './handlers/units/types';
 export type { MediaQueryParams } from './handlers/media/types';
+
+// Errors
+export { BffValidationError } from './utils/errors';

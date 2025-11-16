@@ -1,7 +1,6 @@
 import js from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import pluginImportX from "eslint-plugin-import-x";
-import turboPlugin from "eslint-plugin-turbo";
 import tseslint from "typescript-eslint";
 
 /**
@@ -15,11 +14,9 @@ export const config = [
   ...tseslint.configs.recommended,
   {
     plugins: {
-      turbo: turboPlugin,
       "import-x": pluginImportX,
     },
     rules: {
-      "turbo/no-undeclared-env-vars": "warn",
       // Import ordering and organization
       "import-x/order": [
         "error",
