@@ -23,12 +23,12 @@
   flex-direction: column;
   gap: var(--rs-unit-x4);
   overflow-y: auto;
-  height: calc(60vh - var(--rs-unit-x6));
+  height: calc(100vh - 400px);
   transition: height 300ms ease-in-out;
 }
 
 .formInputsUpdatedHeight {
-  height: calc(87vh - var(--rs-unit-x6));
+  height: calc(100vh - 140px);
 }
 
 .viewPortMedium {

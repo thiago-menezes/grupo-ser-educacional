@@ -46,8 +46,8 @@ export function CourseGrid() {
             <Image
               src="https://placehold.co/1200x200.png?text=Banner"
               alt="Banner"
-              width={1200}
-              height={200}
+              width={0}
+              height={0}
               priority
             />
           </View>
