@@ -1,16 +1,16 @@
 'use client';
 
+import { InfrastructureSection } from '@/features';
+import { AreasSelector } from '@/features/home/areas-selector';
+import { CareerPath } from '@/features/home/career-path';
+import { EntryMethodsSection } from '@/features/home/entry-methods';
 import {
-  AreasSelector,
-  CareerPath,
-  EntryMethodsSection,
   GeoCoursesSection,
   MOCK_POPULAR_COURSES_DATA,
-  HeroSection,
-  InfrastructureSection,
-  ModalitiesSection,
-  PromotionalBanners,
-} from '@grupo-ser/frontend';
+} from '@/features/home/geo-courses';
+import { HeroSection } from '@/features/home/hero';
+import { ModalitiesSection } from '@/features/home/modalities-section';
+import { PromotionalBanners } from '@/features/home/promotional-banners';
 
 const HomePage = () => {
   return (

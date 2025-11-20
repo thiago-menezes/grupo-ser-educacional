@@ -1,6 +1,6 @@
 'use client';
 
-import { InstitutionsList } from '@grupo-ser/frontend';
+import { InstitutionsList } from '@/features';
 
 export default function RootPage() {
   return <InstitutionsList />;

@@ -18,11 +18,10 @@
         "name": "next"
       }
     ],
-    "types": ["node"],
+    "types": ["node", "vitest/globals"],
     "paths": {
       "@/*": ["./src/*"],
       "@grupo-ser/bff": ["../../packages/bff/src"],
-      "@grupo-ser/frontend": ["../../packages/frontend/src"],
       "@grupo-ser/types": ["../../packages/types/src"],
       "@grupo-ser/utils": ["../../packages/utils/src"]
     },

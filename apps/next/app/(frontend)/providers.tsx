@@ -1,11 +1,11 @@
 'use client';
 
-import { makeQueryClient } from '@grupo-ser/frontend';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useParams } from 'next/navigation';
 import { PropsWithChildren, useLayoutEffect, useState } from 'react';
 import { Reshaped } from 'reshaped';
+import { makeQueryClient } from '@/libs';
 
 export default function Providers({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => makeQueryClient());

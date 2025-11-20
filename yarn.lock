@@ -1625,36 +1625,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@grupo-ser/frontend@workspace:packages/frontend":
-  version: 0.0.0-use.local
-  resolution: "@grupo-ser/frontend@workspace:packages/frontend"
-  dependencies:
-    "@grupo-ser/eslint": "workspace:*"
-    "@grupo-ser/types": "workspace:*"
-    "@grupo-ser/utils": "workspace:*"
-    "@hookform/resolvers": "npm:^5.2.2"
-    "@tanstack/react-query": "npm:^5.90.9"
-    "@testing-library/jest-dom": "npm:^6.9.1"
-    "@types/node": "npm:^24.10.1"
-    "@types/react": "npm:^19.2.5"
-    "@types/react-dom": "npm:^19.2.3"
-    axios: "npm:^1.13.2"
-    clsx: "npm:^2.1.1"
-    eslint: "npm:^9.39.1"
-    jsdom: "npm:^27.2.0"
-    prettier: "npm:^3.6.2"
-    react-hook-form: "npm:^7.66.0"
-    typescript: "npm:^5.9.3"
-    vitest: "npm:^4.0.9"
-    zod: "npm:^4.1.12"
-  peerDependencies:
-    next: ^16.0.0
-    react: ^19.0.0
-    react-dom: ^19.0.0
-    reshaped: ^3.8.0
-  languageName: unknown
-  linkType: soft
-
 "@grupo-ser/types@workspace:*, @grupo-ser/types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@grupo-ser/types@workspace:packages/types"
@@ -14130,7 +14100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:^16.0.3":
+"next@npm:^16.0.0":
   version: 16.0.3
   resolution: "next@npm:16.0.3"
   dependencies:
@@ -14196,21 +14166,29 @@ __metadata:
     "@grupo-ser/eslint": "workspace:*"
     "@grupo-ser/types": "workspace:*"
     "@grupo-ser/utils": "workspace:*"
+    "@hookform/resolvers": "npm:^5.2.2"
     "@tanstack/react-query": "npm:^5.90.9"
     "@tanstack/react-query-devtools": "npm:^5.90.2"
+    "@testing-library/jest-dom": "npm:^6.9.1"
     "@types/node": "npm:^24.10.1"
     "@types/react": "npm:^19.2.5"
     "@types/react-dom": "npm:^19.2.3"
     autoprefixer: "npm:^10.4.22"
+    axios: "npm:^1.13.2"
+    clsx: "npm:^2.1.1"
     eslint: "npm:^9.39.1"
-    next: "npm:^16.0.3"
+    jsdom: "npm:^27.2.0"
+    next: "npm:^16.0.0"
     prettier: "npm:^3.6.2"
-    react: "npm:^19.2.0"
-    react-dom: "npm:^19.2.0"
-    reshaped: "npm:^3.8.8"
+    react: "npm:^19.0.0"
+    react-dom: "npm:^19.0.0"
+    react-hook-form: "npm:^7.66.0"
+    reshaped: "npm:^3.8.0"
     sass: "npm:^1.94.0"
     tsx: "npm:^4.20.6"
     typescript: "npm:^5.9.3"
+    vitest: "npm:^4.0.9"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -15964,7 +15942,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^19.2.0":
+"react-dom@npm:^19.0.0, react-dom@npm:^19.2.0":
   version: 19.2.0
   resolution: "react-dom@npm:19.2.0"
   dependencies:
@@ -16017,11 +15995,11 @@ __metadata:
   linkType: hard
 
 "react-hook-form@npm:^7.66.0":
-  version: 7.66.0
-  resolution: "react-hook-form@npm:7.66.0"
+  version: 7.66.1
+  resolution: "react-hook-form@npm:7.66.1"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 10c0/9faeafdaedfabfcbf5f8bb1aeefb81863b8e158eef4b089e2a32180fe474aec47d05fe3ed7d4faea085ca9f689118fb1135b94cdeed2022bd7d3fa3a56530c63
+  checksum: 10c0/f82238249d44111b377116bdfb6063045e3e81fef4c73d7f487160554fa4b43ff0970dec1f4d031e57bc2dfbdd974bdfba5608bc8c5785998a7b8a39a566428f
   languageName: node
   linkType: hard
 
@@ -16304,7 +16282,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^19.2.0":
+"react@npm:^19.0.0, react@npm:^19.2.0":
   version: 19.2.0
   resolution: "react@npm:19.2.0"
   checksum: 10c0/1b6d64eacb9324725bfe1e7860cb7a6b8a34bc89a482920765ebff5c10578eb487e6b46b2f0df263bd27a25edbdae2c45e5ea5d81ae61404301c1a7192c38330
@@ -16606,7 +16584,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reshaped@npm:^3.8.8":
+"reshaped@npm:^3.8.0":
   version: 3.8.8
   resolution: "reshaped@npm:3.8.8"
   dependencies:
@@ -18498,21 +18476,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tldts-core@npm:^7.0.17":
-  version: 7.0.17
-  resolution: "tldts-core@npm:7.0.17"
-  checksum: 10c0/39dd6f5852f241c88391dc462dd236fa8241309a76dbf2486afdba0f172358260b16b98c126d1d06e1d9ee9015d83448ed7c4e2885e5e5c06c368f6503bb6a97
+"tldts-core@npm:^7.0.18":
+  version: 7.0.18
+  resolution: "tldts-core@npm:7.0.18"
+  checksum: 10c0/c42a500722dd913101d4fbffd6a9d223ef85bbf4dd943ca72aacf9fe32bdaf89d1258fa9055494c1c4892a24577b62d4973725d3406a6675496122c33171998e
   languageName: node
   linkType: hard
 
 "tldts@npm:^7.0.5":
-  version: 7.0.17
-  resolution: "tldts@npm:7.0.17"
+  version: 7.0.18
+  resolution: "tldts@npm:7.0.18"
   dependencies:
-    tldts-core: "npm:^7.0.17"
+    tldts-core: "npm:^7.0.18"
   bin:
     tldts: bin/cli.js
-  checksum: 10c0/0ef2a40058a11c27a5b310489009002e57cd0789c2cf383c04ecf808e1523d442d9d9688ac0337c64b261609478b7fd85ddcd692976c8f763747a5e1c7c1c451
+  checksum: 10c0/4ed567d20362096c6f81f0eff2862e13921422783da52d2088ec0ed8ca0f9926bf2279900f8ae7fe34425cd940d908bec3366b30d511813b3abe4c9cdb5fd122
   languageName: node
   linkType: hard
 

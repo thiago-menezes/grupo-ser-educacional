@@ -1,6 +1,6 @@
 'use client';
 
-import { CourseSearchPage } from '@grupo-ser/frontend';
+import { CourseSearchPage } from '@/features';
 
 export default function CursosPage() {
   return <CourseSearchPage />;

@@ -506,7 +506,7 @@ Each Kanban defines:
 
 ## 🔗 Key Links
 
-- **Repository**: `/Users/thiago/Projects/grupo-ser/grupo-ser/frontend`
+- **Repository**: `/Users/thiago/Projects/grupo-ser/frontend`
 - **Current Branch**: `main`
 - **Design System**: [Reshaped](https://reshaped.so/)
 - **Framework**: Next.js 15 (App Router)

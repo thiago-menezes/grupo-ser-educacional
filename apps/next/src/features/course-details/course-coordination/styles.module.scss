@@ -1,0 +1,117 @@
+.coordination {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x5);
+}
+
+.tabContent {
+  margin-top: var(--rs-unit-x3);
+}
+
+.pedagogicalContent {
+  padding: var(--rs-unit-x4);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--rs-color-foreground-neutral);
+}
+
+.coordinatorContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.coordinatorCard {
+  display: flex;
+  flex-direction: row;
+  gap: var(--rs-unit-x4);
+  padding: var(--rs-unit-x4);
+}
+
+.coordinatorPhoto {
+  width: 152px;
+  height: 152px;
+  min-width: 152px;
+  border-radius: var(--rs-radius-medium);
+  background-color: var(--rs-color-background-neutral-subtle);
+}
+
+.coordinatorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x3);
+  flex: 1;
+}
+
+.coordinatorName {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--rs-color-text-primary);
+  margin: 0;
+}
+
+.coordinatorDescription {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--rs-color-foreground-neutral);
+  margin: 0;
+}
+
+.teachersContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x4);
+}
+
+.teachersTitle {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  color: var(--rs-color-text-primary);
+  margin: 0;
+}
+
+.teachersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--rs-unit-x3);
+}
+
+.teacherCard {
+  padding: var(--rs-unit-x3);
+  border: 1px solid rgb(from var(--rs-color-foreground-neutral) r g b / 0.3);
+  border-radius: var(--rs-radius-medium);
+  background: var(--rs-color-background-page);
+}
+
+.teacherName {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--rs-color-text-primary);
+  margin: 0 0 var(--rs-unit-x1) 0;
+}
+
+.teacherRole {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--rs-color-foreground-neutral);
+  margin: 0;
+}
+
+.moreButton {
+  align-self: center;
+  margin-top: var(--rs-unit-x2);
+}
+
+@media (max-width: 768px) {
+  .coordinatorCard {
+    flex-direction: column;
+  }
+
+  .coordinatorPhoto {
+    width: 100%;
+    max-width: 152px;
+    align-self: center;
+  }
+}
