@@ -1,27 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Tabs, View } from 'reshaped';
+import { Button, Tabs, Text, View } from 'reshaped';
 import type { CourseDetails } from '../hooks/useCourseDetails';
+import { MOCK_COORDINATOR, MOCK_TEACHERS } from '../mock';
 import styles from './styles.module.scss';
 
 export type CourseCoordinationProps = {
   course: CourseDetails;
 };
-
-const MOCK_COORDINATOR = {
-  name: 'Dr. Josué Claudio dos Santos Fagundes',
-  description:
-    'Josué Claudio dos Santos Fagundes é um profissional dedicado e experiente, coordenador do curso de Ciência de Dados. Sua paixão por dados e análise o impulsiona a inspirar e guiar os futuros cientistas de dados da UNINASSAU.',
-  photo: '/default-image.png',
-};
-
-const MOCK_TEACHERS = [
-  { name: 'Prof. João Silva', role: 'Professor Titular' },
-  { name: 'Prof. Maria Santos', role: 'Professora Associada' },
-  { name: 'Prof. Pedro Oliveira', role: 'Professor Assistente' },
-  { name: 'Prof. Ana Costa', role: 'Professora Adjunta' },
-];
 
 export function CourseCoordination({
   course: _course,
@@ -39,7 +26,9 @@ export function CourseCoordination({
       <View className={styles.tabContent}>
         {activeTab === 'pedagogical' && (
           <View className={styles.pedagogicalContent}>
-            <p>Conteúdo do Projeto Pedagógico será exibido aqui.</p>
+            <Text variant="body-2" color="neutral-faded">
+              Conteúdo do Projeto Pedagógico será exibido aqui.
+            </Text>
           </View>
         )}
 
@@ -50,12 +39,21 @@ export function CourseCoordination({
                 {/* TODO: Replace with actual image */}
               </div>
               <View className={styles.coordinatorInfo}>
-                <h3 className={styles.coordinatorName}>
+                <Text
+                  as="h3"
+                  variant="body-2"
+                  weight="bold"
+                  className={styles.coordinatorName}
+                >
                   {MOCK_COORDINATOR.name}
-                </h3>
-                <p className={styles.coordinatorDescription}>
+                </Text>
+                <Text
+                  variant="body-3"
+                  color="neutral-faded"
+                  className={styles.coordinatorDescription}
+                >
                   {MOCK_COORDINATOR.description}
-                </p>
+                </Text>
                 <Button variant="outline" size="small">
                   Ver mais
                 </Button>
@@ -66,12 +64,32 @@ export function CourseCoordination({
 
         {activeTab === 'teachers' && (
           <View className={styles.teachersContent}>
-            <h3 className={styles.teachersTitle}>Corpo docente</h3>
+            <Text
+              as="h3"
+              variant="featured-2"
+              weight="bold"
+              className={styles.teachersTitle}
+            >
+              Corpo docente
+            </Text>
             <View className={styles.teachersGrid}>
               {MOCK_TEACHERS.map((teacher, index) => (
                 <View key={index} className={styles.teacherCard}>
-                  <h4 className={styles.teacherName}>{teacher.name}</h4>
-                  <p className={styles.teacherRole}>{teacher.role}</p>
+                  <Text
+                    as="h4"
+                    variant="body-3"
+                    weight="bold"
+                    className={styles.teacherName}
+                  >
+                    {teacher.name}
+                  </Text>
+                  <Text
+                    variant="caption-1"
+                    color="neutral-faded"
+                    className={styles.teacherRole}
+                  >
+                    {teacher.role}
+                  </Text>
                 </View>
               ))}
             </View>

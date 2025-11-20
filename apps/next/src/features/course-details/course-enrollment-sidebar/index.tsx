@@ -1,7 +1,6 @@
-'use client';
-
-import { Button, TextField, View } from 'reshaped';
-import { formatPrice } from '@/utils/format-price';
+import { formatPrice } from '@grupo-ser/utils';
+import { Button, Text, TextField, View } from 'reshaped';
+import { CourseLocationSelector } from '../course-location-selector';
 import type { CourseDetails } from '../hooks/useCourseDetails';
 import styles from './styles.module.scss';
 
@@ -29,9 +28,14 @@ export function CourseEnrollmentSidebar({
     <View className={styles.sidebar}>
       <View className={styles.card}>
         <View className={styles.header}>
-          <h3 className={styles.title}>
-            Processo seletivo 2026.1 - Comece em Fevereiro
-          </h3>
+          <Text
+            as="h3"
+            variant="body-3"
+            weight="medium"
+            className={styles.title}
+          >
+            Processo seletivo 2026.1 - Começe em Fevereiro
+          </Text>
         </View>
 
         <View className={styles.form}>
@@ -47,17 +51,27 @@ export function CourseEnrollmentSidebar({
           />
           <TextField
             name="phone"
-            placeholder="Telefone"
+            placeholder="Celular"
             className={styles.field}
           />
         </View>
 
         {minPrice && (
           <View className={styles.priceSection}>
-            <p className={styles.priceLabel}>A partir de:</p>
+            <Text variant="caption-1" className={styles.priceLabel}>
+              A partir de:
+            </Text>
             <View className={styles.priceRow}>
-              <span className={styles.price}>{formatPrice(minPrice)}</span>
-              <span className={styles.priceNote}>| Mensais</span>
+              <Text variant="featured-2" weight="bold" className={styles.price}>
+                {formatPrice(minPrice)}
+              </Text>
+              <Text
+                variant="body-3"
+                color="neutral-faded"
+                className={styles.priceNote}
+              >
+                | Mensais
+              </Text>
             </View>
           </View>
         )}
@@ -66,6 +80,8 @@ export function CourseEnrollmentSidebar({
           Inscrever-se
         </Button>
       </View>
+
+      <CourseLocationSelector course={course} />
     </View>
   );
 }

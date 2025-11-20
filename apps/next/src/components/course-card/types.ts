@@ -1,4 +1,4 @@
-import { CourseData } from '@/types/courses';
+import type { CourseData } from '@grupo-ser/types';
 
 export type CourseCardProps = {
   course: CourseData;

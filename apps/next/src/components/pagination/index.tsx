@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './styles.module.scss';
 import type { PaginationProps } from './types';
 
@@ -28,3 +26,5 @@ export function Pagination({
     </div>
   );
 }
+
+export type { PaginationProps } from './types';

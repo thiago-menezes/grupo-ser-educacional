@@ -1,5 +1,5 @@
 import { Button } from 'reshaped';
-import { Icon } from '@/components/icon';
+import { Icon } from '../icon';
 import { MODALITY_LABELS } from './constants';
 import styles from './styles.module.scss';
 import type { CourseCardProps } from './types';

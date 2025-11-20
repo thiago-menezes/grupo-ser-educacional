@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { getMockCourseDetails } from '../mock';
 
 export type CourseDetails = {
   id: number;
@@ -52,13 +53,9 @@ export type CourseDetails = {
 };
 
 async function fetchCourseDetails(slug: string): Promise<CourseDetails> {
-  const response = await fetch(`/api/courses/${slug}`);
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch course: ${response.statusText}`);
-  }
-
-  return response.json();
+  // Simulate API delay
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  return getMockCourseDetails(slug);
 }
 
 export function useCourseDetails(slug: string) {

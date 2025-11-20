@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "build/**"]
+      "outputs": ["dist/**", "build/**", ".next/**"]
     },
     "dev": {
       "cache": false,
@@ -18,8 +18,7 @@
       "dependsOn": ["^build"]
     },
     "typecheck": {
-      "dependsOn": ["^build"],
-      "outputs": ["tsconfig.tsbuildinfo"]
+      "dependsOn": ["^build"]
     },
     "test": {
       "dependsOn": ["^build"],

@@ -1,22 +1,22 @@
 'use client';
 
+import { useParams } from 'next/navigation';
 import { Container, View } from 'reshaped';
-import { Breadcrumb } from '@/components/breadcrumb';
+import { Breadcrumb } from '../../components';
 import { CourseDetailsContent } from './course-details-content';
 import { CourseDetailsSkeleton } from './course-details-skeleton';
 import { useCourseDetails } from './hooks/useCourseDetails';
 import styles from './styles.module.scss';
 
-export type CourseDetailsPageProps = {
+export type CourseDetailsPageParams = {
   institution: string;
-  courseSlug: string;
+  slug: string;
 };
 
-export function CourseDetailsPage({
-  institution,
-  courseSlug,
-}: CourseDetailsPageProps) {
-  const { data: course, isLoading, error } = useCourseDetails(courseSlug);
+export function CourseDetailsPage() {
+  const { institution, slug } = useParams<CourseDetailsPageParams>();
+
+  const { data: course, isLoading, error } = useCourseDetails(slug);
 
   if (isLoading) {
     return (

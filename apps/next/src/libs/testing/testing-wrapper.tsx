@@ -1,7 +1,6 @@
-import { QueryClient } from '@tanstack/react-query';
-import { render, RenderOptions } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { ReactElement, ReactNode } from 'react';
-import Providers from '@/app/providers';
 
 type CustomRenderOptions = {
   queryClient?: QueryClient;
@@ -15,17 +14,21 @@ const createTestQueryClient = () =>
     },
   });
 
-const customRender = (
+const NewRender = (
   ui: ReactElement,
-  { ...options }: CustomRenderOptions = {},
-) => {
+  { queryClient, ...options }: CustomRenderOptions = {},
+): RenderResult => {
+  const testQueryClient = queryClient || createTestQueryClient();
+
   const Wrapper = ({ children }: { children: ReactNode }) => (
-    <Providers>{children}</Providers>
+    <QueryClientProvider client={testQueryClient}>
+      {children}
+    </QueryClientProvider>
   );
 
   return render(ui, { wrapper: Wrapper, ...options });
 };
 
 export * from '@testing-library/react';
-export { customRender as render };
+export { NewRender as render };
 export { createTestQueryClient };

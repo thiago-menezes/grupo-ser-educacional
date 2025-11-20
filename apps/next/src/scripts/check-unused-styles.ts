@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve, join, relative, dirname } from 'node:path';
 import { parse } from '@typescript-eslint/parser';

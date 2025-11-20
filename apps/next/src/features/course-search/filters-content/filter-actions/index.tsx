@@ -1,5 +1,3 @@
-'use client';
-
 import { Button, Divider, View } from 'reshaped';
 
 export type FilterActionsProps = {

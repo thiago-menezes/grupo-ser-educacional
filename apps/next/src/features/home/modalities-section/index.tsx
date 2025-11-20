@@ -1,9 +1,7 @@
-'use client';
-
 import { clsx } from 'clsx';
 import Link from 'next/link';
 import { Button, Text } from 'reshaped';
-import { Icon } from '@/components/icon';
+import { Icon } from '../../../components';
 import { MOCK_MODALITIES } from './mocks';
 import styles from './styles.module.scss';
 

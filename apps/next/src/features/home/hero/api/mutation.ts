@@ -41,8 +41,8 @@ async function trackHeroInteraction(
         timestamp: new Date().toISOString(),
       }),
     });
-  } catch (error) {
-    console.error('[HomeHero] Failed to track event:', error);
+  } catch {
+    // Silently fail analytics tracking
   }
 }
 

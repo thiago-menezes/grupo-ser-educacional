@@ -1,5 +1,3 @@
-'use client';
-
 import { View } from 'reshaped';
 import styles from './styles.module.scss';
 

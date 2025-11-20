@@ -1,9 +1,9 @@
 'use client';
 
+import { formatPrice } from '@grupo-ser/utils';
 import { Controller } from 'react-hook-form';
 import type { Control } from 'react-hook-form';
 import { FormControl, Slider, Text, View } from 'reshaped';
-import { formatPrice } from '@/utils/format-price';
 import type { CourseFiltersFormValues } from '../../types';
 import styles from './styles.module.scss';
 

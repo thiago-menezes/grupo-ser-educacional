@@ -2,11 +2,13 @@
 
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
-import { CourseCard, CourseCardSkeleton } from '@/components/course-card';
-import { Icon } from '@/components/icon';
-import { Pagination } from '@/components/pagination';
-import { useGeolocation } from '@/hooks/useGeolocation';
-import { usePagination } from '@/hooks/usePagination';
+import {
+  CourseCard,
+  CourseCardSkeleton,
+  Icon,
+  Pagination,
+} from '../../../components';
+import { useGeolocation, usePagination } from '../../../hooks';
 import { MOCK_GEO_COURSES_DATA } from './api/mocks';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';
@@ -68,11 +70,7 @@ export function GeoCoursesSection({
               )}
             </div>
           </div>
-          <Button
-            variant="ghost"
-            onClick={() => console.log('Ver todos os cursos')}
-            aria-label="Ver todos os cursos disponíveis"
-          >
+          <Button variant="ghost" aria-label="Ver todos os cursos disponíveis">
             Ver todos os cursos
           </Button>
         </div>
@@ -96,10 +94,7 @@ export function GeoCoursesSection({
                 ))
               : coursesToShow.map((course) => (
                   <div key={course.id} className={styles.card} role="listitem">
-                    <CourseCard
-                      course={course}
-                      onClick={() => console.log('Curso clicado:', course.slug)}
-                    />
+                    <CourseCard course={course} />
                   </div>
                 ))}
           </div>

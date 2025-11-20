@@ -1,7 +1,5 @@
-'use client';
-
 import { Badge, Button, Divider, Text, View } from 'reshaped';
-import { Icon } from '@/components/icon';
+import { Icon } from '../../../components';
 import { useCourseFiltersContext } from '../context';
 import styles from './styles.module.scss';
 

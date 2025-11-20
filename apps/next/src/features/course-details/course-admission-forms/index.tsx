@@ -1,6 +1,4 @@
-'use client';
-
-import { View } from 'reshaped';
+import { Text, View } from 'reshaped';
 import styles from './styles.module.scss';
 
 const ADMISSION_FORMS = [
@@ -29,7 +27,14 @@ const ADMISSION_FORMS = [
 export function CourseAdmissionForms() {
   return (
     <View className={styles.forms}>
-      <h2 className={styles.label}>Selecione sua forma de ingresso:</h2>
+      <Text
+        as="h2"
+        variant="featured-2"
+        weight="medium"
+        className={styles.label}
+      >
+        Selecione sua forma de ingresso:
+      </Text>
       <View className={styles.formsGrid}>
         {ADMISSION_FORMS.map((form) => (
           <button
@@ -39,8 +44,21 @@ export function CourseAdmissionForms() {
             aria-label={`${form.title}: ${form.description}`}
           >
             <View className={styles.formContent}>
-              <h3 className={styles.formTitle}>{form.title}</h3>
-              <p className={styles.formDescription}>{form.description}</p>
+              <Text
+                as="h3"
+                variant="body-2"
+                weight="bold"
+                className={styles.formTitle}
+              >
+                {form.title}
+              </Text>
+              <Text
+                variant="body-3"
+                color="neutral-faded"
+                className={styles.formDescription}
+              >
+                {form.description}
+              </Text>
             </View>
           </button>
         ))}

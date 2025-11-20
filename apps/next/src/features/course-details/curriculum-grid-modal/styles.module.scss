@@ -10,7 +10,8 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--rs-unit-x4);
-  border-bottom: 1px solid rgb(from var(--rs-color-foreground-neutral) r g b / 0.3);
+  border-bottom: 1px solid
+    rgb(from var(--rs-color-foreground-neutral) r g b / 0.3);
 }
 
 .title {
@@ -45,6 +46,3 @@
   overflow-y: auto;
   flex: 1;
 }
-
-
-

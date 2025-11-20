@@ -10,7 +10,8 @@
   gap: var(--rs-unit-x6);
 
   @media (min-width: 1024px) {
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 806px 394px;
+    gap: var(--rs-unit-x6);
   }
 }
 
@@ -19,4 +20,3 @@
   flex-direction: column;
   gap: var(--rs-unit-x6);
 }
-

@@ -1,7 +1,5 @@
-'use client';
-
 import { useMemo } from 'react';
-import { useCurrentInstitution } from '@/hooks/useInstitution';
+import { useCurrentInstitution } from '../../../hooks';
 import { useHeroContent } from './api/query';
 import { CarouselControls } from './carousel-controls';
 import { DEFAULT_HERO_CONTENT } from './constants';
@@ -16,7 +14,7 @@ export type HomeHeroProps = {
 };
 
 function HeroContent({ institutionSlug }: HomeHeroProps) {
-  const { data: heroContent, error } = useHeroContent(institutionSlug);
+  const { data: heroContent } = useHeroContent(institutionSlug);
 
   const content = useMemo(
     () => heroContent || DEFAULT_HERO_CONTENT,
@@ -25,10 +23,6 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
 
   const { currentSlide, nextSlide, previousSlide, setIsAutoAdvancing } =
     useHeroCarousel();
-
-  if (error) {
-    console.error('[HomeHero] Error loading hero content:', error);
-  }
 
   return (
     <div className={styles.wrapper}>

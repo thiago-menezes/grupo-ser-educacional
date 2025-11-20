@@ -22,3 +22,5 @@ export const Icon = ({
     />
   );
 };
+
+export type { IconProps, IconNames } from './types';

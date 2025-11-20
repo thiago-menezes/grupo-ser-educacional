@@ -1,10 +1,8 @@
-'use client';
-
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Pagination, View } from 'reshaped';
-import { CourseCard, CourseCardSkeleton } from '@/components/course-card';
-import { useCurrentInstitution } from '@/hooks/useInstitution';
+import { CourseCard, CourseCardSkeleton } from '../../../components';
+import { useCurrentInstitution } from '../../../hooks';
 import { useCourseGrid } from './hooks';
 import styles from './styles.module.scss';
 
@@ -48,8 +46,8 @@ export function CourseGrid() {
             <Image
               src="https://placehold.co/1200x200.png?text=Banner"
               alt="Banner"
-              width={1200}
-              height={200}
+              width={0}
+              height={0}
               priority
             />
           </View>

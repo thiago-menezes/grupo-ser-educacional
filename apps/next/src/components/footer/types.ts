@@ -1,4 +1,4 @@
-import type { IconProps } from '@/components/icon/types';
+import type { IconProps } from '../icon/types';
 
 export type FooterLink = {
   label: string;

@@ -1,5 +1,3 @@
-'use client';
-
 import { Modal, View } from 'reshaped';
 import { FiltersContent } from '../filters-content';
 import styles from './styles.module.scss';

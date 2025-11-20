@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, DropdownMenu } from 'reshaped';
-import { Icon } from '@/components/icon';
-import { useCurrentInstitution } from '@/hooks/useInstitution';
+import { Icon } from '../..';
+import { useCurrentInstitution } from '../../../hooks';
 import styles from '../styles.module.scss';
 
 export const MainNav = ({
@@ -32,7 +32,7 @@ export const MainNav = ({
 
           <div className={styles.rightContainer}>
             <nav className={styles.desktopNav} aria-label="Main navigation">
-              <Link href={`/`}>
+              <Link href={'/'}>
                 <Button size="large" variant="ghost">
                   Graduação
                 </Button>
