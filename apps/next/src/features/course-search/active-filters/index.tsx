@@ -1,5 +1,5 @@
 import { Badge, Button, Divider, Text, View } from 'reshaped';
-import { Icon } from '../../../components';
+import { Icon } from '@/components';
 import { useCourseFiltersContext } from '../context';
 import styles from './styles.module.scss';
 

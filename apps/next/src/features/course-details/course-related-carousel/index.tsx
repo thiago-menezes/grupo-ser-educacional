@@ -3,7 +3,7 @@
 import { formatPrice } from '@grupo-ser/utils';
 import { useState } from 'react';
 import { Button, Divider, Text, View } from 'reshaped';
-import { CourseCard, Icon } from '../../../components';
+import { CourseCard, Icon } from '@/components';
 import { MOCK_RELATED_COURSES } from '../mock';
 import styles from './styles.module.scss';
 

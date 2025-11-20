@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { useRef } from 'react';
 import { Button } from 'reshaped';
-import { Icon, Pagination } from '../../../components';
-import { usePagination } from '../../../hooks';
+import { Icon, Pagination } from '@/components';
+import { usePagination } from '@/hooks';
 import { DEFAULT_AREAS_CONTENT } from './constants';
 import { useAreaSelector } from './hooks';
 import styles from './styles.module.scss';

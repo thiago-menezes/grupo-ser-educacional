@@ -64,10 +64,12 @@ src/
 ### Context File Naming
 
 **Feature/Component-specific contexts:**
+
 - Use `context.tsx` inside the feature/component folder
 - Example: `src/features/course-search/context.tsx`
 
 **Global/shared contexts:**
+
 - Use business rule name in `src/contexts/` folder
 - Examples: `src/contexts/city.tsx`, `src/contexts/courses.tsx`
 
@@ -113,9 +115,9 @@ export function useCityContext() {
 
 ```typescript
 // src/features/course-search/context.tsx (feature-specific context)
-'use client';
+"use client";
 
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
 const CourseFiltersContext = createContext<CourseFiltersContextValues>(
   {} as CourseFiltersContextValues,
@@ -128,7 +130,9 @@ export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
 export const useCourseFiltersContext = () => {
   const context = useContext(CourseFiltersContext);
   if (context === undefined) {
-    throw new Error('useCourseFiltersContext must be used within CourseFiltersProvider');
+    throw new Error(
+      "useCourseFiltersContext must be used within CourseFiltersProvider",
+    );
   }
   return context;
 };

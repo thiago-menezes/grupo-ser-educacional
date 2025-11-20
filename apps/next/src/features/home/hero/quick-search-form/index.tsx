@@ -1,12 +1,21 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { Button, TextField, Checkbox, FormControl, Text } from 'reshaped';
-import { Icon } from '../../../../components';
-import { useCityContext } from '../../../../contexts/city';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import {
+  Button,
+  Autocomplete,
+  TextField,
+  Checkbox,
+  FormControl,
+} from 'reshaped';
+import type { AutocompleteProps } from 'reshaped';
+import { Icon } from '@/components';
+import { useCityContext } from '@/contexts/city';
+import { useGeolocation } from '@/hooks';
+import { MOCK_CITIES, type CityOption } from '../constants';
 import { useQuickSearchForm } from '../hooks';
-import { buildSearchParams } from '../utils';
+import { buildSearchParams, formatCityValue } from '../utils';
 import styles from './styles.module.scss';
 import type { CourseLevel, QuickSearchFormProps } from './types';
 
@@ -17,13 +26,39 @@ export function QuickSearchForm({
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<CourseLevel>('graduation');
+  const [inputValue, setInputValue] = useState('');
+  const isUserTypingRef = useRef(false);
+  const previousCityRef = useRef<string>('');
+  const isGeolocationRequestRef = useRef(false);
   const { city, setCity, course, setCourse, modalities, toggleModality } =
     useQuickSearchForm();
+  const [formattedCityValue, setFormattedCityValue] = useState('');
   const {
     city: contextCity,
     state: contextState,
+    setCityState,
     setFocusCityFieldCallback,
   } = useCityContext();
+  // Don't pass manualCity/manualState to geolocation hook
+  // This allows geolocation to work independently and update the city
+  const {
+    city: geolocationCity,
+    permissionDenied,
+    requestPermission,
+    isLoading: isGeoLoading,
+  } = useGeolocation();
+
+  // Initialize with Recife if no city is set on mount (before geolocation loads)
+  useEffect(() => {
+    // Only set default on mount if geolocation hasn't started yet
+    // This provides immediate feedback while geolocation is loading
+    if (!contextCity && !contextState && inputValue === '') {
+      setCityState('Recife', 'PE');
+      setInputValue('Recife - PE');
+      setFormattedCityValue(formatCityValue('Recife', 'PE'));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount
 
   // Register focus callback with context
   useEffect(() => {
@@ -35,13 +70,166 @@ export function QuickSearchForm({
     });
   }, [setFocusCityFieldCallback]);
 
+  // Set default to Recife when no city is selected
+  // This ensures the field is never empty
+  useEffect(() => {
+    // Only set default if:
+    // 1. No city is currently selected in context
+    // 2. Geolocation is not loading (wait for it to finish)
+    // 3. Geolocation didn't return a city (either denied, failed, or not available)
+    if (!contextCity && !isGeoLoading && !geolocationCity) {
+      setCityState('Recife', 'PE');
+      // Also set the input value and formatted value
+      setInputValue('Recife - PE');
+      setFormattedCityValue(formatCityValue('Recife', 'PE'));
+    }
+  }, [contextCity, isGeoLoading, setCityState, geolocationCity]);
+
+  // Build all available options including geolocation-detected city
+  const allOptions = useMemo(() => {
+    const options: CityOption[] = [];
+
+    // Add geolocation option as first item if permission denied
+    if (permissionDenied) {
+      options.push({
+        label: 'Permitir localização',
+        value: 'geolocation:request',
+        city: '',
+        state: '',
+      });
+    }
+
+    // Add geolocation-detected city if available and not already in mock list
+    if (contextCity && contextState && !permissionDenied) {
+      const geoLabel = `${contextCity} - ${contextState}`;
+      const geoValue = formatCityValue(contextCity, contextState);
+      const existsInMock = MOCK_CITIES.some(
+        (city) => city.city === contextCity && city.state === contextState,
+      );
+
+      if (!existsInMock) {
+        options.push({
+          label: geoLabel,
+          value: geoValue,
+          city: contextCity,
+          state: contextState,
+        });
+      }
+    }
+
+    // Add mock cities
+    options.push(...MOCK_CITIES);
+
+    return options;
+  }, [permissionDenied, contextCity, contextState]);
+
+  // Get current city display label (e.g., "Recife - PE")
+  const currentCityLabel = useMemo(() => {
+    if (contextCity && contextState) {
+      return `${contextCity} - ${contextState}`;
+    }
+    return '';
+  }, [contextCity, contextState]);
+
+  // Sync input value with selected city only when city changes externally (not from user typing)
+  useEffect(() => {
+    const currentCityKey =
+      contextCity && contextState ? `${contextCity}-${contextState}` : '';
+
+    // Only update if city changed externally (not from user typing)
+    if (
+      currentCityKey !== previousCityRef.current &&
+      !isUserTypingRef.current
+    ) {
+      if (contextCity && contextState) {
+        const cityLabel = `${contextCity} - ${contextState}`;
+        setInputValue(cityLabel);
+        // Always update formatted value when city changes
+        setFormattedCityValue(formatCityValue(contextCity, contextState));
+      } else {
+        // If no city is set, ensure we show Recife as default
+        // This prevents empty field
+        if (!inputValue && !isGeoLoading) {
+          setInputValue('Recife - PE');
+          setFormattedCityValue(formatCityValue('Recife', 'PE'));
+        }
+      }
+      previousCityRef.current = currentCityKey;
+    }
+
+    // Reset typing flag after a short delay
+    if (isUserTypingRef.current) {
+      const timer = setTimeout(() => {
+        isUserTypingRef.current = false;
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [contextCity, contextState, inputValue, formattedCityValue, isGeoLoading]);
+
+  const handleInputChange: AutocompleteProps['onChange'] = ({ value }) => {
+    // Prevent geolocation text from appearing in input
+    if (isGeolocationRequestRef.current && value === 'Permitir localização') {
+      setInputValue('');
+      return;
+    }
+
+    isUserTypingRef.current = true;
+    setInputValue(value || '');
+    // Clear selection if user is typing something different
+    if (value !== currentCityLabel) {
+      setCity('');
+      setFormattedCityValue('');
+      // Clear context city when user types something different
+      if (contextCity && contextState) {
+        setCityState('', '');
+      }
+    }
+  };
+
+  const handleItemSelect: AutocompleteProps['onItemSelect'] = ({
+    value,
+    data,
+  }) => {
+    if (data) {
+      const option = data as CityOption;
+      // Handle geolocation request
+      if (option.value === 'geolocation:request') {
+        isGeolocationRequestRef.current = true;
+        requestPermission();
+        // Clear input value to prevent "Permitir localização" from appearing
+        setTimeout(() => {
+          setInputValue('');
+          isGeolocationRequestRef.current = false;
+        }, 0);
+        return;
+      }
+
+      // Set city and state from selected option (manual selection)
+      isUserTypingRef.current = false;
+      setCityState(option.city, option.state);
+      // Store formatted value for form submission (don't overwrite contextCity)
+      setFormattedCityValue(option.value);
+      // Use the label (value from Autocomplete.Item) for display
+      setInputValue(value || option.label);
+      previousCityRef.current = `${option.city}-${option.state}`;
+      // Mark that user manually selected a city - this will prevent geolocation from overriding
+      // The geolocation hook will check if current city matches geolocation city
+      // If it doesn't match, it means it was manually selected and won't override
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setIsLoading(true);
 
     try {
-      const searchData = { city, course, modalities, courseLevel: activeTab };
+      const searchData = {
+        city: formattedCityValue || city,
+        course,
+        modalities,
+        courseLevel: activeTab,
+      };
 
       if (onSubmit) {
         onSubmit(searchData);
@@ -85,29 +273,69 @@ export function QuickSearchForm({
       <div className={styles.inputsContainer}>
         <FormControl disabled={isLoading}>
           <FormControl.Label>Em que cidade quer estudar?</FormControl.Label>
-          {contextCity && (
-            <button
-              type="button"
-              onClick={() => cityFieldRef.current?.focus()}
-              className={styles.cityDisplay}
-              disabled={isLoading}
-            >
-              <Text as="span" variant="body-2" weight="medium">
-                {contextCity}
-                {contextState && ` - ${contextState}`}
-              </Text>
-              <Icon name="current-location" size={16} aria-hidden="true" />
-            </button>
-          )}
-          <TextField
-            ref={cityFieldRef}
+          <Autocomplete
             name="city"
             placeholder="Encontre sua cidade"
-            value={city}
-            onChange={({ value }) => setCity(value)}
+            value={inputValue}
+            onChange={handleInputChange}
+            onItemSelect={handleItemSelect}
             disabled={isLoading}
             size="large"
-          />
+          >
+            {allOptions.map((option) => {
+              // Filter options based on input value
+              const searchTerm = inputValue.toLowerCase().trim();
+              const optionLabel = option.label.toLowerCase();
+
+              // Always show geolocation option
+              if (option.value === 'geolocation:request') {
+                return (
+                  <Autocomplete.Item
+                    key={option.value}
+                    value={option.label}
+                    data={option}
+                  >
+                    <div className={styles.geolocationOption}>
+                      <Icon name="current-location" size={16} />
+                      <span>{option.label}</span>
+                    </div>
+                  </Autocomplete.Item>
+                );
+              }
+
+              // Filter cities by label - show if input is empty or matches
+              // Don't show exact matches (user already typed it)
+              if (!searchTerm) {
+                return (
+                  <Autocomplete.Item
+                    key={option.value}
+                    value={option.label}
+                    data={option}
+                  >
+                    {option.label}
+                  </Autocomplete.Item>
+                );
+              }
+
+              // Show if label includes search term but is not exact match
+              if (
+                optionLabel.includes(searchTerm) &&
+                optionLabel !== searchTerm
+              ) {
+                return (
+                  <Autocomplete.Item
+                    key={option.value}
+                    value={option.label}
+                    data={option}
+                  >
+                    {option.label}
+                  </Autocomplete.Item>
+                );
+              }
+
+              return null;
+            })}
+          </Autocomplete>
         </FormControl>
 
         <FormControl disabled={isLoading}>
@@ -136,21 +364,23 @@ export function QuickSearchForm({
       <div className={styles.filtersContainer}>
         <span className={styles.filtersLabel}>Modalidade:</span>
         <div className={styles.filterOptions}>
-          {['Presencial', 'Semi', 'EAD'].map((modality) => (
-            <Checkbox
-              key={modality}
-              name={`modality-${modality}`}
-              checked={modalities.includes(
-                modality as 'presencial' | 'semi' | 'ead',
-              )}
-              onChange={() =>
-                toggleModality(modality as 'presencial' | 'semi' | 'ead')
-              }
-              disabled={isLoading}
-            >
-              {modality === 'semi' ? 'Semi' : modality}
-            </Checkbox>
-          ))}
+          {['Presencial', 'Semi', 'EAD'].map((modality) => {
+            const modalityKey = modality.toLowerCase() as
+              | 'presencial'
+              | 'semi'
+              | 'ead';
+            return (
+              <Checkbox
+                key={modality}
+                name={`modality-${modality}`}
+                checked={modalities.includes(modalityKey)}
+                onChange={() => toggleModality(modalityKey)}
+                disabled={isLoading}
+              >
+                {modality === 'Semi' ? 'Semi' : modality}
+              </Checkbox>
+            );
+          })}
         </div>
       </div>
     </form>

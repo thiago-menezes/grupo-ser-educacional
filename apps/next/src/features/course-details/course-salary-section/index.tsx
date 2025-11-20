@@ -1,5 +1,5 @@
 import { Divider, Text, View } from 'reshaped';
-import { Icon } from '../../../components';
+import { Icon } from '@/components';
 import { MOCK_SALARY_RANGES } from '../mock';
 import styles from './styles.module.scss';
 

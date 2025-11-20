@@ -98,24 +98,30 @@
   }
 }
 
-.cityDisplay {
+.geolocationOption {
   display: flex;
   align-items: center;
   gap: var(--rs-unit-x1);
-  padding: var(--rs-unit-x1) var(--rs-unit-x2);
-  margin-bottom: var(--rs-unit-x1);
-  background-color: transparent;
+}
+
+.option {
+  display: block;
+  width: 100%;
+  padding: var(--rs-unit-x2);
+  text-align: left;
+  background: transparent;
   border: none;
   cursor: pointer;
   border-radius: var(--rs-radius-small);
   transition: background-color 0.2s ease;
 
-  &:hover:not(:disabled) {
+  &:hover,
+  &:focus {
     background-color: var(--rs-color-background-neutral-faded);
+    outline: none;
   }
+}
 
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
+.optionFocused {
+  background-color: var(--rs-color-background-neutral-faded);
 }

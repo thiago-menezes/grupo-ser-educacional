@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import { Text } from 'reshaped';
-import { Icon } from '../../../components';
+import { Icon } from '@/components';
 import { DEFAULT_ENTRY_METHODS } from './constants';
 import styles from './styles.module.scss';
 

@@ -1,3 +1,5 @@
+import type { CityOption } from './constants';
+
 export function buildSearchParams(data: {
   city?: string;
   course?: string;
@@ -7,7 +9,11 @@ export function buildSearchParams(data: {
   const params = new URLSearchParams();
 
   if (data.city?.trim()) {
-    params.append('city', data.city.trim());
+    // Parse city value format: "city:name-state:code" -> extract city name
+    const cityName = parseCityValue(data.city.trim());
+    if (cityName) {
+      params.append('city', cityName);
+    }
   }
 
   if (data.course?.trim()) {
@@ -23,4 +29,71 @@ export function buildSearchParams(data: {
   }
 
   return params;
+}
+
+export function parseCityValue(value: string): string {
+  // Parse format: "city:name-state:code"
+  const match = value.match(/^city:([^-]+)-state:[a-z]{2}$/i);
+  if (match) {
+    return match[1].replace(/-/g, ' ');
+  }
+  // If not in expected format, return as-is
+  return value;
+}
+
+export function formatCityValue(city: string, state: string): string {
+  // Format: "city:name-state:code"
+  const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+  const stateCode = state.toLowerCase();
+  return `city:${citySlug}-state:${stateCode}`;
+}
+
+/**
+ * Normalize city name for matching (remove accents, lowercase, trim)
+ */
+function normalizeCityName(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // Remove accents
+    .trim();
+}
+
+/**
+ * Find matching city from MOCK_CITIES based on geocoded city and state
+ */
+export function findMatchingCity(
+  geocodedCity: string,
+  geocodedState: string,
+  availableCities: CityOption[],
+): CityOption | null {
+  const normalizedGeocodedCity = normalizeCityName(geocodedCity);
+  const normalizedGeocodedState = geocodedState.toUpperCase().trim();
+
+  // First try exact match (city and state)
+  const exactMatch = availableCities.find(
+    (c) =>
+      normalizeCityName(c.city) === normalizedGeocodedCity &&
+      c.state.toUpperCase() === normalizedGeocodedState,
+  );
+
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  // Try partial match (city name contains or is contained by geocoded city)
+  const partialMatch = availableCities.find((c) => {
+    const normalizedCity = normalizeCityName(c.city);
+    return (
+      (normalizedCity.includes(normalizedGeocodedCity) ||
+        normalizedGeocodedCity.includes(normalizedCity)) &&
+      c.state.toUpperCase() === normalizedGeocodedState
+    );
+  });
+
+  if (partialMatch) {
+    return partialMatch;
+  }
+
+  return null;
 }

@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, DropdownMenu } from 'reshaped';
+import { useCurrentInstitution } from '@/hooks';
 import { Icon } from '../..';
-import { useCurrentInstitution } from '../../../hooks';
 import styles from '../styles.module.scss';
 
 export const MainNav = ({

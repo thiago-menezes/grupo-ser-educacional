@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Pagination, View } from 'reshaped';
-import { CourseCard, CourseCardSkeleton } from '../../../components';
-import { useCurrentInstitution } from '../../../hooks';
+import { CourseCard, CourseCardSkeleton } from '@/components';
+import { useCurrentInstitution } from '@/hooks';
 import { useCourseGrid } from './hooks';
 import styles from './styles.module.scss';
 

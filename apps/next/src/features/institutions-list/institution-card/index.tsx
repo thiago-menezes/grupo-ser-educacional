@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button, Text } from 'reshaped';
-import { Icon } from '../../../components';
+import { Icon } from '@/components';
 import styles from './styles.module.scss';
 import { InstitutionCardProps } from './types';
 

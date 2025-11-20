@@ -1,5 +1,5 @@
 import { Button, Link } from 'reshaped';
-import { useCurrentInstitution } from '../../../hooks';
+import { useCurrentInstitution } from '@/hooks';
 import styles from '../styles.module.scss';
 
 export const MobileNav = ({ mobileMenuOpen }: { mobileMenuOpen: boolean }) => {

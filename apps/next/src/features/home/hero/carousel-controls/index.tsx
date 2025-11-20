@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { Button } from 'reshaped';
-import { Icon } from '../../../../components';
+import { Icon } from '@/components';
 import styles from './styles.module.scss';
 import type { CarouselControlsProps } from './types';
 

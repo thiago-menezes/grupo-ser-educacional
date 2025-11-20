@@ -1,5 +1,5 @@
 import { Modal, View } from 'reshaped';
-import { Icon } from '../../../components';
+import { Icon } from '@/components';
 import type { CourseDetails } from '../hooks/useCourseDetails';
 import styles from './styles.module.scss';
 

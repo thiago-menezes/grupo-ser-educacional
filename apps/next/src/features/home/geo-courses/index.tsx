@@ -2,14 +2,9 @@
 
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
-import {
-  CourseCard,
-  CourseCardSkeleton,
-  Icon,
-  Pagination,
-} from '../../../components';
-import { useGeolocation, usePagination } from '../../../hooks';
-import { useCityContext } from '../../../contexts/city';
+import { CourseCard, CourseCardSkeleton, Icon, Pagination } from '@/components';
+import { useCityContext } from '@/contexts/city';
+import { useGeolocation, usePagination } from '@/hooks';
 import { MOCK_GEO_COURSES_DATA } from './api/mocks';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';

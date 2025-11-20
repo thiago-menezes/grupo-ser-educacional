@@ -42,12 +42,56 @@ export function useGeolocation(
       const response = await fetch(
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=pt`,
       );
+
+      if (!response.ok) {
+        throw new Error(`Geocoding API failed: ${response.status}`);
+      }
+
       const data = await response.json();
+
+      // Extract city name (prefer city, fallback to locality)
+      const cityName = (data.city || data.locality || '').trim();
+
+      // Extract state code from principalSubdivisionCode (format: "BR-MS" or "MS")
+      let stateCode = DEFAULT_STATE;
+      if (data.principalSubdivisionCode) {
+        const parts = data.principalSubdivisionCode.split('-');
+        // Take the last part (handles both "BR-MS" and "MS" formats)
+        stateCode = parts[parts.length - 1].toUpperCase();
+      } else if (data.principalSubdivision) {
+        // Fallback: try to extract from principalSubdivision name
+        // This is less reliable but might work in some cases
+        const subdivision = data.principalSubdivision.toUpperCase();
+        // Common Brazilian state abbreviations
+        const stateMap: Record<string, string> = {
+          'MATO GROSSO DO SUL': 'MS',
+          'MATO GROSSO': 'MT',
+          'SÃO PAULO': 'SP',
+          'RIO DE JANEIRO': 'RJ',
+          'MINAS GERAIS': 'MG',
+          PERNAMBUCO: 'PE',
+          BAHIA: 'BA',
+          CEARÁ: 'CE',
+          CEARA: 'CE',
+          'DISTRITO FEDERAL': 'DF',
+          AMAZONAS: 'AM',
+        };
+
+        // Try to find matching state
+        for (const [key, value] of Object.entries(stateMap)) {
+          if (subdivision.includes(key)) {
+            stateCode = value;
+            break;
+          }
+        }
+      }
+
       return {
-        city: data.city || data.locality || DEFAULT_CITY,
-        state: data.principalSubdivisionCode?.split('-')[1] || DEFAULT_STATE,
+        city: cityName || DEFAULT_CITY,
+        state: stateCode || DEFAULT_STATE,
       };
-    } catch {
+    } catch (error) {
+      console.error('Error in reverse geocoding:', error);
       return { city: DEFAULT_CITY, state: DEFAULT_STATE };
     }
   };
@@ -105,13 +149,16 @@ export function useGeolocation(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Use manual override if provided, otherwise use geolocation result or default
-  const finalCity = manualCity !== undefined && manualCity !== null
-    ? manualCity
-    : city || DEFAULT_CITY;
-  const finalState = manualState !== undefined && manualState !== null
-    ? manualState
-    : state || DEFAULT_STATE;
+  // Use manual override if provided, otherwise use geolocation result
+  // Only use default (Recife/PE) if permission was explicitly denied
+  const finalCity =
+    manualCity !== undefined && manualCity !== null
+      ? manualCity
+      : city || (permissionDenied ? DEFAULT_CITY : null);
+  const finalState =
+    manualState !== undefined && manualState !== null
+      ? manualState
+      : state || (permissionDenied ? DEFAULT_STATE : null);
 
   return {
     city: finalCity,

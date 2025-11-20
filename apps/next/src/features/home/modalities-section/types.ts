@@ -1,4 +1,4 @@
-import type { IconNames } from '../../../components/icon/types';
+import type { IconNames } from '@/components/icon/types';
 
 export type ModalityHighlight = {
   id: string;

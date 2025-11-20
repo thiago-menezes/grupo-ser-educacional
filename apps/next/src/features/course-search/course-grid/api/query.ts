@@ -1,7 +1,7 @@
 import type { CoursesResponse } from '@grupo-ser/types';
 import { useQuery } from '@tanstack/react-query';
-import { useCurrentInstitution } from '../../../../hooks';
-import { query } from '../../../../libs';
+import { useCurrentInstitution } from '@/hooks';
+import { query } from '@/libs';
 
 type CourseFilters = {
   location?: string;
