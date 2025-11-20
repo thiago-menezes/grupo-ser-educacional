@@ -36,6 +36,9 @@ For project understanding and development guidelines, read:
 - Functions/variables: camelCase
 - Hooks: `useFeatureName`
 - CSS classes: camelCase
+- **Context files:**
+  - Feature/component-specific: `context.tsx` (inside feature/component folder)
+  - Global/shared: Business rule name in `src/contexts/` folder (e.g., `city.tsx`, `courses.tsx`)
 
 ### Component Structure
 

@@ -3,6 +3,7 @@
 import { getMediaUrl } from '@grupo-ser/utils';
 import { useMemo, useState } from 'react';
 import { useGeolocation } from '@/hooks';
+import { useCityContext } from '@/contexts/city';
 import { useQueryInfrastructure } from './api/query';
 import type { StrapiUnitsResponse } from './api/types';
 import type { InfrastructureImage, InfrastructureUnit } from './types';
@@ -54,14 +55,20 @@ export const useInfrastructure = () => {
 
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+  const { city: contextCity, state: contextState } = useCityContext();
   const {
-    city,
-    state,
     coordinates,
     permissionDenied,
     requestPermission,
     isLoading: isGeoLoading,
-  } = useGeolocation();
+  } = useGeolocation({
+    manualCity: contextCity || null,
+    manualState: contextState || null,
+  });
+
+  // Use context city/state if available
+  const city = contextCity || '';
+  const state = contextState || '';
 
   // Only transform if there's no error and we have data
   const { units, images, location } = useMemo(() => {

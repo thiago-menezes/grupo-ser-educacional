@@ -43,14 +43,95 @@ src/
 ├── features/                        # Feature-specific components
 │   ├── home/
 │   ├── course-search/
+│   │   └── context.tsx             # Feature-specific context
 │   ├── course-details/
 │   └── lead-enrichment/
+├── contexts/                        # Global/shared contexts
+│   ├── city.tsx                    # City context (business rule)
+│   └── courses.tsx                 # Courses context (business rule)
 ├── libs/
 │   ├── api/                         # Axios + React Query
 │   ├── auth/                        # NextAuth
 │   └── testing/
 └── config/
     └── institutions.ts              # Institution registry
+```
+
+---
+
+## 🔄 Context Patterns
+
+### Context File Naming
+
+**Feature/Component-specific contexts:**
+- Use `context.tsx` inside the feature/component folder
+- Example: `src/features/course-search/context.tsx`
+
+**Global/shared contexts:**
+- Use business rule name in `src/contexts/` folder
+- Examples: `src/contexts/city.tsx`, `src/contexts/courses.tsx`
+
+### Context Implementation Pattern
+
+```typescript
+// src/contexts/city.tsx (global context)
+'use client';
+
+import { createContext, useContext, useState, useCallback } from 'react';
+
+type CityContextValue = {
+  city: string;
+  state: string;
+  setCity: (city: string) => void;
+};
+
+const CityContext = createContext<CityContextValue | undefined>(undefined);
+
+export function CityProvider({ children }: { children: ReactNode }) {
+  const [city, setCityValue] = useState('');
+  const [state, setStateValue] = useState('');
+
+  const setCity = useCallback((newCity: string) => {
+    setCityValue(newCity);
+  }, []);
+
+  return (
+    <CityContext.Provider value={{ city, state, setCity }}>
+      {children}
+    </CityContext.Provider>
+  );
+}
+
+export function useCityContext() {
+  const context = useContext(CityContext);
+  if (context === undefined) {
+    throw new Error('useCityContext must be used within a CityProvider');
+  }
+  return context;
+}
+```
+
+```typescript
+// src/features/course-search/context.tsx (feature-specific context)
+'use client';
+
+import { createContext, useContext } from 'react';
+
+const CourseFiltersContext = createContext<CourseFiltersContextValues>(
+  {} as CourseFiltersContextValues,
+);
+
+export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
+  // Context implementation
+};
+
+export const useCourseFiltersContext = () => {
+  const context = useContext(CourseFiltersContext);
+  if (context === undefined) {
+    throw new Error('useCourseFiltersContext must be used within CourseFiltersProvider');
+  }
+  return context;
+};
 ```
 
 ---

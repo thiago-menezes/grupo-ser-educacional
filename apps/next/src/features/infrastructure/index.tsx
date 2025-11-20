@@ -2,11 +2,13 @@ import { clsx } from 'clsx';
 import Image from 'next/image';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components';
+import { useCityContext } from '@/contexts/city';
 import { useInfrastructure } from './hooks';
 import { ImageModal } from './image-modal';
 import styles from './styles.module.scss';
 
 export const InfrastructureSection = () => {
+  const { focusCityField } = useCityContext();
   const {
     city,
     state,
@@ -23,6 +25,8 @@ export const InfrastructureSection = () => {
     selectedUnitId,
     selectedImage,
   } = useInfrastructure();
+
+  const hasCity = Boolean(city && state);
 
   if (!mainImage) {
     return null;
@@ -49,7 +53,7 @@ export const InfrastructureSection = () => {
                 Unidades próximas a você
               </Text>
               <div className={styles.location}>
-                {permissionDenied ? (
+                {!hasCity && permissionDenied ? (
                   <Button
                     variant="ghost"
                     size="small"
@@ -60,8 +64,13 @@ export const InfrastructureSection = () => {
                     <Icon name="current-location" size={16} />
                     Permitir localização
                   </Button>
-                ) : (
-                  <>
+                ) : hasCity ? (
+                  <button
+                    type="button"
+                    onClick={focusCityField}
+                    className={styles.locationButton}
+                    disabled={isLoading}
+                  >
                     <Text
                       as="span"
                       variant="body-2"
@@ -75,8 +84,8 @@ export const InfrastructureSection = () => {
                       size={16}
                       className={styles.locationIcon}
                     />
-                  </>
-                )}
+                  </button>
+                ) : null}
               </div>
             </div>
           </div>

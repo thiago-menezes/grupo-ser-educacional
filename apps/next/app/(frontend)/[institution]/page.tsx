@@ -1,5 +1,6 @@
 'use client';
 
+import { CityProvider } from '@/contexts/city';
 import { InfrastructureSection } from '@/features';
 import { AreasSelector } from '@/features/home/areas-selector';
 import { CareerPath } from '@/features/home/career-path';
@@ -14,17 +15,19 @@ import { PromotionalBanners } from '@/features/home/promotional-banners';
 
 const HomePage = () => {
   return (
-    <main>
-      <HeroSection />
-      <GeoCoursesSection />
-      <PromotionalBanners />
-      <ModalitiesSection />
-      <AreasSelector />
-      <CareerPath />
-      <EntryMethodsSection />
-      <GeoCoursesSection data={MOCK_POPULAR_COURSES_DATA} />
-      <InfrastructureSection />
-    </main>
+    <CityProvider>
+      <main>
+        <HeroSection />
+        <GeoCoursesSection />
+        <PromotionalBanners />
+        <ModalitiesSection />
+        <AreasSelector />
+        <CareerPath />
+        <EntryMethodsSection />
+        <GeoCoursesSection data={MOCK_POPULAR_COURSES_DATA} />
+        <InfrastructureSection />
+      </main>
+    </CityProvider>
   );
 };
 

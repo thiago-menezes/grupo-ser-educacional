@@ -1,9 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { Button, TextField, Checkbox, FormControl } from 'reshaped';
+import { useState, useEffect } from 'react';
+import { Button, TextField, Checkbox, FormControl, Text } from 'reshaped';
 import { Icon } from '../../../../components';
+import { useCityContext } from '../../../../contexts/city';
 import { useQuickSearchForm } from '../hooks';
 import { buildSearchParams } from '../utils';
 import styles from './styles.module.scss';
@@ -18,6 +19,21 @@ export function QuickSearchForm({
   const [activeTab, setActiveTab] = useState<CourseLevel>('graduation');
   const { city, setCity, course, setCourse, modalities, toggleModality } =
     useQuickSearchForm();
+  const {
+    city: contextCity,
+    state: contextState,
+    setFocusCityFieldCallback,
+  } = useCityContext();
+
+  // Register focus callback with context
+  useEffect(() => {
+    setFocusCityFieldCallback(() => {
+      // Find the city input field by name attribute
+      const cityInput =
+        document.querySelector<HTMLInputElement>('input[name="city"]');
+      cityInput?.focus();
+    });
+  }, [setFocusCityFieldCallback]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,7 +85,22 @@ export function QuickSearchForm({
       <div className={styles.inputsContainer}>
         <FormControl disabled={isLoading}>
           <FormControl.Label>Em que cidade quer estudar?</FormControl.Label>
+          {contextCity && (
+            <button
+              type="button"
+              onClick={() => cityFieldRef.current?.focus()}
+              className={styles.cityDisplay}
+              disabled={isLoading}
+            >
+              <Text as="span" variant="body-2" weight="medium">
+                {contextCity}
+                {contextState && ` - ${contextState}`}
+              </Text>
+              <Icon name="current-location" size={16} aria-hidden="true" />
+            </button>
+          )}
           <TextField
+            ref={cityFieldRef}
             name="city"
             placeholder="Encontre sua cidade"
             value={city}

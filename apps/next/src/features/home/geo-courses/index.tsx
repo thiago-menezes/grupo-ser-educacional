@@ -9,6 +9,7 @@ import {
   Pagination,
 } from '../../../components';
 import { useGeolocation, usePagination } from '../../../hooks';
+import { useCityContext } from '../../../contexts/city';
 import { MOCK_GEO_COURSES_DATA } from './api/mocks';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';
@@ -21,10 +22,22 @@ export function GeoCoursesSection({
   data = MOCK_GEO_COURSES_DATA,
 }: Partial<GeoCourseSectionProps>) {
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
-  const { city, state, permissionDenied, requestPermission, isLoading } =
-    useGeolocation();
+  const {
+    city: contextCity,
+    state: contextState,
+    focusCityField,
+  } = useCityContext();
+  const { permissionDenied, requestPermission, isLoading } = useGeolocation({
+    manualCity: contextCity || null,
+    manualState: contextState || null,
+  });
 
-  const showSkeletons = permissionDenied || isLoading;
+  // Use context city/state if available, otherwise show permission UI
+  const city = contextCity || '';
+  const state = contextState || '';
+  const hasCity = Boolean(city && state);
+
+  const showSkeletons = (!hasCity && permissionDenied) || isLoading;
   const coursesToShow = showSkeletons ? [] : data.courses;
 
   const { currentPage, totalPages, goToPage, isScrollable } = usePagination({
@@ -49,7 +62,7 @@ export function GeoCoursesSection({
               <Text as="span" variant="body-2">
                 Cursos perto de você
               </Text>
-              {permissionDenied ? (
+              {!hasCity && permissionDenied ? (
                 <Button
                   variant="ghost"
                   size="small"
@@ -60,14 +73,19 @@ export function GeoCoursesSection({
                   <Icon name="current-location" size={16} />
                   Permitir localização
                 </Button>
-              ) : (
-                <>
+              ) : hasCity ? (
+                <button
+                  type="button"
+                  onClick={focusCityField}
+                  className={styles.locationButton}
+                  disabled={isLoading}
+                >
                   <Text as="span" variant="body-2" weight="medium">
                     {city} - {state}
                   </Text>
                   <Icon name="current-location" size={16} aria-hidden="true" />
-                </>
-              )}
+                </button>
+              ) : null}
             </div>
           </div>
           <Button variant="ghost" aria-label="Ver todos os cursos disponíveis">

@@ -1,6 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { useCityContext } from '../../../contexts/city';
+import { useGeolocation } from '../../../hooks';
 import { CAROUSEL_CONFIG } from './constants';
 
 export function useHeroCarousel(totalSlides: number = 1) {
@@ -44,17 +46,57 @@ export function useHeroCarousel(totalSlides: number = 1) {
 }
 
 export function useQuickSearchForm() {
-  const [city, setCity] = useState('');
+  const {
+    city: contextCity,
+    setCity: setContextCity,
+    setCityState,
+  } = useCityContext();
+  const [localCity, setLocalCity] = useState('');
   const [course, setCourse] = useState('');
   const [modalities, setModalities] = useState<
     Array<'presencial' | 'semi' | 'ead'>
   >(['presencial', 'semi', 'ead']);
 
+  // Use geolocation with manual override from context
+  const geolocation = useGeolocation({
+    manualCity: contextCity || null,
+    manualState: null,
+  });
+
+  // Pre-populate city from geolocation on mount if context is empty
+  useEffect(() => {
+    if (
+      !contextCity &&
+      geolocation.city &&
+      geolocation.state &&
+      !geolocation.isLoading
+    ) {
+      setCityState(geolocation.city, geolocation.state);
+    }
+  }, [
+    geolocation.city,
+    geolocation.state,
+    geolocation.isLoading,
+    contextCity,
+    setCityState,
+  ]);
+
+  // Sync local city state with context
+  const city = contextCity || localCity;
+
+  const setCity = useCallback(
+    (newCity: string) => {
+      setLocalCity(newCity);
+      setContextCity(newCity);
+    },
+    [setContextCity],
+  );
+
   const reset = useCallback(() => {
     setCity('');
     setCourse('');
     setModalities(['presencial', 'semi', 'ead']);
-  }, []);
+  }, [setCity]);
 
   const toggleModality = useCallback(
     (modality: 'presencial' | 'semi' | 'ead') => {

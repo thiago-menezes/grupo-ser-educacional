@@ -97,3 +97,25 @@
     gap: var(--rs-unit-x5);
   }
 }
+
+.cityDisplay {
+  display: flex;
+  align-items: center;
+  gap: var(--rs-unit-x1);
+  padding: var(--rs-unit-x1) var(--rs-unit-x2);
+  margin-bottom: var(--rs-unit-x1);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--rs-radius-small);
+  transition: background-color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--rs-color-background-neutral-faded);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}

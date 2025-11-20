@@ -47,6 +47,11 @@ useElementId, useHandlerRef, useHotkeys, useKeyboardArrowNavigation, useKeyboard
 - **Mocks:** Create `mocks.ts` file (not folder) unless multiple mocks exist
 - **Exports:** Only export the component itself via `index.ts`
 - **Child components:** Keep in same folder as parent, not in `components/` subfolder
+- **Context files:**
+  - **Feature/Component-specific contexts:** Use `context.tsx` inside the feature/component folder
+    - Example: `src/features/course-search/context.tsx`
+  - **Global/shared contexts:** Use business rule name in `src/contexts/` folder
+    - Example: `src/contexts/city.tsx`, `src/contexts/courses.tsx`
 
 ### Project Structure Example
 

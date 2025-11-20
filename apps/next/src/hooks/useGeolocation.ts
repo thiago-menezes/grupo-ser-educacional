@@ -12,10 +12,18 @@ type GeolocationState = {
   requestPermission: () => void;
 };
 
-const DEFAULT_CITY = 'São José dos Campos';
-const DEFAULT_STATE = 'SP';
+const DEFAULT_CITY = 'Recife';
+const DEFAULT_STATE = 'PE';
 
-export function useGeolocation(): GeolocationState {
+type UseGeolocationOptions = {
+  manualCity?: string | null;
+  manualState?: string | null;
+};
+
+export function useGeolocation(
+  options?: UseGeolocationOptions,
+): GeolocationState {
+  const { manualCity, manualState } = options || {};
   const [city, setCity] = useState<string | null>(null);
   const [state, setState] = useState<string | null>(null);
   const [coordinates, setCoordinates] = useState<{
@@ -97,9 +105,17 @@ export function useGeolocation(): GeolocationState {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Use manual override if provided, otherwise use geolocation result or default
+  const finalCity = manualCity !== undefined && manualCity !== null
+    ? manualCity
+    : city || DEFAULT_CITY;
+  const finalState = manualState !== undefined && manualState !== null
+    ? manualState
+    : state || DEFAULT_STATE;
+
   return {
-    city: city || DEFAULT_CITY,
-    state: state || DEFAULT_STATE,
+    city: finalCity,
+    state: finalState,
     coordinates,
     isLoading,
     error,
