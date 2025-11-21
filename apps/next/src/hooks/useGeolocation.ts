@@ -18,12 +18,19 @@ const DEFAULT_STATE = 'PE';
 type UseGeolocationOptions = {
   manualCity?: string | null;
   manualState?: string | null;
+  institutionDefaultCity?: string | null;
+  institutionDefaultState?: string | null;
 };
 
 export function useGeolocation(
   options?: UseGeolocationOptions,
 ): GeolocationState {
-  const { manualCity, manualState } = options || {};
+  const {
+    manualCity,
+    manualState,
+    institutionDefaultCity,
+    institutionDefaultState,
+  } = options || {};
   const [city, setCity] = useState<string | null>(null);
   const [state, setState] = useState<string | null>(null);
   const [coordinates, setCoordinates] = useState<{
@@ -150,15 +157,29 @@ export function useGeolocation(
   }, []);
 
   // Use manual override if provided, otherwise use geolocation result
-  // Only use default (Recife/PE) if permission was explicitly denied
+  // Only use default if permission was explicitly denied
+  const getDefaultCity = () => {
+    if (permissionDenied) {
+      return institutionDefaultCity || DEFAULT_CITY;
+    }
+    return null;
+  };
+
+  const getDefaultState = () => {
+    if (permissionDenied) {
+      return institutionDefaultState || DEFAULT_STATE;
+    }
+    return null;
+  };
+
   const finalCity =
     manualCity !== undefined && manualCity !== null
       ? manualCity
-      : city || (permissionDenied ? DEFAULT_CITY : null);
+      : city || getDefaultCity();
   const finalState =
     manualState !== undefined && manualState !== null
       ? manualState
-      : state || (permissionDenied ? DEFAULT_STATE : null);
+      : state || getDefaultState();
 
   return {
     city: finalCity,

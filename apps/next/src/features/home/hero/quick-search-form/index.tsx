@@ -1,5 +1,3 @@
-'use client';
-
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import {
@@ -12,7 +10,7 @@ import {
 import type { AutocompleteProps } from 'reshaped';
 import { Icon } from '@/components';
 import { useCityContext } from '@/contexts/city';
-import { useGeolocation } from '@/hooks';
+import { useGeolocation, useInstitutionData } from '@/hooks';
 import { MOCK_CITIES, type CityOption } from '../constants';
 import { useQuickSearchForm } from '../hooks';
 import { buildSearchParams, formatCityValue } from '../utils';
@@ -39,6 +37,13 @@ export function QuickSearchForm({
     setCityState,
     setFocusCityFieldCallback,
   } = useCityContext();
+  // Get institution data for default city/state
+  const {
+    defaultCity,
+    defaultState,
+    isLoading: isInstitutionLoading,
+  } = useInstitutionData();
+
   // Don't pass manualCity/manualState to geolocation hook
   // This allows geolocation to work independently and update the city
   const {
@@ -46,19 +51,31 @@ export function QuickSearchForm({
     permissionDenied,
     requestPermission,
     isLoading: isGeoLoading,
-  } = useGeolocation();
+  } = useGeolocation({
+    institutionDefaultCity: defaultCity,
+    institutionDefaultState: defaultState,
+  });
 
-  // Initialize with Recife if no city is set on mount (before geolocation loads)
+  // Initialize with institution default or Recife if no city is set on mount
   useEffect(() => {
-    // Only set default on mount if geolocation hasn't started yet
+    // Only set default on mount if geolocation hasn't started yet and institution data is loaded
     // This provides immediate feedback while geolocation is loading
-    if (!contextCity && !contextState && inputValue === '') {
-      setCityState('Recife', 'PE');
-      setInputValue('Recife - PE');
-      setFormattedCityValue(formatCityValue('Recife', 'PE'));
+    if (
+      !contextCity &&
+      !contextState &&
+      inputValue === '' &&
+      !isInstitutionLoading
+    ) {
+      const defaultCityToUse = defaultCity || 'Recife';
+      const defaultStateToUse = defaultState || 'PE';
+      setCityState(defaultCityToUse, defaultStateToUse);
+      setInputValue(`${defaultCityToUse} - ${defaultStateToUse}`);
+      setFormattedCityValue(
+        formatCityValue(defaultCityToUse, defaultStateToUse),
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Only run on mount
+  }, [defaultCity, defaultState, isInstitutionLoading]); // Run when institution data loads
 
   // Register focus callback with context
   useEffect(() => {
@@ -70,20 +87,38 @@ export function QuickSearchForm({
     });
   }, [setFocusCityFieldCallback]);
 
-  // Set default to Recife when no city is selected
+  // Set default to institution default or Recife when no city is selected
   // This ensures the field is never empty
   useEffect(() => {
     // Only set default if:
     // 1. No city is currently selected in context
     // 2. Geolocation is not loading (wait for it to finish)
     // 3. Geolocation didn't return a city (either denied, failed, or not available)
-    if (!contextCity && !isGeoLoading && !geolocationCity) {
-      setCityState('Recife', 'PE');
+    // 4. Institution data is loaded
+    if (
+      !contextCity &&
+      !isGeoLoading &&
+      !geolocationCity &&
+      !isInstitutionLoading
+    ) {
+      const defaultCityToUse = defaultCity || 'Recife';
+      const defaultStateToUse = defaultState || 'PE';
+      setCityState(defaultCityToUse, defaultStateToUse);
       // Also set the input value and formatted value
-      setInputValue('Recife - PE');
-      setFormattedCityValue(formatCityValue('Recife', 'PE'));
+      setInputValue(`${defaultCityToUse} - ${defaultStateToUse}`);
+      setFormattedCityValue(
+        formatCityValue(defaultCityToUse, defaultStateToUse),
+      );
     }
-  }, [contextCity, isGeoLoading, setCityState, geolocationCity]);
+  }, [
+    contextCity,
+    isGeoLoading,
+    setCityState,
+    geolocationCity,
+    defaultCity,
+    defaultState,
+    isInstitutionLoading,
+  ]);
 
   // Build all available options including geolocation-detected city
   const allOptions = useMemo(() => {
@@ -147,11 +182,15 @@ export function QuickSearchForm({
         // Always update formatted value when city changes
         setFormattedCityValue(formatCityValue(contextCity, contextState));
       } else {
-        // If no city is set, ensure we show Recife as default
+        // If no city is set, ensure we show institution default or Recife as default
         // This prevents empty field
-        if (!inputValue && !isGeoLoading) {
-          setInputValue('Recife - PE');
-          setFormattedCityValue(formatCityValue('Recife', 'PE'));
+        if (!inputValue && !isGeoLoading && !isInstitutionLoading) {
+          const defaultCityToUse = defaultCity || 'Recife';
+          const defaultStateToUse = defaultState || 'PE';
+          setInputValue(`${defaultCityToUse} - ${defaultStateToUse}`);
+          setFormattedCityValue(
+            formatCityValue(defaultCityToUse, defaultStateToUse),
+          );
         }
       }
       previousCityRef.current = currentCityKey;

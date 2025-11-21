@@ -4,7 +4,7 @@ import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
 import { CourseCard, CourseCardSkeleton, Icon, Pagination } from '@/components';
 import { useCityContext } from '@/contexts/city';
-import { useGeolocation, usePagination } from '@/hooks';
+import { useGeolocation, useInstitutionData, usePagination } from '@/hooks';
 import { MOCK_GEO_COURSES_DATA } from './api/mocks';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';
@@ -22,9 +22,13 @@ export function GeoCoursesSection({
     state: contextState,
     focusCityField,
   } = useCityContext();
+  const { defaultCity, defaultState } = useInstitutionData();
+
   const { permissionDenied, requestPermission, isLoading } = useGeolocation({
     manualCity: contextCity || null,
     manualState: contextState || null,
+    institutionDefaultCity: defaultCity,
+    institutionDefaultState: defaultState,
   });
 
   // Use context city/state if available, otherwise show permission UI

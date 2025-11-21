@@ -54,6 +54,15 @@
       "type": "boolean",
       "default": true
     },
+    "defaultCity": {
+      "type": "string",
+      "required": false
+    },
+    "defaultState": {
+      "type": "string",
+      "maxLength": 2,
+      "required": false
+    },
     "courses": {
       "type": "relation",
       "relation": "oneToMany",
