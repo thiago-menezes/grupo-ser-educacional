@@ -1,5 +1,3 @@
-'use client';
-
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCityContext } from '@/contexts/city';
 import { useGeolocation } from '@/hooks';

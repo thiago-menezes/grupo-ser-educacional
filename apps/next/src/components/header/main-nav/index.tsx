@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button, DropdownMenu } from 'reshaped';
+import { Button, DropdownMenu, useTheme } from 'reshaped';
 import { useCurrentInstitution } from '@/hooks';
 import { Icon } from '../..';
 import styles from '../styles.module.scss';
@@ -13,6 +13,9 @@ export const MainNav = ({
   mobileMenuOpen: boolean;
 }) => {
   const { institutionId, institutionName } = useCurrentInstitution();
+  const { colorMode } = useTheme();
+
+  const isDarkMode = colorMode === 'dark';
 
   return (
     <div className={styles.mainNav}>
@@ -20,7 +23,7 @@ export const MainNav = ({
         <div className={styles.mainNavContent}>
           <Link href={`/${institutionId}`} className={styles.logo}>
             <Image
-              src={`/logos/${institutionId}.png`}
+              src={`/logos/${institutionId}/${isDarkMode ? 'dark' : 'light'}.svg`}
               alt={`Logo ${institutionName}`}
               className={styles.logoImage}
               width={200}

@@ -25,7 +25,7 @@
 }
 
 .logo {
-  width: min(190px, 100%);
+  width: min(160px, 200px);
   height: auto;
 }
 
@@ -41,7 +41,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgb(from var(--rs-color-on-background-primary) r g b / 0.3);
   display: inline-flex;
   align-items: center;
   justify-content: center;

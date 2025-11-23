@@ -1,5 +1,3 @@
-'use client';
-
 import { useParams } from 'next/navigation';
 import { Container, View } from 'reshaped';
 import { Breadcrumb } from '../../components';

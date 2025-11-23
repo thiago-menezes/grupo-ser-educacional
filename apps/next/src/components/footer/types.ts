@@ -23,10 +23,6 @@ export type FooterBadge = {
 };
 
 export type FooterContent = {
-  logo: {
-    src: string;
-    alt: string;
-  };
   socialLinks: FooterSocialLink[];
   sections: FooterSection[];
   badge: FooterBadge;

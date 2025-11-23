@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useRef } from 'react';
 import { Button } from 'reshaped';
 import { Icon } from '@/components';

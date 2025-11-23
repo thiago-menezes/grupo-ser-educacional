@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { Text, View } from 'reshaped';
 import { useCurrentInstitution } from '@/hooks';

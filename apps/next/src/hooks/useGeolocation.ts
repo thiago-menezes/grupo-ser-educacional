@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 
 type GeolocationState = {
@@ -98,6 +96,7 @@ export function useGeolocation(
         state: stateCode || DEFAULT_STATE,
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error in reverse geocoding:', error);
       return { city: DEFAULT_CITY, state: DEFAULT_STATE };
     }

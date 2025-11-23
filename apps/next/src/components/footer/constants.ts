@@ -1,13 +1,8 @@
 import type { FooterContent } from './types';
 
-const LOGO_PLACEHOLDER = 'https://placehold.co/190x40.png';
 const MEC_BADGE_PLACEHOLDER = 'https://placehold.co/200x300.png';
 
 export const DEFAULT_FOOTER_CONTENT: FooterContent = {
-  logo: {
-    src: LOGO_PLACEHOLDER,
-    alt: 'Logo da instituição',
-  },
   socialLinks: [
     {
       label: 'Instagram',

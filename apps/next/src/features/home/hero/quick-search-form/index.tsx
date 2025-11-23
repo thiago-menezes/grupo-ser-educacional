@@ -203,6 +203,7 @@ export function QuickSearchForm({
       }, 100);
       return () => clearTimeout(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contextCity, contextState, inputValue, formattedCityValue, isGeoLoading]);
 
   const handleInputChange: AutocompleteProps['onChange'] = ({ value }) => {

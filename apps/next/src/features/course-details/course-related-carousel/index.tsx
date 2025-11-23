@@ -1,5 +1,3 @@
-'use client';
-
 import { formatPrice } from '@grupo-ser/utils';
 import { useState } from 'react';
 import { Button, Divider, Text, View } from 'reshaped';

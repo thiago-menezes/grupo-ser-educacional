@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Text } from 'reshaped';
@@ -5,11 +7,13 @@ import { Icon } from '..';
 import { DEFAULT_FOOTER_CONTENT } from './constants';
 import styles from './styles.module.scss';
 import type { FooterProps } from './types';
+import { useCurrentInstitution } from '@/hooks';
 
 export type { FooterProps } from './types';
 
 export function Footer({ content = DEFAULT_FOOTER_CONTENT }: FooterProps) {
-  const { logo, socialLinks, sections, badge } = content;
+  const { institutionId, institutionName } = useCurrentInstitution();
+  const { socialLinks, sections, badge } = content;
 
   return (
     <footer className={styles.wrapper} role="contentinfo">
@@ -17,8 +21,8 @@ export function Footer({ content = DEFAULT_FOOTER_CONTENT }: FooterProps) {
         <div className={styles.contentGrid}>
           <div className={styles.brandBlock}>
             <Image
-              src={logo.src}
-              alt={logo.alt}
+              src={`/logos/${institutionId}/dark.svg`}
+              alt={`Logo ${institutionName}`}
               className={styles.logo}
               width={190}
               height={40}

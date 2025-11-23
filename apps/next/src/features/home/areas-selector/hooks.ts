@@ -1,5 +1,3 @@
-'use client';
-
 import { useRouter } from 'next/navigation';
 import { useCurrentInstitution } from '@/hooks';
 import type { AreaCard } from './types';

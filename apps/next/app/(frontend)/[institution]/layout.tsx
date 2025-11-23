@@ -1,8 +1,7 @@
 import { isValidInstitution } from '@grupo-ser/utils';
-import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Footer, Header } from '@/components';
-import { generateJsonLd, getSeoFromStrapi } from '@/seo';
+import { generateJsonLd, generateMetadata } from '@/seo';
 
 type InstitutionLayoutProps = {
   children: React.ReactNode;
@@ -21,15 +20,7 @@ export async function generateStaticParams() {
   ];
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ institution: string }>;
-}): Promise<Metadata> {
-  const { institution } = await params;
-  const seoData = await getSeoFromStrapi(institution);
-  return seoData?.metadata as Metadata;
-}
+export { generateMetadata };
 
 export default async function InstitutionLayout({
   children,

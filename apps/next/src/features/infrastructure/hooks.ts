@@ -1,5 +1,3 @@
-'use client';
-
 import { getMediaUrl } from '@grupo-ser/utils';
 import { useMemo, useState } from 'react';
 import { useCityContext } from '@/contexts/city';

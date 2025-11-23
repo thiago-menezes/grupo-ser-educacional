@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { Button, Tabs, Text, View } from 'reshaped';
 import type { CourseDetails } from '../hooks/useCourseDetails';
