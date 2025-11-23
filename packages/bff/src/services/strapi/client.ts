@@ -3,9 +3,14 @@
  * Framework-agnostic service for fetching data from Strapi CMS
  */
 
+export type PopulateOption =
+  | string
+  | string[]
+  | Record<string, string | boolean | Record<string, unknown>>;
+
 export interface StrapiFetchOptions {
   filters?: Record<string, unknown>;
-  populate?: string | string[];
+  populate?: PopulateOption;
   sort?: string | string[];
   params?: Record<string, unknown>;
 }
@@ -85,12 +90,28 @@ export class StrapiClient {
 
     // Add populate
     if (options?.populate) {
-      if (Array.isArray(options.populate)) {
+      if (typeof options.populate === 'string') {
+        queryParts.push(`populate=${options.populate}`);
+      } else if (Array.isArray(options.populate)) {
         options.populate.forEach((field, index) => {
           queryParts.push(`populate[${index}]=${field}`);
         });
-      } else {
-        queryParts.push(`populate=${options.populate}`);
+      } else if (typeof options.populate === 'object') {
+        // Object-based populate: { Desktop: '*', Mobile: '*', instituicao: true }
+        Object.entries(options.populate).forEach(([key, value]) => {
+          if (typeof value === 'string' || typeof value === 'boolean') {
+            queryParts.push(`populate[${key}]=${value}`);
+          } else if (typeof value === 'object' && value !== null) {
+            // Nested populate object
+            Object.entries(value as Record<string, unknown>).forEach(
+              ([nestedKey, nestedValue]) => {
+                queryParts.push(
+                  `populate[${key}][${nestedKey}]=${nestedValue}`,
+                );
+              },
+            );
+          }
+        });
       }
     }
 

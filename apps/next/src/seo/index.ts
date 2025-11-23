@@ -9,7 +9,12 @@ export async function generateJsonLd(
 
   const seoData = await getSeoFromStrapi(institutionSlug);
 
-  return seoData?.jsonld as StrapiSeo['jsonld'];
+  // Handle nested structure: metadata.jsonld or jsonld
+  const jsonld =
+    (seoData as { metadata?: { jsonld?: StrapiSeo['jsonld'] } })?.metadata
+      ?.jsonld || (seoData as StrapiSeo)?.jsonld;
+
+  return (jsonld as StrapiSeo['jsonld']) || undefined;
 }
 
 export async function generateMetadata({
@@ -19,5 +24,23 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { institution } = await params;
   const seoData = await getSeoFromStrapi(institution);
-  return seoData?.metadata as Metadata;
+
+  if (!seoData) {
+    return {
+      title: 'Grupo SER - Portal Institucional',
+      description: 'Portal multi-institucional do Grupo SER Educacional',
+    };
+  }
+
+  // Handle nested structure: metadata.metadata or metadata
+  const metadata =
+    (seoData as { metadata?: { metadata?: Metadata } })?.metadata?.metadata ||
+    (seoData as StrapiSeo)?.metadata;
+
+  return (
+    (metadata as Metadata) || {
+      title: 'Grupo SER - Portal Institucional',
+      description: 'Portal multi-institucional do Grupo SER Educacional',
+    }
+  );
 }

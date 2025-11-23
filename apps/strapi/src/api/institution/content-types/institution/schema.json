@@ -35,7 +35,9 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "website": {
       "type": "string"
@@ -67,12 +69,6 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::course.course",
-      "mappedBy": "institution"
-    },
-    "pageContents": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::page-content.page-content",
       "mappedBy": "institution"
     },
     "units": {

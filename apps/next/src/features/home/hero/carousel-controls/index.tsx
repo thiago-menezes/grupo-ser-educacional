@@ -9,7 +9,9 @@ export function CarouselControls({
   totalSlides,
   onPrevious,
   onNext,
+  onGoToSlide,
   onToggleAutoAdvance,
+  showArrows = true,
 }: CarouselControlsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -34,15 +36,19 @@ export function CarouselControls({
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <Button
-        className={styles.arrowButton}
-        onClick={() => {
-          onPrevious();
-          onToggleAutoAdvance?.(false);
-        }}
-        aria-label="Previous slide (or press ← arrow)"
-        icon={<Icon name="chevron-left" />}
-      />
+      {showArrows && (
+        <>
+          <Button
+            className={styles.arrowButton}
+            onClick={() => {
+              onPrevious();
+              onToggleAutoAdvance?.(false);
+            }}
+            aria-label="Previous slide (or press ← arrow)"
+            icon={<Icon name="chevron-left" />}
+          />
+        </>
+      )}
 
       <div className={styles.indicators}>
         {Array.from({ length: totalSlides }).map((_, index) => (
@@ -50,6 +56,7 @@ export function CarouselControls({
             key={index}
             className={`${styles.dot} ${index === currentSlide ? styles.active : ''}`}
             onClick={() => {
+              onGoToSlide?.(index);
               onToggleAutoAdvance?.(false);
             }}
             aria-label={`Go to slide ${index + 1}`}
@@ -59,15 +66,17 @@ export function CarouselControls({
         ))}
       </div>
 
-      <Button
-        className={styles.arrowButton}
-        onClick={() => {
-          onNext();
-          onToggleAutoAdvance?.(false);
-        }}
-        aria-label="Next slide (or press → arrow)"
-        icon={<Icon name="chevron-right" />}
-      />
+      {showArrows && (
+        <Button
+          className={styles.arrowButton}
+          onClick={() => {
+            onNext();
+            onToggleAutoAdvance?.(false);
+          }}
+          aria-label="Next slide (or press → arrow)"
+          icon={<Icon name="chevron-right" />}
+        />
+      )}
     </div>
   );
 }

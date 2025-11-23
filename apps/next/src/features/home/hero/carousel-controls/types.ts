@@ -3,6 +3,8 @@ export type CarouselControlsProps = {
   totalSlides: number;
   onPrevious: () => void;
   onNext: () => void;
+  onGoToSlide?: (index: number) => void;
   isAutoAdvancing?: boolean;
   onToggleAutoAdvance?: (enabled: boolean) => void;
+  showArrows?: boolean;
 };

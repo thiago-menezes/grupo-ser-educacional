@@ -63,3 +63,30 @@ export type CourseSearchResultDTO = {
   modality: 'presencial' | 'semi' | 'ead';
   url: string;
 };
+
+export type HomeCarouselItemDTO = {
+  id: number;
+  Nome: string | null;
+  Desktop?: {
+    id: number;
+    url: string;
+    alternativeText?: string | null;
+  } | null;
+  Mobile?: {
+    id: number;
+    url: string;
+    alternativeText?: string | null;
+  } | null;
+};
+
+export type HomeCarouselResponseDTO = {
+  data: HomeCarouselItemDTO[];
+  meta: {
+    pagination?: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+};

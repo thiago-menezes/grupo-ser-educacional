@@ -1,10 +1,13 @@
+import { getMediaUrl } from '@grupo-ser/utils';
 import { useQuery } from '@tanstack/react-query';
+import { query } from '@/libs';
 import { HOME_HERO_QUERY_KEY, DEFAULT_HERO_CONTENT } from '../constants';
 import type { HeroContent } from '../types';
 import type {
   HomePageResponseDTO,
   CourseSearchQueryDTO,
   CourseSearchResultDTO,
+  HomeCarouselResponseDTO,
 } from './types';
 
 async function fetchHeroContent(institutionSlug: string): Promise<HeroContent> {
@@ -85,5 +88,60 @@ export function useCoursesSearch(
     queryFn: () => searchCourses(params),
     enabled,
     staleTime: 10 * 60 * 1000,
+  });
+}
+
+export type CarouselItem = {
+  desktopImage: string;
+  mobileImage?: string;
+  alt?: string;
+};
+
+async function fetchHomeCarousel(
+  institutionSlug: string,
+): Promise<CarouselItem[]> {
+  try {
+    const data = await query<HomeCarouselResponseDTO>('/home-carousels', {
+      institutionSlug,
+    });
+
+    if (!data.data || data.data.length === 0) {
+      return [];
+    }
+
+    const items: CarouselItem[] = [];
+
+    for (const item of data.data) {
+      const desktopUrl = item.Desktop?.url;
+      const mobileUrl = item.Mobile?.url;
+      const alt =
+        item.Desktop?.alternativeText ||
+        item.Mobile?.alternativeText ||
+        item.Nome ||
+        'Hero banner';
+
+      if (!desktopUrl) {
+        continue;
+      }
+
+      items.push({
+        desktopImage: getMediaUrl(desktopUrl),
+        mobileImage: mobileUrl ? getMediaUrl(mobileUrl) : undefined,
+        alt,
+      });
+    }
+
+    return items;
+  } catch {
+    return [];
+  }
+}
+
+export function useHomeCarousel(institutionSlug: string) {
+  return useQuery({
+    queryKey: [...HOME_HERO_QUERY_KEY, 'carousel', institutionSlug],
+    queryFn: () => fetchHomeCarousel(institutionSlug),
+    staleTime: 5 * 60 * 1000,
+    retry: 2,
   });
 }

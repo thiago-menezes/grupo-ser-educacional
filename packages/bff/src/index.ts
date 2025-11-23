@@ -15,6 +15,7 @@ export {
 export { handleSeo } from './handlers/seos';
 export { handleUnits } from './handlers/units';
 export { handleMedia } from './handlers/media';
+export { handleHomeCarousel } from './handlers/home-carousel';
 
 // Types - shared types are exported from @grupo-ser/types
 export type {
@@ -24,6 +25,7 @@ export type {
 export type { SeoQueryParams } from './handlers/seos/types';
 export type { UnitsQueryParams } from './handlers/units/types';
 export type { MediaQueryParams } from './handlers/media/types';
+export type { HomeCarouselQueryParams } from './handlers/home-carousel/types';
 
 // Errors
 export { BffValidationError } from './utils/errors';
