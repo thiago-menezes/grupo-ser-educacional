@@ -39,33 +39,6 @@
     outline: 2px solid var(--rs-color-text-primary);
     outline-offset: 2px;
   }
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  @media (min-width: 768px) {
-    width: 40px;
-    height: 40px;
-    border-radius: calc(var(--rs-radius-small) + 2px);
-
-    svg {
-      width: 24px;
-      height: 24px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--rs-radius-medium);
-
-    svg {
-      width: 24px;
-      height: 24px;
-    }
-  }
 }
 
 .indicators {

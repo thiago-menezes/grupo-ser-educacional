@@ -45,7 +45,7 @@ export function CarouselControls({
               onToggleAutoAdvance?.(false);
             }}
             aria-label="Previous slide (or press ← arrow)"
-            icon={<Icon name="chevron-left" />}
+            icon={<Icon name="chevron-left" size={20} />}
           />
         </>
       )}
@@ -74,7 +74,7 @@ export function CarouselControls({
             onToggleAutoAdvance?.(false);
           }}
           aria-label="Next slide (or press → arrow)"
-          icon={<Icon name="chevron-right" />}
+          icon={<Icon name="chevron-right" size={24} />}
         />
       )}
     </div>

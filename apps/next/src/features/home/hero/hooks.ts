@@ -7,19 +7,29 @@ import { findMatchingCity } from './utils';
 export function useHeroCarousel(totalSlides: number = 1) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoAdvancing, setIsAutoAdvancing] = useState(true);
+  const [direction, setDirection] = useState<'left' | 'right'>('right');
 
   const goToSlide = useCallback(
     (index: number) => {
-      setCurrentSlide(index % totalSlides);
+      setCurrentSlide((prev) => {
+        const newIndex = index % totalSlides;
+        // Determine direction based on shortest path
+        const forward = (newIndex - prev + totalSlides) % totalSlides;
+        const backward = (prev - newIndex + totalSlides) % totalSlides;
+        setDirection(forward <= backward ? 'right' : 'left');
+        return newIndex;
+      });
     },
     [totalSlides],
   );
 
   const nextSlide = useCallback(() => {
+    setDirection('right');
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
   }, [totalSlides]);
 
   const previousSlide = useCallback(() => {
+    setDirection('left');
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   }, [totalSlides]);
 
@@ -36,6 +46,7 @@ export function useHeroCarousel(totalSlides: number = 1) {
 
   return {
     currentSlide,
+    direction,
     goToSlide,
     nextSlide,
     previousSlide,

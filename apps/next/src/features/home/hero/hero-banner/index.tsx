@@ -6,6 +6,7 @@ import type { HeroBannerProps } from './types';
 export function HeroBanner({
   carouselItems,
   currentSlide = 0,
+  direction = 'right',
   imageUrl,
   imageUrlMobile,
   imageAlt = 'Hero banner',
@@ -19,10 +20,16 @@ export function HeroBanner({
         <div className={styles.slidesWrapper}>
           {carouselItems.map((item, index) => {
             const isActive = index === currentSlide % carouselItems.length;
+            const slideDirectionClass =
+              direction === 'right' ? styles.slideRight : styles.slideLeft;
             return (
               <div
                 key={index}
-                className={clsx(styles.slide, isActive && styles.slideActive)}
+                className={clsx(
+                  styles.slide,
+                  isActive && styles.slideActive,
+                  slideDirectionClass,
+                )}
               >
                 {item.mobileImage && (
                   <Image

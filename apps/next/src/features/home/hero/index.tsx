@@ -28,6 +28,7 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
   const totalSlides = carouselItems.length > 0 ? carouselItems.length : 1;
   const {
     currentSlide,
+    direction,
     nextSlide,
     previousSlide,
     goToSlide,
@@ -66,6 +67,7 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
             <HeroBanner
               carouselItems={carouselItemsFormatted}
               currentSlide={currentSlide}
+              direction={direction}
               imageUrl={fallbackImageUrl}
               imageUrlMobile={fallbackImageUrlMobile}
               imageAlt={fallbackImageAlt}
@@ -81,7 +83,7 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
                       setIsAutoAdvancing(false);
                     }}
                     aria-label="Previous slide"
-                    icon={<Icon name="chevron-left" />}
+                    icon={<Icon name="chevron-left" size={24} />}
                   />
                   <Button
                     className={styles.carouselRightButton}
@@ -90,7 +92,7 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
                       setIsAutoAdvancing(false);
                     }}
                     aria-label="Next slide"
-                    icon={<Icon name="chevron-right" />}
+                    icon={<Icon name="chevron-right" size={24} />}
                   />
                 </div>
 
