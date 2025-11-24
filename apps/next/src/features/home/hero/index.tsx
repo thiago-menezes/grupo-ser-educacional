@@ -6,6 +6,7 @@ import { useHeroContent, useHomeCarousel } from './api/query';
 import { CarouselControls } from './carousel-controls';
 import { DEFAULT_HERO_CONTENT } from './constants';
 import { HeroBanner } from './hero-banner';
+import { HeroBannerSkeleton } from './hero-banner-skeleton';
 import { useHeroCarousel } from './hooks';
 import { QuickSearchForm } from './quick-search-form';
 import styles from './styles.module.scss';
@@ -16,8 +17,12 @@ export type HomeHeroProps = {
 };
 
 function HeroContent({ institutionSlug }: HomeHeroProps) {
-  const { data: heroContent } = useHeroContent(institutionSlug);
-  const { data: carouselItems = [] } = useHomeCarousel(institutionSlug);
+  const { data: heroContent, isLoading: isLoadingHeroContent } =
+    useHeroContent(institutionSlug);
+  const { data: carouselItems = [], isLoading: isLoadingCarousel } =
+    useHomeCarousel(institutionSlug);
+
+  const isLoading = isLoadingHeroContent || isLoadingCarousel;
 
   const content = useMemo(
     () => heroContent || DEFAULT_HERO_CONTENT,
@@ -49,9 +54,7 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
 
   // Fallback to single image if no carousel items
   const fallbackImageUrl =
-    carouselItems.length === 0
-      ? content.backgroundImage?.url || '/placeholder-hero.jpg'
-      : undefined;
+    carouselItems.length === 0 ? content.backgroundImage?.url : undefined;
   const fallbackImageUrlMobile =
     carouselItems.length === 0 ? content.backgroundImageMobile?.url : undefined;
   const fallbackImageAlt =
@@ -64,14 +67,18 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
       <div className={styles.container}>
         <div className={styles.heroSection}>
           <div className={styles.heroCard}>
-            <HeroBanner
-              carouselItems={carouselItemsFormatted}
-              currentSlide={currentSlide}
-              direction={direction}
-              imageUrl={fallbackImageUrl}
-              imageUrlMobile={fallbackImageUrlMobile}
-              imageAlt={fallbackImageAlt}
-            />
+            {isLoading ? (
+              <HeroBannerSkeleton />
+            ) : (
+              <HeroBanner
+                carouselItems={carouselItemsFormatted}
+                currentSlide={currentSlide}
+                direction={direction}
+                imageUrl={fallbackImageUrl}
+                imageUrlMobile={fallbackImageUrlMobile}
+                imageAlt={fallbackImageAlt}
+              />
+            )}
 
             {content.showCarouselControls && (
               <>

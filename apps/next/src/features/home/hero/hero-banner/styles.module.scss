@@ -16,10 +16,12 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
+  opacity: 1;
   pointer-events: none;
   z-index: 0;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease-in-out;
+  // No transition or animation by default
+  transition: none;
+  animation: none;
 }
 
 .slideActive {
@@ -31,51 +33,81 @@
 
 // When direction is right (next slide)
 .slideRight {
-  // Active slide enters from right
-  &.slideActive {
+  // Active slide enters from right (only animate if slideAnimated class is present)
+  &.slideActive.slideAnimated {
     transform: translateX(0);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     animation: slideInFromRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  // Previous slide exits to left
-  &:not(.slideActive) {
+  // Active slide without animation (initial render) - no transition, no animation
+  &.slideActive:not(.slideAnimated) {
+    transform: translateX(0);
+    transition: none;
+    animation: none;
+  }
+  
+  // Previous slide exits to left - only transition when animating
+  &:not(.slideActive).slideAnimated {
     transform: translateX(-100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: none;
+  }
+  
+  // Inactive slides without animation - positioned correctly from start
+  &:not(.slideActive):not(.slideAnimated) {
+    transform: translateX(-100%);
+    transition: none;
+    animation: none;
   }
 }
 
 // When direction is left (previous slide)
 .slideLeft {
-  // Active slide enters from left
-  &.slideActive {
+  // Active slide enters from left (only animate if slideAnimated class is present)
+  &.slideActive.slideAnimated {
     transform: translateX(0);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     animation: slideInFromLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
-  // Next slide exits to right
-  &:not(.slideActive) {
+  // Active slide without animation (initial render) - no transition, no animation
+  &.slideActive:not(.slideAnimated) {
+    transform: translateX(0);
+    transition: none;
+    animation: none;
+  }
+  
+  // Next slide exits to right - only transition when animating
+  &:not(.slideActive).slideAnimated {
     transform: translateX(100%);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: none;
+  }
+  
+  // Inactive slides without animation - positioned correctly from start
+  &:not(.slideActive):not(.slideAnimated) {
+    transform: translateX(100%);
+    transition: none;
+    animation: none;
   }
 }
 
 @keyframes slideInFromRight {
   from {
     transform: translateX(100%);
-    opacity: 0;
   }
   to {
     transform: translateX(0);
-    opacity: 1;
   }
 }
 
 @keyframes slideInFromLeft {
   from {
     transform: translateX(-100%);
-    opacity: 0;
   }
   to {
     transform: translateX(0);
-    opacity: 1;
   }
 }
 

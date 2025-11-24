@@ -1,4 +1,5 @@
 import { clsx } from 'clsx';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import styles from './styles.module.scss';
 import type { HeroBannerProps } from './types';
@@ -11,6 +12,28 @@ export function HeroBanner({
   imageUrlMobile,
   imageAlt = 'Hero banner',
 }: HeroBannerProps) {
+  const isInitialMount = useRef(true);
+  const prevSlideRef = useRef<number | null>(null);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      prevSlideRef.current = currentSlide;
+      setShouldAnimate(false);
+      return;
+    }
+    
+    // Only animate if slide actually changed
+    if (prevSlideRef.current !== null && prevSlideRef.current !== currentSlide) {
+      setShouldAnimate(true);
+    } else {
+      setShouldAnimate(false);
+    }
+    
+    prevSlideRef.current = currentSlide;
+  }, [currentSlide]);
+
   // Use carousel if items are provided, otherwise fallback to single image
   const useCarousel = carouselItems && carouselItems.length > 0;
 
@@ -29,6 +52,7 @@ export function HeroBanner({
                   styles.slide,
                   isActive && styles.slideActive,
                   slideDirectionClass,
+                  shouldAnimate && styles.slideAnimated,
                 )}
               >
                 {item.mobileImage && (
