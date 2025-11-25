@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
-import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import type { HeroBannerProps } from './types';
 
@@ -16,23 +16,33 @@ export function HeroBanner({
   const prevSlideRef = useRef<number | null>(null);
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
       prevSlideRef.current = currentSlide;
-      setShouldAnimate(false);
       return;
     }
-    
+
     // Only animate if slide actually changed
-    if (prevSlideRef.current !== null && prevSlideRef.current !== currentSlide) {
+    const prevSlide = prevSlideRef.current;
+    if (prevSlide !== null && prevSlide !== currentSlide) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShouldAnimate(true);
-    } else {
-      setShouldAnimate(false);
     }
-    
+
     prevSlideRef.current = currentSlide;
-  }, [currentSlide]);
+  }, [currentSlide, setShouldAnimate]);
+
+  // Reset animation flag after animation completes
+  useEffect(() => {
+    if (!shouldAnimate) return;
+
+    const timer = setTimeout(() => {
+      setShouldAnimate(false);
+    }, 600); // Match animation duration
+
+    return () => clearTimeout(timer);
+  }, [shouldAnimate]);
 
   // Use carousel if items are provided, otherwise fallback to single image
   const useCarousel = carouselItems && carouselItems.length > 0;

@@ -5,6 +5,7 @@ import { InfrastructureSection } from '@/features';
 import { AreasSelector } from '@/features/home/areas-selector';
 import { CareerPath } from '@/features/home/career-path';
 import { EntryMethodsSection } from '@/features/home/entry-methods';
+import { FAQSection } from '@/features/home/faq-section';
 import {
   GeoCoursesSection,
   MOCK_POPULAR_COURSES_DATA,
@@ -26,6 +27,7 @@ const HomePage = () => {
         <EntryMethodsSection />
         <GeoCoursesSection data={MOCK_POPULAR_COURSES_DATA} />
         <InfrastructureSection />
+        <FAQSection />
       </main>
     </CityProvider>
   );
