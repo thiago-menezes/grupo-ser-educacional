@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { View } from 'reshaped';
+import { InfrastructureSection } from '@/features';
 import { CourseAbout } from '../course-about';
 import { CourseAdmissionForms } from '../course-admission-forms';
 import { CourseCoordination } from '../course-coordination';
 import { CourseEnrollmentSidebar } from '../course-enrollment-sidebar';
-import { CourseFAQSection } from '../course-faq-section';
 import { CourseImage } from '../course-image';
 import { CourseInfo } from '../course-info';
-import { CourseInfrastructureSection } from '../course-infrastructure-section';
 import { CourseJobMarketSection } from '../course-job-market-section';
 import { CourseModalitySelector } from '../course-modality-selector';
 import { CourseRelatedCarousel } from '../course-related-carousel';
@@ -49,8 +48,7 @@ export function CourseDetailsContent({
           <CourseJobMarketSection />
           <CourseSalarySection />
           <CourseCoordination course={course} />
-          <CourseInfrastructureSection />
-          <CourseFAQSection />
+          <InfrastructureSection />
           <CourseRelatedCarousel
             institution={institution}
             currentCourseSlug={course.slug}
