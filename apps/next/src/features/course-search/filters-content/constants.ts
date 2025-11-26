@@ -1,6 +1,6 @@
 import { CourseFiltersFormValues } from '../types';
 
-export const FILTERS_CONTENT_HEIGHT_TO_UPDATE = 206;
+export const FILTERS_CONTENT_HEIGHT_TO_UPDATE = 120;
 
 export const DEFAULT_FILTERS: CourseFiltersFormValues = {
   courseLevel: 'graduation',
