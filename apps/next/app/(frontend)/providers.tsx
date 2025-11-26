@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useParams } from 'next/navigation';
 import { PropsWithChildren, useLayoutEffect, useState } from 'react';
 import { Reshaped } from 'reshaped';
+import { CityProvider } from '@/contexts/city';
 import { makeQueryClient } from '@/libs';
 
 export default function Providers({ children }: PropsWithChildren) {
@@ -25,10 +26,12 @@ export default function Providers({ children }: PropsWithChildren) {
   return (
     <Reshaped theme={institution}>
       <QueryClientProvider client={queryClient}>
-        {children}
-        {process.env.NODE_ENV === 'development' ? (
-          <ReactQueryDevtools initialIsOpen={false} />
-        ) : null}
+        <CityProvider>
+          {children}
+          {process.env.NODE_ENV === 'development' ? (
+            <ReactQueryDevtools initialIsOpen={false} />
+          ) : null}
+        </CityProvider>
       </QueryClientProvider>
     </Reshaped>
   );

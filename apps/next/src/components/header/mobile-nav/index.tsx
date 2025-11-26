@@ -1,24 +1,47 @@
 import { Button, Link } from 'reshaped';
+import { useCityContext } from '@/contexts/city';
 import { useCurrentInstitution } from '@/hooks';
 import styles from '../styles.module.scss';
 
 export const MobileNav = ({ mobileMenuOpen }: { mobileMenuOpen: boolean }) => {
   const { institutionId, institutionName } = useCurrentInstitution();
+  const { city } = useCityContext();
+
+  const buildGraduationUrl = () => {
+    const params = new URLSearchParams();
+    params.append('courseLevel', 'graduation');
+    if (city) {
+      params.append('city', city);
+    }
+    return `/${institutionId}/cursos?${params.toString()}`;
+  };
+
+  const buildPostgraduateUrl = () => {
+    const params = new URLSearchParams();
+    params.append('courseLevel', 'postgraduate');
+    if (city) {
+      params.append('city', city);
+    }
+    return `/${institutionId}/cursos?${params.toString()}`;
+  };
 
   return (
-    mobileMenuOpen && (
-      <div className={styles.mobileNav}>
-        <div className={styles.container}>
-          <nav className={styles.mobileNavContent}>
+    <div
+      className={`${styles.mobileNav} ${
+        mobileMenuOpen ? styles.mobileNavOpen : ''
+      }`}
+    >
+      <div className={styles.container}>
+        <nav className={styles.mobileNavContent}>
             <Link
-              href={`/${institutionId}/graduacao`}
+              href={buildGraduationUrl()}
               className={styles.mobileNavLink}
             >
               Graduação
             </Link>
 
             <Link
-              href={`/${institutionId}/pos-graduacao`}
+              href={buildPostgraduateUrl()}
               className={styles.mobileNavLink}
             >
               Pós-Graduação
@@ -52,9 +75,8 @@ export const MobileNav = ({ mobileMenuOpen }: { mobileMenuOpen: boolean }) => {
             >
               Inscreva-se
             </Button>
-          </nav>
-        </div>
+        </nav>
       </div>
-    )
+    </div>
   );
 };

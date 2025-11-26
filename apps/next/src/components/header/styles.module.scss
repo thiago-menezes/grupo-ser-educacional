@@ -114,18 +114,11 @@
 .mobileNav {
   background: var(--rs-color-background-page);
   border-top: 1px solid rgb(from var(--rs-color-background-neutral) r g b / 0.6);
-  animation: slideDown 0.3s ease;
+  display: none;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.mobileNavOpen {
+  display: block;
 }
 
 .mobileNavContent {

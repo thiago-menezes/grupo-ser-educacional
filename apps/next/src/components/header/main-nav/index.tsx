@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, DropdownMenu, useTheme } from 'reshaped';
+import { useCityContext } from '@/contexts/city';
 import { useCurrentInstitution } from '@/hooks';
 import { Icon } from '../..';
 import styles from '../styles.module.scss';
@@ -14,8 +15,27 @@ export const MainNav = ({
 }) => {
   const { institutionId, institutionName } = useCurrentInstitution();
   const { colorMode } = useTheme();
+  const { city } = useCityContext();
 
   const isDarkMode = colorMode === 'dark';
+
+  const buildGraduationUrl = () => {
+    const params = new URLSearchParams();
+    params.append('courseLevel', 'graduation');
+    if (city) {
+      params.append('city', city);
+    }
+    return `/${institutionId}/cursos?${params.toString()}`;
+  };
+
+  const buildPostgraduateUrl = () => {
+    const params = new URLSearchParams();
+    params.append('courseLevel', 'postgraduate');
+    if (city) {
+      params.append('city', city);
+    }
+    return `/${institutionId}/cursos?${params.toString()}`;
+  };
 
   return (
     <div className={styles.mainNav}>
@@ -35,13 +55,13 @@ export const MainNav = ({
 
           <div className={styles.rightContainer}>
             <nav className={styles.desktopNav} aria-label="Main navigation">
-              <Link href={'/'}>
+              <Link href={buildGraduationUrl()}>
                 <Button size="large" variant="ghost">
                   Graduação
                 </Button>
               </Link>
 
-              <Link href={`/${institutionId}/pos-graduacao`}>
+              <Link href={buildPostgraduateUrl()}>
                 <Button size="large" variant="ghost">
                   Pós-Graduação
                 </Button>

@@ -1,16 +1,21 @@
+'use client';
+
 import {
   createContext,
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { DEFAULT_FILTERS } from './filters-content/constants';
 import type {
   ActiveFilter,
   CourseFiltersContextValues,
   CourseFiltersFormValues,
+  CourseLevel,
 } from './types';
 
 const CourseFiltersContext = createContext<CourseFiltersContextValues>(
@@ -111,10 +116,74 @@ function buildActiveFilters(filters: CourseFiltersFormValues): ActiveFilter[] {
   return activeFilters;
 }
 
+function parseFiltersFromSearchParams(
+  searchParams: URLSearchParams,
+): Partial<CourseFiltersFormValues> {
+  const filters: Partial<CourseFiltersFormValues> = {};
+
+  const courseLevel = searchParams.get('courseLevel');
+  if (courseLevel === 'graduation' || courseLevel === 'postgraduate') {
+    filters.courseLevel = courseLevel as CourseLevel;
+  }
+
+  const city = searchParams.get('city');
+  if (city) {
+    filters.city = city;
+  }
+
+  const courseName = searchParams.get('course');
+  if (courseName) {
+    filters.courseName = courseName;
+  }
+
+  const modalities = searchParams.getAll('modalities');
+  if (modalities.length > 0) {
+    filters.modalities = modalities.filter(
+      (m): m is CourseFiltersFormValues['modalities'][number] =>
+        m === 'presencial' || m === 'semipresencial' || m === 'ead',
+    );
+  }
+
+  return filters;
+}
+
 export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
-  // Applied filters - these trigger the search/API call
-  const [appliedFilters, setAppliedFilters] =
-    useState<CourseFiltersFormValues>(DEFAULT_FILTERS);
+  const searchParams = useSearchParams();
+
+  // Initialize filters from URL params on mount
+  const [appliedFilters, setAppliedFilters] = useState<CourseFiltersFormValues>(
+    () => {
+      const urlFilters = parseFiltersFromSearchParams(searchParams);
+      return {
+        ...DEFAULT_FILTERS,
+        ...urlFilters,
+      };
+    },
+  );
+
+  // Update filters when URL params change
+  useEffect(() => {
+    const urlFilters = parseFiltersFromSearchParams(searchParams);
+    setAppliedFilters((prev) => {
+      // Only update if there are actual changes to avoid unnecessary re-renders
+      const hasChanges =
+        (urlFilters.courseLevel && urlFilters.courseLevel !== prev.courseLevel) ||
+        (urlFilters.city !== undefined && urlFilters.city !== prev.city) ||
+        (urlFilters.courseName !== undefined &&
+          urlFilters.courseName !== prev.courseName) ||
+        (urlFilters.modalities !== undefined &&
+          JSON.stringify(urlFilters.modalities) !== JSON.stringify(prev.modalities));
+
+      if (!hasChanges) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        ...urlFilters,
+      };
+    });
+  }, [searchParams]);
 
   const activeFilters = useMemo(
     () => buildActiveFilters(appliedFilters),
