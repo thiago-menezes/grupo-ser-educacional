@@ -34,7 +34,7 @@
   padding: var(--rs-unit-x3);
   border-radius: 0 var(--rs-radius-large) 0 0;
 
-  @media (min-width: 768px) {
+  @media (min-width: 660px) {
     grid-template-columns: 1fr 1fr auto;
     gap: var(--rs-unit-x4);
     align-items: flex-end;

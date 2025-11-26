@@ -1,11 +1,12 @@
 import { clsx } from 'clsx';
 import Link from 'next/link';
-import { Button, useTheme } from 'reshaped';
+import { Button } from 'reshaped';
+import { useColorMode } from '@/hooks';
 import { Icon } from '../..';
 import styles from '../styles.module.scss';
 
 export const TopBar = () => {
-  const { invertColorMode, colorMode } = useTheme();
+  const { invertColorMode, colorMode } = useColorMode();
 
   return (
     <div className={styles.topBar}>

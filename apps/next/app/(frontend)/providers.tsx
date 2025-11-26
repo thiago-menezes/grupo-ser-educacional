@@ -8,6 +8,19 @@ import { Reshaped } from 'reshaped';
 import { CityProvider } from '@/contexts/city';
 import { makeQueryClient } from '@/libs';
 
+const COLOR_MODE_STORAGE_KEY = 'rs-color-mode';
+
+// Initialize color mode synchronously before React renders
+if (typeof window !== 'undefined') {
+  const storedColorMode = localStorage.getItem(COLOR_MODE_STORAGE_KEY);
+  if (storedColorMode === 'dark' || storedColorMode === 'light') {
+    document.documentElement.setAttribute(
+      'data-rs-color-mode',
+      storedColorMode,
+    );
+  }
+}
+
 export default function Providers({ children }: PropsWithChildren) {
   const [queryClient] = useState(() => makeQueryClient());
   const { institution = 'grupo-ser' } = useParams<{ institution: string }>();

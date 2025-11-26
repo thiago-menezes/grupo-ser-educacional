@@ -34,8 +34,26 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={tablerIcons.variable}>
+    <html
+      lang="pt-BR"
+      className={tablerIcons.variable}
+      suppressHydrationWarning
+    >
       <body className={inter.className}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const storedColorMode = localStorage.getItem('rs-color-mode');
+                  if (storedColorMode === 'dark' || storedColorMode === 'light') {
+                    document.documentElement.setAttribute('data-rs-color-mode', storedColorMode);
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         <Providers>{children}</Providers>
       </body>
     </html>
