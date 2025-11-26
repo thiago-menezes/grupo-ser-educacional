@@ -14,30 +14,20 @@
     "Nome": {
       "type": "string"
     },
-    "Desktop": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "Mobile": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "instituicao": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::institution.institution"
+    },
+    "Desktop": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "Mobile": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
     }
   }
 }

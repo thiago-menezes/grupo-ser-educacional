@@ -47,4 +47,3 @@ export type StrapiHomeCarouselResponse = {
     };
   };
 };
-
