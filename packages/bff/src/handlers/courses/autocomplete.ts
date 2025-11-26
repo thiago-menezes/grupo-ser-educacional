@@ -3,29 +3,25 @@ import type {
   AutocompleteResponse,
 } from '@grupo-ser/types';
 
-import { getAvailableCities, getAvailableCourses } from '../../data';
+import { getAvailableCourses } from '../../data';
+import { searchCities, formatCityValue } from '../../services/cities';
 
 /**
  * Handle autocomplete request
  */
-export function handleAutocomplete(
+export async function handleAutocomplete(
   params: AutocompleteQueryParams,
-): AutocompleteResponse {
+): Promise<AutocompleteResponse> {
   const query = params.q || '';
 
   if (params.type === 'cities') {
-    const cities = getAvailableCities();
-    const filtered = cities.filter(
-      (city) =>
-        city.city.toLowerCase().includes(query.toLowerCase()) ||
-        city.state.toLowerCase().includes(query.toLowerCase()),
-    );
+    const cities = await searchCities(query);
 
     return {
       type: 'cities',
-      results: filtered.map((city) => ({
+      results: cities.map((city) => ({
         label: `${city.city} - ${city.state}`,
-        value: city.city,
+        value: formatCityValue(city.city, city.state),
         city: city.city,
         state: city.state,
       })),

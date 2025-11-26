@@ -5,7 +5,7 @@
     "unitId": 1,
     "modalityId": 1,
     "periodId": 3,
-    "price": 812.07,
+    "price": 81207,
     "duration": "5 anos (10 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -16,7 +16,7 @@
     "unitId": 1,
     "modalityId": 3,
     "periodId": 1,
-    "price": 780.0,
+    "price": 78000,
     "duration": "5 anos (10 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -27,7 +27,7 @@
     "unitId": 1,
     "modalityId": 2,
     "periodId": 5,
-    "price": 750.0,
+    "price": 75000,
     "duration": "5 anos (10 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -38,7 +38,7 @@
     "unitId": 2,
     "modalityId": 2,
     "periodId": 5,
-    "price": 650.0,
+    "price": 65000,
     "duration": "4 anos (8 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -49,7 +49,7 @@
     "unitId": 2,
     "modalityId": 2,
     "periodId": 5,
-    "price": 320.9,
+    "price": 32090,
     "duration": "4 anos (8 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -60,7 +60,7 @@
     "unitId": 2,
     "modalityId": 2,
     "periodId": 5,
-    "price": 450.9,
+    "price": 45090,
     "duration": "5 anos (10 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -71,7 +71,7 @@
     "unitId": 3,
     "modalityId": 1,
     "periodId": 2,
-    "price": 720.0,
+    "price": 72000,
     "duration": "5 anos (10 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -82,7 +82,7 @@
     "unitId": 3,
     "modalityId": 2,
     "periodId": 5,
-    "price": 420.0,
+    "price": 42000,
     "duration": "4 anos (8 semestres)",
     "enrollmentOpen": false,
     "active": true
@@ -93,7 +93,7 @@
     "unitId": 1,
     "modalityId": 1,
     "periodId": 4,
-    "price": 950.0,
+    "price": 95000,
     "duration": "5 anos (10 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -104,7 +104,7 @@
     "unitId": 1,
     "modalityId": 1,
     "periodId": 4,
-    "price": 3500.0,
+    "price": 350000,
     "duration": "6 anos (12 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -115,7 +115,7 @@
     "unitId": 1,
     "modalityId": 1,
     "periodId": 3,
-    "price": 850.0,
+    "price": 85000,
     "duration": "5 anos (10 semestres)",
     "enrollmentOpen": true,
     "active": true
@@ -126,7 +126,7 @@
     "unitId": 1,
     "modalityId": 2,
     "periodId": 5,
-    "price": 750.0,
+    "price": 75000,
     "duration": "5 anos (10 semestres)",
     "enrollmentOpen": true,
     "active": true

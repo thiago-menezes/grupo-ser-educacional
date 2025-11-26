@@ -82,4 +82,10 @@ export const MOCK_CITIES: CityOption[] = [
     city: 'Manaus',
     state: 'AM',
   },
+  {
+    label: 'Região Metropolitana de Campinas - SP',
+    value: 'city:região-metropolitana-de-campinas-state:sp',
+    city: 'Região Metropolitana de Campinas',
+    state: 'SP',
+  },
 ];

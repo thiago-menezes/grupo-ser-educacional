@@ -1,6 +1,7 @@
 // Services
 export * from './services/strapi';
 export * from './services/geolocation';
+export * from './services/cities';
 
 // Handlers
 export {

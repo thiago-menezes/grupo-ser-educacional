@@ -49,7 +49,7 @@ export const MOCK_COURSE_DETAILS: CourseDetails = {
       unitId: 1,
       modalityId: 1,
       periodId: 1,
-      price: 812.07,
+      price: 81207,
       duration: '5 anos (10 semestres)',
       enrollmentOpen: true,
       unit: {
@@ -73,7 +73,7 @@ export const MOCK_COURSE_DETAILS: CourseDetails = {
       unitId: 1,
       modalityId: 1,
       periodId: 2,
-      price: 850.0,
+      price: 85000,
       duration: '5 anos (10 semestres)',
       enrollmentOpen: true,
       unit: {
@@ -97,7 +97,7 @@ export const MOCK_COURSE_DETAILS: CourseDetails = {
       unitId: 1,
       modalityId: 2,
       periodId: 1,
-      price: 750.0,
+      price: 75000,
       duration: '5 anos (10 semestres)',
       enrollmentOpen: true,
       unit: {
@@ -266,7 +266,7 @@ export const MOCK_RELATED_COURSES = [
     type: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modality: 'Presencial',
-    price: 812.07,
+    price: 81207,
     slug: 'ciencias-de-dados',
   },
   {
@@ -275,7 +275,7 @@ export const MOCK_RELATED_COURSES = [
     type: 'Bacharelado',
     duration: '4 anos (8 semestres)',
     modality: 'Presencial',
-    price: 320.9,
+    price: 32090,
     slug: 'sociologia',
   },
   {
@@ -284,7 +284,7 @@ export const MOCK_RELATED_COURSES = [
     type: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modality: 'Presencial',
-    price: 1200.4,
+    price: 120040,
     slug: 'enfermagem',
   },
   {
@@ -293,7 +293,7 @@ export const MOCK_RELATED_COURSES = [
     type: 'Tecnólogo',
     duration: '2,5 anos (5 semestres)',
     modality: 'Presencial',
-    price: 450.9,
+    price: 45090,
     slug: 'analise-e-desenvolvimento-de-sistemas',
   },
 ];

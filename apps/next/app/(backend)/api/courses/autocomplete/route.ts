@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   try {
     const params = parseAutocompleteQueryParams(request.nextUrl.searchParams);
-    const response = handleAutocomplete(params);
+    const response = await handleAutocomplete(params);
     return NextResponse.json(response);
   } catch (error) {
     if (error instanceof BffValidationError) {

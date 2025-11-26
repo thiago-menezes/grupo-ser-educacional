@@ -10,8 +10,12 @@ import {
 import type { AutocompleteProps } from 'reshaped';
 import { Icon } from '@/components';
 import { useCityContext } from '@/contexts/city';
-import { useGeolocation, useInstitutionData } from '@/hooks';
-import { MOCK_CITIES, type CityOption } from '../constants';
+import {
+  useGeolocation,
+  useInstitutionData,
+  useCitiesAutocomplete,
+  type CityOption,
+} from '@/hooks';
 import { useQuickSearchForm } from '../hooks';
 import { buildSearchParams, formatCityValue } from '../utils';
 import styles from './styles.module.scss';
@@ -120,6 +124,10 @@ export function QuickSearchForm({
     isInstitutionLoading,
   ]);
 
+  // Use dynamic city search
+  const { cities: searchResults, isLoading: isSearching } =
+    useCitiesAutocomplete(inputValue);
+
   // Build all available options including geolocation-detected city
   const allOptions = useMemo(() => {
     const options: CityOption[] = [];
@@ -134,15 +142,15 @@ export function QuickSearchForm({
       });
     }
 
-    // Add geolocation-detected city if available and not already in mock list
+    // Add geolocation-detected city if available and not already in search results
     if (contextCity && contextState && !permissionDenied) {
       const geoLabel = `${contextCity} - ${contextState}`;
       const geoValue = formatCityValue(contextCity, contextState);
-      const existsInMock = MOCK_CITIES.some(
+      const existsInResults = searchResults.some(
         (city) => city.city === contextCity && city.state === contextState,
       );
 
-      if (!existsInMock) {
+      if (!existsInResults) {
         options.push({
           label: geoLabel,
           value: geoValue,
@@ -152,11 +160,11 @@ export function QuickSearchForm({
       }
     }
 
-    // Add mock cities
-    options.push(...MOCK_CITIES);
+    // Add search results from API
+    options.push(...searchResults);
 
     return options;
-  }, [permissionDenied, contextCity, contextState]);
+  }, [permissionDenied, contextCity, contextState, searchResults]);
 
   // Get current city display label (e.g., "Recife - PE")
   const currentCityLabel = useMemo(() => {
@@ -322,11 +330,12 @@ export function QuickSearchForm({
             disabled={isLoading}
             size="large"
           >
+            {isSearching && inputValue.trim().length >= 2 && (
+              <Autocomplete.Item value="" data={null} disabled>
+                Buscando...
+              </Autocomplete.Item>
+            )}
             {allOptions.map((option) => {
-              // Filter options based on input value
-              const searchTerm = inputValue.toLowerCase().trim();
-              const optionLabel = option.label.toLowerCase();
-
               // Always show geolocation option
               if (option.value === 'geolocation:request') {
                 return (
@@ -343,38 +352,24 @@ export function QuickSearchForm({
                 );
               }
 
-              // Filter cities by label - show if input is empty or matches
-              // Don't show exact matches (user already typed it)
-              if (!searchTerm) {
-                return (
-                  <Autocomplete.Item
-                    key={option.value}
-                    value={option.label}
-                    data={option}
-                  >
-                    {option.label}
-                  </Autocomplete.Item>
-                );
-              }
-
-              // Show if label includes search term but is not exact match
-              if (
-                optionLabel.includes(searchTerm) &&
-                optionLabel !== searchTerm
-              ) {
-                return (
-                  <Autocomplete.Item
-                    key={option.value}
-                    value={option.label}
-                    data={option}
-                  >
-                    {option.label}
-                  </Autocomplete.Item>
-                );
-              }
-
-              return null;
+              // Show all other options (already filtered by API)
+              return (
+                <Autocomplete.Item
+                  key={option.value}
+                  value={option.label}
+                  data={option}
+                >
+                  {option.label}
+                </Autocomplete.Item>
+              );
             })}
+            {!isSearching &&
+              allOptions.length === 0 &&
+              inputValue.trim().length >= 2 && (
+                <Autocomplete.Item value="" data={null} disabled>
+                  Nenhuma cidade encontrada
+                </Autocomplete.Item>
+              )}
           </Autocomplete>
         </FormControl>
 

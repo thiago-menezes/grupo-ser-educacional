@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import {
   createContext,
   PropsWithChildren,
@@ -8,8 +9,8 @@ import {
   useEffect,
   useMemo,
   useState,
+  startTransition,
 } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { DEFAULT_FILTERS } from './filters-content/constants';
 import type {
   ActiveFilter,
@@ -59,9 +60,36 @@ function buildActiveFilters(filters: CourseFiltersFormValues): ActiveFilter[] {
   }
 
   if (filters.city) {
+    // Format city label from technical value format (city:name-state:code)
+    const techFormatMatch = filters.city.match(
+      /^city:(.+?)-state:([a-z]{2})$/i,
+    );
+    let cityLabel = filters.city;
+
+    if (techFormatMatch) {
+      const citySlug = techFormatMatch[1];
+      const stateCode = techFormatMatch[2].toUpperCase();
+      const cityName = citySlug.replace(/-/g, ' ');
+
+      // Capitalize city name properly
+      const formattedCity = cityName
+        .split(' ')
+        .map((word) => {
+          // Handle special cases like "de", "da", "do", "dos", "das"
+          const lowerWords = ['de', 'da', 'do', 'dos', 'das', 'e'];
+          if (lowerWords.includes(word.toLowerCase())) {
+            return word.toLowerCase();
+          }
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        })
+        .join(' ');
+
+      cityLabel = `${formattedCity} - ${stateCode}`;
+    }
+
     activeFilters.push({
       id: 'city',
-      label: filters.city,
+      label: cityLabel,
     });
   }
 
@@ -164,24 +192,28 @@ export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
   // Update filters when URL params change
   useEffect(() => {
     const urlFilters = parseFiltersFromSearchParams(searchParams);
-    setAppliedFilters((prev) => {
-      // Only update if there are actual changes to avoid unnecessary re-renders
-      const hasChanges =
-        (urlFilters.courseLevel && urlFilters.courseLevel !== prev.courseLevel) ||
-        (urlFilters.city !== undefined && urlFilters.city !== prev.city) ||
-        (urlFilters.courseName !== undefined &&
-          urlFilters.courseName !== prev.courseName) ||
-        (urlFilters.modalities !== undefined &&
-          JSON.stringify(urlFilters.modalities) !== JSON.stringify(prev.modalities));
+    startTransition(() => {
+      setAppliedFilters((prev) => {
+        // Only update if there are actual changes to avoid unnecessary re-renders
+        const hasChanges =
+          (urlFilters.courseLevel &&
+            urlFilters.courseLevel !== prev.courseLevel) ||
+          (urlFilters.city !== undefined && urlFilters.city !== prev.city) ||
+          (urlFilters.courseName !== undefined &&
+            urlFilters.courseName !== prev.courseName) ||
+          (urlFilters.modalities !== undefined &&
+            JSON.stringify(urlFilters.modalities) !==
+              JSON.stringify(prev.modalities));
 
-      if (!hasChanges) {
-        return prev;
-      }
+        if (!hasChanges) {
+          return prev;
+        }
 
-      return {
-        ...prev,
-        ...urlFilters,
-      };
+        return {
+          ...prev,
+          ...urlFilters,
+        };
+      });
     });
   }, [searchParams]);
 

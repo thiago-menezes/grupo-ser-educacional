@@ -33,48 +33,42 @@ export const MobileNav = ({ mobileMenuOpen }: { mobileMenuOpen: boolean }) => {
     >
       <div className={styles.container}>
         <nav className={styles.mobileNavContent}>
-            <Link
-              href={buildGraduationUrl()}
-              className={styles.mobileNavLink}
-            >
-              Graduação
-            </Link>
+          <Link href={buildGraduationUrl()} className={styles.mobileNavLink}>
+            Graduação
+          </Link>
 
-            <Link
-              href={buildPostgraduateUrl()}
-              className={styles.mobileNavLink}
-            >
-              Pós-Graduação
-            </Link>
+          <Link href={buildPostgraduateUrl()} className={styles.mobileNavLink}>
+            Pós-Graduação
+          </Link>
 
-            <Link
-              href={`/${institutionId}/cursos`}
-              className={styles.mobileNavLink}
-            >
-              Nossos cursos
-            </Link>
+          <Link
+            href={`/${institutionId}/cursos`}
+            className={styles.mobileNavLink}
+          >
+            Nossos cursos
+          </Link>
 
-            <Link
-              href={`/${institutionId}/sobre`}
-              className={styles.mobileNavLink}
-            >
-              A {institutionName}
-            </Link>
+          <Link
+            href={`/${institutionId}/sobre`}
+            className={styles.mobileNavLink}
+          >
+            A {institutionName}
+          </Link>
 
-            <Link
-              href={`/${institutionId}/ingresso`}
-              className={styles.mobileNavLink}
-            >
-              Formas de ingresso
-            </Link>
+          <Link
+            href={`/${institutionId}/ingresso`}
+            className={styles.mobileNavLink}
+          >
+            Formas de ingresso
+          </Link>
 
-            <Button
-              href={`/${institutionId}/inscreva-se`}
-              color="primary"
-              fullWidth
-            >
-              Inscreva-se
-            </Button>
+          <Button
+            href={`/${institutionId}/inscreva-se`}
+            color="primary"
+            fullWidth
+          >
+            Inscreva-se
+          </Button>
         </nav>
       </div>
     </div>

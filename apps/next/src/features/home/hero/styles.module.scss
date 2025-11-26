@@ -1,7 +1,8 @@
 .wrapper {
   width: 100%;
   position: relative;
-  padding: calc(var(--rs-unit-x10) * 2) var(--rs-unit-x4);
+  padding: var(--rs-unit-x8) var(--rs-unit-x4) calc(var(--rs-unit-x10) * 2)
+    var(--rs-unit-x4);
   padding-bottom: calc(var(--rs-unit-x10) * 7);
 
   @media (--rs-viewport-m) {
