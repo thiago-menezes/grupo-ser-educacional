@@ -1,7 +1,5 @@
 'use client';
 
-import { CourseDetailsPage } from '@/features';
-
 // export async function generateMetadata({ params }: CourseDetailsPageProps) {
 //   const { institution, slug } = await params;
 
@@ -38,5 +36,5 @@ import { CourseDetailsPage } from '@/features';
 // }
 
 export default function CourseDetailsRoute() {
-  return <CourseDetailsPage />;
+  return;
 }
