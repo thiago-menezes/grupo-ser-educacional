@@ -22,9 +22,19 @@ const ADMISSION_FORMS = [
     title: 'Outro diploma',
     description: 'Utilize seu diploma para ingressar',
   },
-];
+] as const;
 
-export function CourseAdmissionForms() {
+export type AdmissionFormId = (typeof ADMISSION_FORMS)[number]['id'];
+
+export type CourseAdmissionFormsProps = {
+  selectedFormId?: string | null;
+  onSelectForm: (formId: string) => void;
+};
+
+export function CourseAdmissionForms({
+  selectedFormId,
+  onSelectForm,
+}: CourseAdmissionFormsProps) {
   return (
     <View className={styles.forms}>
       <Text
@@ -36,32 +46,39 @@ export function CourseAdmissionForms() {
         Selecione sua forma de ingresso:
       </Text>
       <View className={styles.formsGrid}>
-        {ADMISSION_FORMS.map((form) => (
-          <button
-            key={form.id}
-            type="button"
-            className={styles.formCard}
-            aria-label={`${form.title}: ${form.description}`}
-          >
-            <View className={styles.formContent}>
-              <Text
-                as="h3"
-                variant="body-2"
-                weight="bold"
-                className={styles.formTitle}
-              >
-                {form.title}
-              </Text>
-              <Text
-                variant="body-3"
-                color="neutral-faded"
-                className={styles.formDescription}
-              >
-                {form.description}
-              </Text>
-            </View>
-          </button>
-        ))}
+        {ADMISSION_FORMS.map((form) => {
+          const isSelected = selectedFormId === form.id;
+          return (
+            <button
+              key={form.id}
+              type="button"
+              className={`${styles.formCard} ${
+                isSelected ? styles.selected : ''
+              }`}
+              aria-label={`${form.title}: ${form.description}`}
+              aria-pressed={isSelected}
+              onClick={() => onSelectForm(form.id)}
+            >
+              <View className={styles.formContent}>
+                <Text
+                  as="h3"
+                  variant="body-2"
+                  weight="bold"
+                  className={styles.formTitle}
+                >
+                  {form.title}
+                </Text>
+                <Text
+                  variant="body-3"
+                  color="neutral-faded"
+                  className={styles.formDescription}
+                >
+                  {form.description}
+                </Text>
+              </View>
+            </button>
+          );
+        })}
       </View>
     </View>
   );

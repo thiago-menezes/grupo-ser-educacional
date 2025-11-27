@@ -4,6 +4,12 @@
   gap: var(--rs-unit-x6);
 }
 
+.topContentSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x6);
+}
+
 .layout {
   display: grid;
   grid-template-columns: 1fr;

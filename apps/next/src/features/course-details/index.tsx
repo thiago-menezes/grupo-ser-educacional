@@ -47,9 +47,9 @@ export function CourseDetailsPage() {
 
   return (
     <View className={styles.page}>
-      <Container>
+      <Container className={styles.topSection}>
         <Breadcrumb items={breadcrumbItems} />
-        <CourseDetailsContent course={course} institution={institution} />
+        <CourseDetailsContent course={course} />
       </Container>
     </View>
   );
