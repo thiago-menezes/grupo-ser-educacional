@@ -57,12 +57,38 @@ nvm use 22
 
 ### Yarn version mismatch
 
-If you see `The engine "yarn" is incompatible`, enable Corepack:
+If you see `The engine "yarn" is incompatible` or `Expected version ">=4.0.0". Got "1.22.19"`:
 
-```bash
-corepack enable
-corepack prepare yarn@4.9.4 --activate
-```
+1. **Enable Corepack** (if not already enabled):
+   ```bash
+   corepack enable
+   ```
+
+2. **Prepare and activate Yarn 4.9.4**:
+   ```bash
+   corepack prepare yarn@4.9.4 --activate
+   ```
+
+3. **Verify it's working**:
+   ```bash
+   yarn --version  # Should show 4.9.4, NOT 1.x
+   ```
+
+4. **If still having issues**, check which yarn is being used:
+   ```bash
+   which yarn
+   # If it shows /usr/local/bin/yarn or /opt/homebrew/bin/yarn, Corepack might not be intercepting
+   # Try restarting your terminal or running: hash -r
+   ```
+
+5. **For CI/CD environments**, make sure Corepack is enabled in your workflow:
+   ```yaml
+   - name: Setup Node.js
+     uses: actions/setup-node@v4
+     with:
+       node-version: "22"
+       enable-corepack: true  # This is crucial!
+   ```
 
 ### Corepack not available
 

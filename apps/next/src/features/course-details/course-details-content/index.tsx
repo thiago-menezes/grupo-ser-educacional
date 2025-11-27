@@ -1,5 +1,5 @@
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, startTransition } from 'react';
 import { View } from 'reshaped';
 import { InfrastructureSection } from '@/features';
 import { GeoCoursesSection } from '@/features/home/geo-courses';
@@ -73,12 +73,14 @@ export function CourseDetailsContent({ course }: CourseDetailsContentProps) {
   // Initialize selected admission form from URL params
   useEffect(() => {
     const admissionFormParam = searchParams.get('admissionForm');
-    if (admissionFormParam) {
-      setSelectedAdmissionFormId(admissionFormParam);
-    } else {
-      // Default to first form if no param (will update URL when user selects)
-      setSelectedAdmissionFormId('vestibular');
-    }
+    startTransition(() => {
+      if (admissionFormParam) {
+        setSelectedAdmissionFormId(admissionFormParam);
+      } else {
+        // Default to first form if no param (will update URL when user selects)
+        setSelectedAdmissionFormId('vestibular');
+      }
+    });
   }, [searchParams]);
 
   // Handler to update modality query parameter
