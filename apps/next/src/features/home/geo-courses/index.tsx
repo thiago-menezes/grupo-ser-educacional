@@ -1,8 +1,14 @@
+import { useRouter } from 'next/navigation';
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
 import { CourseCard, CourseCardSkeleton, Icon, Pagination } from '@/components';
 import { useCityContext } from '@/contexts/city';
-import { useGeolocation, useInstitutionData, usePagination } from '@/hooks';
+import {
+  useCurrentInstitution,
+  useGeolocation,
+  useInstitutionData,
+  usePagination,
+} from '@/hooks';
 import { MOCK_GEO_COURSES_DATA } from './api/mocks';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';
@@ -14,6 +20,8 @@ const SKELETON_COUNT = 4;
 export function GeoCoursesSection({
   data = MOCK_GEO_COURSES_DATA,
 }: Partial<GeoCourseSectionProps>) {
+  const router = useRouter();
+  const { institutionId } = useCurrentInstitution();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const {
     city: contextCity,
@@ -45,6 +53,14 @@ export function GeoCoursesSection({
   const handleScroll = useCallback(
     (_e: React.UIEvent<HTMLDivElement>) => {},
     [],
+  );
+
+  const handleCourseClick = useCallback(
+    (slug: string) => {
+      if (!institutionId) return;
+      router.push(`/${institutionId}/cursos/${slug}`);
+    },
+    [router, institutionId],
   );
 
   return (
@@ -109,7 +125,7 @@ export function GeoCoursesSection({
                 ))
               : coursesToShow.map((course) => (
                   <div key={course.id} className={styles.card} role="listitem">
-                    <CourseCard course={course} />
+                    <CourseCard course={course} onClick={handleCourseClick} />
                   </div>
                 ))}
           </div>
