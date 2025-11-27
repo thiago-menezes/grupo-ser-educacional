@@ -47,16 +47,22 @@ export function createFallbackInfrastructure(institutionSlug: string): {
   }));
 
   // Create fallback images for each unit
-  // Using a default placeholder image path
+  // Using gallery images from public folder
+  const galleryImages = [
+    '/galeria-1.png',
+    '/galeria-2.png',
+    '/galeria-3.png',
+    '/galeria-4.png',
+  ];
   const fallbackImages: InfrastructureImage[] = institutionUnits.flatMap(
     (unit) => {
-      // Create 3-4 fallback images per unit
+      // Create 4 fallback images per unit
       const imageCount = 4;
       return Array.from({ length: imageCount }, (_, imageIndex) => {
         const imageId = `${unit.id}-fallback-${imageIndex + 1}`;
         return {
           id: imageId,
-          src: 'https://placehold.co/1920x1080.png', // Fallback image path
+          src: galleryImages[imageIndex % galleryImages.length],
           alt: `${unit.name} - Infraestrutura ${imageIndex + 1}`,
         };
       });

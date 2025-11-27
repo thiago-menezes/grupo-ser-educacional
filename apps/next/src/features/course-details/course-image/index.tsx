@@ -9,7 +9,7 @@ export type CourseImageProps = {
 };
 
 export function CourseImage({ course }: CourseImageProps) {
-  const initialImageUrl = 'https://placehold.co/800x120.png';
+  const initialImageUrl = '/banner curso.png';
   const { src, handleError } = useImageFallback(initialImageUrl);
   const imageAlt = course.name || 'Imagem do curso';
 

@@ -1,14 +1,12 @@
 import type { AreasSelectorContent } from './types';
 
-const PLACEHOLDER_IMAGE = 'https://placehold.co/320x180.png';
-
 export const DEFAULT_AREAS_CONTENT: AreasSelectorContent = {
   areas: [
     {
       id: 'engineering',
       title: 'Engenharia & Tecnologia',
       slug: 'engenharia-tecnologia',
-      imageUrl: PLACEHOLDER_IMAGE,
+      imageUrl: '/area1.png',
       courses: [
         {
           id: 'engenharia-civil',
@@ -36,7 +34,7 @@ export const DEFAULT_AREAS_CONTENT: AreasSelectorContent = {
       id: 'humanas',
       title: 'Ciências Humanas',
       slug: 'ciencias-humanas',
-      imageUrl: PLACEHOLDER_IMAGE,
+      imageUrl: '/area2.png',
       courses: [
         { id: 'jornalismo', name: 'Jornalismo', slug: 'jornalismo' },
         { id: 'geografia', name: 'Geografia', slug: 'geografia' },
@@ -52,7 +50,7 @@ export const DEFAULT_AREAS_CONTENT: AreasSelectorContent = {
       id: 'exatas',
       title: 'Ciências Exatas e da Terra',
       slug: 'ciencias-exatas',
-      imageUrl: PLACEHOLDER_IMAGE,
+      imageUrl: '/area3.png',
       courses: [
         { id: 'fisica', name: 'Física', slug: 'fisica' },
         { id: 'quimica', name: 'Química', slug: 'quimica' },
@@ -64,7 +62,7 @@ export const DEFAULT_AREAS_CONTENT: AreasSelectorContent = {
       id: 'saude',
       title: 'Ciências da Saúde',
       slug: 'ciencias-da-saude',
-      imageUrl: PLACEHOLDER_IMAGE,
+      imageUrl: '/area4.png',
       courses: [
         { id: 'enfermagem', name: 'Enfermagem', slug: 'enfermagem' },
         { id: 'fisioterapia', name: 'Fisioterapia', slug: 'fisioterapia' },

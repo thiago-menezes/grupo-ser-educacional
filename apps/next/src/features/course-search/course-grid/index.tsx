@@ -18,9 +18,8 @@ export function CourseGrid() {
     handlePageChange,
     currentPage,
   } = useCourseGrid();
-  const { src: bannerSrc, handleError: handleBannerError } = useImageFallback(
-    'https://placehold.co/1200x200.png',
-  );
+  const { src: bannerSrc, handleError: handleBannerError } =
+    useImageFallback('/banner cursos.png');
 
   const handleCourseClick = (slug: string) => {
     router.push(`/${institutionId}/cursos/${slug}`);
@@ -50,9 +49,8 @@ export function CourseGrid() {
             <Image
               src={bannerSrc}
               alt="Banner"
-              width={0}
-              height={0}
-              priority
+              width={800}
+              height={80}
               onError={handleBannerError}
             />
           </View>
