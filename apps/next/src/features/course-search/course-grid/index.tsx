@@ -44,7 +44,7 @@ export function CourseGrid() {
 
           <View className={styles.bannerContainer}>
             <Image
-              src="https://placehold.co/1200x200.png?text=Banner"
+              src="https://placehold.co/1200x200.png"
               alt="Banner"
               width={0}
               height={0}

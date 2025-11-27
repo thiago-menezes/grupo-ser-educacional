@@ -61,12 +61,6 @@ export function CourseSalarySection() {
             </View>
           </View>
         ))}
-        {MOCK_SALARY_RANGES.map((_, index) => {
-          if (index < MOCK_SALARY_RANGES.length - 1) {
-            return <div key={`divider-${index}`} className={styles.divider} />;
-          }
-          return null;
-        })}
       </View>
 
       <Text

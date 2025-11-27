@@ -1,4 +1,5 @@
 import { getMediaUrl } from '@grupo-ser/utils';
+import { useParams } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { useCityContext } from '@/contexts/city';
 import { useGeolocation } from '@/hooks';
@@ -6,6 +7,7 @@ import { useQueryInfrastructure } from './api/query';
 import type { StrapiUnitsResponse } from './api/types';
 import type { InfrastructureImage, InfrastructureUnit } from './types';
 import { markClosestUnit } from './utils';
+import { createFallbackInfrastructure } from './utils/fallback';
 
 function transformStrapiResponse(response?: StrapiUnitsResponse) {
   if (!response) {
@@ -43,7 +45,40 @@ function transformStrapiResponse(response?: StrapiUnitsResponse) {
   return { units, images, location };
 }
 
+function transformStrapiResponseWithFallback(
+  response: StrapiUnitsResponse | undefined,
+  institutionSlug: string | undefined,
+) {
+  try {
+    const transformed = transformStrapiResponse(response);
+
+    // If units exist but have no images, use fallback
+    if (transformed.units.length > 0 && transformed.images.length === 0) {
+      if (institutionSlug) {
+        const fallback = createFallbackInfrastructure(institutionSlug);
+        // Merge: use Strapi units but fallback images
+        return {
+          units: transformed.units,
+          images: fallback.images,
+          location: transformed.location || fallback.location,
+        };
+      }
+    }
+
+    return transformed;
+  } catch {
+    // If transformation fails, use fallback if we have institution slug
+    if (institutionSlug) {
+      return createFallbackInfrastructure(institutionSlug);
+    }
+    throw new Error('No data available and no fallback possible');
+  }
+}
+
 export const useInfrastructure = () => {
+  const params = useParams<{ institution?: string }>();
+  const institutionSlug = params.institution;
+
   const {
     data: response,
     error,
@@ -68,18 +103,26 @@ export const useInfrastructure = () => {
   const city = contextCity || '';
   const state = contextState || '';
 
-  // Only transform if there's no error and we have data
+  // Transform with fallback support
   const { units, images, location } = useMemo(() => {
+    // If there's an error or no response, try fallback
     if (isError || !response) {
+      if (institutionSlug) {
+        return createFallbackInfrastructure(institutionSlug);
+      }
       return { units: [], images: [], location: '' };
     }
+
     try {
-      return transformStrapiResponse(response);
+      return transformStrapiResponseWithFallback(response, institutionSlug);
     } catch {
-      // Transform errors are handled by returning empty data
+      // If transformation fails, try fallback
+      if (institutionSlug) {
+        return createFallbackInfrastructure(institutionSlug);
+      }
       return { units: [], images: [], location: '' };
     }
-  }, [isError, response]);
+  }, [isError, response, institutionSlug]);
 
   const hasData = units.length > 0 && images.length > 0;
 

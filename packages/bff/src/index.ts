@@ -28,5 +28,8 @@ export type { UnitsQueryParams } from './handlers/units/types';
 export type { MediaQueryParams } from './handlers/media/types';
 export type { HomeCarouselQueryParams } from './handlers/home-carousel/types';
 
+// Data
+export { institutions, units } from './data';
+
 // Errors
 export { BffValidationError } from './utils/errors';
