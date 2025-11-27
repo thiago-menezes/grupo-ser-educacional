@@ -175,7 +175,7 @@ function parseFiltersFromSearchParams(
   return filters;
 }
 
-export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
+export function CourseFiltersProvider({ children }: PropsWithChildren) {
   const searchParams = useSearchParams();
 
   // Initialize filters from URL params on mount
@@ -280,7 +280,7 @@ export const CourseFiltersProvider = ({ children }: PropsWithChildren) => {
       {children}
     </CourseFiltersContext.Provider>
   );
-};
+}
 
 export const useCourseFiltersContext = (): CourseFiltersContextValues => {
   const context = useContext(CourseFiltersContext);

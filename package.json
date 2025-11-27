@@ -15,7 +15,8 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "clean": "turbo run clean && rm -rf node_modules",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\" && yarn lint -- --fix"
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\" && yarn lint -- --fix",
+    "setup": "corepack enable && corepack prepare yarn@4.9.4 --activate"
   },
   "devDependencies": {
     "prettier": "^3.6.2",
@@ -23,7 +24,7 @@
     "typescript": "5.9.3"
   },
   "engines": {
-    "node": ">=22.0.0 <=22.x.x",
+    "node": ">=22.0.0",
     "yarn": ">=4.0.0"
   },
   "packageManager": "yarn@4.9.4",

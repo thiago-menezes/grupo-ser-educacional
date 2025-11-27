@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Pagination, View } from 'reshaped';
 import { CourseCard, CourseCardSkeleton } from '@/components';
+import { useImageFallback } from '@/features/infrastructure/utils/image-fallback';
 import { useCurrentInstitution } from '@/hooks';
 import { useCourseGrid } from './hooks';
 import styles from './styles.module.scss';
@@ -17,6 +18,9 @@ export function CourseGrid() {
     handlePageChange,
     currentPage,
   } = useCourseGrid();
+  const { src: bannerSrc, handleError: handleBannerError } = useImageFallback(
+    'https://placehold.co/1200x200.png',
+  );
 
   const handleCourseClick = (slug: string) => {
     router.push(`/${institutionId}/cursos/${slug}`);
@@ -44,11 +48,12 @@ export function CourseGrid() {
 
           <View className={styles.bannerContainer}>
             <Image
-              src="https://placehold.co/1200x200.png"
+              src={bannerSrc}
               alt="Banner"
               width={0}
               height={0}
               priority
+              onError={handleBannerError}
             />
           </View>
 

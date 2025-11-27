@@ -1,6 +1,6 @@
 export const formatPrice = (priceInCents: number): string => {
   if (priceInCents === 0) {
-    return 'R$ 0,00';
+    return "R$ 0,00";
   }
 
   const priceInReais = priceInCents / 100;
