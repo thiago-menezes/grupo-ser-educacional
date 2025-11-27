@@ -4,20 +4,35 @@
   gap: var(--rs-unit-x5);
 }
 
+.tabs {
+  border-bottom: 1px solid var(--rs-color-border-neutral, rgba(0, 0, 0, 0.12));
+}
+
 .tabContent {
   margin-top: var(--rs-unit-x3);
 }
 
 .pedagogicalContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x3);
   padding: var(--rs-unit-x4);
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--rs-color-foreground-neutral);
+  border: 1px solid var(--rs-color-border-neutral, rgba(0, 0, 0, 0.12));
+  border-radius: var(--rs-radius-large);
+  background: var(--rs-color-background-page);
+}
+
+.pedagogicalCover {
+  width: 100%;
+  max-width: 560px;
+  border-radius: var(--rs-radius-medium);
+  object-fit: cover;
 }
 
 .coordinatorContent {
   display: flex;
   flex-direction: column;
+  gap: var(--rs-unit-x5);
 }
 
 .coordinatorCard {
@@ -25,6 +40,9 @@
   flex-direction: row;
   gap: var(--rs-unit-x4);
   padding: var(--rs-unit-x4);
+  border: 1px solid var(--rs-color-border-neutral, rgba(0, 0, 0, 0.12));
+  border-radius: var(--rs-radius-large);
+  background: var(--rs-color-background-page);
 }
 
 .coordinatorPhoto {
@@ -32,6 +50,7 @@
   height: 152px;
   min-width: 152px;
   border-radius: var(--rs-radius-medium);
+  object-fit: cover;
   background-color: var(--rs-color-background-neutral-subtle);
 }
 
@@ -60,7 +79,7 @@
 .teachersContent {
   display: flex;
   flex-direction: column;
-  gap: var(--rs-unit-x4);
+  gap: var(--rs-unit-x3);
 }
 
 .teachersTitle {
@@ -71,17 +90,24 @@
   margin: 0;
 }
 
-.teachersGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: var(--rs-unit-x3);
+.teachersList {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--rs-color-border-neutral, rgba(0, 0, 0, 0.12));
+  border-radius: var(--rs-radius-large);
+  overflow: hidden;
 }
 
-.teacherCard {
+.teacherRow {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--rs-unit-x2);
   padding: var(--rs-unit-x3);
-  border: 1px solid rgb(from var(--rs-color-foreground-neutral) r g b / 0.3);
-  border-radius: var(--rs-radius-medium);
   background: var(--rs-color-background-page);
+}
+
+.teacherRow + .teacherRow {
+  border-top: 1px solid var(--rs-color-border-neutral, rgba(0, 0, 0, 0.08));
 }
 
 .teacherName {
@@ -93,15 +119,11 @@
 }
 
 .teacherRole {
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 20px;
   color: var(--rs-color-foreground-neutral);
   margin: 0;
-}
-
-.moreButton {
-  align-self: center;
-  margin-top: var(--rs-unit-x2);
+  text-align: right;
 }
 
 @media (max-width: 768px) {
@@ -113,5 +135,14 @@
     width: 100%;
     max-width: 152px;
     align-self: center;
+  }
+
+  .teacherRow {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .teacherRole {
+    text-align: left;
   }
 }

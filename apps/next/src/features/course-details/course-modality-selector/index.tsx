@@ -1,4 +1,4 @@
-import { Tabs, View } from 'reshaped';
+import { Tabs, Text, View } from 'reshaped';
 import type { CourseDetails } from '../hooks/useCourseDetails';
 import styles from './styles.module.scss';
 
@@ -24,18 +24,23 @@ export function CourseModalitySelector({
   if (modalities.length === 0) return null;
 
   return (
-    <View className={styles.selector}>
-      <h2 className={styles.label}>Selecione modalidade</h2>
-      <Tabs
-        value={selectedModalityId?.toString() || ''}
-        onChange={(value) => onSelectModality(Number(value))}
-      >
-        {modalities.map((modality) => (
-          <Tabs.Item key={modality.id} value={modality.id.toString()}>
-            {MODALITY_LABELS[modality.slug] || modality.name}
-          </Tabs.Item>
-        ))}
-      </Tabs>
+    <View>
+      <Text variant="title-4" className={styles.label}>
+        Selecione a modalidade
+      </Text>
+
+      <View direction="row" gap={4}>
+        <Tabs
+          value={selectedModalityId?.toString() || ''}
+          onChange={(value) => onSelectModality(Number(value))}
+        >
+          {modalities.map((modality) => (
+            <Tabs.Item key={modality.id} value={modality.id.toString()}>
+              {MODALITY_LABELS[modality.slug] || modality.name}
+            </Tabs.Item>
+          ))}
+        </Tabs>
+      </View>
     </View>
   );
 }
