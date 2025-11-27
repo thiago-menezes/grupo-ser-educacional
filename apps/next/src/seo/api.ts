@@ -30,6 +30,10 @@ export async function getSeoFromStrapi(
     // In development, bypass cache to see changes immediately
     const revalidate = process.env.NODE_ENV === 'development' ? 0 : 3600;
 
+    // Add timeout for build time (5 seconds)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+
     const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
@@ -40,7 +44,10 @@ export async function getSeoFromStrapi(
           : {}),
       },
       next: { revalidate },
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch SEO: ${response.statusText}`);

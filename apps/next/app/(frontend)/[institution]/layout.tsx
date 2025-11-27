@@ -9,16 +9,14 @@ type InstitutionLayoutProps = {
 };
 
 export async function generateStaticParams() {
-  return [
-    { institution: 'uninassau' },
-    { institution: 'ung' },
-    { institution: 'unama' },
-    { institution: 'uninorte' },
-    { institution: 'unifael' },
-    { institution: 'uni7' },
-    { institution: 'grupo-ser' },
-  ];
+  // Temporarily only build UNAMA to avoid CMS timeout during build
+  // TODO: Re-enable all institutions when CMS is available
+  return [{ institution: 'unama' }];
 }
+
+// Force dynamic rendering to avoid build-time CMS calls
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export { generateMetadata };
 
@@ -34,7 +32,13 @@ export default async function InstitutionLayout({
     return notFound();
   }
 
-  const jsonLd = await generateJsonLd(institution);
+  // Wrap in try-catch to prevent build failures if CMS is unavailable
+  let jsonLd;
+  try {
+    jsonLd = await generateJsonLd(institution);
+  } catch {
+    jsonLd = undefined;
+  }
 
   return (
     <>
