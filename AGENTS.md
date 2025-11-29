@@ -20,6 +20,7 @@
 - ESLint configs ship in `packages/eslint`; extend `.eslintrc` rather than duplicating rules.
 - Prefer PascalCase for React components, camelCase for functions and utilities, and kebab-case for file names except React components (`ComponentName.tsx`).
 - Keep shared TypeScript types in `packages/types` and re-export from an index barrel instead of deep imports.
+- **CSS Layers**: All component styles in `styles.module.scss` files MUST be wrapped in `@layer components { }` to ensure they override Reshaped styles in production (see `docs/CSS-LAYERS-GUIDE.md`).
 
 ## Testing Guidelines
 

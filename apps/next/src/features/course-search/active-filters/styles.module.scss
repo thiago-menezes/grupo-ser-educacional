@@ -1,7 +1,7 @@
 .activeFiltersSection {
   display: flex;
   flex-direction: column;
-  gap: var(--rs-unit-x3) !important;
+  gap: var(--rs-unit-x3);
 
   @media (--rs-viewport-l) {
     display: none;
@@ -11,11 +11,11 @@
 .activeFiltersHeader {
   display: flex;
   align-items: center;
-  gap: var(--rs-unit-x2) !important;
+  gap: var(--rs-unit-x2);
 }
 
 .activeFiltersSidebar {
   display: flex;
   flex-direction: column;
-  gap: var(--rs-unit-x4) !important;
+  gap: var(--rs-unit-x4);
 }
