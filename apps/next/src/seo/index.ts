@@ -29,6 +29,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { institution } = await params;
 
+  const icons = {
+    icon: `/favicons/${institution}.ico`,
+  };
+
   try {
     const seoData = await getSeoFromStrapi(institution);
 
@@ -36,6 +40,7 @@ export async function generateMetadata({
       return {
         title: 'Grupo SER - Portal Institucional',
         description: 'Portal multi-institucional do Grupo SER Educacional',
+        icons,
       };
     }
 
@@ -44,17 +49,19 @@ export async function generateMetadata({
       (seoData as { metadata?: { metadata?: Metadata } })?.metadata?.metadata ||
       (seoData as StrapiSeo)?.metadata;
 
-    return (
-      (metadata as Metadata) || {
+    return {
+      ...((metadata as Metadata) || {
         title: 'Grupo SER - Portal Institucional',
         description: 'Portal multi-institucional do Grupo SER Educacional',
-      }
-    );
+      }),
+      icons,
+    };
   } catch {
     // Return default metadata if CMS is unavailable during build
     return {
       title: 'Grupo SER - Portal Institucional',
       description: 'Portal multi-institucional do Grupo SER Educacional',
+      icons,
     };
   }
 }

@@ -49,7 +49,6 @@ export default async function InstitutionLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
-      <link rel="icon" href={`/favicons/${institution}.ico`} sizes="any" />
       {children}
       <Footer />
     </>
