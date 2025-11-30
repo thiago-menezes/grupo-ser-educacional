@@ -24,8 +24,8 @@ export function PriceRangeSlider({ control }: PriceRangeSliderProps) {
               min={300}
               max={3000}
               step={50}
-              minValue={field.value.min}
-              maxValue={field.value.max}
+              minValue={field?.value?.min || 0}
+              maxValue={field?.value?.max || 0}
               onChange={(args) => {
                 if (
                   'minValue' in args &&
@@ -64,10 +64,10 @@ export function PriceRangeSlider({ control }: PriceRangeSliderProps) {
               className={styles.priceRangeLabels}
             >
               <Text variant="body-2" color="neutral">
-                {formatPrice(field.value.min)}
+                {formatPrice(field?.value?.min || 0)}
               </Text>
               <Text variant="body-2" color="neutral">
-                {formatPrice(field.value.max)}
+                {formatPrice(field?.value?.max || 0)}
               </Text>
             </View>
           </View>

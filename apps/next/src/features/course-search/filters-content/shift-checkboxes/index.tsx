@@ -18,12 +18,12 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
           <View direction="row" gap={2}>
             <Checkbox
               name="shift-morning"
-              checked={field.value.includes('morning')}
+              checked={field?.value?.includes('morning')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, 'morning']);
+                  field.onChange([...(field?.value || []), 'morning']);
                 } else {
-                  field.onChange(field.value.filter((s) => s !== 'morning'));
+                  field.onChange(field?.value?.filter((s) => s !== 'morning'));
                 }
               }}
             >
@@ -31,12 +31,14 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
             </Checkbox>
             <Checkbox
               name="shift-afternoon"
-              checked={field.value.includes('afternoon')}
+              checked={field?.value?.includes('afternoon')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, 'afternoon']);
+                  field.onChange([...(field?.value || []), 'afternoon']);
                 } else {
-                  field.onChange(field.value.filter((s) => s !== 'afternoon'));
+                  field.onChange(
+                    field?.value?.filter((s) => s !== 'afternoon'),
+                  );
                 }
               }}
             >
@@ -44,12 +46,12 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
             </Checkbox>
             <Checkbox
               name="shift-night"
-              checked={field.value.includes('night')}
+              checked={field?.value?.includes('night')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, 'night']);
+                  field.onChange([...(field?.value || []), 'night']);
                 } else {
-                  field.onChange(field.value.filter((s) => s !== 'night'));
+                  field.onChange(field?.value?.filter((s) => s !== 'night'));
                 }
               }}
             >
@@ -57,12 +59,12 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
             </Checkbox>
             <Checkbox
               name="shift-fulltime"
-              checked={field.value.includes('fulltime')}
+              checked={field?.value?.includes('fulltime')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, 'fulltime']);
+                  field.onChange([...(field?.value || []), 'fulltime']);
                 } else {
-                  field.onChange(field.value.filter((s) => s !== 'fulltime'));
+                  field.onChange(field?.value?.filter((s) => s !== 'fulltime'));
                 }
               }}
             >
@@ -70,12 +72,12 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
             </Checkbox>
             <Checkbox
               name="shift-virtual"
-              checked={field.value.includes('virtual')}
+              checked={field?.value?.includes('virtual')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, 'virtual']);
+                  field.onChange([...(field?.value || []), 'virtual']);
                 } else {
-                  field.onChange(field.value.filter((s) => s !== 'virtual'));
+                  field.onChange(field?.value?.filter((s) => s !== 'virtual'));
                 }
               }}
             >

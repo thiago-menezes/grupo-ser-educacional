@@ -20,12 +20,14 @@ export function CourseModalityCheckboxes({
           <View gap={2}>
             <Checkbox
               name="modality-presencial"
-              checked={field.value.includes('presencial')}
+              checked={field?.value?.includes('presencial')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, 'presencial']);
+                  field.onChange([...(field?.value || []), 'presencial']);
                 } else {
-                  field.onChange(field.value.filter((m) => m !== 'presencial'));
+                  field.onChange(
+                    field?.value?.filter((m) => m !== 'presencial'),
+                  );
                 }
               }}
             >
@@ -33,13 +35,13 @@ export function CourseModalityCheckboxes({
             </Checkbox>
             <Checkbox
               name="modality-semipresencial"
-              checked={field.value.includes('semipresencial')}
+              checked={field?.value?.includes('semipresencial')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, 'semipresencial']);
+                  field.onChange([...(field?.value || []), 'semipresencial']);
                 } else {
                   field.onChange(
-                    field.value.filter((m) => m !== 'semipresencial'),
+                    field?.value?.filter((m) => m !== 'semipresencial'),
                   );
                 }
               }}
@@ -48,12 +50,12 @@ export function CourseModalityCheckboxes({
             </Checkbox>
             <Checkbox
               name="modality-ead"
-              checked={field.value.includes('ead')}
+              checked={field?.value?.includes('ead')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, 'ead']);
+                  field.onChange([...(field?.value || []), 'ead']);
                 } else {
-                  field.onChange(field.value.filter((m) => m !== 'ead'));
+                  field.onChange(field?.value?.filter((m) => m !== 'ead'));
                 }
               }}
             >

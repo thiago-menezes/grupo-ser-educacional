@@ -20,12 +20,12 @@ export function CourseDurationCheckboxes({
           <View direction="row" gap={2}>
             <Checkbox
               name="duration-1-2"
-              checked={field.value.includes('1-2')}
+              checked={field?.value?.includes('1-2')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, '1-2']);
+                  field.onChange([...(field?.value || []), '1-2']);
                 } else {
-                  field.onChange(field.value.filter((d) => d !== '1-2'));
+                  field.onChange(field?.value?.filter((d) => d !== '1-2'));
                 }
               }}
             >
@@ -33,12 +33,12 @@ export function CourseDurationCheckboxes({
             </Checkbox>
             <Checkbox
               name="duration-2-3"
-              checked={field.value.includes('2-3')}
+              checked={field?.value?.includes('2-3')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, '2-3']);
+                  field.onChange([...(field?.value || []), '2-3']);
                 } else {
-                  field.onChange(field.value.filter((d) => d !== '2-3'));
+                  field.onChange(field?.value?.filter((d) => d !== '2-3'));
                 }
               }}
             >
@@ -46,12 +46,12 @@ export function CourseDurationCheckboxes({
             </Checkbox>
             <Checkbox
               name="duration-3-4"
-              checked={field.value.includes('3-4')}
+              checked={field?.value?.includes('3-4')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, '3-4']);
+                  field.onChange([...(field?.value || []), '3-4']);
                 } else {
-                  field.onChange(field.value.filter((d) => d !== '3-4'));
+                  field.onChange(field?.value?.filter((d) => d !== '3-4'));
                 }
               }}
             >
@@ -59,12 +59,12 @@ export function CourseDurationCheckboxes({
             </Checkbox>
             <Checkbox
               name="duration-4-plus"
-              checked={field.value.includes('4-plus')}
+              checked={field?.value?.includes('4-plus')}
               onChange={({ checked }) => {
                 if (checked) {
-                  field.onChange([...field.value, '4-plus']);
+                  field.onChange([...(field?.value || []), '4-plus']);
                 } else {
-                  field.onChange(field.value.filter((d) => d !== '4-plus'));
+                  field.onChange(field?.value?.filter((d) => d !== '4-plus'));
                 }
               }}
             >
