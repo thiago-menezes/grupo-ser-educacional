@@ -21,7 +21,7 @@
     "@strapi/plugin-documentation": "^5.31.2",
     "@strapi/plugin-users-permissions": "5.31.2",
     "@strapi/strapi": "5.31.2",
-    "better-sqlite3": "^12.4.6",
+    "better-sqlite3": "^12.5.0",
     "fs-extra": "^11.3.2",
     "mime-types": "^3.0.2",
     "react": "^19.2.0",

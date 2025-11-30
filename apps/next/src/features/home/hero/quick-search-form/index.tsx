@@ -313,6 +313,9 @@ export function QuickSearchForm({
           onClick={() => setActiveTab('postgraduate')}
           disabled={isLoading}
           icon={<Icon name="briefcase" />}
+          className={
+            activeTab === 'postgraduate' ? styles.secondaryButton : undefined
+          }
         >
           Pós-Graduação
         </Button>
@@ -391,6 +394,9 @@ export function QuickSearchForm({
           color="primary"
           disabled={isLoading}
           aria-label="Search courses"
+          className={
+            activeTab === 'postgraduate' ? styles.secondaryButton : undefined
+          }
         >
           {isLoading ? 'Buscando...' : 'Buscar'}
         </Button>
@@ -411,6 +417,11 @@ export function QuickSearchForm({
                 checked={modalities.includes(modalityKey)}
                 onChange={() => toggleModality(modalityKey)}
                 disabled={isLoading}
+                className={
+                  activeTab === 'postgraduate'
+                    ? styles.secondaryCheckbox
+                    : undefined
+                }
               >
                 {modality === 'Semi' ? 'Semi' : modality}
               </Checkbox>
