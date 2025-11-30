@@ -1,9 +1,8 @@
 import { useParams } from 'next/navigation';
 import { Container, View } from 'reshaped';
-import { Breadcrumb } from '../../components';
+import { useQueryCourseDetails } from './api/query';
 import { CourseDetailsContent } from './course-details-content';
 import { CourseDetailsSkeleton } from './course-details-skeleton';
-import { useCourseDetails } from './hooks/useCourseDetails';
 import styles from './styles.module.scss';
 
 export type CourseDetailsPageParams = {
@@ -12,9 +11,9 @@ export type CourseDetailsPageParams = {
 };
 
 export function CourseDetailsPage() {
-  const { institution, slug } = useParams<CourseDetailsPageParams>();
+  const { slug } = useParams<CourseDetailsPageParams>();
 
-  const { data: course, isLoading, error } = useCourseDetails(slug);
+  const { data: course, isLoading, error } = useQueryCourseDetails(slug);
 
   if (isLoading) {
     return (
@@ -39,16 +38,9 @@ export function CourseDetailsPage() {
     );
   }
 
-  const breadcrumbItems = [
-    { label: 'Início', href: `/${institution}` },
-    { label: 'Cursos', href: `/${institution}/cursos` },
-    { label: course.name },
-  ];
-
   return (
     <View className={styles.page}>
       <Container className={styles.topSection}>
-        <Breadcrumb items={breadcrumbItems} />
         <CourseDetailsContent course={course} />
       </Container>
     </View>

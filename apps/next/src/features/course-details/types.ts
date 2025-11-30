@@ -1,6 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import { getMockCourseDetails } from '../mock';
-
 export type CourseDetails = {
   id: number;
   name: string;
@@ -51,17 +48,3 @@ export type CourseDetails = {
     };
   }>;
 };
-
-async function fetchCourseDetails(slug: string): Promise<CourseDetails> {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 300));
-  return getMockCourseDetails(slug);
-}
-
-export function useCourseDetails(slug: string) {
-  return useQuery({
-    queryKey: ['course-details', slug],
-    queryFn: () => fetchCourseDetails(slug),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-  });
-}

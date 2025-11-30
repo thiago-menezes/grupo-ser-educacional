@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
+import 'reshaped/bundle.css';
 import Providers from './providers';
 import './icon/tabler-300.css';
 import '@/styles/global.scss';

@@ -3,25 +3,6 @@
   min-height: 100vh;
 }
 
-.topSection {
-  position: relative;
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '';
-    display: block;
-    width: 100%;
-    height: 560px;
-    background-color: rgb(
-      from var(--rs-color-border-primary-faded) r g b / 0.3
-    );
-    z-index: -1;
-  }
-  padding: var(--rs-unit-x6) 0;
-  margin: calc(var(--rs-unit-x6) * -1) 0 var(--rs-unit-x6) 0;
-}
-
 .error {
   padding: var(--rs-unit-x8);
   text-align: center;

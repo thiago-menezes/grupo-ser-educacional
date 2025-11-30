@@ -14248,7 +14248,6 @@ __metadata:
     clsx: "npm:^2.1.1"
     cssnano: "npm:^7.1.2"
     eslint: "npm:^9.39.1"
-    handlebars: "npm:^4.7.8"
     jsdom: "npm:^27.2.0"
     next: "npm:^16.0.5"
     postcss: "npm:^8.5.6"

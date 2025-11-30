@@ -11,4 +11,5 @@ body {
   background-color: rgb(
     from var(--rs-color-background-primary-faded) r g b / 0.3
   );
+  overflow-x: hidden;
 }
