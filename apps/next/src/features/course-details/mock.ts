@@ -1,4 +1,4 @@
-import type { CourseDetails } from './hooks/useCourseDetails';
+import type { CourseDetails } from './types';
 
 export const MOCK_COURSE_DETAILS: CourseDetails = {
   id: 1,
