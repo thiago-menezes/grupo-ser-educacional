@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Text, View } from 'reshaped';
-import type { CourseDetails } from '../hooks/useCourseDetails';
+import type { CourseDetails } from '../types';
 import styles from './styles.module.scss';
 
 export type CourseLocationSelectorProps = {

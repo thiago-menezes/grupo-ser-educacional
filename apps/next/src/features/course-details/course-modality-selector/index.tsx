@@ -1,5 +1,5 @@
 import { Tabs, Text, View } from 'reshaped';
-import type { CourseDetails } from '../hooks/useCourseDetails';
+import type { CourseDetails } from '../types';
 import styles from './styles.module.scss';
 
 export type CourseModalitySelectorProps = {

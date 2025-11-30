@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { View } from 'reshaped';
 import { useImageFallback } from '@/features/infrastructure/utils/image-fallback';
-import type { CourseDetails } from '../hooks/useCourseDetails';
+import type { CourseDetails } from '../types';
 import styles from './styles.module.scss';
 
 export type CourseImageProps = {

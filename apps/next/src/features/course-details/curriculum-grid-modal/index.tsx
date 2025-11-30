@@ -1,6 +1,6 @@
 import { Modal, View } from 'reshaped';
 import { Icon } from '@/components';
-import type { CourseDetails } from '../hooks/useCourseDetails';
+import type { CourseDetails } from '../types';
 import styles from './styles.module.scss';
 
 export type CurriculumGridModalProps = {

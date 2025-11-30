@@ -1,7 +1,7 @@
 import { formatPrice } from '@grupo-ser/utils';
 import { Button, Text, TextField, View } from 'reshaped';
 import { CourseLocationSelector } from '../course-location-selector';
-import type { CourseDetails } from '../hooks/useCourseDetails';
+import type { CourseDetails } from '../types';
 import styles from './styles.module.scss';
 
 export type CourseEnrollmentSidebarProps = {

@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Button, Tabs, Text, View } from 'reshaped';
-import type { CourseDetails } from '../hooks/useCourseDetails';
 import { MOCK_COORDINATOR, MOCK_TEACHERS } from '../mock';
+import type { CourseDetails } from '../types';
 import styles from './styles.module.scss';
 
 export type CourseCoordinationProps = {
