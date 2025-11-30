@@ -35,7 +35,7 @@ The project uses 4 layers in order of precedence (lowest to highest):
 - **Purpose**: Component and feature-specific styles
 - **Location**: All `*.module.scss` files in `src/components/` and `src/features/`
 - **Contains**: Custom component styles that override Reshaped when needed
-- **Highest priority for styles**: This layer wins over Reshaped and base
+- **How it works**: Automatically applied through global layer declaration
 
 ### 4. `utilities` (Highest Priority)
 
@@ -45,45 +45,65 @@ The project uses 4 layers in order of precedence (lowest to highest):
 
 ## How to Use Layers
 
-### In Component/Feature SCSS Files
+### Global Layer Declaration (Automatic)
 
-**Always wrap your styles in the `components` layer:**
+The layer system is configured in `apps/next/src/styles/global.scss`:
 
 ```scss
-// ✅ CORRECT
-@layer components {
-  .myComponent {
-    background: var(--rs-color-background-primary);
-    padding: var(--rs-unit-x4);
-  }
+// This declaration ensures component styles always override Reshaped
+@layer reshaped, base, components, utilities;
 
-  .myButton {
-    color: var(--rs-color-foreground-neutral);
-  }
+@layer reshaped {
+  @import 'reshaped/themes/reshaped/theme.css';
+}
+
+@layer base {
+  @import './tokens';
+  @import './themes/uninassau';
+  // ...other themes
 }
 ```
 
+### In Component/Feature SCSS Module Files
+
+**You do NOT need to wrap styles in `@layer` - write normal CSS Module styles:**
+
 ```scss
-// ❌ WRONG - No layer wrapper
+// ✅ CORRECT - Clean, simple CSS Module
 .myComponent {
   background: var(--rs-color-background-primary);
+  padding: var(--rs-unit-x4);
+}
+
+.myButton {
+  color: var(--rs-color-foreground-neutral);
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 }
 ```
 
-### Example: Override Reshaped Button
+**Why no @layer wrapper?**
+- CSS Modules are already scoped by Next.js
+- The global layer declaration applies cascade rules to all styles
+- Component modules automatically output to the `components` layer
+- Adding `@layer components { ... }` is redundant and provides no additional benefit
+
+### Overriding Reshaped Components
+
+The layer system ensures your component styles always win:
 
 ```scss
 // src/components/my-button/styles.module.scss
-@layer components {
-  .button {
-    // This will override Reshaped button styles
-    // even if Reshaped has higher specificity!
-    border-radius: var(--rs-radius-large);
-    padding: var(--rs-unit-x6);
+.button {
+  // These styles override Reshaped button styles automatically
+  // No @layer wrapper needed - global.scss handles it!
+  border-radius: var(--rs-radius-large);
+  padding: var(--rs-unit-x6);
 
-    &:hover {
-      transform: translateY(-2px);
-    }
+  &:hover {
+    transform: translateY(-2px);
   }
 }
 ```
@@ -96,14 +116,15 @@ The project uses 4 layers in order of precedence (lowest to highest):
 4. **Easier maintenance**: Clear separation of concerns
 5. **Source order independence**: Layers work regardless of CSS file load order
 
-## Migration Checklist
+## Best Practices Checklist
 
-When creating or updating SCSS files:
+When creating or updating SCSS module files:
 
-- [ ] Wrap all styles in `@layer components { ... }`
+- [ ] Write styles directly (no `@layer` wrapper needed)
 - [ ] Use Reshaped design tokens (never hardcode colors)
-- [ ] Verify styles work without `!important`
+- [ ] Styles work without `!important` (thanks to global layer config)
 - [ ] Test at all breakpoints (use `--rs-viewport-*` media queries)
+- [ ] Use CSS Modules for component-scoped styles
 
 ## Browser Support
 

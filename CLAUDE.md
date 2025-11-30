@@ -188,7 +188,7 @@ apps/next/src/
 
 ### CSS Cascade Layers (IMPORTANT!)
 
-**The project uses CSS `@layer` to ensure proper cascade between Reshaped and component styles.** See `docs/CSS-LAYERS.md` for full details.
+**The project uses CSS `@layer` in global.scss to ensure proper cascade between Reshaped and component styles.** See `docs/CSS-LAYERS.md` for full details.
 
 **Layer order (lowest to highest priority):**
 
@@ -196,25 +196,26 @@ apps/next/src/
 @layer reshaped, base, components, utilities;
 ```
 
-**All component SCSS files MUST wrap styles in the `components` layer:**
+This global declaration in `global.scss` ensures component styles automatically take precedence over Reshaped design system styles.
+
+**For CSS Module files (*.module.scss):**
+
+CSS Modules automatically benefit from the global layer system. You do NOT need to wrap styles in `@layer components { ... }` - the global configuration handles cascade control.
 
 ```scss
-// ✅ CORRECT
-@layer components {
-  .myComponent {
-    background: var(--rs-color-background-primary);
+// ✅ CORRECT - Simple, clean CSS Module
+.myComponent {
+  background: var(--rs-color-background-primary);
+}
+
+.myButton {
+  &:hover {
+    transform: translateY(-2px);
   }
 }
 ```
 
-```scss
-// ❌ WRONG - No layer wrapper
-.myComponent {
-  background: var(--rs-color-background-primary);
-}
-```
-
-**Why?** CSS layers provide explicit cascade control independent of specificity. The `components` layer always wins over the `reshaped` layer, eliminating the need for `!important` hacks.
+**Why?** The global `@layer` declaration in `global.scss` already establishes that all component styles win over Reshaped styles, regardless of specificity. CSS Modules are already locally-scoped, so additional layer wrappers provide no benefit.
 
 ### Design Tokens
 
