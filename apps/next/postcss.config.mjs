@@ -1,12 +1,10 @@
 import { existsSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import process from 'process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Find monorepo root by traversing up until we find node_modules/reshaped
 function findMonorepoRoot(startDir) {
   let currentDir = startDir;
   while (currentDir !== path.dirname(currentDir)) {
@@ -25,35 +23,14 @@ const themeMediaCSSPath = path.resolve(
   'node_modules/reshaped/dist/themes/reshaped/media.css',
 );
 
-const plugins = {
-  '@csstools/postcss-global-data': {
-    files: [themeMediaCSSPath],
-  },
-  'postcss-custom-media': {},
-  autoprefixer: {},
-};
-
-if (process.env.NODE_ENV === 'production') {
-  plugins.cssnano = {
-    preset: [
-      'default',
-      {
-        calc: false,
-        discardComments: { removeAll: true },
-        normalizeUrl: false,
-        mergeRules: false,
-        zindex: false,
-        reduceTransforms: false,
-        normalizeWhitespace: false,
-        reduceIdents: false,
-        minifyFontValues: false,
-      },
-    ],
-  };
-}
-
 const postcssConfig = {
-  plugins,
+  plugins: {
+    '@csstools/postcss-global-data': {
+      files: [themeMediaCSSPath],
+    },
+    'postcss-custom-media': {},
+    cssnano: { preset: ['default', { calc: false }] },
+  },
 };
 
 export default postcssConfig;

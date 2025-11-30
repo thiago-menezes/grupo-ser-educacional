@@ -33,7 +33,6 @@
     "**/*.tsx",
     "**/*.d.ts",
     ".next/types/**/*.ts",
-    "postcss.config.js",
     ".next/dev/types/**/*.ts",
     "../../packages/utils/src/verify-institution.ts"
   ],
