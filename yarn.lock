@@ -8249,7 +8249,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssnano-preset-default@npm:^7.0.9":
+"cssnano-preset-default@npm:^7.0.10, cssnano-preset-default@npm:^7.0.9":
   version: 7.0.10
   resolution: "cssnano-preset-default@npm:7.0.10"
   dependencies:
@@ -8307,6 +8307,18 @@ __metadata:
   peerDependencies:
     postcss: ^8.4.32
   checksum: 10c0/d761e86277dabfa986a34de4c8c79c555b0982b66b9e80a4a4c60956b5d34ae94c5464d74ab8c222578ee5f78c157ff7310386827a0f9cb847263797f738b300
+  languageName: node
+  linkType: hard
+
+"cssnano@npm:^7.1.2":
+  version: 7.1.2
+  resolution: "cssnano@npm:7.1.2"
+  dependencies:
+    cssnano-preset-default: "npm:^7.0.10"
+    lilconfig: "npm:^3.1.3"
+  peerDependencies:
+    postcss: ^8.4.32
+  checksum: 10c0/3879ea5d3dd649b8dc1b96d3917c505895be6da9e7251b88f9d4a7567fcead95fdc0bd96482284df06997b08f0e36b9f917a2f6d6710d46186dd92dc953c6216
   languageName: node
   linkType: hard
 
@@ -14234,17 +14246,23 @@ __metadata:
     axios: "npm:^1.13.2"
     baseline-browser-mapping: "npm:^2.8.32"
     clsx: "npm:^2.1.1"
+    cssnano: "npm:^7.1.2"
     eslint: "npm:^9.39.1"
+    handlebars: "npm:^4.7.8"
     jsdom: "npm:^27.2.0"
     next: "npm:^16.0.5"
+    postcss: "npm:^8.5.6"
+    postcss-custom-media: "npm:^11.0.6"
     prettier: "npm:^3.7.3"
     react: "npm:^19.2.0"
     react-dom: "npm:^19.2.0"
     react-hook-form: "npm:^7.67.0"
+    react-toastify: "npm:^11.0.5"
     reshaped: "npm:^3.8.9"
     sass: "npm:^1.94.2"
     tsx: "npm:^4.20.6"
     typescript: "npm:^5.9.3"
+    use-mask-input: "npm:^3.5.2"
     vitest: "npm:^4.0.14"
     zod: "npm:^4.1.13"
   languageName: unknown
@@ -15312,7 +15330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-custom-media@npm:11.0.6":
+"postcss-custom-media@npm:11.0.6, postcss-custom-media@npm:^11.0.6":
   version: 11.0.6
   resolution: "postcss-custom-media@npm:11.0.6"
   dependencies:
@@ -16309,6 +16327,18 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/841938ff16d16a6b76895f4cb2e1fea957e5fe3b30febbf03a54892dae1c9153f2383e231dea0b3ba41192ad2f2849448fa859caccd288943bce32639e971bee
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^11.0.5":
+  version: 11.0.5
+  resolution: "react-toastify@npm:11.0.5"
+  dependencies:
+    clsx: "npm:^2.1.1"
+  peerDependencies:
+    react: ^18 || ^19
+    react-dom: ^18 || ^19
+  checksum: 10c0/50f5b81323ebb1957b2efd0963fac24aa1407155d16ab756ffd6d0f42f8af17e796b3958a9fce13e9d1b945d6c3a5a9ebf13529478474d8a2af4bf1dd0db67d2
   languageName: node
   linkType: hard
 
@@ -19363,6 +19393,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/4d3c1124d630fbe09c1d2a16af0cd78ac2fe1d22eb24a178363e3d84a897659cc04e8e8cd71f66ff78ff75ef8287fa72e746cb213b96c1097e70e4b4ed69f63f
+  languageName: node
+  linkType: hard
+
+"use-mask-input@npm:^3.5.2":
+  version: 3.5.2
+  resolution: "use-mask-input@npm:3.5.2"
+  peerDependencies:
+    react: ">=17"
+    react-dom: ">=17"
+  checksum: 10c0/1a51711084edc011009ba1feca6e32aa875ee0acd0a93ba07b2641dfb1cfcc9a700ee2f438967dc779faff5c81a5b8eba12ac7108b6842972e611099ef421270
   languageName: node
   linkType: hard
 

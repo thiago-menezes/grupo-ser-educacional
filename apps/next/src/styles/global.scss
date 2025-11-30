@@ -1,28 +1,14 @@
-// Define layer order (earlier = lower priority in cascade)
-// reshaped: Design system base styles
-// base: Global styles, tokens, and themes
-// components: Component-specific styles
-// utilities: Utility classes and overrides
-@layer reshaped, base, components, utilities;
+@use './tokens';
+@use './themes/uninassau';
+@use './themes/uni7';
+@use './themes/unifael';
+@use './themes/uninorte';
+@use './themes/unama';
+@use './themes/ung';
+@use './themes/grupo-ser';
 
-@layer reshaped {
-  @import 'reshaped/themes/reshaped/theme.css';
-}
-
-// Base layer: tokens, themes, and global styles
-@layer base {
-  @import './tokens';
-  @import './themes/uninassau';
-  @import './themes/uni7';
-  @import './themes/unifael';
-  @import './themes/uninorte';
-  @import './themes/unama';
-  @import './themes/ung';
-  @import './themes/grupo-ser';
-
-  body {
-    background-color: rgb(
-      from var(--rs-color-background-primary-faded) r g b / 0.3
-    );
-  }
+body {
+  background-color: rgb(
+    from var(--rs-color-background-primary-faded) r g b / 0.3
+  );
 }
