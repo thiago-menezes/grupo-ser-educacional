@@ -60,21 +60,25 @@ nvm use 22
 If you see `The engine "yarn" is incompatible` or `Expected version ">=4.0.0". Got "1.22.19"`:
 
 1. **Enable Corepack** (if not already enabled):
+
    ```bash
    corepack enable
    ```
 
 2. **Prepare and activate Yarn 4.9.4**:
+
    ```bash
    corepack prepare yarn@4.9.4 --activate
    ```
 
 3. **Verify it's working**:
+
    ```bash
    yarn --version  # Should show 4.9.4, NOT 1.x
    ```
 
 4. **If still having issues**, check which yarn is being used:
+
    ```bash
    which yarn
    # If it shows /usr/local/bin/yarn or /opt/homebrew/bin/yarn, Corepack might not be intercepting
@@ -87,7 +91,7 @@ If you see `The engine "yarn" is incompatible` or `Expected version ">=4.0.0". G
      uses: actions/setup-node@v4
      with:
        node-version: "22"
-       enable-corepack: true  # This is crucial!
+       enable-corepack: true # This is crucial!
    ```
 
 ### Corepack not available

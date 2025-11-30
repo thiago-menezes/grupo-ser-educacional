@@ -83,6 +83,7 @@ yarn clean         # Clean all workspaces
 ### Multi-Tenant Routing
 
 Institution context flows through the URL:
+
 - Routes: `/[institution]`, `/[institution]/cursos`, `/[institution]/cursos/[slug]`
 - Institution slug determines theming, content filtering, and branding
 - Default institution: `uninassau`
@@ -143,6 +144,7 @@ apps/next/src/
 ### File Contracts
 
 **Component Module** (`src/components/[name]`):
+
 - `index.tsx`: Stateless component export
 - `types.ts`: **ONLY** file for type definitions (props, variants)
 - `styles.module.scss`: CSS modules
@@ -151,6 +153,7 @@ apps/next/src/
 - `hooks.ts`: Presentation-only hooks (no data fetching)
 
 **Feature Module** (`src/features/[feature]`):
+
 - `index.tsx`: Composes UI, wires hooks
 - `hooks.ts`: React Query hooks + derived-state helpers
 - `types.ts`: **ONLY** file for feature-scoped types
@@ -183,19 +186,35 @@ apps/next/src/
 
 ## Styling Guidelines
 
-### CSS Load Order (IMPORTANT!)
+### CSS Cascade Layers (IMPORTANT!)
 
-**Reshaped CSS is explicitly imported in `layout.tsx` BEFORE component styles.** This ensures proper cascade order:
+**The project uses CSS `@layer` to ensure proper cascade between Reshaped and component styles.** See `docs/CSS-LAYERS.md` for full details.
 
-```typescript
-// app/(frontend)/layout.tsx
-import 'reshaped/themes/reshaped/theme.css';  // 1. Reshaped (loaded first)
-import './icon/tabler-300.css';                // 2. Icons
-import '@/styles/global.scss';                 // 3. Global styles & themes
-// Component CSS modules load automatically when used (highest priority)
+**Layer order (lowest to highest priority):**
+
+```css
+@layer reshaped, base, components, utilities;
 ```
 
-**Why?** Next.js's `optimizePackageImports` feature reorders imports in production builds. By explicitly importing Reshaped CSS first, we ensure component CSS modules (loaded later) always override Reshaped styles via normal CSS cascade—no `!important` needed.
+**All component SCSS files MUST wrap styles in the `components` layer:**
+
+```scss
+// ✅ CORRECT
+@layer components {
+  .myComponent {
+    background: var(--rs-color-background-primary);
+  }
+}
+```
+
+```scss
+// ❌ WRONG - No layer wrapper
+.myComponent {
+  background: var(--rs-color-background-primary);
+}
+```
+
+**Why?** CSS layers provide explicit cascade control independent of specificity. The `components` layer always wins over the `reshaped` layer, eliminating the need for `!important` hacks.
 
 ### Design Tokens
 
@@ -212,7 +231,9 @@ import '@/styles/global.scss';                 // 3. Global styles & themes
 
 // ❌ WRONG - Don't create custom color variables
 $blue-primary: #052b82;
-.button { background: $blue-primary; }
+.button {
+  background: $blue-primary;
+}
 ```
 
 ### Viewport Breakpoints
@@ -239,7 +260,8 @@ Use PostCSS custom media queries from Reshaped:
 
 // ❌ WRONG - Don't create custom breakpoint variables
 $breakpoint-tablet: 768px;
-@media (min-width: calc(var(--rs-viewport-m-min) * 1px)) {}
+@media (min-width: calc(var(--rs-viewport-m-min) * 1px)) {
+}
 ```
 
 ### RGB Transparency
@@ -256,7 +278,7 @@ rgba(...)
 
 ### Avoid !important
 
-Component CSS modules load after Reshaped CSS, so normal cascade rules apply. You should **never need `!important`** to override Reshaped styles. If you do, the CSS load order is broken.
+With CSS layers configured, you should **never need `!important`** to override Reshaped styles. The `components` layer automatically takes precedence over the `reshaped` layer. If you find yourself using `!important`, check that your SCSS file is properly wrapped in `@layer components { ... }`.
 
 ## Data Fetching Patterns
 
@@ -264,14 +286,14 @@ Component CSS modules load after Reshaped CSS, so normal cascade rules apply. Yo
 
 ```typescript
 // src/features/[feature]/hooks.ts
-import { useQuery } from '@tanstack/react-query';
-import { apiClient } from '@/libs/api/axios';
+import { useQuery } from "@tanstack/react-query";
+import { apiClient } from "@/libs/api/axios";
 
 export function useCourses(filters: CourseFilters) {
   return useQuery({
-    queryKey: ['courses', filters],
+    queryKey: ["courses", filters],
     queryFn: async () => {
-      const { data } = await apiClient.get('/courses', { params: filters });
+      const { data } = await apiClient.get("/courses", { params: filters });
       return data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -286,7 +308,7 @@ export function useCourses(filters: CourseFilters) {
 export function useLeadSubmission() {
   return useMutation({
     mutationFn: async (leadData: LeadFormData) => {
-      const { data } = await apiClient.post('/leads', leadData);
+      const { data } = await apiClient.post("/leads", leadData);
       return data;
     },
     onSuccess: (data) => {
@@ -301,18 +323,22 @@ export function useLeadSubmission() {
 Use React Hook Form + Zod:
 
 ```typescript
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 const schema = z.object({
-  full_name: z.string().min(3, 'Nome muito curto'),
-  email: z.string().email('E-mail inválido'),
+  full_name: z.string().min(3, "Nome muito curto"),
+  email: z.string().email("E-mail inválido"),
 });
 
 type FormData = z.infer<typeof schema>;
 
-const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+const {
+  register,
+  handleSubmit,
+  formState: { errors },
+} = useForm<FormData>({
   resolver: zodResolver(schema),
 });
 ```
@@ -353,6 +379,7 @@ GET /api/courses?filters[institution][slug][$eq]=uninassau&filters[featured][$eq
 ## Commit Guidelines
 
 Follow Conventional Commits pattern (observed in git log):
+
 - `feat:` - New features
 - `fix:` - Bug fixes
 - `chore:` - Maintenance tasks
@@ -372,6 +399,7 @@ Keep subject lines under 72 characters.
 - **Quick Development Guide**: `docs/QUICK-DEVELOPMENT-GUIDE.md` - Coding standards and rules
 - **Quick Reference**: `docs/QUICK-REFERENCE.md` - Developer cheat sheet
 - **HFSA Architecture**: `docs/HFSA-ARCHITECTURE.md` - Project structure principles
+- **CSS Layers Guide**: `docs/CSS-LAYERS.md` - CSS cascade layers configuration
 - **Project Index**: `docs/PROJECT-INDEX.md` - Complete project overview
 - **General Execution Plan**: `docs/general-execution-plan.md` - Roadmap and strategy
 - **Strapi Content Strategy**: `docs/strapi-content-strategy.md` - CMS architecture

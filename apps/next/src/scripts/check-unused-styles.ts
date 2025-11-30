@@ -309,8 +309,8 @@ const extractPropertyName = (
 const isNode = (value: unknown): value is ASTNode =>
   Boolean(
     value &&
-      typeof value === 'object' &&
-      'type' in (value as Record<string, unknown>),
+    typeof value === 'object' &&
+    'type' in (value as Record<string, unknown>),
   );
 
 const recordUsage = (modulePath: string, className: string) => {
