@@ -10,5 +10,16 @@
     "draftAndPublish": true
   },
   "pluginOptions": {},
-  "attributes": {}
+  "attributes": {
+    "nome": {
+      "type": "string"
+    },
+    "descricao": {
+      "type": "text"
+    },
+    "telefone": {
+      "type": "string",
+      "regex": "^\\(\\d{2}\\)\\s\\d{5}-\\d{4}$"
+    }
+  }
 }
