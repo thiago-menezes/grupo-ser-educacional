@@ -1,14 +1,14 @@
 .secondaryButton {
-  background-color: var(--rs-color-background-secondary);
-  border-color: var(--rs-color-border-secondary);
-  color: var(--rs-color-on-brand);
+  background-color: var(--rs-color-background-secondary) !important;
+  border-color: var(--rs-color-border-secondary) !important;
+  color: var(--rs-color-on-brand) !important;
 
   &:hover:not(:disabled) {
-    background-color: var(--rs-color-foreground-secondary);
-    border-color: var(--rs-color-border-secondary);
+    background-color: var(--rs-color-foreground-secondary) !important;
+    border-color: var(--rs-color-border-secondary) !important;
   }
 
   &:active:not(:disabled) {
-    background-color: var(--rs-color-border-secondary);
+    background-color: var(--rs-color-border-secondary) !important;
   }
 }

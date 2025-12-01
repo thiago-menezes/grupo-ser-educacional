@@ -1,6 +1,7 @@
 import { Button, Link } from 'reshaped';
 import { useCityContext } from '@/contexts/city';
 import { useCurrentInstitution } from '@/hooks';
+import mainNavStyles from '../main-nav/styles.module.scss';
 import styles from '../styles.module.scss';
 
 export const MobileNav = ({ mobileMenuOpen }: { mobileMenuOpen: boolean }) => {
@@ -66,6 +67,7 @@ export const MobileNav = ({ mobileMenuOpen }: { mobileMenuOpen: boolean }) => {
             href={`/${institutionId}/inscreva-se`}
             color="primary"
             fullWidth
+            className={mainNavStyles.secondaryButton}
           >
             Inscreva-se
           </Button>
