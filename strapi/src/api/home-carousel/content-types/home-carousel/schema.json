@@ -11,7 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Nome": {
+    "nome": {
       "type": "string"
     },
     "instituicao": {
@@ -19,15 +19,25 @@
       "relation": "oneToOne",
       "target": "api::institution.institution"
     },
-    "Desktop": {
+    "desktop": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["images", "files", "videos", "audios"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
-    "Mobile": {
+    "mobile": {
       "type": "media",
       "multiple": false,
-      "allowedTypes": ["images", "files", "videos", "audios"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

@@ -467,7 +467,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     modality: Schema.Attribute.Enumeration<['presencial', 'ead', 'hibrido']>;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    nome: Schema.Attribute.String & Schema.Attribute.Required;
     price: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
     sector: Schema.Attribute.Enumeration<
@@ -481,7 +481,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
         'outros',
       ]
     >;
-    slug: Schema.Attribute.UID<'name'>;
+    slug: Schema.Attribute.UID;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -504,7 +504,7 @@ export interface ApiHomeCarouselHomeCarousel
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Desktop: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    desktop: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     instituicao: Schema.Attribute.Relation<
       'oneToOne',
       'api::institution.institution'
@@ -515,8 +515,8 @@ export interface ApiHomeCarouselHomeCarousel
       'api::home-carousel.home-carousel'
     > &
       Schema.Attribute.Private;
-    Mobile: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    Nome: Schema.Attribute.String;
+    mobile: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    nome: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -536,48 +536,27 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    code: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 20;
-      }>;
+    cidadePadrao: Schema.Attribute.String;
     courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    defaultCity: Schema.Attribute.String;
-    defaultState: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 2;
-      }>;
-    description: Schema.Attribute.Text;
+    descricao: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::institution.institution'
     > &
       Schema.Attribute.Private;
-    logo: Schema.Attribute.Media<'images'>;
-    name: Schema.Attribute.String &
+    nome: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    primaryColor: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 7;
-      }>;
     publishedAt: Schema.Attribute.DateTime;
-    secondaryColor: Schema.Attribute.String &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 7;
-      }>;
-    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID & Schema.Attribute.Required;
     units: Schema.Attribute.Relation<'oneToMany', 'api::unit.unit'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    website: Schema.Attribute.String;
   };
 }
 
@@ -652,7 +631,7 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
         },
         number
       >;
-    name: Schema.Attribute.String & Schema.Attribute.Required;
+    nome: Schema.Attribute.String & Schema.Attribute.Required;
     photos: Schema.Attribute.Media<'images', true>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;

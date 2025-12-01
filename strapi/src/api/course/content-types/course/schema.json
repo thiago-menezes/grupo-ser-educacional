@@ -12,13 +12,12 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "nome": {
       "type": "string",
       "required": true
     },
     "slug": {
-      "type": "uid",
-      "targetField": "name"
+      "type": "uid"
     },
     "description": {
       "type": "text"
@@ -56,7 +55,11 @@
     },
     "modality": {
       "type": "enumeration",
-      "enum": ["presencial", "ead", "hibrido"]
+      "enum": [
+        "presencial",
+        "ead",
+        "hibrido"
+      ]
     },
     "curriculum": {
       "type": "richtext"
@@ -65,13 +68,17 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "gallery": {
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "workload": {
       "type": "integer"
