@@ -5,6 +5,7 @@ import { useCityContext } from '@/contexts/city';
 import { useCurrentInstitution } from '@/hooks';
 import { Icon } from '../..';
 import styles from '../styles.module.scss';
+import mainNavStyles from './styles.module.scss';
 
 export const MainNav = ({
   setMobileMenuOpen,
@@ -137,8 +138,8 @@ export const MainNav = ({
               </DropdownMenu>
             </nav>
 
-            <Link href={`/${institutionId}/inscreva-se`}>
-              <Button size="large" color="primary">
+            <Link href={`/${institutionId}/cursos`}>
+              <Button size="large" className={mainNavStyles.secondaryButton}>
                 Inscreva-se
               </Button>
             </Link>
