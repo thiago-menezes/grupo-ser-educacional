@@ -1,6 +1,6 @@
 import { Controller } from 'react-hook-form';
 import type { Control } from 'react-hook-form';
-import { FormControl, TextField } from 'reshaped';
+import { CourseInput } from '@/components';
 import type { CourseFiltersFormValues } from '../../types';
 
 export type CourseNameInputProps = {
@@ -13,15 +13,11 @@ export function CourseNameInput({ control }: CourseNameInputProps) {
       name="courseName"
       control={control}
       render={({ field }) => (
-        <FormControl>
-          <FormControl.Label>Qual curso quer estudar?</FormControl.Label>
-          <TextField
-            name={field.name}
-            placeholder="Encontre seu curso"
-            value={field.value}
-            onChange={({ value }) => field.onChange(value)}
-          />
-        </FormControl>
+        <CourseInput
+          value={field.value || ''}
+          onChange={field.onChange}
+          name={field.name}
+        />
       )}
     />
   );

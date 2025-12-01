@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { handleUnits } from '@/packages/bff/handlers';
+import { transformUnit } from '@/packages/bff/transformers/strapi';
 import { getStrapiClient } from '../services/bff';
 
 export async function GET(request: NextRequest) {
@@ -15,8 +16,15 @@ export async function GET(request: NextRequest) {
 
   try {
     const strapiClient = getStrapiClient();
-    const data = await handleUnits(strapiClient, { institutionSlug });
-    return NextResponse.json(data, {
+    const strapiData = await handleUnits(strapiClient, { institutionSlug });
+
+    // Transform Portuguese field names to English DTOs
+    const transformedData = {
+      data: strapiData.data.map(transformUnit),
+      meta: strapiData.meta,
+    };
+
+    return NextResponse.json(transformedData, {
       headers: {
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
       },

@@ -9,11 +9,8 @@ export function buildSearchParams(data: {
   const params = new URLSearchParams();
 
   if (data.city?.trim()) {
-    // Parse city value format: "city:name-state:code" -> extract city name
-    const cityName = parseCityValue(data.city.trim());
-    if (cityName) {
-      params.append('city', cityName);
-    }
+    // Keep the full technical format in URL for proper formatting on search page
+    params.append('city', data.city.trim());
   }
 
   if (data.course?.trim()) {

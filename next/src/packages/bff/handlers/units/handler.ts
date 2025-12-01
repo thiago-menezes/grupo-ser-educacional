@@ -10,7 +10,7 @@ export async function handleUnits(
 ): Promise<StrapiUnitsResponse> {
   // First, verify the institution exists
   const institutionCheck = await strapiClient.fetch<{
-    data: Array<{ id: number; slug: string; name: string }>;
+    data: Array<{ id: number; slug: string; nome: string }>;
   }>('institutions', {
     filters: {
       slug: { $eq: params.institutionSlug },
@@ -23,14 +23,14 @@ export async function handleUnits(
     );
   }
 
-  // Fetch units with institution filter
+  // Fetch units with institution filter (using Portuguese field names)
   const units = await strapiClient.fetch<StrapiUnitsResponse>('units', {
     filters: {
-      institution: {
+      instituicao: {
         slug: { $eq: params.institutionSlug },
       },
     },
-    populate: ['institution', 'photos'],
+    populate: ['instituicao', 'fotos'],
   });
 
   if (!units.data || units.data.length === 0) {

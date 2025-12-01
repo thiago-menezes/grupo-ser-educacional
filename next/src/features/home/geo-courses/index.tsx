@@ -30,19 +30,25 @@ export function GeoCoursesSection({
   } = useCityContext();
   const { defaultCity, defaultState } = useInstitutionData();
 
-  const { permissionDenied, requestPermission, isLoading } = useGeolocation({
+  const {
+    city: geoCity,
+    state: geoState,
+    permissionDenied,
+    requestPermission,
+    isLoading,
+  } = useGeolocation({
     manualCity: contextCity || null,
     manualState: contextState || null,
     institutionDefaultCity: defaultCity,
     institutionDefaultState: defaultState,
   });
 
-  // Use context city/state if available, otherwise show permission UI
-  const city = contextCity || '';
-  const state = contextState || '';
+  // Use context city/state if available, otherwise use geolocation result (which includes defaults)
+  const city = contextCity || geoCity || '';
+  const state = contextState || geoState || '';
   const hasCity = Boolean(city && state);
 
-  const showSkeletons = (!hasCity && permissionDenied) || isLoading;
+  const showSkeletons = isLoading;
   const coursesToShow = showSkeletons ? [] : data.courses;
 
   const { currentPage, totalPages, goToPage, isScrollable } = usePagination({

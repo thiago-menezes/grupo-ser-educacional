@@ -1,3 +1,9 @@
+/**
+ * Infrastructure API types
+ * These represent the TRANSFORMED data from the BFF (English field names)
+ * The BFF transforms Portuguese Strapi fields to these English DTOs
+ */
+
 export type StrapiUnitPhoto = {
   id: number;
   documentId: string;

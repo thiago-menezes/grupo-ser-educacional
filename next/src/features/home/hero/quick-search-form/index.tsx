@@ -144,7 +144,14 @@ export function QuickSearchForm({
 
     // Add geolocation-detected city if available and not already in search results
     if (contextCity && contextState && !permissionDenied) {
-      const geoLabel = `${contextCity} - ${contextState}`;
+      // Format city name properly: capitalize each word
+      const formattedCity = contextCity
+        .split(' ')
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+        )
+        .join(' ');
+      const geoLabel = `${formattedCity} - ${contextState.toUpperCase()}`;
       const geoValue = formatCityValue(contextCity, contextState);
       const existsInResults = searchResults.some(
         (city) => city.city === contextCity && city.state === contextState,
@@ -169,7 +176,14 @@ export function QuickSearchForm({
   // Get current city display label (e.g., "Recife - PE")
   const currentCityLabel = useMemo(() => {
     if (contextCity && contextState) {
-      return `${contextCity} - ${contextState}`;
+      // Format city name properly: capitalize each word
+      const formattedCity = contextCity
+        .split(' ')
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+        )
+        .join(' ');
+      return `${formattedCity} - ${contextState.toUpperCase()}`;
     }
     return '';
   }, [contextCity, contextState]);
@@ -185,8 +199,8 @@ export function QuickSearchForm({
       !isUserTypingRef.current
     ) {
       if (contextCity && contextState) {
-        const cityLabel = `${contextCity} - ${contextState}`;
-        setInputValue(cityLabel);
+        // Use the properly formatted city label
+        setInputValue(currentCityLabel);
         // Always update formatted value when city changes
         setFormattedCityValue(formatCityValue(contextCity, contextState));
       } else {
@@ -212,7 +226,14 @@ export function QuickSearchForm({
       return () => clearTimeout(timer);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contextCity, contextState, inputValue, formattedCityValue, isGeoLoading]);
+  }, [
+    contextCity,
+    contextState,
+    currentCityLabel,
+    inputValue,
+    formattedCityValue,
+    isGeoLoading,
+  ]);
 
   const handleInputChange: AutocompleteProps['onChange'] = ({ value }) => {
     // Prevent geolocation text from appearing in input

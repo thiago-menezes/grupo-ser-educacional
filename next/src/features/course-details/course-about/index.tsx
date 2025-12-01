@@ -9,14 +9,10 @@ export function CourseAbout({ description }: CourseAboutProps) {
   return (
     <View className={styles.about}>
       <Divider />
-      <Text
-        as="h2"
-        variant="featured-2"
-        weight="medium"
-        className={styles.title}
-      >
+      <Text as="h2" variant="featured-2" weight="medium">
         Sobre o curso
       </Text>
+
       <View className={styles.description}>
         <Text variant="body-2" color="neutral-faded">
           {description}

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { transformInstitution } from '@/packages/bff/transformers/strapi';
 
 export async function GET(request: NextRequest) {
   try {
@@ -40,23 +41,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const institution = data.data[0];
+    const strapiInstitution = data.data[0];
+    const institution = transformInstitution(strapiInstitution);
 
     return NextResponse.json({
-      institution: {
-        id: institution.id,
-        name: institution.name,
-        slug: institution.slug,
-        code: institution.code,
-        defaultCity: institution.defaultCity,
-        defaultState: institution.defaultState,
-        active: institution.active,
-        description: institution.description,
-        logo: institution.logo,
-        website: institution.website,
-        primaryColor: institution.primaryColor,
-        secondaryColor: institution.secondaryColor,
-      },
+      institution,
     });
   } catch (error) {
     // eslint-disable-next-line no-console

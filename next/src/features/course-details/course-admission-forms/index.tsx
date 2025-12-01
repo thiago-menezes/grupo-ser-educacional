@@ -1,37 +1,10 @@
 import { Text, View } from 'reshaped';
+import { ADMISSION_FORMS } from './constants';
 import styles from './styles.module.scss';
-
-const ADMISSION_FORMS = [
-  {
-    id: 'vestibular',
-    title: 'Vestibular',
-    description: 'Faça seu vestibular online',
-  },
-  {
-    id: 'enem',
-    title: 'ENEM',
-    description: 'Utilize notas do ENEM dos últimos 5 anos',
-  },
-  {
-    id: 'transferencia',
-    title: 'Transferência',
-    description: 'Transfira seu curso de outra instituição',
-  },
-  {
-    id: 'diploma',
-    title: 'Outro diploma',
-    description: 'Utilize seu diploma para ingressar',
-  },
-] as const;
-
-export type AdmissionFormId = (typeof ADMISSION_FORMS)[number]['id'];
-
-export type CourseAdmissionFormsProps = {
-  selectedFormId?: string | null;
-  onSelectForm: (formId: string) => void;
-};
+import { CourseAdmissionFormsProps } from './types';
 
 export function CourseAdmissionForms({
+  availableForms = ADMISSION_FORMS,
   selectedFormId,
   onSelectForm,
 }: CourseAdmissionFormsProps) {
@@ -45,18 +18,21 @@ export function CourseAdmissionForms({
       >
         Selecione sua forma de ingresso:
       </Text>
+
       <View className={styles.formsGrid}>
-        {ADMISSION_FORMS.map((form) => {
+        {availableForms.map((form) => {
           const isSelected = selectedFormId === form.id;
+          const isDisabled = availableForms.length === 1;
           return (
             <button
               key={form.id}
               type="button"
               className={`${styles.formCard} ${
                 isSelected ? styles.selected : ''
-              }`}
+              } ${isDisabled ? styles.disabled : ''}`}
               aria-label={`${form.title}: ${form.description}`}
               aria-pressed={isSelected}
+              disabled={isDisabled}
               onClick={() => onSelectForm(form.id)}
             >
               <View className={styles.formContent}>

@@ -1,4 +1,4 @@
-import { Tabs, Text, View } from 'reshaped';
+import { Text, View } from 'reshaped';
 import type { CourseDetails } from '../types';
 import styles from './styles.module.scss';
 
@@ -24,22 +24,43 @@ export function CourseModalitySelector({
   if (modalities.length === 0) return null;
 
   return (
-    <View>
-      <Text variant="title-4" className={styles.label}>
-        Selecione a modalidade
+    <View className={styles.modalitySelector}>
+      <Text
+        as="h2"
+        variant="featured-2"
+        weight="medium"
+        className={styles.label}
+      >
+        Selecione a modalidade:
       </Text>
 
-      <View direction="row" gap={4}>
-        <Tabs
-          value={selectedModalityId?.toString() || ''}
-          onChange={(value) => onSelectModality(Number(value))}
-        >
-          {modalities.map((modality) => (
-            <Tabs.Item key={modality.id} value={modality.id.toString()}>
-              {MODALITY_LABELS[modality.slug] || modality.name}
-            </Tabs.Item>
-          ))}
-        </Tabs>
+      <View className={styles.modalityGrid}>
+        {modalities.map((modality) => {
+          const isSelected = selectedModalityId === modality.id;
+          const isDisabled = modalities.length === 1;
+          return (
+            <button
+              key={modality.id}
+              type="button"
+              className={`${styles.modalityButton} ${
+                isSelected ? styles.selected : ''
+              } ${isDisabled ? styles.disabled : ''}`}
+              aria-label={MODALITY_LABELS[modality.slug] || modality.name}
+              aria-pressed={isSelected}
+              disabled={isDisabled}
+              onClick={() => onSelectModality(modality.id)}
+            >
+              <Text
+                as="span"
+                variant="body-2"
+                weight="bold"
+                className={styles.modalityLabel}
+              >
+                {MODALITY_LABELS[modality.slug] || modality.name}
+              </Text>
+            </button>
+          );
+        })}
       </View>
     </View>
   );
