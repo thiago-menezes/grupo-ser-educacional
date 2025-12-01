@@ -397,6 +397,7 @@ export function QuickSearchForm({
           className={
             activeTab === 'postgraduate' ? styles.secondaryButton : undefined
           }
+          endIcon={<Icon name="search" />}
         >
           {isLoading ? 'Buscando...' : 'Buscar'}
         </Button>
