@@ -20,6 +20,16 @@
     "telefone": {
       "type": "string",
       "regex": "^\\(\\d{2}\\)\\s\\d{5}-\\d{4}$"
+    },
+    "foto": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }
