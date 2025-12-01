@@ -3009,13 +3009,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:16.0.3":
-  version: 16.0.3
-  resolution: "dotenv@npm:16.0.3"
-  checksum: 10c0/109457ac5f9e930ca8066ea33887b6f839ab24d647a7a8b49ddcd1f32662e2c35591c5e5b9819063e430148a664d0927f0cbe60cf9575d89bc524f47ff7e78f0
-  languageName: node
-  linkType: hard
-
 "dotenv@npm:^8.1.0":
   version: 8.6.0
   resolution: "dotenv@npm:8.6.0"
@@ -3554,18 +3547,6 @@ __metadata:
   peerDependencies:
     eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
   checksum: 10c0/c850bfd556291d4d9234f5ca38db1436924a1013627c8ab1853f77cac73ec19b020e861e6c7b783436a48b6ffcdfba4547598235a37ad4611b6739f65fd8ad57
-  languageName: node
-  linkType: hard
-
-"eslint-plugin-turbo@npm:^2.6.1":
-  version: 2.6.1
-  resolution: "eslint-plugin-turbo@npm:2.6.1"
-  dependencies:
-    dotenv: "npm:16.0.3"
-  peerDependencies:
-    eslint: ">6.6.0"
-    turbo: ">2.0.0"
-  checksum: 10c0/2d6d33b4f17a9d420f729f9cbf2d22f6ee5f87b0d879b0c3c5ca2afbac7808df8ede97da7d7b013b7671c553ee63918b77158fa7ba5584fa5f7c62580cbc2a9a
   languageName: node
   linkType: hard
 
@@ -5020,7 +5001,6 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.5.4"
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-hooks: "npm:^7.0.1"
-    eslint-plugin-turbo: "npm:^2.6.1"
     globals: "npm:^16.5.0"
     jsdom: "npm:^27.2.0"
     next: "npm:^16.0.5"
