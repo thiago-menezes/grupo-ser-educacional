@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "corpo_de_docentes",
+  "info": {
+    "singularName": "corpo-docente",
+    "pluralName": "corpo-de-docentes",
+    "displayName": "Curso / Corpo docente"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string"
+    },
+    "materia": {
+      "type": "text"
+    },
+    "curso": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::course.course",
+      "inversedBy": "corpo_docente"
+    },
+    "modalidade": {
+      "type": "enumeration",
+      "enum": [
+        "presencial",
+        "semipresencial",
+        "digital (EAD)",
+        "ao vivo"
+      ]
+    }
+  }
+}

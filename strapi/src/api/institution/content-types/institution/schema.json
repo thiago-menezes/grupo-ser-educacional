@@ -28,17 +28,11 @@
       "type": "string",
       "required": false
     },
-    "courses": {
+    "cursos": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::course.course",
-      "mappedBy": "institution"
-    },
-    "units": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::unit.unit",
-      "mappedBy": "institution"
+      "mappedBy": "instituicao"
     }
   }
 }

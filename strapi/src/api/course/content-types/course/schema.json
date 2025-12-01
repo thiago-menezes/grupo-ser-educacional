@@ -4,7 +4,7 @@
   "info": {
     "singularName": "course",
     "pluralName": "courses",
-    "displayName": "Curso",
+    "displayName": "Curso / Detalhes",
     "description": "Academic courses offered by institutions"
   },
   "options": {
@@ -17,85 +17,38 @@
       "required": true
     },
     "slug": {
-      "type": "uid"
+      "type": "uid",
+      "required": true
     },
-    "description": {
-      "type": "text"
+    "sobre": {
+      "type": "text",
+      "required": true
     },
-    "detailedDescription": {
+    "descricaoSegundaria": {
       "type": "richtext"
-    },
-    "price": {
-      "type": "decimal"
-    },
-    "duration": {
-      "type": "string"
-    },
-    "sector": {
-      "type": "enumeration",
-      "enum": [
-        "saude",
-        "tecnologia",
-        "gestao",
-        "educacao",
-        "direito",
-        "engenharia",
-        "outros"
-      ]
-    },
-    "level": {
-      "type": "enumeration",
-      "enum": [
-        "tecnico",
-        "graduacao",
-        "pos-graduacao",
-        "extensao",
-        "curso-livre"
-      ]
-    },
-    "modality": {
-      "type": "enumeration",
-      "enum": [
-        "presencial",
-        "ead",
-        "hibrido"
-      ]
     },
     "curriculum": {
       "type": "richtext"
     },
-    "coverImage": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "gallery": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "workload": {
-      "type": "integer"
-    },
-    "enrollmentOpen": {
-      "type": "boolean",
-      "default": true
-    },
-    "featured": {
-      "type": "boolean",
-      "default": false
-    },
-    "institution": {
+    "instituicao": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::institution.institution",
-      "inversedBy": "courses"
+      "inversedBy": "cursos"
+    },
+    "capa": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "corpo_docente": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::corpo-docente.corpo-docente",
+      "mappedBy": "curso"
     }
   }
 }

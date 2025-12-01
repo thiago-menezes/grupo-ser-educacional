@@ -430,11 +430,107 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAreasDeInteresseAreasDeInteresse
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'areas_de_interesses';
+  info: {
+    displayName: 'Home / \u00C1reas de interesse';
+    pluralName: 'areas-de-interesses';
+    singularName: 'areas-de-interesse';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    capa: Schema.Attribute.Media<'images' | 'files'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    instituicao: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::institution.institution'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::areas-de-interesse.areas-de-interesse'
+    > &
+      Schema.Attribute.Private;
+    nome: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    subareas: Schema.Attribute.Blocks;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCoordenacaoCoordenacao extends Struct.CollectionTypeSchema {
+  collectionName: 'coordenacoes';
+  info: {
+    displayName: 'Curso / Coordena\u00E7\u00E3o';
+    pluralName: 'coordenacoes';
+    singularName: 'coordenacao';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::coordenacao.coordenacao'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCorpoDocenteCorpoDocente
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'corpo_de_docentes';
+  info: {
+    displayName: 'Curso / Corpo docente';
+    pluralName: 'corpo-de-docentes';
+    singularName: 'corpo-docente';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    curso: Schema.Attribute.Relation<'oneToOne', 'api::course.course'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::corpo-docente.corpo-docente'
+    > &
+      Schema.Attribute.Private;
+    materia: Schema.Attribute.Text;
+    modalidade: Schema.Attribute.Enumeration<
+      ['presencial', 'semipresencial', 'digital (EAD)', 'ao vivo']
+    >;
+    nome: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   collectionName: 'courses';
   info: {
     description: 'Academic courses offered by institutions';
-    displayName: 'Curso';
+    displayName: 'Curso / Detalhes';
     pluralName: 'courses';
     singularName: 'course';
   };
@@ -442,23 +538,19 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    coverImage: Schema.Attribute.Media<'images'>;
+    capa: Schema.Attribute.Media<'images' | 'files'>;
+    corpo_docente: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::corpo-docente.corpo-docente'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     curriculum: Schema.Attribute.RichText;
-    description: Schema.Attribute.Text;
-    detailedDescription: Schema.Attribute.RichText;
-    duration: Schema.Attribute.String;
-    enrollmentOpen: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    gallery: Schema.Attribute.Media<'images', true>;
-    institution: Schema.Attribute.Relation<
+    descricaoSegundaria: Schema.Attribute.RichText;
+    instituicao: Schema.Attribute.Relation<
       'manyToOne',
       'api::institution.institution'
-    >;
-    level: Schema.Attribute.Enumeration<
-      ['tecnico', 'graduacao', 'pos-graduacao', 'extensao', 'curso-livre']
     >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -466,26 +558,13 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       'api::course.course'
     > &
       Schema.Attribute.Private;
-    modality: Schema.Attribute.Enumeration<['presencial', 'ead', 'hibrido']>;
     nome: Schema.Attribute.String & Schema.Attribute.Required;
-    price: Schema.Attribute.Decimal;
     publishedAt: Schema.Attribute.DateTime;
-    sector: Schema.Attribute.Enumeration<
-      [
-        'saude',
-        'tecnologia',
-        'gestao',
-        'educacao',
-        'direito',
-        'engenharia',
-        'outros',
-      ]
-    >;
-    slug: Schema.Attribute.UID;
+    slug: Schema.Attribute.UID & Schema.Attribute.Required;
+    sobre: Schema.Attribute.Text & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    workload: Schema.Attribute.Integer;
   };
 }
 
@@ -504,7 +583,7 @@ export interface ApiHomeCarouselHomeCarousel
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    desktop: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    desktop: Schema.Attribute.Media<'images' | 'files'>;
     instituicao: Schema.Attribute.Relation<
       'oneToOne',
       'api::institution.institution'
@@ -515,8 +594,36 @@ export interface ApiHomeCarouselHomeCarousel
       'api::home-carousel.home-carousel'
     > &
       Schema.Attribute.Private;
-    mobile: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    mobile: Schema.Attribute.Media<'images' | 'files'>;
     nome: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHomePromoBannerHomePromoBanner
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'home_promo_banners';
+  info: {
+    displayName: 'Home / Banners promocionais';
+    pluralName: 'home-promo-banners';
+    singularName: 'home-promo-banner';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::home-promo-banner.home-promo-banner'
+    > &
+      Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -537,10 +644,10 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
   };
   attributes: {
     cidadePadrao: Schema.Attribute.String;
-    courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    cursos: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
     descricao: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -553,7 +660,70 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
       Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID & Schema.Attribute.Required;
-    units: Schema.Attribute.Relation<'oneToMany', 'api::unit.unit'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPerguntaFrequentePerguntaFrequente
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'perguntas_frequentes';
+  info: {
+    displayName: 'Home / Perguntas Frequentes';
+    pluralName: 'perguntas-frequentes';
+    singularName: 'pergunta-frequente';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    instituicao: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::pergunta-frequente.pergunta-frequente'
+    > &
+      Schema.Attribute.Private;
+    Pergunta: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    Resposta: Schema.Attribute.Text;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSearchBannerPromoSearchBannerPromo
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'search_banner_promos';
+  info: {
+    displayName: 'Busca / Banner promocional';
+    pluralName: 'search-banner-promos';
+    singularName: 'search-banner-promo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    imagem: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::search-banner-promo.search-banner-promo'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -594,7 +764,7 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
   collectionName: 'units';
   info: {
     description: 'Infrastructure units (campuses) for institutions';
-    displayName: 'Unidade';
+    displayName: 'Infraestrutura';
     pluralName: 'units';
     singularName: 'unit';
   };
@@ -602,12 +772,13 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    address: Schema.Attribute.Text & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    institution: Schema.Attribute.Relation<
-      'manyToOne',
+    endereco: Schema.Attribute.Text & Schema.Attribute.Required;
+    fotos: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
+    instituicao: Schema.Attribute.Relation<
+      'oneToOne',
       'api::institution.institution'
     >;
     latitude: Schema.Attribute.Decimal &
@@ -632,7 +803,6 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
         number
       >;
     nome: Schema.Attribute.String & Schema.Attribute.Required;
-    photos: Schema.Attribute.Media<'images', true>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1150,9 +1320,15 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::areas-de-interesse.areas-de-interesse': ApiAreasDeInteresseAreasDeInteresse;
+      'api::coordenacao.coordenacao': ApiCoordenacaoCoordenacao;
+      'api::corpo-docente.corpo-docente': ApiCorpoDocenteCorpoDocente;
       'api::course.course': ApiCourseCourse;
       'api::home-carousel.home-carousel': ApiHomeCarouselHomeCarousel;
+      'api::home-promo-banner.home-promo-banner': ApiHomePromoBannerHomePromoBanner;
       'api::institution.institution': ApiInstitutionInstitution;
+      'api::pergunta-frequente.pergunta-frequente': ApiPerguntaFrequentePerguntaFrequente;
+      'api::search-banner-promo.search-banner-promo': ApiSearchBannerPromoSearchBannerPromo;
       'api::seo.seo': ApiSeoSeo;
       'api::unit.unit': ApiUnitUnit;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "unit",
     "pluralName": "units",
-    "displayName": "Unidade",
+    "displayName": "Infraestrutura",
     "description": "Infrastructure units (campuses) for institutions"
   },
   "options": {
@@ -16,7 +16,7 @@
       "type": "string",
       "required": true
     },
-    "address": {
+    "endereco": {
       "type": "text",
       "required": true
     },
@@ -32,19 +32,18 @@
       "min": -180,
       "max": 180
     },
-    "photos": {
+    "fotos": {
       "type": "media",
       "multiple": true,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "images"
       ]
     },
-    "institution": {
+    "instituicao": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::institution.institution",
-      "inversedBy": "units"
+      "relation": "oneToOne",
+      "target": "api::institution.institution"
     }
   }
 }
