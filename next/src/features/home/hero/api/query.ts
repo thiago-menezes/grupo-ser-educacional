@@ -112,12 +112,12 @@ async function fetchHomeCarousel(
     const items: CarouselItem[] = [];
 
     for (const item of data.data) {
-      const desktopUrl = item.Desktop?.url;
-      const mobileUrl = item.Mobile?.url;
+      const desktopUrl = item.desktop?.url;
+      const mobileUrl = item.mobile?.url;
       const alt =
-        item.Desktop?.alternativeText ||
-        item.Mobile?.alternativeText ||
-        item.Nome ||
+        item.desktop?.alternativeText ||
+        item.mobile?.alternativeText ||
+        item.nome ||
         'Hero banner';
 
       if (!desktopUrl) {

@@ -20,11 +20,11 @@ export async function handleHomeCarousel(
         },
       },
       populate: {
-        Desktop: true,
-        Mobile: true,
+        desktop: true,
+        mobile: true,
         instituicao: true,
       },
-      sort: ['Nome:ASC'],
+      sort: ['nome:ASC'],
     },
     params.noCache,
   );

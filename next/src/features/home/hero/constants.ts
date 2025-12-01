@@ -7,10 +7,6 @@ export const DEFAULT_HERO_CONTENT: HeroContent = {
     url: '/carrossel.png',
     alternativeText: 'Hero banner background',
   },
-  backgroundImageMobile: {
-    url: '/carrossel.png',
-    alternativeText: 'Hero banner background',
-  },
   showCarouselControls: true,
   showQuickSearch: true,
 };

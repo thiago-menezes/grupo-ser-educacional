@@ -5,35 +5,22 @@ export type HomeCarouselQueryParams = {
 
 export type StrapiHomeCarouselItem = {
   id: number;
-  attributes: {
-    Nome: string;
-    Desktop?: {
-      data: {
-        id: number;
-        attributes: {
-          url: string;
-          alternativeText?: string;
-        };
-      } | null;
-    };
-    Mobile?: {
-      data: {
-        id: number;
-        attributes: {
-          url: string;
-          alternativeText?: string;
-        };
-      } | null;
-    };
-    instituicao?: {
-      data: {
-        id: number;
-        attributes: {
-          slug: string;
-        };
-      } | null;
-    };
-  };
+  documentId: string;
+  nome: string;
+  desktop?: {
+    id: number;
+    url: string;
+    alternativeText?: string | null;
+  } | null;
+  mobile?: {
+    id: number;
+    url: string;
+    alternativeText?: string | null;
+  } | null;
+  instituicao?: {
+    id: number;
+    slug: string;
+  } | null;
 };
 
 export type StrapiHomeCarouselResponse = {

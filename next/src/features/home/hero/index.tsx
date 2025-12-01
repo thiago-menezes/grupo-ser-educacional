@@ -38,6 +38,7 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
     previousSlide,
     goToSlide,
     setIsAutoAdvancing,
+    pauseAutoAdvance,
   } = useHeroCarousel(totalSlides);
 
   // Transform carousel items to match HeroBanner props
@@ -87,7 +88,7 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
                     className={styles.carouselLeftButton}
                     onClick={() => {
                       previousSlide();
-                      setIsAutoAdvancing(false);
+                      pauseAutoAdvance();
                     }}
                     aria-label="Previous slide"
                     icon={<Icon name="chevron-left" size={24} />}
@@ -96,7 +97,7 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
                     className={styles.carouselRightButton}
                     onClick={() => {
                       nextSlide();
-                      setIsAutoAdvancing(false);
+                      pauseAutoAdvance();
                     }}
                     aria-label="Next slide"
                     icon={<Icon name="chevron-right" size={24} />}
@@ -107,9 +108,18 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
                   <CarouselControls
                     currentSlide={currentSlide}
                     totalSlides={totalSlides}
-                    onPrevious={previousSlide}
-                    onNext={nextSlide}
-                    onGoToSlide={goToSlide}
+                    onPrevious={() => {
+                      previousSlide();
+                      pauseAutoAdvance();
+                    }}
+                    onNext={() => {
+                      nextSlide();
+                      pauseAutoAdvance();
+                    }}
+                    onGoToSlide={(index) => {
+                      goToSlide(index);
+                      pauseAutoAdvance();
+                    }}
                     onToggleAutoAdvance={setIsAutoAdvancing}
                     showArrows={false}
                   />

@@ -14,7 +14,9 @@ export function HeroBanner({
 }: HeroBannerProps) {
   const isInitialMount = useRef(true);
   const prevSlideRef = useRef<number | null>(null);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [animatingSlides, setAnimatingSlides] = useState<Set<number>>(
+    new Set(),
+  );
 
   useLayoutEffect(() => {
     if (isInitialMount.current) {
@@ -26,23 +28,24 @@ export function HeroBanner({
     // Only animate if slide actually changed
     const prevSlide = prevSlideRef.current;
     if (prevSlide !== null && prevSlide !== currentSlide) {
+      // Both current and previous slides should animate
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setShouldAnimate(true);
+      setAnimatingSlides(new Set([currentSlide, prevSlide]));
     }
 
     prevSlideRef.current = currentSlide;
-  }, [currentSlide, setShouldAnimate]);
+  }, [currentSlide]);
 
-  // Reset animation flag after animation completes
+  // Reset animation flags after animation completes
   useEffect(() => {
-    if (!shouldAnimate) return;
+    if (animatingSlides.size === 0) return;
 
     const timer = setTimeout(() => {
-      setShouldAnimate(false);
+      setAnimatingSlides(new Set());
     }, 600); // Match animation duration
 
     return () => clearTimeout(timer);
-  }, [shouldAnimate]);
+  }, [animatingSlides]);
 
   // Use carousel if items are provided, otherwise fallback to single image
   const useCarousel = carouselItems && carouselItems.length > 0;
@@ -53,8 +56,10 @@ export function HeroBanner({
         <div className={styles.slidesWrapper}>
           {carouselItems.map((item, index) => {
             const isActive = index === currentSlide % carouselItems.length;
+            const shouldAnimate = animatingSlides.has(index);
             const slideDirectionClass =
               direction === 'right' ? styles.slideRight : styles.slideLeft;
+
             return (
               <div
                 key={index}

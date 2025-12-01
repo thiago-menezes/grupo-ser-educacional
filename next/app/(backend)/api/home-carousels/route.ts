@@ -16,17 +16,40 @@ export async function GET(request: NextRequest) {
 
   try {
     const strapiClient = getStrapiClient();
-    const data = await handleHomeCarousel(strapiClient, {
+    const strapiData = await handleHomeCarousel(strapiClient, {
       institutionSlug,
       noCache,
     });
+
+    // Transform Strapi response to expected DTO format
+    const transformedData = {
+      data: strapiData.data.map((item) => ({
+        id: item.id,
+        nome: item.nome || null,
+        desktop: item.desktop
+          ? {
+              id: item.desktop.id,
+              url: item.desktop.url,
+              alternativeText: item.desktop.alternativeText,
+            }
+          : null,
+        mobile: item.mobile
+          ? {
+              id: item.mobile.id,
+              url: item.mobile.url,
+              alternativeText: item.mobile.alternativeText,
+            }
+          : null,
+      })),
+      meta: strapiData.meta,
+    };
 
     const cacheControl =
       process.env.NODE_ENV === 'development' || noCache
         ? 'no-store, no-cache, must-revalidate, proxy-revalidate'
         : 'public, s-maxage=3600, stale-while-revalidate=86400';
 
-    return NextResponse.json(data, {
+    return NextResponse.json(transformedData, {
       headers: {
         'Cache-Control': cacheControl,
         'X-Cache-Status': noCache ? 'bypassed' : 'cached',

@@ -66,13 +66,13 @@ export type CourseSearchResultDTO = {
 
 export type HomeCarouselItemDTO = {
   id: number;
-  Nome: string | null;
-  Desktop?: {
+  nome: string | null;
+  desktop?: {
     id: number;
     url: string;
     alternativeText?: string | null;
   } | null;
-  Mobile?: {
+  mobile?: {
     id: number;
     url: string;
     alternativeText?: string | null;

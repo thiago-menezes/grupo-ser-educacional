@@ -8,6 +8,7 @@ export function useHeroCarousel(totalSlides: number = 1) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoAdvancing, setIsAutoAdvancing] = useState(true);
   const [direction, setDirection] = useState<'left' | 'right'>('right');
+  const autoAdvanceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const goToSlide = useCallback(
     (index: number) => {
@@ -33,6 +34,21 @@ export function useHeroCarousel(totalSlides: number = 1) {
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
   }, [totalSlides]);
 
+  // Pause auto-advance temporarily (will resume after a delay)
+  const pauseAutoAdvance = useCallback(() => {
+    setIsAutoAdvancing(false);
+
+    // Clear any existing timeout
+    if (autoAdvanceTimeoutRef.current) {
+      clearTimeout(autoAdvanceTimeoutRef.current);
+    }
+
+    // Resume auto-advance after 10 seconds
+    autoAdvanceTimeoutRef.current = setTimeout(() => {
+      setIsAutoAdvancing(true);
+    }, 10000);
+  }, []);
+
   useEffect(() => {
     if (!isAutoAdvancing || totalSlides <= 1) return;
 
@@ -44,6 +60,15 @@ export function useHeroCarousel(totalSlides: number = 1) {
     return () => clearInterval(interval);
   }, [isAutoAdvancing, totalSlides, nextSlide]);
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (autoAdvanceTimeoutRef.current) {
+        clearTimeout(autoAdvanceTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return {
     currentSlide,
     direction,
@@ -52,6 +77,7 @@ export function useHeroCarousel(totalSlides: number = 1) {
     previousSlide,
     isAutoAdvancing,
     setIsAutoAdvancing,
+    pauseAutoAdvance,
   };
 }
 
