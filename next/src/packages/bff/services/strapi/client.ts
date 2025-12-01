@@ -18,6 +18,7 @@ export interface StrapiFetchOptions {
 export interface StrapiClientConfig {
   baseUrl: string;
   cacheRevalidate?: number;
+  token?: string;
 }
 
 /**
@@ -140,6 +141,9 @@ export class StrapiClient {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        ...(this.config.token
+          ? { Authorization: `Bearer ${this.config.token}` }
+          : {}),
         ...(noCache ? { 'Cache-Control': 'no-cache' } : {}),
       },
     });
@@ -165,9 +169,13 @@ export class StrapiClient {
 /**
  * Create a Strapi client instance
  */
-export function createStrapiClient(baseUrl: string): StrapiClient {
+export function createStrapiClient(
+  baseUrl: string,
+  token?: string,
+): StrapiClient {
   return new StrapiClient({
     baseUrl,
     cacheRevalidate: 3600,
+    token,
   });
 }

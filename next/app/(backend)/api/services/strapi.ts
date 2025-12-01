@@ -5,6 +5,7 @@
  */
 
 const STRAPI_URL = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
+const STRAPI_TOKEN = process.env.STRAPI_TOKEN;
 
 /**
  * Build Strapi query string with proper bracket notation
@@ -159,6 +160,8 @@ export async function fetchFromStrapi<T>(
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      // Add Strapi authorization token if available
+      ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN}` } : {}),
       // Add cache-busting header in development
       ...(noCache || process.env.NODE_ENV === 'development'
         ? { 'Cache-Control': 'no-cache' }

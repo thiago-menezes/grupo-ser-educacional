@@ -14,11 +14,14 @@ export async function GET(request: NextRequest) {
 
     // Fetch from Strapi
     const strapiUrl = process.env.STRAPI_URL || 'http://localhost:1337';
+    const strapiToken = process.env.STRAPI_TOKEN;
+
     const response = await fetch(
       `${strapiUrl}/api/institutions?filters[slug][$eq]=${slug}&populate=*`,
       {
         headers: {
           'Content-Type': 'application/json',
+          ...(strapiToken ? { Authorization: `Bearer ${strapiToken}` } : {}),
         },
         cache: 'no-store',
       },

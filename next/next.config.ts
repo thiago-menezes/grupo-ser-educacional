@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'cozy-joy-a6787fb158.media.strapiapp.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'placehold.co',
       },
       {
