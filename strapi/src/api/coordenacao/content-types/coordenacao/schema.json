@@ -30,6 +30,11 @@
         "videos",
         "audios"
       ]
+    },
+    "instituicao": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution"
     }
   }
 }

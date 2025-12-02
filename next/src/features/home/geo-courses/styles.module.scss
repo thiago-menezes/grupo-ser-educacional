@@ -1,6 +1,6 @@
 .section {
   width: 100%;
-  padding: calc(var(--rs-unit-x10) * 2) var(--rs-unit-x6) var(--rs-unit-x10)
+  padding: calc(var(--rs-unit-x6) * 2) var(--rs-unit-x6) var(--rs-unit-x10)
     var(--rs-unit-x6);
 
   @media (max-width: 768px) {

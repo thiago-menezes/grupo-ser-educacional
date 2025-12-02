@@ -93,7 +93,6 @@ export function useCoursesSearch(
 
 export type CarouselItem = {
   desktopImage: string;
-  mobileImage?: string;
   alt?: string;
 };
 
@@ -113,12 +112,8 @@ async function fetchHomeCarousel(
 
     for (const item of data.data) {
       const desktopUrl = item.desktop?.url;
-      const mobileUrl = item.mobile?.url;
       const alt =
-        item.desktop?.alternativeText ||
-        item.mobile?.alternativeText ||
-        item.nome ||
-        'Hero banner';
+        item.desktop?.alternativeText || item.nome || 'Hero banner';
 
       if (!desktopUrl) {
         continue;
@@ -126,7 +121,6 @@ async function fetchHomeCarousel(
 
       items.push({
         desktopImage: getMediaUrl(desktopUrl),
-        mobileImage: mobileUrl ? getMediaUrl(mobileUrl) : undefined,
         alt,
       });
     }

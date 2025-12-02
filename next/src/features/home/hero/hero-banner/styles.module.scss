@@ -3,12 +3,14 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  aspect-ratio: 5 / 2;
 }
 
 .slidesWrapper {
   position: relative;
   width: 100%;
   height: 100%;
+  padding: 0 40px;
 }
 
 .slide {
@@ -123,20 +125,8 @@
   object-position: center;
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--rs-radius-large);
   pointer-events: none;
-  display: none;
-
-  @media (min-width: 660px) {
-    display: block;
-    pointer-events: auto;
-  }
-}
-
-.imageMobile {
-  display: block;
-  pointer-events: auto;
-
-  @media (min-width: 660px) {
-    display: none;
-  }
 }

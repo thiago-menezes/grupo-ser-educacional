@@ -41,14 +41,26 @@ export interface Institution {
 export function transformInstitution(
   strapi: StrapiInstitution,
 ): Institution {
+  // Parse cidadePadrao if it contains both city and state (e.g., "Manaus - AM")
+  let defaultCity = strapi.cidadePadrao || null;
+  let defaultState = strapi.estadoPadrao || null;
+
+  if (defaultCity && defaultCity.includes(' - ')) {
+    const parts = defaultCity.split(' - ');
+    if (parts.length === 2) {
+      defaultCity = parts[0].trim();
+      defaultState = parts[1].trim();
+    }
+  }
+
   return {
     id: strapi.id,
     documentId: strapi.documentId,
     name: strapi.nome || '',
     slug: strapi.slug,
     code: strapi.codigo || null,
-    defaultCity: strapi.cidadePadrao || null,
-    defaultState: strapi.estadoPadrao || null,
+    defaultCity,
+    defaultState,
     active: strapi.ativo ?? true,
     description: strapi.descricao || null,
     logo: strapi.logo,

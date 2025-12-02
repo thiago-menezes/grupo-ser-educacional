@@ -317,7 +317,7 @@ export function QuickSearchForm({
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <div className={styles.tabsContainer}>
         <Button
-          size="large"
+          size="small"
           variant={activeTab === 'graduation' ? 'solid' : 'ghost'}
           color={activeTab === 'graduation' ? 'primary' : undefined}
           onClick={() => setActiveTab('graduation')}
@@ -328,7 +328,7 @@ export function QuickSearchForm({
         </Button>
 
         <Button
-          size="large"
+          size="small"
           variant={activeTab === 'postgraduate' ? 'solid' : 'ghost'}
           color={activeTab === 'postgraduate' ? 'primary' : undefined}
           onClick={() => setActiveTab('postgraduate')}

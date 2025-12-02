@@ -1,17 +1,11 @@
 .wrapper {
   width: 100%;
   position: relative;
-  padding: var(--rs-unit-x8) var(--rs-unit-x4) calc(var(--rs-unit-x10) * 2)
-    var(--rs-unit-x4);
-  padding-bottom: calc(var(--rs-unit-x10) * 7);
-
-  @media (--rs-viewport-m) {
-    padding-bottom: calc(var(--rs-unit-x10) * 3);
-  }
+  padding: var(--rs-unit-x6) var(--rs-unit-x1) 0 var(--rs-unit-x1);
 }
 
 .container {
-  max-width: 1232px;
+  max-width: 1440px;
   margin: 0 auto;
   position: relative;
 }
@@ -26,17 +20,11 @@
 .heroCard {
   position: relative;
   width: 100%;
-  height: 300px;
+  pointer-events: none;
+  aspect-ratio: 5 / 2;
   border-radius: var(--rs-radius-large);
   overflow: hidden;
-
-  @media (--rs-viewport-m) {
-    height: 400px;
-  }
-
-  @media (--rs-viewport-l) {
-    height: 520px;
-  }
+  padding: 0 calc(var(--rs-unit-x1) * 6);
 }
 
 .carouselControlsWrapper {
@@ -88,30 +76,23 @@
 
 .carouselIndicators {
   position: absolute;
-  right: 8px;
+  right: var(--rs-unit-x8);
   top: 8px;
   z-index: 10;
   pointer-events: auto;
 }
 
 .searchFormContainer {
-  position: absolute;
-  bottom: -96px;
-  left: 50%;
-  transform: translateX(-50%) translateY(50%);
+  position: relative;
   border-radius: calc(var(--rs-radius-medium) + 4px);
-  padding: var(--rs-unit-x4);
+  padding: var(--rs-unit-x4) var(--rs-unit-x2);
   width: 100%;
   max-width: 1080px;
+  margin: 0 auto;
   z-index: 10;
 
   @media (--rs-viewport-m) {
-    bottom: 0;
-    border-radius: calc(var(--rs-radius-large) + 4px);
-    padding: var(--rs-unit-x5);
-  }
-
-  @media (--rs-viewport-l) {
-    padding: var(--rs-unit-x6);
+    top: -56px;
+    padding: 0;
   }
 }

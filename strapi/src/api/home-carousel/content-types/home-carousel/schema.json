@@ -4,7 +4,8 @@
   "info": {
     "singularName": "home-carousel",
     "pluralName": "home-carousels",
-    "displayName": "Home / Carrossel"
+    "displayName": "Home / Carrossel",
+    "description": "Banners do carrossel da home. Formato recomendado: 1800x720px (proporção 5:2)"
   },
   "options": {
     "draftAndPublish": true
@@ -22,17 +23,9 @@
     "desktop": {
       "type": "media",
       "multiple": false,
+      "required": true,
       "allowedTypes": [
-        "images",
-        "files"
-      ]
-    },
-    "mobile": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files"
+        "images"
       ]
     }
   }

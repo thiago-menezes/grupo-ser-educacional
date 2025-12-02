@@ -481,6 +481,10 @@ export interface ApiCoordenacaoCoordenacao extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     descricao: Schema.Attribute.Text;
     foto: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    instituicao: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -512,6 +516,10 @@ export interface ApiCorpoDocenteCorpoDocente
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     curso: Schema.Attribute.Relation<'oneToOne', 'api::course.course'>;
+    instituicao: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -576,6 +584,7 @@ export interface ApiHomeCarouselHomeCarousel
   extends Struct.CollectionTypeSchema {
   collectionName: 'home_carousels';
   info: {
+    description: 'Banners do carrossel da home. Formato recomendado: 1800x720px (propor\u00E7\u00E3o 5:2)';
     displayName: 'Home / Carrossel';
     pluralName: 'home-carousels';
     singularName: 'home-carousel';
@@ -587,7 +596,7 @@ export interface ApiHomeCarouselHomeCarousel
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    desktop: Schema.Attribute.Media<'images' | 'files'>;
+    desktop: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     instituicao: Schema.Attribute.Relation<
       'oneToOne',
       'api::institution.institution'
@@ -598,7 +607,6 @@ export interface ApiHomeCarouselHomeCarousel
       'api::home-carousel.home-carousel'
     > &
       Schema.Attribute.Private;
-    mobile: Schema.Attribute.Media<'images' | 'files'>;
     nome: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -619,6 +627,12 @@ export interface ApiHomePromoBannerHomePromoBanner
     draftAndPublish: true;
   };
   attributes: {
+    banner1: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    banner2: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    banner3: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

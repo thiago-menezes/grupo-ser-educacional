@@ -48,7 +48,6 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
     }
     return carouselItems.map((item) => ({
       desktopImage: item.desktopImage,
-      mobileImage: item.mobileImage,
       alt: item.alt,
     }));
   }, [carouselItems]);
@@ -56,8 +55,6 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
   // Fallback to single image if no carousel items
   const fallbackImageUrl =
     carouselItems.length === 0 ? content.backgroundImage?.url : undefined;
-  const fallbackImageUrlMobile =
-    carouselItems.length === 0 ? content.backgroundImageMobile?.url : undefined;
   const fallbackImageAlt =
     carouselItems.length === 0
       ? content.backgroundImage?.alternativeText
@@ -76,7 +73,6 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
                 currentSlide={currentSlide}
                 direction={direction}
                 imageUrl={fallbackImageUrl}
-                imageUrlMobile={fallbackImageUrlMobile}
                 imageAlt={fallbackImageAlt}
               />
             )}

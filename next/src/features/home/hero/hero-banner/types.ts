@@ -5,7 +5,6 @@ export type HeroBannerProps = {
   currentSlide?: number;
   direction?: 'left' | 'right';
   imageUrl?: string;
-  imageUrlMobile?: string;
   imageAlt?: string;
   videoUrl?: string;
   isLoading?: boolean;
