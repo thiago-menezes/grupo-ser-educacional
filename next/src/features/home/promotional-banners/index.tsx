@@ -1,20 +1,54 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MOCK_PROMOTIONAL_BANNERS } from './mocks';
+import { useState, useEffect } from 'react';
+import { Pagination } from '@/components/pagination';
+import { usePromotionalBanners } from './api';
+import { useScrollPagination } from './hooks';
 import styles from './styles.module.scss';
-import type { PromotionalBannersProps } from './types';
+
+export type PromotionalBannersProps = {
+  institutionSlug: string;
+};
+
+// Banner card dimensions matching the SCSS
+const BANNER_GAP = 24;
 
 export function PromotionalBanners({
-  banners = MOCK_PROMOTIONAL_BANNERS,
+  institutionSlug,
 }: PromotionalBannersProps) {
-  if (!banners.length) {
+  const { data: banners = [], isLoading } = usePromotionalBanners(institutionSlug);
+  const [cardWidth, setCardWidth] = useState(294); // Default mobile width
+
+  // Update card width based on window size
+  useEffect(() => {
+    const updateCardWidth = () => {
+      setCardWidth(window.innerWidth >= 440 ? 394 : 294);
+    };
+
+    updateCardWidth();
+    window.addEventListener('resize', updateCardWidth);
+    return () => window.removeEventListener('resize', updateCardWidth);
+  }, []);
+
+  const {
+    scrollerRef,
+    currentPage,
+    totalPages,
+    handlePageChange,
+  } = useScrollPagination({
+    totalItems: banners.length,
+    itemWidth: cardWidth,
+    gap: BANNER_GAP,
+  });
+
+  if (isLoading || !banners.length) {
     return null;
   }
 
   return (
     <section className={styles.section} aria-label="Banners promocionais">
       <div className={styles.container}>
-        <div className={styles.scroller} role="list">
+        <div className={styles.scroller} role="list" ref={scrollerRef}>
           {banners.map((banner) => {
             const imageElement = (
               <Image
@@ -34,7 +68,12 @@ export function PromotionalBanners({
                 role="listitem"
               >
                 {banner.link ? (
-                  <Link href={banner.link} className={styles.bannerLink}>
+                  <Link
+                    href={banner.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.bannerLink}
+                  >
                     {imageElement}
                   </Link>
                 ) : (
@@ -44,6 +83,15 @@ export function PromotionalBanners({
             );
           })}
         </div>
+
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChangeAction={handlePageChange}
+            className={styles.pagination}
+          />
+        )}
       </div>
     </section>
   );

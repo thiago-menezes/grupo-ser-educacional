@@ -17,8 +17,6 @@ export type FooterSocialLink = FooterLink & {
 
 export type FooterBadge = {
   title: string;
-  imageUrl: string;
-  imageAlt: string;
   href?: string;
 };
 

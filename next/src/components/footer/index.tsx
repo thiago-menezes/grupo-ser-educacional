@@ -6,6 +6,7 @@ import { Text } from 'reshaped';
 import { useCurrentInstitution } from '@/hooks';
 import { Icon } from '..';
 import { DEFAULT_FOOTER_CONTENT } from './constants';
+import { EmecBadge } from './emec-badge';
 import styles from './styles.module.scss';
 import type { FooterProps } from './types';
 
@@ -74,15 +75,7 @@ export function Footer({ content = DEFAULT_FOOTER_CONTENT }: FooterProps) {
               {badge.title}
             </Text>
 
-            <Link href={badge.href || '#'} aria-label={badge.title}>
-              <Image
-                src={badge.imageUrl}
-                alt={badge.imageAlt}
-                className={styles.badgeImage}
-                width={101}
-                height={144}
-              />
-            </Link>
+            <EmecBadge href={badge.href} title={badge.title} />
           </div>
         </div>
       </div>

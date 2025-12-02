@@ -4,7 +4,3 @@ export type PromotionalBanner = {
   imageAlt?: string;
   link?: string | null;
 };
-
-export type PromotionalBannersProps = {
-  banners?: PromotionalBanner[];
-};

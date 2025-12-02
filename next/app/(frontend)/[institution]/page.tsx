@@ -12,13 +12,16 @@ import {
 import { HeroSection } from '@/features/home/hero';
 import { ModalitiesSection } from '@/features/home/modalities-section';
 import { PromotionalBanners } from '@/features/home/promotional-banners';
+import { useCurrentInstitution } from '@/hooks';
 
 const HomePage = () => {
+  const { institutionId } = useCurrentInstitution();
+
   return (
     <main>
       <HeroSection />
       <GeoCoursesSection />
-      <PromotionalBanners />
+      <PromotionalBanners institutionSlug={institutionId} />
       <ModalitiesSection />
       <AreasSelector />
       <CareerPath />

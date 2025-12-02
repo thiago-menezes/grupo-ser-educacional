@@ -2,12 +2,14 @@ import { clsx } from 'clsx';
 import Link from 'next/link';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components';
+import { useCurrentInstitution } from '@/hooks/useInstitution';
 import { MOCK_MODALITIES } from './mocks';
 import styles from './styles.module.scss';
 
 export function ModalitiesSection() {
   const modalities = MOCK_MODALITIES;
   const sectionClassName = clsx(styles.section);
+  const { institutionId } = useCurrentInstitution();
 
   return (
     <section
@@ -39,7 +41,7 @@ export function ModalitiesSection() {
                 {modality.description}
               </Text>
 
-              <Link href={modality.ctaHref}>
+              <Link href={`/${institutionId}/${modality.ctaHref}`}>
                 <Button
                   variant="ghost"
                   color="primary"

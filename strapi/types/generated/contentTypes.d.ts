@@ -581,6 +581,36 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEMecEMec extends Struct.CollectionTypeSchema {
+  collectionName: 'e_mecs';
+  info: {
+    displayName: 'e-mec';
+    pluralName: 'e-mecs';
+    singularName: 'e-mec';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    instituicao: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    link: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::e-mec.e-mec'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    qcode: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHomeCarouselHomeCarousel
   extends Struct.CollectionTypeSchema {
   collectionName: 'home_carousels';
@@ -1346,6 +1376,7 @@ declare module '@strapi/strapi' {
       'api::coordenacao.coordenacao': ApiCoordenacaoCoordenacao;
       'api::corpo-docente.corpo-docente': ApiCorpoDocenteCorpoDocente;
       'api::course.course': ApiCourseCourse;
+      'api::e-mec.e-mec': ApiEMecEMec;
       'api::home-carousel.home-carousel': ApiHomeCarouselHomeCarousel;
       'api::home-promo-banner.home-promo-banner': ApiHomePromoBannerHomePromoBanner;
       'api::institution.institution': ApiInstitutionInstitution;

@@ -8,7 +8,7 @@ export const MOCK_MODALITIES: ModalityHighlight[] = [
       'Aulas no campus, contato direto com professores e vivência universitária completa.',
     icon: 'users',
     ctaLabel: 'Veja cursos presenciais',
-    ctaHref: '/cursos/presenciais',
+    ctaHref: '/cursos?modalities=presencial',
   },
   {
     id: 'semipresencial',
@@ -17,7 +17,7 @@ export const MOCK_MODALITIES: ModalityHighlight[] = [
       'O equilíbrio perfeito entre flexibilidade e contato direto, parte online, parte presencial.',
     icon: 'user-square-rounded',
     ctaLabel: 'Veja cursos semipresenciais',
-    ctaHref: '/cursos/semipresenciais',
+    ctaHref: '/cursos?modalities=semipresencial',
   },
   {
     id: 'ead',
@@ -26,6 +26,6 @@ export const MOCK_MODALITIES: ModalityHighlight[] = [
       'Estude de onde quiser e no seu ritmo. Cursos 100% online com qualidade e máxima flexibilidade.',
     icon: 'device-laptop',
     ctaLabel: 'Veja cursos EAD',
-    ctaHref: '/cursos/ead',
+    ctaHref: '/cursos?modalities=ead',
   },
 ];

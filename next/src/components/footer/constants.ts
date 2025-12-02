@@ -1,7 +1,5 @@
 import type { FooterContent } from './types';
 
-const MEC_BADGE_PLACEHOLDER = 'https://placehold.co/200x300.png';
-
 export const DEFAULT_FOOTER_CONTENT: FooterContent = {
   socialLinks: [
     {
@@ -64,8 +62,6 @@ export const DEFAULT_FOOTER_CONTENT: FooterContent = {
   ],
   badge: {
     title: 'Consulte aqui o cadastro da Instituição no e-MEC',
-    imageUrl: MEC_BADGE_PLACEHOLDER,
-    imageAlt: 'QR Code e-MEC placeholder',
     href: '#',
   },
 };
