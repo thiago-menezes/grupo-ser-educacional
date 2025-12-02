@@ -44,6 +44,29 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::institution.institution"
+    },
+    "bairro": {
+      "type": "string",
+      "required": true
+    },
+    "cidade": {
+      "type": "string",
+      "required": true
+    },
+    "estado": {
+      "type": "string",
+      "required": true
+    },
+    "numero": {
+      "type": "string",
+      "required": true
+    },
+    "cep": {
+      "type": "string",
+      "required": true
+    },
+    "complemento": {
+      "type": "string"
     }
   }
 }

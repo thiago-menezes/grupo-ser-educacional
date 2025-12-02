@@ -2,18 +2,23 @@ import Image from 'next/image';
 import { useRef } from 'react';
 import { Button } from 'reshaped';
 import { Icon, Pagination } from '@/components';
-import { usePagination } from '@/hooks';
-import { DEFAULT_AREAS_CONTENT } from './constants';
+import { useCurrentInstitution, usePagination } from '@/hooks';
+import { useAreasInteresse } from './api';
 import { useAreaSelector } from './hooks';
 import styles from './styles.module.scss';
 import { AreasSelectorProps } from './types';
 
-export function AreasSelector({
-  content = DEFAULT_AREAS_CONTENT,
-}: AreasSelectorProps) {
+export function AreasSelector({ content }: AreasSelectorProps) {
+  const { institutionId } = useCurrentInstitution();
+  const { data: areas } = useAreasInteresse(institutionId);
+
+  const displayContent = {
+    areas: areas && areas.length > 0 ? areas : content?.areas,
+  };
+
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const { currentPage, totalPages, goToPage, isScrollable } = usePagination({
-    totalItems: content.areas.length,
+    totalItems: displayContent.areas?.length || 0,
     containerRef: scrollRef,
     gap: 24,
   });
@@ -31,7 +36,7 @@ export function AreasSelector({
 
         <div className={styles.carousel}>
           <div ref={scrollRef} className={styles.scrollArea} role="list">
-            {content.areas.map((area) => (
+            {displayContent.areas?.map((area) => (
               <article key={area.id} className={styles.card} role="listitem">
                 <div className={styles.imageWrapper}>
                   <Image
@@ -51,7 +56,7 @@ export function AreasSelector({
                       <button
                         key={course.id}
                         className={styles.courseButton}
-                        onClick={() => handleCourseClick(area, course.slug)}
+                        onClick={() => handleCourseClick(area, course.name)}
                         type="button"
                       >
                         {course.name}
@@ -63,7 +68,7 @@ export function AreasSelector({
                   <div className={styles.allCourses}>
                     <Button
                       type="button"
-                      onClick={() => handleAllCourses(area.slug)}
+                      onClick={() => handleAllCourses(area.title)}
                       variant="ghost"
                       color="primary"
                       icon={<Icon name="link" size={16} />}

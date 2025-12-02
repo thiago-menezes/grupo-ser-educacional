@@ -35,6 +35,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::institution.institution"
+    },
+    "curso_detalhes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course.course",
+      "mappedBy": "curso_coordenacao"
     }
   }
 }

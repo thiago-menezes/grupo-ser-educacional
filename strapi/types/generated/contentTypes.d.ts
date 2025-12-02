@@ -479,6 +479,10 @@ export interface ApiCoordenacaoCoordenacao extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    curso_detalhes: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::course.course'
+    >;
     descricao: Schema.Attribute.Text;
     foto: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     instituicao: Schema.Attribute.Relation<
@@ -560,6 +564,10 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     curriculum: Schema.Attribute.RichText;
+    curso_coordenacao: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::coordenacao.coordenacao'
+    >;
     descricaoSegundaria: Schema.Attribute.RichText;
     instituicao: Schema.Attribute.Relation<
       'manyToOne',
@@ -584,7 +592,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
 export interface ApiEMecEMec extends Struct.CollectionTypeSchema {
   collectionName: 'e_mecs';
   info: {
-    displayName: 'e-mec';
+    displayName: 'E-mec';
     pluralName: 'e-mecs';
     singularName: 'e-mec';
   };
@@ -700,6 +708,10 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     cursos: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
     descricao: Schema.Attribute.Text;
+    home_perguntas_frequente: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::pergunta-frequente.pergunta-frequente'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -732,8 +744,8 @@ export interface ApiPerguntaFrequentePerguntaFrequente
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    instituicao: Schema.Attribute.Relation<
-      'oneToOne',
+    instituicoes: Schema.Attribute.Relation<
+      'oneToMany',
       'api::institution.institution'
     >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -742,9 +754,9 @@ export interface ApiPerguntaFrequentePerguntaFrequente
       'api::pergunta-frequente.pergunta-frequente'
     > &
       Schema.Attribute.Private;
-    Pergunta: Schema.Attribute.Text;
+    Pergunta: Schema.Attribute.Text & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    Resposta: Schema.Attribute.Text;
+    Resposta: Schema.Attribute.Text & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -824,10 +836,15 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    bairro: Schema.Attribute.String & Schema.Attribute.Required;
+    cep: Schema.Attribute.String & Schema.Attribute.Required;
+    cidade: Schema.Attribute.String & Schema.Attribute.Required;
+    complemento: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     endereco: Schema.Attribute.Text & Schema.Attribute.Required;
+    estado: Schema.Attribute.String & Schema.Attribute.Required;
     fotos: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
     instituicao: Schema.Attribute.Relation<
       'oneToOne',
@@ -855,6 +872,7 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
         number
       >;
     nome: Schema.Attribute.String & Schema.Attribute.Required;
+    numero: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

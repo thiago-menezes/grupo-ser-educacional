@@ -7,6 +7,7 @@ import { useCurrentInstitution } from '@/hooks';
 import { Icon } from '..';
 import { DEFAULT_FOOTER_CONTENT } from './constants';
 import { EmecBadge } from './emec-badge';
+import { useEMec } from './emec-badge/api/query';
 import styles from './styles.module.scss';
 import type { FooterProps } from './types';
 
@@ -15,6 +16,7 @@ export type { FooterProps } from './types';
 export function Footer({ content = DEFAULT_FOOTER_CONTENT }: FooterProps) {
   const { institutionId, institutionName } = useCurrentInstitution();
   const { socialLinks, sections, badge } = content;
+  const { data: emecData } = useEMec(institutionId);
 
   return (
     <footer className={styles.wrapper} role="contentinfo">
@@ -71,11 +73,21 @@ export function Footer({ content = DEFAULT_FOOTER_CONTENT }: FooterProps) {
           </div>
 
           <div className={styles.badge}>
-            <Text as="p" variant="body-3" className={styles.badgeTitle}>
+            <Text
+              as="p"
+              variant="body-3"
+              align="center"
+              className={styles.badgeTitle}
+            >
               {badge.title}
             </Text>
 
-            <EmecBadge href={badge.href} title={badge.title} />
+            <EmecBadge
+              href={emecData?.link || badge.href}
+              title={badge.title}
+              qrcodeUrl={emecData?.qrcodeUrl}
+              qrcodeAlt={emecData?.qrcodeAlt}
+            />
           </div>
         </div>
       </div>

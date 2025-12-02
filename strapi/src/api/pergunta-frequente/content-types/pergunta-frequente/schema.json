@@ -12,15 +12,18 @@
   "pluginOptions": {},
   "attributes": {
     "Pergunta": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "Resposta": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
-    "instituicao": {
+    "instituicoes": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::institution.institution"
+      "relation": "oneToMany",
+      "target": "api::institution.institution",
+      "mappedBy": "home_perguntas_frequente"
     }
   }
 }

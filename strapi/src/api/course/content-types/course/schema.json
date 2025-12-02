@@ -50,6 +50,12 @@
       "relation": "oneToOne",
       "target": "api::corpo-docente.corpo-docente",
       "mappedBy": "curso"
+    },
+    "curso_coordenacao": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::coordenacao.coordenacao",
+      "inversedBy": "curso_detalhes"
     }
   }
 }

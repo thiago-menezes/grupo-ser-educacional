@@ -6,19 +6,19 @@ export function useAreaSelector() {
   const { institutionId } = useCurrentInstitution();
   const router = useRouter();
 
-  const handleCourseClick = (area: AreaCard, courseSlug: string) => {
+  const handleCourseClick = (area: AreaCard, courseName: string) => {
     if (!institutionId) return;
     const params = new URLSearchParams({
-      area: area.slug,
-      course: courseSlug,
+      area: area.title,
+      course: courseName,
     });
     router.push(`/${institutionId}/cursos?${params.toString()}`);
   };
 
-  const handleAllCourses = (areaSlug: string) => {
+  const handleAllCourses = (areaName: string) => {
     if (!institutionId) return;
     const params = new URLSearchParams({
-      area: areaSlug,
+      area: areaName,
     });
     router.push(`/${institutionId}/cursos?${params.toString()}`);
   };

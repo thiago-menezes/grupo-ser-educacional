@@ -65,7 +65,9 @@ export function FAQSection() {
             {FAQ_ITEMS.map((item) => (
               <Accordion key={item.id} className={styles.faqItem}>
                 <Accordion.Trigger>
-                  <Text className={styles.faqQuestion}>{item.question}</Text>
+                  <Text as="h3" className={styles.faqQuestion}>
+                    <strong>{item.question}</strong>
+                  </Text>
                 </Accordion.Trigger>
 
                 <Accordion.Content>
