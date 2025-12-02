@@ -1,6 +1,6 @@
 import { CourseData, CourseModality } from 'types/api/courses';
-import type { CourseOfferingEnriched } from '../data';
 import { formatPrice } from '@/packages/utils';
+import type { CourseOfferingEnriched } from '../data';
 
 /**
  * Transform enriched offering to CourseData format

@@ -1,2 +1,5 @@
 export { useSearchBannerPromos } from './query';
-export type { SearchBannerPromoItemDTO, SearchBannerPromosResponseDTO } from './types';
+export type {
+  SearchBannerPromoItemDTO,
+  SearchBannerPromosResponseDTO,
+} from './types';

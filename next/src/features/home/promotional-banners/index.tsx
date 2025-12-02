@@ -16,7 +16,8 @@ const BANNER_GAP = 24;
 export function PromotionalBanners({
   institutionSlug,
 }: PromotionalBannersProps) {
-  const { data: banners = [], isLoading } = usePromotionalBanners(institutionSlug);
+  const { data: banners = [], isLoading } =
+    usePromotionalBanners(institutionSlug);
   const [cardWidth, setCardWidth] = useState(294); // Default mobile width
 
   // Update card width based on window size
@@ -30,16 +31,12 @@ export function PromotionalBanners({
     return () => window.removeEventListener('resize', updateCardWidth);
   }, []);
 
-  const {
-    scrollerRef,
-    currentPage,
-    totalPages,
-    handlePageChange,
-  } = useScrollPagination({
-    totalItems: banners.length,
-    itemWidth: cardWidth,
-    gap: BANNER_GAP,
-  });
+  const { scrollerRef, currentPage, totalPages, handlePageChange } =
+    useScrollPagination({
+      totalItems: banners.length,
+      itemWidth: cardWidth,
+      gap: BANNER_GAP,
+    });
 
   if (isLoading || !banners.length) {
     return null;

@@ -1,6 +1,6 @@
 import { CourseDetailsResponse } from 'types/api/courses';
-import { getCourseBySlug, getOfferingsByCourse, categories } from '../../data';
 import { formatPrice } from '@/packages/utils';
+import { getCourseBySlug, getOfferingsByCourse, categories } from '../../data';
 
 /**
  * Handle course details request

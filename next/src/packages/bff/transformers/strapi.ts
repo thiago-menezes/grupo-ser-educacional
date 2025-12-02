@@ -16,7 +16,6 @@ export interface StrapiInstitution {
   site?: string | null;
   corPrimaria?: string | null;
   corSecundaria?: string | null;
-  logo?: any;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string | null;
@@ -32,15 +31,12 @@ export interface Institution {
   defaultState?: string | null;
   active?: boolean;
   description?: string | null;
-  logo?: any;
   website?: string | null;
   primaryColor?: string | null;
   secondaryColor?: string | null;
 }
 
-export function transformInstitution(
-  strapi: StrapiInstitution,
-): Institution {
+export function transformInstitution(strapi: StrapiInstitution): Institution {
   // Parse cidadePadrao if it contains both city and state (e.g., "Manaus - AM")
   let defaultCity = strapi.cidadePadrao || null;
   let defaultState = strapi.estadoPadrao || null;
@@ -63,7 +59,6 @@ export function transformInstitution(
     defaultState,
     active: strapi.ativo ?? true,
     description: strapi.descricao || null,
-    logo: strapi.logo,
     website: strapi.site || null,
     primaryColor: strapi.corPrimaria || null,
     secondaryColor: strapi.corSecundaria || null,
@@ -77,7 +72,7 @@ export interface StrapiUnit {
   endereco: string | null;
   latitude: number;
   longitude: number;
-  fotos?: any[];
+  fotos?: unknown[];
   instituicao?: StrapiInstitution;
   createdAt?: string;
   updatedAt?: string;
@@ -91,7 +86,7 @@ export interface Unit {
   address: string;
   latitude: number;
   longitude: number;
-  photos?: any[];
+  photos?: unknown[];
   institution?: Institution;
 }
 

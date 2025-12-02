@@ -10,9 +10,7 @@ import { getStrapiClient } from '../services/bff';
 /**
  * Helper function to extract course names from Strapi rich text blocks
  */
-function extractCoursesFromRichText(
-  subareas: StrapiRichTextBlock[],
-): string[] {
+function extractCoursesFromRichText(subareas: StrapiRichTextBlock[]): string[] {
   if (!subareas || !Array.isArray(subareas)) {
     return [];
   }

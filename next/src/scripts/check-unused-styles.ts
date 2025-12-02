@@ -4,7 +4,7 @@ import { resolve, join, relative, dirname } from 'node:path';
 import { parse } from '@typescript-eslint/parser';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ASTNode = any;
+type ASTNode = unknown | any;
 
 type CssModuleInfo = {
   classes: Set<string>;

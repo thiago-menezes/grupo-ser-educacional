@@ -20,7 +20,7 @@ export type StrapiUnitsResponse = {
       caption?: string | null;
       width?: number;
       height?: number;
-      formats?: any;
+      formats?: unknown;
       hash?: string;
       ext?: string;
       mime?: string;

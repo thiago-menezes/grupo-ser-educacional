@@ -1,6 +1,6 @@
+import { AutocompleteQueryParams } from 'types/api/autocomplete';
 import { CoursesQueryParams } from 'types/api/courses';
 import { BffValidationError } from '../../utils/errors';
-import { AutocompleteQueryParams } from 'types/api/autocomplete';
 
 function parseInteger(value: string | null): number | undefined {
   if (!value) return undefined;
