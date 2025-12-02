@@ -63,6 +63,10 @@
     },
     "complemento": {
       "type": "string"
+    },
+    "rua": {
+      "type": "string",
+      "required": true
     }
   }
 }

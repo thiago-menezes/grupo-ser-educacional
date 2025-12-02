@@ -14,7 +14,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "x-generation-date": "2025-12-02T05:56:16.235Z"
+    "x-generation-date": "2025-12-02T06:17:02.009Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -23712,7 +23712,8 @@
               "cidade",
               "estado",
               "numero",
-              "cep"
+              "cep",
+              "rua"
             ],
             "type": "object",
             "properties": {
@@ -23768,6 +23769,9 @@
                 "type": "string"
               },
               "complemento": {
+                "type": "string"
+              },
+              "rua": {
                 "type": "string"
               },
               "locale": {
@@ -23837,7 +23841,8 @@
           "cidade",
           "estado",
           "numero",
-          "cep"
+          "cep",
+          "rua"
         ],
         "properties": {
           "id": {
@@ -25176,6 +25181,9 @@
           "complemento": {
             "type": "string"
           },
+          "rua": {
+            "type": "string"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -25394,6 +25402,9 @@
                   "type": "string"
                 },
                 "complemento": {
+                  "type": "string"
+                },
+                "rua": {
                   "type": "string"
                 },
                 "createdAt": {
