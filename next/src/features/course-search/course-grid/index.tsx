@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Pagination, View } from 'reshaped';
-import { CourseCard, CourseCardSkeleton } from '@/components';
+import { BannerSkeleton, CourseCard, CourseCardSkeleton } from '@/components';
 import { useImageFallback } from '@/features/infrastructure/utils/image-fallback';
 import { useSearchBannerPromos } from '@/features/search/banner-promo/api';
 import { useCurrentInstitution } from '@/hooks';
@@ -20,10 +20,11 @@ export function CourseGrid() {
     handlePageChange,
     currentPage,
   } = useCourseGrid();
-  const { data: bannerData } = useSearchBannerPromos({
-    institutionSlug,
-    enabled: !!institutionSlug,
-  });
+  const { data: bannerData, isLoading: isBannerLoading } =
+    useSearchBannerPromos({
+      institutionSlug,
+      enabled: !!institutionSlug,
+    });
   const bannerItem = bannerData?.data?.[0];
   const { src: bannerSrc, handleError: handleBannerError } = useImageFallback(
     bannerItem?.imageUrl || '/banner cursos.png',
@@ -54,7 +55,9 @@ export function CourseGrid() {
           </View>
 
           <View className={styles.bannerContainer}>
-            {bannerItem?.link ? (
+            {isBannerLoading ? (
+              <BannerSkeleton />
+            ) : bannerItem?.link ? (
               <Link
                 href={bannerItem.link}
                 target="_blank"
