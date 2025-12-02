@@ -25,10 +25,9 @@ export async function generateStaticParams() {
   }));
 }
 
-// Use ISR for better performance in production
+// Force dynamic to fetch metadata at request time (not build time)
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
-export const revalidate = 3600; // Revalidate every hour
 
 export { generateMetadata };
 
