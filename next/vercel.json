@@ -1,8 +1,4 @@
 {
   "installCommand": "corepack enable && corepack prepare yarn@4.9.4 --activate && corepack yarn install",
-  "build": {
-    "env": {
-      "NEXT_PUBLIC_API_BASE_URL": "@api_base_url"
-    }
-  }
+  "$schema": "https://openapi.vercel.sh/vercel.json"
 }
