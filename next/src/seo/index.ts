@@ -45,7 +45,9 @@ export async function generateMetadata({
     const seoData = await Promise.race([
       getSeoFromStrapi(institution),
       new Promise<null>((_, reject) =>
-        setTimeout(() => reject(new Error('SEO fetch timeout')), 8000),
+        setTimeout(() => {
+          reject(new Error('SEO fetch timeout'));
+        }, 8000),
       ),
     ]);
 
