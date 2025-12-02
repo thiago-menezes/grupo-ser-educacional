@@ -188,6 +188,22 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  // Validar valores de period (se fornecido)
+  const validPeriods: CurriculumPeriod[] = [
+    'morning',
+    'afternoon',
+    'evening',
+    'integral',
+  ];
+  if (period && !validPeriods.includes(period)) {
+    return NextResponse.json(
+      {
+        error: `period deve ser um dos seguintes valores: ${validPeriods.join(', ')}`,
+      },
+      { status: 400 },
+    );
+  }
+
   // Try to fetch from real backend API
   const backendUrl = process.env.BACKEND_CURRICULUM_API_URL;
 

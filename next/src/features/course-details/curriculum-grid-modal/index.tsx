@@ -16,14 +16,11 @@ export function CurriculumGridModal({
   course,
 }: CurriculumGridModalProps) {
   // Pega a primeira modalidade disponível como padrão
-  const defaultModality =
-    course.modalities[0]?.slug === 'presencial'
-      ? 'presencial'
-      : course.modalities[0]?.slug === 'ead'
-        ? 'ead'
-        : course.modalities[0]?.slug === 'semipresencial'
-          ? 'semipresencial'
-          : 'presencial';
+  const firstModalitySlug = course.modalities[0]?.slug;
+  const validModalities = ['presencial', 'ead', 'semipresencial', 'aovivo'];
+  const defaultModality = validModalities.includes(firstModalitySlug)
+    ? (firstModalitySlug as 'presencial' | 'ead' | 'semipresencial' | 'aovivo')
+    : 'presencial';
 
   return (
     <Modal active={isOpen} onClose={onClose} size="large">

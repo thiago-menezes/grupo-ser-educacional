@@ -17,14 +17,19 @@ type TabValue = 'mandatory' | 'elective';
 export function CurriculumGrid({
   courseId,
   defaultModality = 'presencial',
+  defaultPeriod,
 }: CurriculumGridProps) {
   const [selectedModality, setSelectedModality] =
     useState<CurriculumModality>(defaultModality);
+  const [selectedPeriod] = useState<CurriculumPeriod | undefined>(
+    defaultPeriod,
+  );
   const [selectedTab, setSelectedTab] = useState<TabValue>('mandatory');
 
   const { data } = useQueryCurriculum({
     courseId,
     modality: selectedModality,
+    period: selectedPeriod,
   });
 
   const mandatorySubjects =
