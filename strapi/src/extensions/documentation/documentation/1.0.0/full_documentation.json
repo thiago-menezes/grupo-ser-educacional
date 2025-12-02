@@ -14,7 +14,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "x-generation-date": "2025-12-02T04:32:25.296Z"
+    "x-generation-date": "2025-12-02T05:06:04.389Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -12582,7 +12582,7 @@
           "data": {
             "type": "object",
             "properties": {
-              "qcode": {
+              "qrcode": {
                 "oneOf": [
                   {
                     "type": "integer"
@@ -12672,7 +12672,7 @@
           "documentId": {
             "type": "string"
           },
-          "qcode": {
+          "qrcode": {
             "type": "object",
             "properties": {
               "id": {
@@ -13714,7 +13714,7 @@
                 "documentId": {
                   "type": "string"
                 },
-                "qcode": {
+                "qrcode": {
                   "type": "object",
                   "properties": {
                     "id": {

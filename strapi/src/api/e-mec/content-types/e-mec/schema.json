@@ -11,7 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "qcode": {
+    "qrcode": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [
