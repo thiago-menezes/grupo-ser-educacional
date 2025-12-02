@@ -14,7 +14,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "x-generation-date": "2025-12-02T01:52:00.740Z"
+    "x-generation-date": "2025-12-02T02:04:52.441Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -12075,7 +12075,7 @@
         "properties": {
           "data": {
             "required": [
-              "desktop"
+              "imagem"
             ],
             "type": "object",
             "properties": {
@@ -12093,7 +12093,7 @@
                 ],
                 "example": "string or id"
               },
-              "desktop": {
+              "imagem": {
                 "oneOf": [
                   {
                     "type": "integer"
@@ -12166,7 +12166,7 @@
       "HomeCarousel": {
         "type": "object",
         "required": [
-          "desktop"
+          "imagem"
         ],
         "properties": {
           "id": {
@@ -13040,7 +13040,7 @@
               }
             }
           },
-          "desktop": {
+          "imagem": {
             "type": "object",
             "properties": {
               "id": {
@@ -13234,7 +13234,7 @@
                     }
                   }
                 },
-                "desktop": {
+                "imagem": {
                   "type": "object",
                   "properties": {
                     "id": {
@@ -16953,6 +16953,9 @@
                 ],
                 "example": "string or id"
               },
+              "link": {
+                "type": "string"
+              },
               "locale": {
                 "type": "string"
               },
@@ -17619,6 +17622,9 @@
               }
             }
           },
+          "link": {
+            "type": "string"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -17795,6 +17801,9 @@
                       }
                     }
                   }
+                },
+                "link": {
+                  "type": "string"
                 },
                 "createdAt": {
                   "type": "string",

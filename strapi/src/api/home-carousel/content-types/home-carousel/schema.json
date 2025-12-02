@@ -20,7 +20,7 @@
       "relation": "oneToOne",
       "target": "api::institution.institution"
     },
-    "desktop": {
+    "imagem": {
       "type": "media",
       "multiple": false,
       "required": true,

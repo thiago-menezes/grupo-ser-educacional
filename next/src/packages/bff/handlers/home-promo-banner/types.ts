@@ -1,12 +1,11 @@
-export type HomeCarouselQueryParams = {
+export type HomePromoBannerQueryParams = {
   institutionSlug: string;
   noCache?: boolean;
 };
 
-export type StrapiHomeCarouselItem = {
+export type StrapiHomePromoBannerItem = {
   id: number;
   documentId: string;
-  nome: string;
   link?: string | null;
   imagem?: {
     id: number;
@@ -19,8 +18,8 @@ export type StrapiHomeCarouselItem = {
   } | null;
 };
 
-export type StrapiHomeCarouselResponse = {
-  data: StrapiHomeCarouselItem[];
+export type StrapiHomePromoBannerResponse = {
+  data: StrapiHomePromoBannerItem[];
   meta: {
     pagination?: {
       page: number;

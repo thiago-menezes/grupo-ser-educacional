@@ -20,7 +20,7 @@ export async function handleHomeCarousel(
         },
       },
       populate: {
-        desktop: true,
+        desktop: true, // TODO: mudar para 'imagem' após deploy do Strapi
         instituicao: true,
       },
       sort: ['nome:ASC'],

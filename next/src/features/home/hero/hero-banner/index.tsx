@@ -1,5 +1,6 @@
 import { clsx } from 'clsx';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './styles.module.scss';
 import type { HeroBannerProps } from './types';
@@ -59,6 +60,17 @@ export function HeroBanner({
             const slideDirectionClass =
               direction === 'right' ? styles.slideRight : styles.slideLeft;
 
+            const imageElement = (
+              <Image
+                src={item.image}
+                alt={item.alt || `Hero banner ${index + 1}`}
+                fill
+                className={styles.image}
+                priority={index === 0}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 1440px"
+              />
+            );
+
             return (
               <div
                 key={index}
@@ -69,14 +81,13 @@ export function HeroBanner({
                   shouldAnimate && styles.slideAnimated,
                 )}
               >
-                <Image
-                  src={item.desktopImage}
-                  alt={item.alt || `Hero banner ${index + 1}`}
-                  fill
-                  className={styles.image}
-                  priority={index === 0}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 1440px"
-                />
+                {item.link ? (
+                  <Link href={item.link} className={styles.imageLink}>
+                    {imageElement}
+                  </Link>
+                ) : (
+                  imageElement
+                )}
               </div>
             );
           })}

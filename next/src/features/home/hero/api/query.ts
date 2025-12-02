@@ -92,8 +92,9 @@ export function useCoursesSearch(
 }
 
 export type CarouselItem = {
-  desktopImage: string;
+  image: string;
   alt?: string;
+  link?: string | null;
 };
 
 async function fetchHomeCarousel(
@@ -111,17 +112,17 @@ async function fetchHomeCarousel(
     const items: CarouselItem[] = [];
 
     for (const item of data.data) {
-      const desktopUrl = item.desktop?.url;
-      const alt =
-        item.desktop?.alternativeText || item.nome || 'Hero banner';
+      const imageUrl = item.imagem?.url;
+      const alt = item.imagem?.alternativeText || item.nome || 'Hero banner';
 
-      if (!desktopUrl) {
+      if (!imageUrl) {
         continue;
       }
 
       items.push({
-        desktopImage: getMediaUrl(desktopUrl),
+        image: getMediaUrl(imageUrl),
         alt,
+        link: item.link || null,
       });
     }
 

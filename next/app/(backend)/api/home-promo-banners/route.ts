@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { handleHomeCarousel } from '@/packages/bff/handlers/home-carousel';
+import { handleHomePromoBanner } from '@/packages/bff/handlers/home-promo-banner';
 import { getStrapiClient } from '../services/bff';
 
 export async function GET(request: NextRequest) {
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const strapiClient = getStrapiClient();
-    const strapiData = await handleHomeCarousel(strapiClient, {
+    const strapiData = await handleHomePromoBanner(strapiClient, {
       institutionSlug,
       noCache,
     });
@@ -25,15 +25,9 @@ export async function GET(request: NextRequest) {
     const transformedData = {
       data: strapiData.data.map((item) => ({
         id: item.id,
-        nome: item.nome || null,
         link: item.link || null,
-        imagem: item.imagem
-          ? {
-              id: item.imagem.id,
-              url: item.imagem.url,
-              alternativeText: item.imagem.alternativeText,
-            }
-          : null,
+        imageUrl: item.imagem?.url || null,
+        imageAlt: item.imagem?.alternativeText || null,
       })),
       meta: strapiData.meta,
     };
@@ -52,7 +46,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       {
-        error: 'Failed to fetch home carousel data',
+        error: 'Failed to fetch home promotional banners data',
         message: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 },

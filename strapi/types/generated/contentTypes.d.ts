@@ -597,7 +597,7 @@ export interface ApiHomeCarouselHomeCarousel
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    desktop: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
+    imagem: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     instituicao: Schema.Attribute.Relation<
       'oneToOne',
       'api::institution.institution'
@@ -738,6 +738,7 @@ export interface ApiSearchBannerPromoSearchBannerPromo
       Schema.Attribute.Private;
     imagem: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
+    link: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
