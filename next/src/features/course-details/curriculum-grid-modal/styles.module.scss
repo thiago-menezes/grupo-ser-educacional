@@ -1,14 +1,14 @@
 .modal {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr;
   max-height: 90vh;
+  min-height: 600px;
+  width: 100%;
 }
 
 .header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  position: relative;
   padding: var(--rs-unit-x4);
   border-bottom: 1px solid
     rgb(from var(--rs-color-foreground-neutral) r g b / 0.3);
@@ -23,26 +23,13 @@
 }
 
 .closeButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  border-radius: var(--rs-radius-small);
-  color: var(--rs-color-foreground-neutral);
-  transition: all var(--rs-duration-fast) var(--rs-easing-standard);
-
-  &:hover {
-    background-color: var(--rs-color-background-neutral-subtle);
-    color: var(--rs-color-text-primary);
-  }
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
 }
 
 .content {
   padding: var(--rs-unit-x6);
   overflow-y: auto;
-  flex: 1;
 }

@@ -1,5 +1,6 @@
-import { Modal, View } from 'reshaped';
+import { Button, Modal, View } from 'reshaped';
 import { Icon } from '@/components';
+import { CurriculumGrid } from '../curriculum-grid';
 import type { CourseDetails } from '../types';
 import styles from './styles.module.scss';
 
@@ -14,23 +15,33 @@ export function CurriculumGridModal({
   onClose,
   course,
 }: CurriculumGridModalProps) {
+  // Pega a primeira modalidade disponível como padrão
+  const defaultModality =
+    course.modalities[0]?.slug === 'presencial'
+      ? 'presencial'
+      : course.modalities[0]?.slug === 'ead'
+        ? 'ead'
+        : course.modalities[0]?.slug === 'semipresencial'
+          ? 'semipresencial'
+          : 'presencial';
+
   return (
     <Modal active={isOpen} onClose={onClose} size="large">
       <View className={styles.modal}>
-        <View className={styles.header}>
-          <h2 className={styles.title}>Grade Curricular - {course.name}</h2>
-          <button
-            type="button"
-            onClick={onClose}
-            className={styles.closeButton}
-            aria-label="Fechar modal"
-          >
-            <Icon name="x" size={24} />
-          </button>
-        </View>
+        <Button
+          variant="ghost"
+          size="small"
+          onClick={onClose}
+          icon={<Icon name="x" size={24} />}
+          className={styles.closeButton}
+          aria-label="Fechar modal"
+        />
+
         <View className={styles.content}>
-          {/* TODO: Implement curriculum grid content */}
-          <p>Conteúdo da grade curricular será exibido aqui.</p>
+          <CurriculumGrid
+            courseId={course.id.toString()}
+            defaultModality={defaultModality}
+          />
         </View>
       </View>
     </Modal>
