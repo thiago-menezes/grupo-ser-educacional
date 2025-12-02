@@ -110,11 +110,6 @@
   line-height: 1.4;
 }
 
-.badgeImage {
-  width: 144px;
-  height: auto;
-}
-
 @media (min-width: 768px) {
   .contentGrid {
     grid-template-columns: repeat(1, minmax(0, 1fr));

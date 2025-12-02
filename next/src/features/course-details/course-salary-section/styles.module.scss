@@ -86,13 +86,6 @@
   margin: 0;
 }
 
-.divider {
-  width: 1px;
-  height: 100%;
-  background: var(--rs-color-border-neutral-faded, rgba(0, 0, 0, 0.08));
-  flex-shrink: 0;
-}
-
 .closing {
   font-size: var(--rs-font-size-body-2, 16px);
   font-weight: var(--rs-font-weight-regular, 400);
