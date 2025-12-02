@@ -9,14 +9,26 @@ type InstitutionLayoutProps = {
 };
 
 export async function generateStaticParams() {
-  // Temporarily only build UNAMA to avoid CMS timeout during build
-  // TODO: Re-enable all institutions when CMS is available
-  return [{ institution: 'unama' }];
+  // Generate static params for all known institutions to avoid build-time CMS calls
+  // This allows the pages to be statically generated with fallback
+  const institutions = [
+    'unama',
+    'ung',
+    'uni7',
+    'unifael',
+    'uninassau',
+    'uninorte',
+  ];
+
+  return institutions.map((institution) => ({
+    institution,
+  }));
 }
 
-// Force dynamic rendering to avoid build-time CMS calls
+// Use ISR for better performance in production
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
+export const revalidate = 3600; // Revalidate every hour
 
 export { generateMetadata };
 

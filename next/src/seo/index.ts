@@ -33,15 +33,28 @@ export async function generateMetadata({
     icon: `/favicons/${institution}.ico`,
   };
 
+  // Default metadata as fallback
+  const defaultMetadata: Metadata = {
+    title: 'Grupo SER - Portal Institucional',
+    description: 'Portal multi-institucional do Grupo SER Educacional',
+    icons,
+  };
+
   try {
-    const seoData = await getSeoFromStrapi(institution);
+    // Add timeout to prevent hanging in production
+    const seoData = await Promise.race([
+      getSeoFromStrapi(institution),
+      new Promise<null>((_, reject) =>
+        setTimeout(() => reject(new Error('SEO fetch timeout')), 8000),
+      ),
+    ]);
 
     if (!seoData) {
-      return {
-        title: 'Grupo SER - Portal Institucional',
-        description: 'Portal multi-institucional do Grupo SER Educacional',
-        icons,
-      };
+      console.log(
+        'SEO: Using default metadata - no data for institution:',
+        institution,
+      );
+      return defaultMetadata;
     }
 
     // Handle nested structure: metadata.metadata or metadata
@@ -49,19 +62,24 @@ export async function generateMetadata({
       (seoData as { metadata?: { metadata?: Metadata } })?.metadata?.metadata ||
       (seoData as StrapiSeo)?.metadata;
 
+    if (!metadata) {
+      console.log(
+        'SEO: Using default metadata - no metadata in response for institution:',
+        institution,
+      );
+      return defaultMetadata;
+    }
+
+    console.log(
+      'SEO: Successfully loaded metadata for institution:',
+      institution,
+    );
     return {
-      ...((metadata as Metadata) || {
-        title: 'Grupo SER - Portal Institucional',
-        description: 'Portal multi-institucional do Grupo SER Educacional',
-      }),
+      ...(metadata as Metadata),
       icons,
     };
-  } catch {
-    // Return default metadata if CMS is unavailable during build
-    return {
-      title: 'Grupo SER - Portal Institucional',
-      description: 'Portal multi-institucional do Grupo SER Educacional',
-      icons,
-    };
+  } catch (error) {
+    console.error('SEO: Error fetching metadata, using default:', error);
+    return defaultMetadata;
   }
 }
