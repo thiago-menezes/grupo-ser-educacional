@@ -2,6 +2,7 @@ import { clsx } from 'clsx';
 import Link from 'next/link';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components';
+import { useCurrentInstitution } from '@/hooks';
 import { DEFAULT_CAREER_PATH_CONTENT } from './constants';
 import styles from './styles.module.scss';
 import type { CareerPathProps } from './types';
@@ -9,6 +10,8 @@ import type { CareerPathProps } from './types';
 export function CareerPath({
   content = DEFAULT_CAREER_PATH_CONTENT,
 }: CareerPathProps) {
+  const { institutionId } = useCurrentInstitution();
+
   return (
     <section className={styles.section} aria-labelledby="career-path-title">
       <div className={styles.container}>
@@ -96,7 +99,10 @@ export function CareerPath({
                       : styles.buttonSecondary
                   }`}
                 >
-                  <Link href={card.ctaHref} className={styles.link}>
+                  <Link
+                    href={`/${institutionId}${card.ctaHref}`}
+                    className={styles.link}
+                  >
                     <Button
                       variant="outline"
                       className={clsx('button', {

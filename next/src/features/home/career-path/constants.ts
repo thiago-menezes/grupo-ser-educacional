@@ -15,7 +15,7 @@ export const DEFAULT_CAREER_PATH_CONTENT: CareerPathContent = {
         { id: 'ead', label: 'EAD' },
       ],
       ctaLabel: 'Veja cursos Graduação',
-      ctaHref: '/cursos?tipo=graduacao',
+      ctaHref: '/cursos?courseLevel=graduation',
     },
     {
       id: 'postgraduate',
@@ -29,7 +29,7 @@ export const DEFAULT_CAREER_PATH_CONTENT: CareerPathContent = {
         { id: 'digital', label: 'Digital' },
       ],
       ctaLabel: 'Veja cursos Pós-graduação',
-      ctaHref: '/cursos?tipo=pos-graduacao',
+      ctaHref: '/cursos?courseLevel=postgraduate',
     },
   ],
 };

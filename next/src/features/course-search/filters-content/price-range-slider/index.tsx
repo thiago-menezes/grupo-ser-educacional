@@ -21,8 +21,8 @@ export function PriceRangeSlider({ control }: PriceRangeSliderProps) {
             <Slider
               name={field.name}
               range
-              min={300}
-              max={3000}
+              min={30000}
+              max={450000}
               step={50}
               minValue={field?.value?.min || 0}
               maxValue={field?.value?.max || 0}

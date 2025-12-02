@@ -57,10 +57,6 @@ export function FiltersContent({
     applyFilters(data);
   };
 
-  const handleCancel = () => {
-    reset(appliedFilters);
-  };
-
   return (
     <View className={styles.filtersContent}>
       <div
@@ -96,7 +92,7 @@ export function FiltersContent({
             handleCloseModal();
           }
         }}
-        onCancel={handleCloseModal ? handleCancel : undefined}
+        onCancel={handleCloseModal}
       />
     </View>
   );

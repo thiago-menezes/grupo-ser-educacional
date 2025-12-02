@@ -9,7 +9,7 @@ export type EMecData = {
   id: string;
   link: string | null;
   qrcodeUrl: string;
-  qrcodeAlt?: string;
+  qrcodeAlt?: string | null;
 };
 
 async function fetchEMec(institutionSlug: string): Promise<EMecData | null> {

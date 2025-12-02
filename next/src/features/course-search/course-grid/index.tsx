@@ -1,15 +1,17 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Pagination, View } from 'reshaped';
 import { CourseCard, CourseCardSkeleton } from '@/components';
 import { useImageFallback } from '@/features/infrastructure/utils/image-fallback';
+import { useSearchBannerPromos } from '@/features/search/banner-promo/api';
 import { useCurrentInstitution } from '@/hooks';
 import { useCourseGrid } from './hooks';
 import styles from './styles.module.scss';
 
 export function CourseGrid() {
   const router = useRouter();
-  const { institutionId } = useCurrentInstitution();
+  const { institutionId, institutionSlug } = useCurrentInstitution();
   const {
     totalPages,
     isLoading,
@@ -18,8 +20,14 @@ export function CourseGrid() {
     handlePageChange,
     currentPage,
   } = useCourseGrid();
-  const { src: bannerSrc, handleError: handleBannerError } =
-    useImageFallback('/banner cursos.png');
+  const { data: bannerData } = useSearchBannerPromos({
+    institutionSlug,
+    enabled: !!institutionSlug,
+  });
+  const bannerItem = bannerData?.data?.[0];
+  const { src: bannerSrc, handleError: handleBannerError } = useImageFallback(
+    bannerItem?.imageUrl || '/banner cursos.png',
+  );
 
   const handleCourseClick = (slug: string) => {
     router.push(`/${institutionId}/cursos/${slug}`);
@@ -46,13 +54,27 @@ export function CourseGrid() {
           </View>
 
           <View className={styles.bannerContainer}>
-            <Image
-              src={bannerSrc}
-              alt="Banner"
-              width={800}
-              height={80}
-              onError={handleBannerError}
-            />
+            {bannerItem?.link ? (
+              <Link
+                href={bannerItem.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Image
+                  src={bannerSrc}
+                  alt={bannerItem.imageAlt || 'Banner'}
+                  onError={handleBannerError}
+                  fill
+                />
+              </Link>
+            ) : (
+              <Image
+                src={bannerSrc}
+                alt={bannerItem?.imageAlt || 'Banner'}
+                onError={handleBannerError}
+                fill
+              />
+            )}
           </View>
 
           <View gap={4} wrap direction="row" align="center" justify="center">
