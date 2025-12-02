@@ -11,7 +11,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "banner1": {
+    "imagem": {
       "type": "media",
       "multiple": false,
       "required": true,
@@ -20,23 +20,13 @@
         "files"
       ]
     },
-    "banner2": {
-      "type": "media",
-      "multiple": false,
-      "required": true,
-      "allowedTypes": [
-        "images",
-        "files"
-      ]
+    "link": {
+      "type": "string"
     },
-    "banner3": {
-      "type": "media",
-      "multiple": false,
-      "required": true,
-      "allowedTypes": [
-        "images",
-        "files"
-      ]
+    "instituicao": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution"
     }
   }
 }

@@ -550,7 +550,8 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    capa: Schema.Attribute.Media<'images' | 'files'>;
+    capa: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
     corpo_docente: Schema.Attribute.Relation<
       'oneToOne',
       'api::corpo-docente.corpo-docente'
@@ -601,6 +602,7 @@ export interface ApiHomeCarouselHomeCarousel
       'oneToOne',
       'api::institution.institution'
     >;
+    link: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -627,15 +629,16 @@ export interface ApiHomePromoBannerHomePromoBanner
     draftAndPublish: true;
   };
   attributes: {
-    banner1: Schema.Attribute.Media<'images' | 'files'> &
-      Schema.Attribute.Required;
-    banner2: Schema.Attribute.Media<'images' | 'files'> &
-      Schema.Attribute.Required;
-    banner3: Schema.Attribute.Media<'images' | 'files'> &
-      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    imagem: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.Required;
+    instituicao: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
+    link: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
