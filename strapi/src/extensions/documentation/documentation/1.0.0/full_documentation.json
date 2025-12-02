@@ -14,7 +14,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "x-generation-date": "2025-12-02T05:55:34.801Z"
+    "x-generation-date": "2025-12-02T05:56:16.235Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -23705,7 +23705,6 @@
           "data": {
             "required": [
               "nome",
-              "endereco",
               "latitude",
               "longitude",
               "fotos",
@@ -23718,9 +23717,6 @@
             "type": "object",
             "properties": {
               "nome": {
-                "type": "string"
-              },
-              "endereco": {
                 "type": "string"
               },
               "latitude": {
@@ -23834,7 +23830,6 @@
         "type": "object",
         "required": [
           "nome",
-          "endereco",
           "latitude",
           "longitude",
           "fotos",
@@ -23852,9 +23847,6 @@
             "type": "string"
           },
           "nome": {
-            "type": "string"
-          },
-          "endereco": {
             "type": "string"
           },
           "latitude": {
@@ -25233,9 +25225,6 @@
                   "type": "string"
                 },
                 "nome": {
-                  "type": "string"
-                },
-                "endereco": {
                   "type": "string"
                 },
                 "latitude": {

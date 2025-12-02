@@ -843,7 +843,6 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    endereco: Schema.Attribute.Text & Schema.Attribute.Required;
     estado: Schema.Attribute.String & Schema.Attribute.Required;
     fotos: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
     instituicao: Schema.Attribute.Relation<
