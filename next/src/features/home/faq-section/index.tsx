@@ -1,7 +1,9 @@
 import { Accordion, Divider, Text, View } from 'reshaped';
+import { useCurrentInstitution } from '@/hooks';
+import { usePerguntasFrequentes } from './api';
 import styles from './styles.module.scss';
 
-const FAQ_ITEMS = [
+const DEFAULT_FAQ_ITEMS = [
   {
     id: 1,
     question: 'Como funciona o processo seletivo?',
@@ -41,6 +43,12 @@ const FAQ_ITEMS = [
 ];
 
 export function FAQSection() {
+  const { institutionId } = useCurrentInstitution();
+  const { data: faqItems } = usePerguntasFrequentes(institutionId);
+
+  const displayItems =
+    faqItems && faqItems.length > 0 ? faqItems : DEFAULT_FAQ_ITEMS;
+
   return (
     <section className={styles.section} aria-labelledby="faq-section-title">
       <div className={styles.container}>
@@ -62,7 +70,7 @@ export function FAQSection() {
           </View>
 
           <View className={styles.faqList}>
-            {FAQ_ITEMS.map((item) => (
+            {displayItems.map((item) => (
               <Accordion key={item.id} className={styles.faqItem}>
                 <Accordion.Trigger>
                   <Text as="h3" className={styles.faqQuestion}>
