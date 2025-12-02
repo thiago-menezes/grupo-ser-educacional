@@ -82,7 +82,12 @@ export function HeroBanner({
                 )}
               >
                 {item.link ? (
-                  <Link href={item.link} className={styles.imageLink}>
+                  <Link
+                    href={item.link}
+                    target="_blank"
+                    className={styles.imageLink}
+                    rel="noopener noreferrer"
+                  >
                     {imageElement}
                   </Link>
                 ) : (

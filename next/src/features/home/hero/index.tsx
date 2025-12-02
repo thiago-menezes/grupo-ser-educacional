@@ -47,8 +47,9 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
       return undefined;
     }
     return carouselItems.map((item) => ({
-      desktopImage: item.desktopImage,
+      image: item.image,
       alt: item.alt,
+      link: item.link,
     }));
   }, [carouselItems]);
 
