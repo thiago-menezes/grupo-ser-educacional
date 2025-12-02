@@ -21,7 +21,6 @@ export async function handleHomeCarousel(
       },
       populate: {
         desktop: true,
-        mobile: true,
         instituicao: true,
       },
       sort: ['nome:ASC'],
