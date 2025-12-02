@@ -22,6 +22,11 @@
     },
     "link": {
       "type": "string"
+    },
+    "instituicao": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::institution.institution"
     }
   }
 }

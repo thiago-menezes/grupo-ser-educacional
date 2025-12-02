@@ -780,6 +780,10 @@ export interface ApiSearchBannerPromoSearchBannerPromo
       Schema.Attribute.Private;
     imagem: Schema.Attribute.Media<'images' | 'files'> &
       Schema.Attribute.Required;
+    instituicao: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::institution.institution'
+    >;
     link: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
