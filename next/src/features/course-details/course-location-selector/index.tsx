@@ -65,7 +65,7 @@ export function CourseLocationSelector({
         onClick={handleChangeUnit}
         className={styles.changeButton}
       >
-        Trocar campos
+        Trocar unidade
       </Button>
     </View>
   );
