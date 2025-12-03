@@ -41,20 +41,10 @@ export async function generateMetadata({
   };
 
   try {
-    // Add timeout to prevent hanging in production
-    // Increased timeout to handle cold starts
-    const timeoutMs = 15000; // 15 seconds for cold start
-    const timeoutError = new Error('SEO fetch timeout');
-
     console.log(`SEO: Fetching metadata for ${institution}...`);
     const startTime = Date.now();
 
-    const seoData = await Promise.race([
-      getSeoFromStrapi(institution),
-      new Promise<null>((_, reject) =>
-        setTimeout(() => reject(timeoutError), timeoutMs),
-      ),
-    ]);
+    const seoData = getSeoFromStrapi(institution);
 
     const elapsed = Date.now() - startTime;
     console.log(`SEO: Fetch completed in ${elapsed}ms`);
@@ -70,7 +60,7 @@ export async function generateMetadata({
     // Handle nested structure: metadata.metadata or metadata
     const metadata =
       (seoData as { metadata?: { metadata?: Metadata } })?.metadata?.metadata ||
-      (seoData as StrapiSeo)?.metadata;
+      ((await seoData) as StrapiSeo)?.metadata;
 
     if (!metadata) {
       console.log(

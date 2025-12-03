@@ -41,13 +41,19 @@ export function CourseCoordination({
         {activeTab === 'coordination' && (
           <View className={styles.coordinatorContent}>
             <View className={styles.coordinatorCard}>
-              <Image
-                src={MOCK_COORDINATOR.photo}
-                alt={`Foto do coordenador(a) ${MOCK_COORDINATOR.name}`}
-                className={styles.coordinatorPhoto}
-                width={120}
-                height={120}
-              />
+              {MOCK_COORDINATOR.photo ? (
+                <Image
+                  src={MOCK_COORDINATOR.photo}
+                  alt={`Foto do coordenador(a) ${MOCK_COORDINATOR.name}`}
+                  className={styles.coordinatorPhoto}
+                  width={120}
+                  height={120}
+                />
+              ) : (
+                <View className={styles.coordinatorPhotoPlaceholder}>
+                  <Icon name="user" size={64} />
+                </View>
+              )}
               <View className={styles.coordinatorInfo}>
                 <Text
                   as="h3"

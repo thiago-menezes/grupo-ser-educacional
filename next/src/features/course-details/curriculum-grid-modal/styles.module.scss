@@ -7,22 +7,6 @@
   width: 100%;
 }
 
-.header {
-  display: grid;
-  position: relative;
-  padding: var(--rs-unit-x4);
-  border-bottom: 1px solid
-    rgb(from var(--rs-color-foreground-neutral) r g b / 0.3);
-}
-
-.title {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 28px;
-  color: var(--rs-color-text-primary);
-  margin: 0;
-}
-
 .closeButton {
   position: absolute;
   top: 0;

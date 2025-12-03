@@ -302,7 +302,7 @@ export const MOCK_COORDINATOR = {
   name: 'Dr. Josué Claudio dos Santos Fagundes',
   description:
     'Josué Claudio dos Santos Fagundes é um profissional dedicado e experiente, coordenador do curso de Ciência de Dados. Sua paixão por dados e análise o impulsiona a inspirar e guiar os futuros cientistas de dados da UNINASSAU.',
-  photo: '/default-image.png',
+  photo: null,
 };
 
 export const MOCK_TEACHERS = [

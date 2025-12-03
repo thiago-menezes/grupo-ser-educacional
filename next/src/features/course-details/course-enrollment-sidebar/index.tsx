@@ -7,11 +7,15 @@ import styles from './styles.module.scss';
 export type CourseEnrollmentSidebarProps = {
   course: CourseDetails;
   selectedModalityId: number | null;
+  selectedUnitId: number;
+  onUnitChange: (unitId: number) => void;
 };
 
 export function CourseEnrollmentSidebar({
   course,
   selectedModalityId,
+  selectedUnitId,
+  onUnitChange,
 }: CourseEnrollmentSidebarProps) {
   // Get offerings for selected modality
   const modalityOfferings = course.offerings.filter(
@@ -34,7 +38,7 @@ export function CourseEnrollmentSidebar({
             weight="medium"
             className={styles.title}
           >
-            Processo seletivo 2026.1 - Começe em Fevereiro
+            Processo seletivo - Inscreva-se agora
           </Text>
         </View>
 
@@ -81,7 +85,11 @@ export function CourseEnrollmentSidebar({
         </Button>
       </View>
 
-      <CourseLocationSelector course={course} />
+      <CourseLocationSelector
+        course={course}
+        selectedUnitId={selectedUnitId}
+        onUnitChange={onUnitChange}
+      />
     </View>
   );
 }

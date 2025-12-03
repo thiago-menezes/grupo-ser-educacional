@@ -45,6 +45,30 @@
   color: var(--rs-color-foreground-neutral);
 }
 
+.metaItemClickable {
+  display: flex;
+  align-items: center;
+  gap: var(--rs-unit-x1);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--rs-color-foreground-neutral);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--rs-duration-fast) var(--rs-easing-standard);
+
+  &:hover {
+    color: var(--rs-color-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--rs-color-primary);
+    outline-offset: 2px;
+    border-radius: var(--rs-radius-small);
+  }
+}
+
 .curriculumButton {
   white-space: nowrap;
 }

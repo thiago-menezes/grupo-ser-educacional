@@ -1,5 +1,5 @@
 import { useParams } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useCityContext } from '@/contexts/city';
 import { useGeolocation } from '@/hooks';
 import { getMediaUrl } from '@/packages/utils';
@@ -75,7 +75,7 @@ function transformStrapiResponseWithFallback(
   }
 }
 
-export const useInfrastructure = () => {
+export const useInfrastructure = (preselectedUnitId?: number) => {
   const params = useParams<{ institution?: string }>();
   const institutionSlug = params.institution;
 
@@ -87,7 +87,16 @@ export const useInfrastructure = () => {
   } = useQueryInfrastructure();
 
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
-  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(
+    preselectedUnitId?.toString() || null,
+  );
+
+  // Sync with preselected unit from parent
+  useEffect(() => {
+    if (preselectedUnitId !== undefined) {
+      setSelectedUnitId(preselectedUnitId.toString());
+    }
+  }, [preselectedUnitId]);
   const { city: contextCity, state: contextState } = useCityContext();
   const {
     coordinates,

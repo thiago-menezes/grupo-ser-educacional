@@ -47,13 +47,6 @@
   gap: var(--rs-unit-x1);
 }
 
-.disciplineIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--rs-color-primary);
-}
-
 .semestersList {
   display: flex;
   flex-direction: column;
@@ -88,18 +81,6 @@
   @media (max-width: 640px) {
     grid-template-columns: minmax(0, 1fr);
   }
-}
-
-.semester {
-  display: flex;
-  flex-direction: column;
-  gap: var(--rs-unit-x2);
-}
-
-.subjectsGrid {
-  display: flex;
-  flex-direction: column;
-  gap: var(--rs-unit-x2);
 }
 
 .subjectCard {
@@ -137,27 +118,4 @@
   display: flex;
   flex-direction: column;
   gap: var(--rs-unit-x0-5);
-}
-
-.loadingContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--rs-unit-x2);
-  padding: var(--rs-unit-x6);
-}
-
-.errorContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--rs-unit-x6);
-}
-
-.emptyContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--rs-unit-x6);
 }

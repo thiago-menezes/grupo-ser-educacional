@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View } from 'reshaped';
 import { Breadcrumb } from '@/components';
 import { InfrastructureSection } from '@/features';
@@ -27,6 +28,27 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
     isCurriculumModalOpen,
   } = useCourseDetailsContent(course);
 
+  const [selectedUnitId, setSelectedUnitId] = useState<number>(
+    course.offerings[0]?.unitId || course.units[0]?.id,
+  );
+
+  const handleUnitClick = (unitId: number) => {
+    setSelectedUnitId(unitId);
+
+    // Scroll para infraestrutura
+    const infraSection = document.getElementById('infrastructure-section');
+    if (infraSection) {
+      infraSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  const handleUnitChange = (unitId: number) => {
+    setSelectedUnitId(unitId);
+  };
+
   return (
     <section>
       <View className={styles.content}>
@@ -37,6 +59,8 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
               <CourseImage course={course} />
               <CourseInfo
                 course={course}
+                selectedUnitId={selectedUnitId}
+                onUnitClick={handleUnitClick}
                 onViewCurriculum={() => setIsCurriculumModalOpen(true)}
               />
               <CourseModalitySelector
@@ -58,10 +82,12 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
           <CourseEnrollmentSidebar
             course={course}
             selectedModalityId={selectedModalityId}
+            selectedUnitId={selectedUnitId}
+            onUnitChange={handleUnitChange}
           />
         </div>
 
-        <InfrastructureSection />
+        <InfrastructureSection preselectedUnitId={selectedUnitId} />
         <GeoCoursesSection />
 
         <CurriculumGridModal

@@ -44,7 +44,7 @@
   flex-direction: row;
   gap: var(--rs-unit-x4);
   padding: var(--rs-unit-x4);
-  border: 1px solid var(--rs-color-border-neutral, rgba(0, 0, 0, 0.12));
+  border: 1px solid var(--rs-color-border-neutral);
   border-radius: var(--rs-radius-large);
   background: var(--rs-color-background-page);
 }
@@ -56,6 +56,17 @@
   border-radius: var(--rs-radius-medium);
   object-fit: cover;
   background-color: var(--rs-color-background-neutral-subtle);
+}
+
+.coordinatorPhotoPlaceholder {
+  display: grid;
+  place-items: center;
+  width: 152px;
+  height: 152px;
+  min-width: 152px;
+  border-radius: var(--rs-radius-medium);
+  background-color: var(--rs-color-background-neutral-subtle);
+  color: var(--rs-color-text-primary);
 }
 
 .coordinatorInfo {
@@ -135,7 +146,8 @@
     flex-direction: column;
   }
 
-  .coordinatorPhoto {
+  .coordinatorPhoto,
+  .coordinatorPhotoPlaceholder {
     width: 100%;
     max-width: 152px;
     align-self: center;

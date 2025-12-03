@@ -7,7 +7,13 @@ import { useInfrastructure } from './hooks';
 import { ImageModal } from './image-modal';
 import styles from './styles.module.scss';
 
-export const InfrastructureSection = () => {
+export type InfrastructureSectionProps = {
+  preselectedUnitId?: number;
+};
+
+export const InfrastructureSection = ({
+  preselectedUnitId,
+}: InfrastructureSectionProps = {}) => {
   const { focusCityField } = useCityContext();
   const {
     city,
@@ -24,7 +30,7 @@ export const InfrastructureSection = () => {
     selectedImageId,
     selectedUnitId,
     selectedImage,
-  } = useInfrastructure();
+  } = useInfrastructure(preselectedUnitId);
 
   const hasCity = Boolean(city && state);
 
@@ -34,6 +40,7 @@ export const InfrastructureSection = () => {
 
   return (
     <section
+      id="infrastructure-section"
       className={styles.section}
       aria-labelledby="infrastructure-section-title"
     >
