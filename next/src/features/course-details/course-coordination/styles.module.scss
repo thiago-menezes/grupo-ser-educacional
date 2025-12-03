@@ -11,18 +11,26 @@
 .pedagogicalContent {
   display: flex;
   flex-direction: column;
-  gap: var(--rs-unit-x3);
+  gap: var(--rs-unit-x5);
   padding: var(--rs-unit-x4);
   border: 1px solid var(--rs-color-border-neutral, rgba(0, 0, 0, 0.12));
   border-radius: var(--rs-radius-large);
   background: var(--rs-color-background-page);
 }
 
-.pedagogicalCover {
-  width: 100%;
-  max-width: 560px;
-  border-radius: var(--rs-radius-medium);
-  object-fit: cover;
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x3);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rs-unit-x2);
+  padding-left: var(--rs-unit-x4);
+  margin: 0;
+  list-style-type: disc;
 }
 
 .coordinatorContent {
