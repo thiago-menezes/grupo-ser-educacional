@@ -630,7 +630,7 @@ export interface ApiCurriculumCurriculum extends Struct.CollectionTypeSchema {
 export interface ApiEMecEMec extends Struct.CollectionTypeSchema {
   collectionName: 'e_mecs';
   info: {
-    displayName: 'E-mec';
+    displayName: '/ E-mec';
     pluralName: 'e-mecs';
     singularName: 'e-mec';
   };
@@ -732,7 +732,7 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
   collectionName: 'institutions';
   info: {
     description: 'Educational institutions in the Grupo SER network';
-    displayName: 'Institui\u00E7\u00E3o';
+    displayName: '/ Instituicao';
     pluralName: 'institutions';
     singularName: 'institution';
   };
@@ -839,7 +839,7 @@ export interface ApiSearchBannerPromoSearchBannerPromo
 export interface ApiSeoSeo extends Struct.CollectionTypeSchema {
   collectionName: 'seos';
   info: {
-    displayName: 'SEO';
+    displayName: '/ SEO';
     pluralName: 'seos';
     singularName: 'seo';
   };
@@ -870,7 +870,7 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
   collectionName: 'units';
   info: {
     description: 'Infrastructure units (campuses) for institutions';
-    displayName: 'Infraestrutura';
+    displayName: 'Home / Infraestrutura';
     pluralName: 'units';
     singularName: 'unit';
   };
@@ -887,6 +887,7 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     estado: Schema.Attribute.String & Schema.Attribute.Required;
     fotos: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
+    id_unidade: Schema.Attribute.Integer;
     instituicao: Schema.Attribute.Relation<
       'oneToOne',
       'api::institution.institution'

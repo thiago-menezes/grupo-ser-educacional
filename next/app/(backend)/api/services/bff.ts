@@ -4,9 +4,11 @@
  */
 
 import { createStrapiClient } from '@/packages/bff/services/strapi';
+import { createClientApiClient } from '@/packages/bff/services/client-api';
 
 const STRAPI_URL = process.env.STRAPI_URL || process.env.NEXT_PUBLIC_STRAPI_URL;
 const STRAPI_TOKEN = process.env.STRAPI_TOKEN;
+const CLIENT_API_BASE_URL = process.env.API_BASE_URL;
 
 /**
  * Get Strapi client instance
@@ -24,4 +26,17 @@ export function getStrapiClient() {
 
   console.log('Strapi client initialized with URL:', STRAPI_URL);
   return createStrapiClient(STRAPI_URL, STRAPI_TOKEN);
+}
+
+/**
+ * Get Client API client instance
+ */
+export function getClientApiClient() {
+  if (!CLIENT_API_BASE_URL) {
+    console.error('API_BASE_URL environment variable is not configured');
+    throw new Error('API_BASE_URL environment variable is not configured');
+  }
+
+  console.log('Client API client initialized with URL:', CLIENT_API_BASE_URL);
+  return createClientApiClient(CLIENT_API_BASE_URL);
 }

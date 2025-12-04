@@ -6,8 +6,8 @@ export type PerguntasFrequentesQueryParams = {
 export type StrapiPerguntaFrequente = {
   id: number;
   documentId: string;
-  Pergunta: string;
-  Resposta: string;
+  pergunta: string;
+  resposta: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;

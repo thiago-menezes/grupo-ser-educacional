@@ -14,7 +14,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "x-generation-date": "2025-12-04T16:57:48.625Z"
+    "x-generation-date": "2025-12-04T17:50:13.424Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -26468,6 +26468,9 @@
                 ],
                 "example": "string or id"
               },
+              "id_unidade": {
+                "type": "integer"
+              },
               "locale": {
                 "type": "string"
               },
@@ -27878,6 +27881,9 @@
               }
             }
           },
+          "id_unidade": {
+            "type": "integer"
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -28100,6 +28106,9 @@
                       "type": "string"
                     }
                   }
+                },
+                "id_unidade": {
+                  "type": "integer"
                 },
                 "createdAt": {
                   "type": "string",

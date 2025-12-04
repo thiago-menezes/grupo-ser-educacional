@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { handleUnits } from '@/packages/bff/handlers';
+import { handleUnits, handleUnitById } from '@/packages/bff/handlers';
 import { transformUnit } from '@/packages/bff/transformers/strapi';
 import { getStrapiClient } from '../services/bff';
 
+/**
+ * GET /api/units
+ * Fetch units from Strapi
+ *
+ * Query params:
+ * - institutionSlug: Required
+ * - unitId: Optional - if provided, fetches only that specific unit with photos
+ */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const institutionSlug = searchParams.get('institutionSlug');
+  const unitIdParam = searchParams.get('unitId');
 
   if (!institutionSlug) {
     return NextResponse.json(
@@ -16,7 +25,25 @@ export async function GET(request: NextRequest) {
 
   try {
     const strapiClient = getStrapiClient();
-    const strapiData = await handleUnits(strapiClient, { institutionSlug });
+
+    // If unitId is provided, fetch specific unit
+    let strapiData;
+    if (unitIdParam) {
+      const unitId = parseInt(unitIdParam, 10);
+      if (isNaN(unitId)) {
+        return NextResponse.json(
+          { error: 'unitId must be a valid number' },
+          { status: 400 },
+        );
+      }
+      strapiData = await handleUnitById(strapiClient, {
+        institutionSlug,
+        unitId,
+      });
+    } else {
+      // Fetch all units for institution
+      strapiData = await handleUnits(strapiClient, { institutionSlug });
+    }
 
     // Transform Portuguese field names to English DTOs
     const transformedData = {

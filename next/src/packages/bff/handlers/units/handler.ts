@@ -1,5 +1,9 @@
 import type { StrapiClient } from '../../services/strapi';
-import type { StrapiUnitsResponse, UnitsQueryParams } from './types';
+import type {
+  StrapiUnitsResponse,
+  UnitsQueryParams,
+  UnitByIdQueryParams,
+} from './types';
 
 /**
  * Handle units request
@@ -36,6 +40,33 @@ export async function handleUnits(
   if (!units.data || units.data.length === 0) {
     throw new Error(
       `No units found for institution "${params.institutionSlug}". Units can be managed at: http://localhost:1337/admin/content-manager/collectionType/api::unit/unit`,
+    );
+  }
+
+  return units;
+}
+
+/**
+ * Handle unit request by ID - fetch specific unit with photos
+ */
+export async function handleUnitById(
+  strapiClient: StrapiClient,
+  params: UnitByIdQueryParams,
+): Promise<StrapiUnitsResponse> {
+  // Fetch specific unit by ID and institution
+  const units = await strapiClient.fetch<StrapiUnitsResponse>('units', {
+    filters: {
+      id: { $eq: params.unitId },
+      instituicao: {
+        slug: { $eq: params.institutionSlug },
+      },
+    },
+    populate: ['instituicao', 'fotos'],
+  });
+
+  if (!units.data || units.data.length === 0) {
+    throw new Error(
+      `Unit with ID ${params.unitId} not found for institution "${params.institutionSlug}".`,
     );
   }
 

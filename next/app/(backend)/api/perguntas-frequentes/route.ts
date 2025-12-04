@@ -9,8 +9,8 @@ import { getStrapiClient } from '../services/bff';
 function transformFAQToDTO(faq: StrapiPerguntaFrequente) {
   return {
     id: faq.id,
-    question: faq.Pergunta,
-    answer: faq.Resposta,
+    question: faq.pergunta,
+    answer: faq.resposta,
   };
 }
 

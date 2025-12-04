@@ -4,7 +4,7 @@
   "info": {
     "singularName": "unit",
     "pluralName": "units",
-    "displayName": "Infraestrutura",
+    "displayName": "Home / Infraestrutura",
     "description": "Infrastructure units (campuses) for institutions"
   },
   "options": {
@@ -67,6 +67,9 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::institution.institution"
+    },
+    "id_unidade": {
+      "type": "integer"
     }
   }
 }
