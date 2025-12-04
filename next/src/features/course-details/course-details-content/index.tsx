@@ -88,7 +88,7 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
         </div>
 
         <InfrastructureSection preselectedUnitId={selectedUnitId} />
-        <GeoCoursesSection />
+        <GeoCoursesSection title="Encontre o seu curso e transforme sua carreira!" />
 
         <CurriculumGridModal
           isOpen={isCurriculumModalOpen}

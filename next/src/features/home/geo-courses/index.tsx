@@ -9,17 +9,12 @@ import {
   useInstitutionData,
   usePagination,
 } from '@/hooks';
-import { MOCK_GEO_COURSES_DATA } from './api/mocks';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';
 
-export { MOCK_POPULAR_COURSES_DATA } from './api/mocks';
-
 const SKELETON_COUNT = 4;
 
-export function GeoCoursesSection({
-  data = MOCK_GEO_COURSES_DATA,
-}: Partial<GeoCourseSectionProps>) {
+export function GeoCoursesSection({ data, title }: GeoCourseSectionProps) {
   const router = useRouter();
   const { institutionId } = useCurrentInstitution();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -49,10 +44,10 @@ export function GeoCoursesSection({
   const hasCity = Boolean(city && state);
 
   const showSkeletons = isLoading;
-  const coursesToShow = showSkeletons ? [] : data.courses;
+  const coursesToShow = showSkeletons ? [] : data?.courses;
 
   const { currentPage, totalPages, goToPage, isScrollable } = usePagination({
-    totalItems: showSkeletons ? SKELETON_COUNT : coursesToShow.length,
+    totalItems: showSkeletons ? SKELETON_COUNT : coursesToShow?.length || 0,
     containerRef: scrollContainerRef as React.RefObject<HTMLDivElement>,
   });
 
@@ -75,7 +70,7 @@ export function GeoCoursesSection({
         <div className={styles.header}>
           <div className={styles.headerContent}>
             <Text as="h2" variant="featured-1" weight="bold">
-              {data.title}
+              {title}
             </Text>
             <div className={styles.subtitle}>
               <Text as="span" variant="body-2">
@@ -129,7 +124,7 @@ export function GeoCoursesSection({
                     <CourseCardSkeleton />
                   </div>
                 ))
-              : coursesToShow.map((course) => (
+              : coursesToShow?.map((course) => (
                   <div key={course.id} className={styles.card} role="listitem">
                     <CourseCard course={course} onClick={handleCourseClick} />
                   </div>
