@@ -12,6 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "sku": {
+      "type": "string",
+      "required": true
+    },
     "nome": {
       "type": "string",
       "required": true
@@ -24,18 +28,6 @@
       "type": "text",
       "required": true
     },
-    "descricaoSegundaria": {
-      "type": "richtext"
-    },
-    "curriculum": {
-      "type": "richtext"
-    },
-    "instituicao": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::institution.institution",
-      "inversedBy": "cursos"
-    },
     "capa": {
       "type": "media",
       "multiple": false,
@@ -44,6 +36,15 @@
         "images",
         "files"
       ]
+    },
+    "projeto_pedagogico": {
+      "type": "richtext"
+    },
+    "instituicao": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::institution.institution",
+      "inversedBy": "cursos"
     },
     "corpo_docente": {
       "type": "relation",

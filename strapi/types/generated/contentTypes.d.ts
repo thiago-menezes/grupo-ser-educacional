@@ -563,12 +563,10 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    curriculum: Schema.Attribute.RichText;
     curso_coordenacao: Schema.Attribute.Relation<
       'manyToOne',
       'api::coordenacao.coordenacao'
     >;
-    descricaoSegundaria: Schema.Attribute.RichText;
     instituicao: Schema.Attribute.Relation<
       'manyToOne',
       'api::institution.institution'
@@ -580,7 +578,9 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     nome: Schema.Attribute.String & Schema.Attribute.Required;
+    projeto_pedagogico: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
+    sku: Schema.Attribute.String & Schema.Attribute.Required;
     slug: Schema.Attribute.UID & Schema.Attribute.Required;
     sobre: Schema.Attribute.Text & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -603,20 +603,21 @@ export interface ApiCurriculumCurriculum extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Disciplina: Schema.Attribute.String & Schema.Attribute.Required;
+    curso_detalhe: Schema.Attribute.Relation<'oneToOne', 'api::course.course'>;
+    disciplina: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::curriculum.curriculum'
     > &
       Schema.Attribute.Private;
-    Modalidade: Schema.Attribute.Enumeration<
+    modalidade: Schema.Attribute.Enumeration<
       ['Presencial', 'Semipresencial', 'Digital (EAD)', 'Ao vivo']
     > &
       Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    Semestre: Schema.Attribute.Integer & Schema.Attribute.Required;
-    Turno: Schema.Attribute.Enumeration<
+    semestre: Schema.Attribute.Integer & Schema.Attribute.Required;
+    turno: Schema.Attribute.Enumeration<
       ['Manh\u00E3', 'Tarde', 'Noite', 'Virtual']
     > &
       Schema.Attribute.Required;
@@ -745,7 +746,7 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     cursos: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
     descricao: Schema.Attribute.Text;
-    home_perguntas_frequente: Schema.Attribute.Relation<
+    home_pergunta_frequente: Schema.Attribute.Relation<
       'manyToOne',
       'api::pergunta-frequente.pergunta-frequente'
     >;
@@ -791,9 +792,9 @@ export interface ApiPerguntaFrequentePerguntaFrequente
       'api::pergunta-frequente.pergunta-frequente'
     > &
       Schema.Attribute.Private;
-    Pergunta: Schema.Attribute.Text & Schema.Attribute.Required;
+    pergunta: Schema.Attribute.Text & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    Resposta: Schema.Attribute.Text & Schema.Attribute.Required;
+    resposta: Schema.Attribute.Text & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

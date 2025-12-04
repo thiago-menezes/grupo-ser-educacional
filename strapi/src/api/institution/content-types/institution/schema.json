@@ -34,7 +34,7 @@
       "target": "api::course.course",
       "mappedBy": "instituicao"
     },
-    "home_perguntas_frequente": {
+    "home_pergunta_frequente": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::pergunta-frequente.pergunta-frequente",

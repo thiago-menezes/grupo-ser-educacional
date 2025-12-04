@@ -11,11 +11,11 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Disciplina": {
+    "disciplina": {
       "type": "string",
       "required": true
     },
-    "Turno": {
+    "turno": {
       "type": "enumeration",
       "required": true,
       "enum": [
@@ -25,11 +25,11 @@
         "Virtual"
       ]
     },
-    "Semestre": {
+    "semestre": {
       "type": "integer",
       "required": true
     },
-    "Modalidade": {
+    "modalidade": {
       "type": "enumeration",
       "required": true,
       "enum": [
@@ -38,6 +38,11 @@
         "Digital (EAD)",
         "Ao vivo"
       ]
+    },
+    "curso_detalhe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::course.course"
     }
   }
 }

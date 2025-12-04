@@ -17,12 +17,6 @@
     "materia": {
       "type": "text"
     },
-    "curso": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::course.course",
-      "inversedBy": "corpo_docente"
-    },
     "modalidade": {
       "type": "enumeration",
       "enum": [
@@ -31,6 +25,12 @@
         "digital (EAD)",
         "ao vivo"
       ]
+    },
+    "curso": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::course.course",
+      "inversedBy": "corpo_docente"
     },
     "instituicao": {
       "type": "relation",
