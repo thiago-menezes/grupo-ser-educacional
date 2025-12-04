@@ -589,6 +589,43 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCurriculumCurriculum extends Struct.CollectionTypeSchema {
+  collectionName: 'curricula';
+  info: {
+    displayName: 'Curso / Grade curricular';
+    pluralName: 'curricula';
+    singularName: 'curriculum';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Disciplina: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::curriculum.curriculum'
+    > &
+      Schema.Attribute.Private;
+    Modalidade: Schema.Attribute.Enumeration<
+      ['Presencial', 'Semipresencial', 'Digital (EAD)', 'Ao vivo']
+    > &
+      Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    Semestre: Schema.Attribute.Integer & Schema.Attribute.Required;
+    Turno: Schema.Attribute.Enumeration<
+      ['Manh\u00E3', 'Tarde', 'Noite', 'Virtual']
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiEMecEMec extends Struct.CollectionTypeSchema {
   collectionName: 'e_mecs';
   info: {
@@ -1398,6 +1435,7 @@ declare module '@strapi/strapi' {
       'api::coordenacao.coordenacao': ApiCoordenacaoCoordenacao;
       'api::corpo-docente.corpo-docente': ApiCorpoDocenteCorpoDocente;
       'api::course.course': ApiCourseCourse;
+      'api::curriculum.curriculum': ApiCurriculumCurriculum;
       'api::e-mec.e-mec': ApiEMecEMec;
       'api::home-carousel.home-carousel': ApiHomeCarouselHomeCarousel;
       'api::home-promo-banner.home-promo-banner': ApiHomePromoBannerHomePromoBanner;

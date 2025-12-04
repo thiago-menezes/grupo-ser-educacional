@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "curricula",
+  "info": {
+    "singularName": "curriculum",
+    "pluralName": "curricula",
+    "displayName": "Curso / Grade curricular"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Disciplina": {
+      "type": "string",
+      "required": true
+    },
+    "Turno": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Manhã",
+        "Tarde",
+        "Noite",
+        "Virtual"
+      ]
+    },
+    "Semestre": {
+      "type": "integer",
+      "required": true
+    },
+    "Modalidade": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "Presencial",
+        "Semipresencial",
+        "Digital (EAD)",
+        "Ao vivo"
+      ]
+    }
+  }
+}
