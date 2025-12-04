@@ -35,6 +35,7 @@ export type StrapiUnitsResponse = {
   data: Array<{
     id: number;
     documentId: string;
+    id_unidade: number | null;
     nome: string | null;
     endereco: string | null;
     latitude: number;

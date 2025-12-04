@@ -73,6 +73,12 @@ export const useInfrastructureCombined = (preselectedUnitId?: number) => {
     }
   }, [preselectedUnitId]);
 
+  // Reset selected unit when city or state changes
+  useEffect(() => {
+    setSelectedUnitId(null);
+    setSelectedImageId(null);
+  }, [city, state]);
+
   // Step 2: Fetch images for selected unit from Strapi
   const selectedUnitIdNum = selectedUnitId
     ? parseInt(selectedUnitId, 10)

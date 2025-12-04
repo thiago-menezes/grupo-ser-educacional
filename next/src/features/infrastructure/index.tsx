@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components';
 import { useCityContext } from '@/contexts/city';
-import { useInfrastructure } from './hooks';
+import { useInfrastructureCombined } from './hooks-combined';
 import { ImageModal } from './image-modal';
 import styles from './styles.module.scss';
 
@@ -30,13 +30,17 @@ export const InfrastructureSection = ({
     selectedImageId,
     selectedUnitId,
     selectedImage,
-  } = useInfrastructure(preselectedUnitId);
+  } = useInfrastructureCombined(preselectedUnitId);
 
   const hasCity = Boolean(city && state);
 
-  if (!mainImage) {
+  // Don't render if no units are available
+  if (!isLoading && sortedUnits.length === 0) {
     return null;
   }
+
+  // Don't render main image section if no unit is selected yet
+  const showGallery = Boolean(mainImage);
 
   return (
     <section
@@ -122,41 +126,51 @@ export const InfrastructureSection = ({
           })}
         </div>
 
-        <div className={styles.gallery}>
-          <button
-            className={styles.mainImage}
-            onClick={() => handleImageClick(mainImage.id)}
-            type="button"
-            aria-label={mainImage.alt}
-          >
-            <Image
-              src={mainImage.src}
-              alt={mainImage.alt}
-              width={604}
-              height={424}
-              className={styles.image}
-            />
-          </button>
-          <div className={styles.sideImages}>
-            {sideImages.map((image) => (
-              <button
-                key={image.id}
-                className={styles.sideImage}
-                onClick={() => handleImageClick(image.id)}
-                type="button"
-                aria-label={image.alt}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={290}
-                  height={200}
-                  className={styles.image}
-                />
-              </button>
-            ))}
+        {showGallery && (
+          <div className={styles.gallery}>
+            <button
+              className={styles.mainImage}
+              onClick={() => handleImageClick(mainImage.id)}
+              type="button"
+              aria-label={mainImage.alt}
+            >
+              <Image
+                src={mainImage.src}
+                alt={mainImage.alt}
+                width={604}
+                height={424}
+                className={styles.image}
+              />
+            </button>
+            <div className={styles.sideImages}>
+              {sideImages.map((image) => (
+                <button
+                  key={image.id}
+                  className={styles.sideImage}
+                  onClick={() => handleImageClick(image.id)}
+                  type="button"
+                  aria-label={image.alt}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={290}
+                    height={200}
+                    className={styles.image}
+                  />
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {!showGallery && !isLoading && sortedUnits.length > 0 && (
+          <div className={styles.emptyState}>
+            <Text variant="body-2" color="neutral-faded">
+              Selecione uma unidade acima para visualizar as fotos da infraestrutura
+            </Text>
+          </div>
+        )}
       </div>
 
       <ImageModal

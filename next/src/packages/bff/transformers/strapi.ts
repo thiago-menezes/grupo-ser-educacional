@@ -68,6 +68,7 @@ export function transformInstitution(strapi: StrapiInstitution): Institution {
 export interface StrapiUnit {
   id: number;
   documentId: string;
+  id_unidade: number | null;
   nome: string | null;
   endereco: string | null;
   latitude: number;
@@ -82,6 +83,7 @@ export interface StrapiUnit {
 export interface Unit {
   id: number;
   documentId: string;
+  unitId: number | null;
   name: string;
   address: string;
   latitude: number;
@@ -94,6 +96,7 @@ export function transformUnit(strapi: StrapiUnit): Unit {
   return {
     id: strapi.id,
     documentId: strapi.documentId,
+    unitId: strapi.id_unidade,
     name: strapi.nome || '',
     address: strapi.endereco || '',
     latitude: strapi.latitude,

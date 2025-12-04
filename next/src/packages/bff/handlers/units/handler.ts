@@ -48,15 +48,16 @@ export async function handleUnits(
 
 /**
  * Handle unit request by ID - fetch specific unit with photos
+ * Uses id_unidade field to match with client API ID
  */
 export async function handleUnitById(
   strapiClient: StrapiClient,
   params: UnitByIdQueryParams,
 ): Promise<StrapiUnitsResponse> {
-  // Fetch specific unit by ID and institution
+  // Fetch specific unit by id_unidade (matches client API ID) and institution
   const units = await strapiClient.fetch<StrapiUnitsResponse>('units', {
     filters: {
-      id: { $eq: params.unitId },
+      id_unidade: { $eq: params.unitId },
       instituicao: {
         slug: { $eq: params.institutionSlug },
       },
