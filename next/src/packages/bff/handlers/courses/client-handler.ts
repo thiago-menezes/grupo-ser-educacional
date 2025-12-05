@@ -81,17 +81,104 @@ export async function fetchCityCourses(
     const endIndex = startIndex + perPage;
     const paginatedCourses = transformedCourses.slice(startIndex, endIndex);
 
+    // Step 6: Fetch pricing details for paginated courses in parallel
+    const coursesWithPrices = await enrichCoursesWithPrices(
+      clientApi,
+      paginatedCourses,
+      institution,
+      estado,
+      cidade,
+    );
+
     return {
       total,
       currentPage: page,
       totalPages,
       perPage,
-      courses: paginatedCourses,
+      courses: coursesWithPrices,
     };
   } catch (error) {
     console.error('Error fetching city courses:', error);
     throw error;
   }
+}
+
+/**
+ * Enrich courses with pricing information from course details endpoint
+ * Fetches pricing for paginated courses only (e.g., 12 courses per page)
+ */
+async function enrichCoursesWithPrices(
+  clientApi: ClientApiClient,
+  courses: CourseData[],
+  institution: string,
+  estado: string,
+  cidade: string,
+): Promise<CourseData[]> {
+  // Fetch course details in parallel for all paginated courses
+  const pricePromises = courses.map(async (course) => {
+    try {
+      // Only fetch if we have the required data
+      if (!course.sku || !course.unitId) {
+        console.warn(`Missing SKU or unitId for course: ${course.title}`);
+        return course;
+      }
+
+      const details = await clientApi.fetchCourseDetails(
+        institution,
+        estado,
+        cidade,
+        course.unitId,
+        course.sku,
+      );
+
+      // Extract the lowest price from all available options
+      const price = extractLowestPrice(details);
+
+      if (price !== null) {
+        return {
+          ...course,
+          priceFrom: `R$ ${price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+        };
+      }
+
+      return course;
+    } catch (error) {
+      console.error(
+        `Failed to fetch pricing for course ${course.sku}:`,
+        error,
+      );
+      return course; // Return course without pricing on error
+    }
+  });
+
+  return Promise.all(pricePromises);
+}
+
+/**
+ * Extract the lowest mensalidade price from course details
+ */
+function extractLowestPrice(
+  details: import('../../services/client-api').ClientApiCourseDetails,
+): number | null {
+  let lowestPrice: number | null = null;
+
+  // Iterate through all turnos, formas de ingresso, tipos de pagamento, and valores
+  for (const turno of details.Turnos || []) {
+    for (const forma of turno.FormasIngresso || []) {
+      for (const tipoPagamento of forma.TiposPagamento || []) {
+        for (const valor of tipoPagamento.ValoresPagamento || []) {
+          const mensalidade = parseFloat(valor.Mensalidade);
+          if (!isNaN(mensalidade)) {
+            if (lowestPrice === null || mensalidade < lowestPrice) {
+              lowestPrice = mensalidade;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return lowestPrice;
 }
 
 /**

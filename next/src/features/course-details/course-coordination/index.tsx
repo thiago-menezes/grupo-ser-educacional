@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
+import Markdown from 'react-markdown';
 import { Button, Tabs, Text, View } from 'reshaped';
 import { Icon } from '@/components';
 import type { CourseDetails } from '../types';
@@ -132,11 +133,15 @@ export function CourseCoordination({ course }: CourseCoordinationProps) {
           <View className={styles.pedagogicalContent}>
             {pedagogicalProject ? (
               <View className={styles.section}>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: pedagogicalProject.content,
+                <Markdown
+                  components={{
+                    ul: ({ children }) => (
+                      <ul className={styles.list}>{children}</ul>
+                    ),
                   }}
-                />
+                >
+                  {pedagogicalProject.content}
+                </Markdown>
               </View>
             ) : (
               <View className={styles.emptyState}>
