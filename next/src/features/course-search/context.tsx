@@ -69,39 +69,8 @@ function buildActiveFilters(filters: CourseFiltersFormValues): ActiveFilter[] {
     });
   }
 
-  if (filters.city) {
-    // Format city label from technical value format (city:name-state:code)
-    const techFormatMatch = filters.city.match(
-      /^city:(.+?)-state:([a-z]{2})$/i,
-    );
-    let cityLabel = filters.city;
-
-    if (techFormatMatch) {
-      const citySlug = techFormatMatch[1];
-      const stateCode = techFormatMatch[2].toUpperCase();
-      const cityName = citySlug.replace(/-/g, ' ');
-
-      // Capitalize city name properly
-      const formattedCity = cityName
-        .split(' ')
-        .map((word) => {
-          // Handle special cases like "de", "da", "do", "dos", "das"
-          const lowerWords = ['de', 'da', 'do', 'dos', 'das', 'e'];
-          if (lowerWords.includes(word.toLowerCase())) {
-            return word.toLowerCase();
-          }
-          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-        })
-        .join(' ');
-
-      cityLabel = `${formattedCity} - ${stateCode}`;
-    }
-
-    activeFilters.push({
-      id: 'city',
-      label: cityLabel,
-    });
-  }
+  // NOTE: City filter is not shown as an active filter badge
+  // because it's always visible in the autocomplete input
 
   if (
     filters.courseLevel &&
@@ -274,7 +243,9 @@ export function CourseFiltersProvider({ children }: PropsWithChildren) {
       if (filterId === 'courseName') {
         updated.courseName = '';
       } else if (filterId === 'city') {
-        updated.city = '';
+        // City filter cannot be removed - it's always kept
+        // User must use the city autocomplete input to change it
+        return prev;
       } else if (filterId === 'courseLevel') {
         updated.courseLevel = DEFAULT_FILTERS.courseLevel;
       } else if (filterId === 'priceRange') {
@@ -297,8 +268,12 @@ export function CourseFiltersProvider({ children }: PropsWithChildren) {
   }, []);
 
   const handleClearAllFilters = useCallback(() => {
-    resetFilters();
-  }, [resetFilters]);
+    setAppliedFilters((prev) => ({
+      ...DEFAULT_FILTERS,
+      // Keep the city filter when clearing all filters
+      city: prev.city,
+    }));
+  }, []);
 
   const contextValues: CourseFiltersContextValues = {
     filters: appliedFilters,

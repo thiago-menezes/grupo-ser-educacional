@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { View } from 'reshaped';
+import { EmptyState } from '@/components';
 import { ActiveFilters } from './active-filters';
 import { CourseFiltersProvider } from './context';
 import { CourseGrid } from './course-grid';
+import { useCourseGrid } from './course-grid/hooks';
 import { FiltersButton } from './filters-button';
 import { FiltersContent } from './filters-content';
 import { FiltersModal } from './filters-modal';
@@ -13,6 +15,7 @@ import styles from './styles.module.scss';
 
 function CourseSearchPageContent() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
+  const { courses } = useCourseGrid();
 
   return (
     <View className={styles.page}>
@@ -29,7 +32,13 @@ function CourseSearchPageContent() {
 
           <View className={styles.coursesGridContainer}>
             <ResultsHeader />
-
+            {courses.length === 0 && (
+              <EmptyState
+                icon="search"
+                title="Nenhum curso encontrado"
+                description="Busque por outra cidade para visualizar os cursos disponíveis."
+              />
+            )}
             <CourseGrid />
           </View>
         </View>

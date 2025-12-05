@@ -13,7 +13,6 @@ import { CourseModalityCheckboxes } from './course-modality-checkboxes';
 import { CourseNameInput } from './course-name-input';
 import { FilterActions } from './filter-actions';
 import { PriceRangeSlider } from './price-range-slider';
-import { SearchRadiusSlider } from './search-radius-slider';
 import { ShiftCheckboxes } from './shift-checkboxes';
 import styles from './styles.module.scss';
 
@@ -72,7 +71,7 @@ export function FiltersContent({
 
         <CityInput control={control} />
 
-        <SearchRadiusSlider control={control} />
+        {/* <SearchRadiusSlider control={control} /> */}
 
         <CourseNameInput control={control} />
 
