@@ -39,7 +39,14 @@ export async function GET(
     if (institution && state && city && unit) {
       const enrichedCourse = await handleCourseDetailsWithClientApi(
         strapiCourse,
-        { institution, state, city, unit, sku, admissionForm: admissionForm || undefined },
+        {
+          institution,
+          state,
+          city,
+          unit,
+          sku,
+          admissionForm: admissionForm || undefined,
+        },
       );
 
       console.log('[API] Course enriched with Client API data');

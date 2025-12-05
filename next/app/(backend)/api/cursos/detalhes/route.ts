@@ -68,7 +68,9 @@ export async function GET(request: NextRequest) {
           const formattedState = state.toUpperCase();
 
           // Check if unit exists, if not add it
-          const unitExists = courseDetails.units.some((u) => u.id === unitIdNum);
+          const unitExists = courseDetails.units.some(
+            (u) => u.id === unitIdNum,
+          );
           const enrichedUnits = unitExists
             ? courseDetails.units
             : [

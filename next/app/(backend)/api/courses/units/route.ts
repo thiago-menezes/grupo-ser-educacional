@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getClientApiClient } from '../../services/bff';
 import { transformClientUnits } from '@/packages/bff/transformers/client-api';
+import { getClientApiClient } from '../../services/bff';
 
 /**
  * GET /api/courses/units
@@ -57,7 +57,8 @@ export async function GET(request: NextRequest) {
       },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+          'Cache-Control':
+            'public, s-maxage=3600, stale-while-revalidate=86400',
         },
       },
     );
@@ -73,4 +74,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-
