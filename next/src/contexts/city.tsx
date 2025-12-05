@@ -23,8 +23,6 @@ type CityContextValue = {
   city: string;
   state: string;
   source: CitySource;
-  setCity: (city: string) => void;
-  setState: (state: string) => void;
   setCityState: (city: string, state: string, source?: CitySource) => void;
   focusCityField: () => void;
   setFocusCityFieldCallback: (callback: () => void) => void;
@@ -88,30 +86,6 @@ export function CityProvider({ children }: { children: ReactNode }) {
   const state = cityData.state;
   const source = cityData.source || 'default';
 
-  const setCity = useCallback(
-    (newCity: string) => {
-      setCityData((prev) => ({
-        city: newCity,
-        state: prev?.state || '',
-        timestamp: Date.now(),
-        source: prev?.source || 'default',
-      }));
-    },
-    [setCityData],
-  );
-
-  const setState = useCallback(
-    (newState: string) => {
-      setCityData((prev) => ({
-        city: prev?.city || '',
-        state: newState,
-        timestamp: Date.now(),
-        source: prev?.source || 'default',
-      }));
-    },
-    [setCityData],
-  );
-
   const setCityState = useCallback(
     (newCity: string, newState: string, newSource: CitySource = 'manual') => {
       setCityData({
@@ -138,8 +112,6 @@ export function CityProvider({ children }: { children: ReactNode }) {
         city,
         state,
         source,
-        setCity,
-        setState,
         setCityState,
         focusCityField,
         setFocusCityFieldCallback,

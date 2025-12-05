@@ -4,10 +4,22 @@
  */
 
 import type { CoursesResponse, CourseData } from 'types/api/courses';
-import type { ClientApiClient } from '../../services/client-api';
+import type {
+  ClientApiClient,
+  ClientApiCourseDetails,
+} from '../../services/client-api';
 import { transformClientCourse } from '../../transformers/client-api';
 
-export interface CityCoursesParams {
+const DEFAULT_PER_PAGE = 12;
+const DURATION_RANGES = {
+  ONE_TO_TWO: '1-2',
+  TWO_TO_THREE: '2-3',
+  THREE_TO_FOUR: '3-4',
+  FOUR_PLUS: '4-plus',
+  FOUR_PLUS_ALT: '4+',
+};
+
+export type CityCoursesParams = {
   institution: string;
   estado: string;
   cidade: string;
@@ -17,7 +29,7 @@ export interface CityCoursesParams {
   courseName?: string;
   page?: number;
   perPage?: number;
-}
+};
 
 /**
  * Fetch all courses for a city by fetching units first, then courses for each unit
@@ -26,7 +38,13 @@ export async function fetchCityCourses(
   clientApi: ClientApiClient,
   params: CityCoursesParams,
 ): Promise<CoursesResponse> {
-  const { institution, estado, cidade, page = 1, perPage = 12 } = params;
+  const {
+    institution,
+    estado,
+    cidade,
+    page = 1,
+    perPage = DEFAULT_PER_PAGE,
+  } = params;
 
   try {
     // Step 1: Fetch units for the city
@@ -154,9 +172,7 @@ async function enrichCoursesWithPrices(
 /**
  * Extract the lowest mensalidade price from course details
  */
-function extractLowestPrice(
-  details: import('../../services/client-api').ClientApiCourseDetails,
-): number | null {
+function extractLowestPrice(details: ClientApiCourseDetails): number | null {
   let lowestPrice: number | null = null;
 
   // Iterate through all turnos, formas de ingresso, tipos de pagamento, and valores
@@ -214,10 +230,17 @@ function applyFilters(
       const years = parseInt(match[1], 10);
 
       return params.durations!.some((range) => {
-        if (range === '1-2') return years >= 1 && years <= 2;
-        if (range === '2-3') return years >= 2 && years <= 3;
-        if (range === '3-4') return years >= 3 && years <= 4;
-        if (range === '4-plus' || range === '4+') return years >= 4;
+        if (range === DURATION_RANGES.ONE_TO_TWO)
+          return years >= 1 && years <= 2;
+        if (range === DURATION_RANGES.TWO_TO_THREE)
+          return years >= 2 && years <= 3;
+        if (range === DURATION_RANGES.THREE_TO_FOUR)
+          return years >= 3 && years <= 4;
+        if (
+          range === DURATION_RANGES.FOUR_PLUS ||
+          range === DURATION_RANGES.FOUR_PLUS_ALT
+        )
+          return years >= 4;
         return false;
       });
     });

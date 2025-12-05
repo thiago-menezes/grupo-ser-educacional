@@ -3,7 +3,8 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
 import type { CourseData } from 'types/api/courses';
-import { CourseCard, CourseCardSkeleton, Icon, Pagination } from '@/components';
+import { CourseCard, Icon, Pagination } from '@/components';
+import { CourseCardSkeleton } from '@/components/course-card/skeleton';
 import { useCityContext } from '@/contexts/city';
 import {
   useCurrentInstitution,
