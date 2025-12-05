@@ -9,7 +9,8 @@ export type CourseImageProps = {
 };
 
 export function CourseImage({ course }: CourseImageProps) {
-  const initialImageUrl = '/banner curso.png';
+  // Use Strapi featuredImage if available, fallback to default
+  const initialImageUrl = course.featuredImage || '/banner curso.png';
   const { src, handleError } = useImageFallback(initialImageUrl);
   const imageAlt = course.name || 'Imagem do curso';
 

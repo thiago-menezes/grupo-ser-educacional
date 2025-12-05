@@ -7,7 +7,7 @@ export const MOCK_COURSE_DETAILS: CourseDetails = {
   description:
     'Transforme dados em decisões estratégicas, o curso de Ciência de Dados forma profissionais preparados para atuar na área mais promissora da era digital, onde tecnologia, estatística e negócios se encontram. Você aprenderá a coletar, analisar e interpretar grandes volumes de dados para gerar insights que impulsionam resultados em empresas de todos os setores. Durante a graduação, o aluno desenvolve habilidades em programação, inteligência artificial, machine learning e visualização de dados, utilizando ferramentas usadas no mercado. Ao final, estará pronto para atuar como Cientista de Dados, Analista de BI, Engenheiro de Dados ou em cargos estratégicos que exigem pensamento analítico e domínio tecnológico. Porque hoje, quem entende dados, entende o futuro.',
   type: 'Bacharelado',
-  workload: 3200,
+  workload: '3200',
   category: {
     id: 1,
     name: 'Tecnologia',

@@ -1,6 +1,6 @@
-import { CourseData } from 'types/api/courses';
+import type { CourseData } from 'types/api/courses';
 
 export type CourseCardProps = {
   course: CourseData;
-  onClick?: (slug: string) => void;
+  onClick?: (course: CourseData) => void;
 };

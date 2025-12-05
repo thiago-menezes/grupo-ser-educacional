@@ -1,84 +1,44 @@
 /**
  * Strapi handler for course details
- * Fetches course, coordinator, and teachers from Strapi
+ * Fetches course with embedded coordinator and teachers from Strapi
  */
 
-import type { StrapiClient } from '../../services/strapi/client';
 import type { CourseDetails } from '@/features/course-details/types';
-import type {
-  StrapiCourseResponse,
-  StrapiCoordinatorResponse,
-  StrapiTeachersResponse,
-} from './types-strapi';
+import type { StrapiClient } from '../../services/strapi/client';
 import {
   transformStrapiCourse,
-  transformStrapiCoordinator,
-  transformStrapiTeacher,
   transformStrapiRelatedCourse,
 } from '../../transformers/course-strapi';
+import type { StrapiCourseResponse } from './types-strapi';
 
 export type CourseDetailsParams = {
   courseSku: string;
+  courseSlug?: string;
 };
 
 /**
  * Handle course details request from Strapi
- * Fetches course, coordinator, and teaching staff in parallel
+ * Course includes embedded coordinator and teaching staff
  */
 export async function handleCourseDetailsFromStrapi(
   strapiClient: StrapiClient,
-  params: CourseDetailsParams
+  params: CourseDetailsParams,
 ): Promise<CourseDetails> {
   console.log('[CourseDetails] Fetching from Strapi:', params);
 
   try {
-    // Fetch course, coordinator, and teachers in parallel for performance
-    const [courseResponse, coordinatorResponse, teachersResponse] =
-      await Promise.all([
-        // Fetch course with all nested relationships
-        strapiClient.fetch<StrapiCourseResponse>('courses', {
-          filters: {
-            sku: { $eq: params.courseSku },
-          },
-          populate: {
-            categoria: true,
-            ofertas: {
-              populate: {
-                unidade: {
-                  populate: ['instituicao'],
-                },
-                modalidade: true,
-                periodo: true,
-              },
-            },
-            imagem_destaque: true,
-            cursos_relacionados: {
-              populate: ['categoria', 'ofertas'],
-            },
-          },
-        }),
-
-        // Fetch coordinator (optional - may not exist)
-        strapiClient.fetch<StrapiCoordinatorResponse>('coordenacaos', {
-          filters: {
-            curso: {
-              sku: { $eq: params.courseSku },
-            },
-          },
-          populate: ['foto'],
-        }),
-
-        // Fetch teaching staff (optional - may be empty)
-        strapiClient.fetch<StrapiTeachersResponse>('corpo-docentes', {
-          filters: {
-            curso: {
-              sku: { $eq: params.courseSku },
-            },
-          },
-          populate: ['foto'],
-          sort: ['ordem:asc', 'nome:asc'],
-        }),
-      ]);
+    // Fetch course with all relations populated
+    // Using publicationState=preview to get both published and draft content
+    const courseResponse = await strapiClient.fetch<StrapiCourseResponse>(
+      'courses',
+      {
+        filters: {
+          sku: { $eq: params.courseSku },
+        },
+        populate: '*',
+        params: { publicationState: 'preview' },
+      },
+    );
 
     // Validate course exists
     if (!courseResponse.data || courseResponse.data.length === 0) {
@@ -91,33 +51,14 @@ export async function handleCourseDetailsFromStrapi(
       id: strapiCourse.id,
       nome: strapiCourse.nome,
       sku: strapiCourse.sku,
-      ofertas: strapiCourse.ofertas?.length || 0,
-      hasCoordinator: coordinatorResponse.data.length > 0,
-      teachersCount: teachersResponse.data.length,
+      hasDescription: !!(strapiCourse.sobre || strapiCourse.descricao),
+      hasCoordinator: !!strapiCourse.curso_coordenacao,
+      hasTeacher: !!strapiCourse.corpo_docente,
+      hasCover: !!(strapiCourse.capa || strapiCourse.imagem_destaque),
     });
 
-    // Transform course data
+    // Transform course data (includes embedded coordinator and teacher)
     const courseDetails = transformStrapiCourse(strapiCourse);
-
-    // Add coordinator if exists
-    if (coordinatorResponse.data && coordinatorResponse.data.length > 0) {
-      courseDetails.coordinator = transformStrapiCoordinator(
-        coordinatorResponse.data[0]
-      );
-      console.log('[CourseDetails] Coordinator added:', {
-        name: courseDetails.coordinator.name,
-      });
-    }
-
-    // Add teachers if exist
-    if (teachersResponse.data && teachersResponse.data.length > 0) {
-      courseDetails.teachers = teachersResponse.data.map(
-        transformStrapiTeacher
-      );
-      console.log('[CourseDetails] Teachers added:', {
-        count: courseDetails.teachers.length,
-      });
-    }
 
     // Add pedagogical project if exists
     if (strapiCourse.projeto_pedagogico) {
@@ -152,17 +93,11 @@ export async function handleCourseDetailsFromStrapi(
       strapiCourse.cursos_relacionados.length > 0
     ) {
       courseDetails.relatedCourses = strapiCourse.cursos_relacionados.map(
-        transformStrapiRelatedCourse
+        transformStrapiRelatedCourse,
       );
       console.log('[CourseDetails] Related courses added:', {
         count: courseDetails.relatedCourses.length,
       });
-    }
-
-    // Add featured image if exists
-    if (strapiCourse.imagem_destaque?.url) {
-      courseDetails.featuredImage = strapiCourse.imagem_destaque.url;
-      console.log('[CourseDetails] Featured image added');
     }
 
     return courseDetails;

@@ -22,11 +22,63 @@ export interface ClientApiUnitsResponse {
   Unidades: ClientApiUnit[];
 }
 
+export interface OfertaEntrada {
+  mesInicio: number;
+  mesFim: number;
+  Tipo: 'Percentual' | 'Valor';
+  Valor: string;
+}
+
+export interface ValoresPagamento {
+  ID: number;
+  Valor: string;
+  TemplateCampanha: string;
+  OfertaEntrada: OfertaEntrada[];
+  PrecoBase: string;
+  Mensalidade: string;
+  InicioVigencia: string;
+  FimVigencia: string;
+  PrioridadeAbrangencia: number;
+}
+
+export interface TiposPagamento {
+  ID: number;
+  Nome_TipoPagamento: string;
+  Codigo: string;
+  LinkCheckout: string;
+  ValoresPagamento: ValoresPagamento[];
+  PrecoBase?: string;
+  Mensalidade?: string;
+}
+
+export interface FormasIngresso {
+  ID: number;
+  Nome_FormaIngresso: string;
+  Codigo: string;
+  TiposPagamento: TiposPagamento[];
+}
+
+export interface Turnos {
+  ID: number;
+  Nome_Turno: string;
+  Periodo: string;
+  FormasIngresso: FormasIngresso[];
+  Hash_CursoTurno?: string;
+}
+
 export interface ClientApiCourse {
   ID: string;
   Nome_Curso: string;
   Modalidade: string;
   Periodo: number;
+}
+
+export interface ClientApiCourseDetails {
+  ID: string;
+  Nome_Curso: string;
+  Modalidade: string;
+  Periodo: number;
+  Turnos: Turnos[];
 }
 
 export interface ClientApiCoursesResponse {
@@ -82,6 +134,23 @@ export class ClientApiClient {
     const encodedCity = encodeURIComponent(city.toLowerCase());
 
     return `${this.config.baseUrl}/p/${normalizedInstitution}/${normalizedState}/${encodedCity}/unidades/${unitId}/cursos`;
+  }
+
+  /**
+   * Build URL for course details
+   */
+  private buildCourseDetailsUrl(
+    institution: string,
+    state: string,
+    city: string,
+    unitId: number,
+    courseId: string,
+  ): string {
+    const normalizedInstitution = institution.toLowerCase();
+    const normalizedState = state.toLowerCase();
+    const encodedCity = encodeURIComponent(city.toLowerCase());
+
+    return `${this.config.baseUrl}/p/${normalizedInstitution}/${normalizedState}/${encodedCity}/unidades/${unitId}/cursos/${courseId}`;
   }
 
   /**
@@ -178,6 +247,128 @@ export class ClientApiClient {
       }
 
       throw new Error('Unknown error occurred while fetching courses');
+    }
+  }
+
+  /**
+   * Fetch course details from client API
+   */
+  async fetchCourseDetails(
+    institution: string,
+    state: string,
+    city: string,
+    unitId: number,
+    courseId: string,
+  ): Promise<ClientApiCourseDetails> {
+    const url = this.buildCourseDetailsUrl(
+      institution,
+      state,
+      city,
+      unitId,
+      courseId,
+    );
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(
+      () => controller.abort(),
+      this.config.timeout || 10000,
+    );
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(
+          `Client API request failed: ${response.status} ${response.statusText}`,
+        );
+      }
+
+      return await response.json();
+    } catch (error) {
+      clearTimeout(timeoutId);
+
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Error('Client API request timed out');
+        }
+        throw error;
+      }
+
+      throw new Error('Unknown error occurred while fetching course details');
+    }
+  }
+
+  /**
+   * Build URL for units by course
+   * /p/{institution}/{state}/{city}/cursos/{courseId}/unidades
+   */
+  private buildUnitsByCourseUrl(
+    institution: string,
+    state: string,
+    city: string,
+    courseId: string,
+  ): string {
+    const normalizedInstitution = institution.toLowerCase();
+    const normalizedState = state.toLowerCase();
+    const encodedCity = encodeURIComponent(city.toLowerCase());
+
+    return `${this.config.baseUrl}/p/${normalizedInstitution}/${normalizedState}/${encodedCity}/cursos/${courseId}/unidades`;
+  }
+
+  /**
+   * Fetch units available for a specific course
+   */
+  async fetchUnitsByCourse(
+    institution: string,
+    state: string,
+    city: string,
+    courseId: string,
+  ): Promise<ClientApiUnitsResponse> {
+    const url = this.buildUnitsByCourseUrl(institution, state, city, courseId);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(
+      () => controller.abort(),
+      this.config.timeout || 10000,
+    );
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(
+          `Client API request failed: ${response.status} ${response.statusText}`,
+        );
+      }
+
+      return await response.json();
+    } catch (error) {
+      clearTimeout(timeoutId);
+
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Error('Client API request timed out');
+        }
+        throw error;
+      }
+
+      throw new Error('Unknown error occurred while fetching units by course');
     }
   }
 }

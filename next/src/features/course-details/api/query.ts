@@ -1,28 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
-import { CourseDetails } from '../types';
+import type { CourseDetails } from '../types';
 
 export type CourseDetailsQueryParams = {
   sku: string;
-  instituicao?: string;
-  estado?: string;
-  cidade?: string;
-  idDaUnidade?: string;
+  institution?: string;
+  state?: string;
+  city?: string;
+  unit?: string;
+  admissionForm?: string;
 };
 
 async function fetchCourseDetails(
   params: CourseDetailsQueryParams,
 ): Promise<CourseDetails> {
-  const { sku, instituicao, estado, cidade, idDaUnidade } = params;
+  const { sku, institution, state, city, unit, admissionForm } = params;
 
-  // Build query string for optional params
   const queryParams = new URLSearchParams();
-  if (instituicao) queryParams.append('instituicao', instituicao);
-  if (estado) queryParams.append('estado', estado);
-  if (cidade) queryParams.append('cidade', cidade);
-  if (idDaUnidade) queryParams.append('idDaUnidade', idDaUnidade);
+  if (sku) queryParams.append('sku', sku);
+  if (institution) queryParams.append('institution', institution);
+  if (state) queryParams.append('state', state);
+  if (city) queryParams.append('city', city);
+  if (unit) queryParams.append('unit', unit);
+  if (admissionForm) queryParams.append('admissionForm', admissionForm);
 
   const queryString = queryParams.toString();
-  const url = `/cursos/${sku}${queryString ? `?${queryString}` : ''}`;
+  const url = `/api/cursos/detalhes?${queryString}`;
 
   const response = await fetch(url, {
     headers: {
@@ -39,9 +41,20 @@ async function fetchCourseDetails(
 }
 
 export function useQueryCourseDetails(params: CourseDetailsQueryParams) {
+  const { sku, institution, state, city, unit, admissionForm } = params;
+
   return useQuery({
-    queryKey: ['course-details', params.sku],
+    queryKey: [
+      'course-details',
+      sku,
+      institution,
+      state,
+      city,
+      unit,
+      admissionForm,
+    ],
     queryFn: () => fetchCourseDetails(params),
+    enabled: !!sku,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 }

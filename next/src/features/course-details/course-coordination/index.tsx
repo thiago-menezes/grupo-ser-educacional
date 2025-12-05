@@ -44,9 +44,8 @@ export function CourseCoordination({ course }: CourseCoordinationProps) {
           <View className={styles.coordinatorContent}>
             {hasCoordinationData ? (
               <>
-                {/* Coordinator Card */}
                 {coordinator && (
-                  <View className={styles.coordinatorCard}>
+                  <View key="coordinator" className={styles.coordinatorCard}>
                     {coordinator.photo ? (
                       <Image
                         src={coordinator.photo}
@@ -83,9 +82,8 @@ export function CourseCoordination({ course }: CourseCoordinationProps) {
                   </View>
                 )}
 
-                {/* Teachers List */}
                 {teachers.length > 0 && (
-                  <View className={styles.teachersContent}>
+                  <View key="teachers" className={styles.teachersContent}>
                     <Text
                       as="h3"
                       variant="featured-2"

@@ -10,7 +10,7 @@ export const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modalities: ['presencial'],
-    price: 95010,
+    price: 950,
     campus: {
       name: 'Unidade Aquarius',
       city: 'São José dos Campos',
@@ -29,7 +29,7 @@ export const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Licenciatura',
     duration: '4 anos (8 semestres)',
     modalities: ['ead'],
-    price: 32090,
+    price: 320,
     campus: {
       name: 'Polo Centro',
       city: 'São José dos Campos',
@@ -48,7 +48,7 @@ export const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modalities: ['presencial', 'semipresencial'],
-    price: 120040,
+    price: 1240,
     campus: {
       name: 'Unidade Aquarius',
       city: 'São José dos Campos',
@@ -67,7 +67,7 @@ export const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modalities: ['ead'],
-    price: 45090,
+    price: 450,
     campus: {
       name: 'Polo Centro',
       city: 'São José dos Campos',
@@ -86,7 +86,7 @@ export const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '4 anos (8 semestres)',
     modalities: ['presencial', 'semipresencial', 'ead'],
-    price: 55090,
+    price: 550,
     campus: {
       name: 'Unidade Aquarius',
       city: 'São José dos Campos',
@@ -105,7 +105,7 @@ export const MOCK_COURSES_DTO: CourseDTO[] = [
     degree: 'Bacharelado',
     duration: '5 anos (10 semestres)',
     modalities: ['presencial'],
-    price: 78090,
+    price: 780,
     campus: {
       name: 'Polo Centro',
       city: 'São José dos Campos',

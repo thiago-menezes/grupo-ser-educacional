@@ -1,40 +1,28 @@
-import { useState } from 'react';
-import { Button, Text, View } from 'reshaped';
-import type { CourseDetails } from '../types';
+import { Button, DropdownMenu, Skeleton, Text, View } from 'reshaped';
+import { useSelectedUnit } from './hooks';
 import styles from './styles.module.scss';
 
-export type CourseLocationSelectorProps = {
-  course: CourseDetails;
-  selectedUnitId?: number;
-  onUnitChange?: (unitId: number) => void;
-};
+export function CourseLocationSelector() {
+  const { selectedUnit, units, isLoading, handleUnitChange } =
+    useSelectedUnit();
 
-export function CourseLocationSelector({
-  course,
-  selectedUnitId,
-  onUnitChange,
-}: CourseLocationSelectorProps) {
-  const [currentUnitId, setCurrentUnitId] = useState(
-    selectedUnitId || course.units[0]?.id || null,
-  );
-
-  const selectedUnit =
-    course.units.find((u) => u.id === currentUnitId) || course.units[0];
-
-  const handleChangeUnit = () => {
-    // Cycle through units or open a modal in the future
-    const currentIndex = course.units.findIndex((u) => u.id === currentUnitId);
-    const nextIndex = (currentIndex + 1) % course.units.length;
-    const nextUnitId = course.units[nextIndex]?.id;
-    if (nextUnitId) {
-      setCurrentUnitId(nextUnitId);
-      onUnitChange?.(nextUnitId);
-    }
-  };
+  if (isLoading) {
+    return (
+      <View className={styles.card}>
+        <Skeleton width="60%" height={6} />
+        <View className={styles.unitCard}>
+          <Skeleton width="80%" height={5} />
+          <Skeleton width="50%" height={4} />
+        </View>
+      </View>
+    );
+  }
 
   if (!selectedUnit) {
     return null;
   }
+
+  const hasMultipleUnits = units.length > 1;
 
   return (
     <View className={styles.card}>
@@ -58,15 +46,41 @@ export function CourseLocationSelector({
           {selectedUnit.city} - {selectedUnit.state}
         </Text>
       </View>
-      <Button
-        variant="ghost"
-        color="primary"
-        size="small"
-        onClick={handleChangeUnit}
-        className={styles.changeButton}
-      >
-        Trocar unidade
-      </Button>
+      {hasMultipleUnits && (
+        <DropdownMenu>
+          <DropdownMenu.Trigger>
+            {(attributes) => (
+              <Button
+                attributes={attributes}
+                variant="ghost"
+                color="primary"
+                size="small"
+                className={styles.changeButton}
+              >
+                Trocar unidade
+              </Button>
+            )}
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            {units.map((unit) => (
+              <DropdownMenu.Item
+                key={unit.id}
+                onClick={() => handleUnitChange(unit.id)}
+                selected={unit.id === selectedUnit.id}
+              >
+                <View direction="column" gap={0}>
+                  <Text variant="body-2" weight="medium">
+                    {unit.name}
+                  </Text>
+                  <Text variant="caption-1" color="neutral-faded">
+                    {unit.city} - {unit.state}
+                  </Text>
+                </View>
+              </DropdownMenu.Item>
+            ))}
+          </DropdownMenu.Content>
+        </DropdownMenu>
+      )}
     </View>
   );
 }

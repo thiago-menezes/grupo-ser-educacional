@@ -40,7 +40,6 @@
 
   &.selected {
     border-color: var(--rs-color-border-primary);
-    border-width: 2px;
     background: var(--rs-color-background-primary-faded);
     box-shadow: 0 4px 8px rgba(var(--rs-color-rgb-background-primary), 0.15);
   }

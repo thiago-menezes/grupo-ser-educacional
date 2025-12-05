@@ -3,8 +3,8 @@
  * Orchestrates units + courses fetching with proper error handling
  */
 
-import type { ClientApiClient } from '../../services/client-api';
 import type { CoursesResponse, CourseData } from 'types/api/courses';
+import type { ClientApiClient } from '../../services/client-api';
 import { transformClientCourse } from '../../transformers/client-api';
 
 export interface CityCoursesParams {
@@ -30,7 +30,11 @@ export async function fetchCityCourses(
 
   try {
     // Step 1: Fetch units for the city
-    const unitsResponse = await clientApi.fetchUnits(institution, estado, cidade);
+    const unitsResponse = await clientApi.fetchUnits(
+      institution,
+      estado,
+      cidade,
+    );
 
     if (!unitsResponse.Unidades || unitsResponse.Unidades.length === 0) {
       return {
@@ -51,10 +55,7 @@ export async function fetchCityCourses(
           courses: coursesResponse.Cursos || [],
         }))
         .catch((error) => {
-          console.error(
-            `Failed to fetch courses for unit ${unit.ID}:`,
-            error,
-          );
+          console.error(`Failed to fetch courses for unit ${unit.ID}:`, error);
           return { unit, courses: [] };
         }),
     );

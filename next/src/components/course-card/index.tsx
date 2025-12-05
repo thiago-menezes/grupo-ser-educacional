@@ -6,13 +6,12 @@ import type { CourseCardProps } from './types';
 
 export function CourseCard({ course, onClick }: CourseCardProps) {
   const handleClick = () => {
-    onClick?.(course.slug);
+    onClick?.(course);
   };
 
   return (
     <div className={styles.card} onClick={handleClick} role="article">
       <div className={styles.header}>
-        <div className={styles.category}>{course.category}</div>
         <div className={styles.title}>{course.title}</div>
 
         <div className={styles.meta}>

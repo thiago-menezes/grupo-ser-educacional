@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useMemo, useState } from 'react';
 import { View } from 'reshaped';
 import { Breadcrumb } from '@/components';
 import { InfrastructureSection } from '@/features';
@@ -11,13 +12,15 @@ import { CourseImage } from '../course-image';
 import { CourseInfo } from '../course-info';
 import { CourseJobMarketSection } from '../course-job-market-section';
 import { CourseModalitySelector } from '../course-modality-selector';
-import { CourseSalarySection } from '../course-salary-section';
 import { CurriculumGridModal } from '../curriculum-grid-modal';
-import { CourseDetails } from '../types';
+import type { CourseDetails } from '../types';
 import { useCourseDetailsContent } from './hooks';
 import styles from './styles.module.scss';
 
 export function CourseDetailsContent({ course }: { course: CourseDetails }) {
+  const searchParams = useSearchParams();
+  const unitFromUrl = searchParams.get('unit');
+
   const {
     breadcrumbItems,
     setIsCurriculumModalOpen,
@@ -26,11 +29,30 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
     handleModalityChange,
     handleAdmissionFormChange,
     isCurriculumModalOpen,
+    selectedTurnoId,
+    // handleTurnoChange - available for future turno selector component
   } = useCourseDetailsContent(course);
 
-  const [selectedUnitId, setSelectedUnitId] = useState<number>(
-    course.offerings[0]?.unitId || course.units[0]?.id,
-  );
+  const [selectedUnitId, setSelectedUnitId] = useState<number>(() => {
+    if (unitFromUrl) {
+      return parseInt(unitFromUrl, 10);
+    }
+    return course.offerings[0]?.unitId || course.units[0]?.id;
+  });
+
+  // Get admission forms from selected turno in Client API data
+  const availableAdmissionForms = useMemo(() => {
+    if (!course.clientApiDetails?.Turnos?.length) return undefined;
+
+    const selectedTurno = course.clientApiDetails.Turnos.find(
+      (t) => t.ID === selectedTurnoId,
+    );
+
+    return (
+      selectedTurno?.FormasIngresso ||
+      course.clientApiDetails.Turnos[0]?.FormasIngresso
+    );
+  }, [course.clientApiDetails, selectedTurnoId]);
 
   const handleUnitClick = (unitId: number) => {
     setSelectedUnitId(unitId);
@@ -43,10 +65,6 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
         block: 'start',
       });
     }
-  };
-
-  const handleUnitChange = (unitId: number) => {
-    setSelectedUnitId(unitId);
   };
 
   return (
@@ -69,21 +87,19 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
                 onSelectModality={handleModalityChange}
               />
               <CourseAdmissionForms
+                availableForms={availableAdmissionForms}
                 selectedFormId={selectedAdmissionFormId}
                 onSelectForm={handleAdmissionFormChange}
               />
             </header>
             <CourseAbout description={course.description} />
             <CourseJobMarketSection />
-            <CourseSalarySection />
             <CourseCoordination course={course} />
           </View>
 
           <CourseEnrollmentSidebar
             course={course}
             selectedModalityId={selectedModalityId}
-            selectedUnitId={selectedUnitId}
-            onUnitChange={handleUnitChange}
           />
         </div>
 

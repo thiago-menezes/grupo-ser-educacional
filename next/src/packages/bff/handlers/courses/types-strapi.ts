@@ -103,6 +103,29 @@ export interface StrapiRelatedCourse {
 }
 
 /**
+ * Strapi Coordinator embedded in Course
+ */
+export interface StrapiCourseCoordinator {
+  id: number;
+  documentId: string;
+  nome: string;
+  descricao?: string | null;
+  telefone?: string | null;
+  foto?: StrapiMedia | null;
+}
+
+/**
+ * Strapi Teacher embedded in Course
+ */
+export interface StrapiCourseTeacher {
+  id: number;
+  documentId: string;
+  nome: string;
+  materia?: string | null;
+  modalidade?: string | null;
+}
+
+/**
  * Strapi Course (main content type)
  * Content Type: api::course.course
  */
@@ -112,9 +135,11 @@ export interface StrapiCourse {
   nome: string;
   slug: string;
   sku?: string | null;
-  descricao: string;
-  tipo: string; // "Bacharelado" | "Tecnólogo" | "Licenciatura"
-  carga_horaria: number | null;
+  // "sobre" is the description field in Strapi
+  sobre?: string | null;
+  descricao?: string | null; // fallback field name
+  tipo?: string | null; // "Bacharelado" | "Tecnólogo" | "Licenciatura"
+  carga_horaria?: number | null;
   duracao_padrao?: string | null;
   projeto_pedagogico?: string | null; // Rich text field
   areas_atuacao?: string[] | null; // JSON field
@@ -124,10 +149,15 @@ export interface StrapiCourse {
     description: string;
     icon?: string;
   }> | null; // JSON field
-  categoria: StrapiCategoryNested;
+  categoria?: StrapiCategoryNested | null;
   ofertas?: StrapiOferta[];
   cursos_relacionados?: StrapiRelatedCourse[];
-  imagem_destaque?: StrapiMedia | null;
+  // "capa" is the cover image in Strapi
+  capa?: StrapiMedia | null;
+  imagem_destaque?: StrapiMedia | null; // fallback field name
+  // Embedded relations
+  curso_coordenacao?: StrapiCourseCoordinator | null;
+  corpo_docente?: StrapiCourseTeacher | null;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string | null;

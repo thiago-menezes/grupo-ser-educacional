@@ -1,7 +1,7 @@
 import { startTransition, useEffect, useRef, useState } from 'react';
 import { useCourseFiltersContext } from '../context';
-import { useQueryCourses } from './api/query';
 import { useQueryCityBasedCourses } from './api/city-query';
+import { useQueryCourses } from './api/query';
 import { ITEMS_PER_PAGE } from './constants';
 
 /**

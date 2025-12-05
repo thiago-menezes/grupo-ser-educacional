@@ -1,5 +1,5 @@
-import type { ClientApiUnit, ClientApiCourse } from '../services/client-api';
 import type { CourseData, CourseModality } from 'types/api/courses';
+import type { ClientApiUnit, ClientApiCourse } from '../services/client-api';
 
 /**
  * Transformed Unit DTO (English field names)
@@ -107,6 +107,8 @@ export function transformClientCourse(
     campusCity: unit.Cidade,
     campusState: unit.Estado,
     slug: generateSlug(course.ID),
+    sku: course.ID,
+    unitId: unit.ID,
   };
 }
 

@@ -1,7 +1,7 @@
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { startTransition, useCallback, useEffect, useState } from 'react';
 import { useCurrentInstitution } from '@/hooks';
-import { CourseDetails } from '../types';
+import type { CourseDetails } from '../types';
 
 export const useCourseDetailsContent = (course: CourseDetails) => {
   const router = useRouter();
@@ -14,8 +14,31 @@ export const useCourseDetailsContent = (course: CourseDetails) => {
   const [selectedAdmissionFormId, setSelectedAdmissionFormId] = useState<
     string | null
   >(null);
+  const [selectedTurnoId, setSelectedTurnoId] = useState<number | null>(null);
 
   const { institutionSlug } = useCurrentInstitution();
+
+  // Initialize selected turno from Client API data
+  useEffect(() => {
+    if (course.clientApiDetails?.Turnos?.length) {
+      const turnoParam = searchParams.get('turno');
+      if (turnoParam) {
+        const turno = course.clientApiDetails.Turnos.find(
+          (t) => t.ID.toString() === turnoParam,
+        );
+        if (turno) {
+          startTransition(() => {
+            setSelectedTurnoId(turno.ID);
+          });
+          return;
+        }
+      }
+      // Default to first turno
+      startTransition(() => {
+        setSelectedTurnoId(course.clientApiDetails!.Turnos[0].ID);
+      });
+    }
+  }, [course.clientApiDetails, searchParams]);
 
   // Initialize selected modality based on URL params
   useEffect(() => {
@@ -101,6 +124,17 @@ export const useCourseDetailsContent = (course: CourseDetails) => {
     [router, pathname, searchParams],
   );
 
+  // Handler to update turno query parameter
+  const handleTurnoChange = useCallback(
+    (turnoId: number) => {
+      setSelectedTurnoId(turnoId);
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('turno', turnoId.toString());
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [router, pathname, searchParams],
+  );
+
   return {
     breadcrumbItems,
     isCurriculumModalOpen,
@@ -109,7 +143,10 @@ export const useCourseDetailsContent = (course: CourseDetails) => {
     setSelectedModalityId,
     selectedAdmissionFormId,
     setSelectedAdmissionFormId,
+    selectedTurnoId,
+    setSelectedTurnoId,
     handleModalityChange,
     handleAdmissionFormChange,
+    handleTurnoChange,
   };
 };

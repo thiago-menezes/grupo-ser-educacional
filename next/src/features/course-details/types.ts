@@ -36,13 +36,57 @@ export type RelatedCourseData = {
   price: number | null;
 };
 
+export type OfertaEntrada = {
+  mesInicio: number;
+  mesFim: number;
+  Tipo: 'Percentual' | 'Valor';
+  Valor: string;
+};
+
+export type ValoresPagamento = {
+  ID: number;
+  Valor: string;
+  TemplateCampanha: string;
+  OfertaEntrada: OfertaEntrada[];
+  PrecoBase: string;
+  Mensalidade: string;
+  InicioVigencia: string;
+  FimVigencia: string;
+  PrioridadeAbrangencia: number;
+};
+
+export type TiposPagamento = {
+  ID: number;
+  Nome_TipoPagamento: string;
+  Codigo: string;
+  LinkCheckout: string;
+  ValoresPagamento: ValoresPagamento[];
+  PrecoBase?: string;
+  Mensalidade?: string;
+};
+
+export type FormasIngresso = {
+  ID: number;
+  Nome_FormaIngresso: string;
+  Codigo: string;
+  TiposPagamento: TiposPagamento[];
+};
+
+export type Turnos = {
+  ID: number;
+  Nome_Turno: string;
+  Periodo: string;
+  FormasIngresso: FormasIngresso[];
+  Hash_CursoTurno?: string;
+};
+
 export type CourseDetails = {
   id: number;
   name: string;
   slug: string;
   description: string;
   type: string;
-  workload: number | null;
+  workload: string | null;
   category: {
     id: number;
     name: string;
@@ -93,4 +137,12 @@ export type CourseDetails = {
   salaryRanges?: SalaryRangeData[];
   relatedCourses?: RelatedCourseData[];
   featuredImage?: string;
+  // New fields from Client API (pricing, shifts, admission forms)
+  clientApiDetails?: {
+    ID: string;
+    Nome_Curso: string;
+    Modalidade: string;
+    Periodo: number;
+    Turnos: Turnos[];
+  };
 };

@@ -1,24 +1,32 @@
-import { useParams, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Container, View } from 'reshaped';
+import { useCurrentInstitution } from '@/hooks';
 import { useQueryCourseDetails } from './api/query';
 import { CourseDetailsContent } from './course-details-content';
 import { CourseDetailsSkeleton } from './course-details-skeleton';
 import styles from './styles.module.scss';
 
-export type CourseDetailsPageParams = {
-  sku: string;
-};
-
 export function CourseDetailsPage() {
-  const params = useParams<CourseDetailsPageParams>();
   const searchParams = useSearchParams();
+  const { institutionSlug } = useCurrentInstitution();
 
-  const { data: course, isLoading, error } = useQueryCourseDetails({
-    sku: params.sku,
-    instituicao: searchParams.get('instituicao') || undefined,
-    estado: searchParams.get('estado') || undefined,
-    cidade: searchParams.get('cidade') || undefined,
-    idDaUnidade: searchParams.get('idDaUnidade') || undefined,
+  const sku = searchParams.get('sku');
+  const state = searchParams.get('state');
+  const city = searchParams.get('city');
+  const unit = searchParams.get('unit');
+  const admissionForm = searchParams.get('admissionForm');
+
+  const {
+    data: course,
+    isLoading,
+    error,
+  } = useQueryCourseDetails({
+    sku: sku || '',
+    institution: institutionSlug || undefined,
+    state: state || undefined,
+    city: city || undefined,
+    unit: unit || undefined,
+    admissionForm: admissionForm || undefined,
   });
 
   if (isLoading) {
@@ -31,13 +39,19 @@ export function CourseDetailsPage() {
     );
   }
 
-  if (error || !course) {
+  if (error || !course || !sku) {
     return (
       <View className={styles.page}>
         <Container>
           <View className={styles.error}>
-            <h1>Curso não encontrado</h1>
-            <p>O curso que você está procurando não foi encontrado.</p>
+            <h1>
+              {!sku ? 'Parâmetro SKU não encontrado' : 'Curso não encontrado'}
+            </h1>
+            <p>
+              {!sku
+                ? 'O parâmetro SKU é obrigatório para visualizar os detalhes do curso.'
+                : 'O curso que você está procurando não foi encontrado.'}
+            </p>
           </View>
         </Container>
       </View>

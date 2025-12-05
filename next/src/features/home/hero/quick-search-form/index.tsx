@@ -106,12 +106,15 @@ export function QuickSearchForm({
     }
 
     // Priority 2: Geolocation (if authorized and available)
-    if (geolocationCity && geolocationState && !isGeoLoading && !permissionDenied) {
+    if (
+      geolocationCity &&
+      geolocationState &&
+      !isGeoLoading &&
+      !permissionDenied
+    ) {
       setCityState(geolocationCity, geolocationState, 'geolocation');
       setInputValue(`${geolocationCity} - ${geolocationState}`);
-      setFormattedCityValue(
-        formatCityValue(geolocationCity, geolocationState),
-      );
+      setFormattedCityValue(formatCityValue(geolocationCity, geolocationState));
       return;
     }
 

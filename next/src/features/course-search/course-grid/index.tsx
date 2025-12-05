@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Pagination, View } from 'reshaped';
+import type { CourseData } from 'types/api/courses';
 import { BannerSkeleton, CourseCard, CourseCardSkeleton } from '@/components';
 import { useImageFallback } from '@/features/infrastructure/utils/image-fallback';
 import { useSearchBannerPromos } from '@/features/search/banner-promo/api';
@@ -11,7 +12,7 @@ import styles from './styles.module.scss';
 
 export function CourseGrid() {
   const router = useRouter();
-  const { institutionId, institutionSlug } = useCurrentInstitution();
+  const { institutionSlug } = useCurrentInstitution();
   const {
     totalPages,
     isLoading,
@@ -30,8 +31,33 @@ export function CourseGrid() {
     bannerItem?.imageUrl || '/banner cursos.png',
   );
 
-  const handleCourseClick = (slug: string) => {
-    router.push(`/${institutionId}/cursos/${slug}`);
+  const handleCourseClick = (course: CourseData) => {
+    const queryParams = new URLSearchParams();
+
+    if (course.campusCity) {
+      queryParams.set('city', course.campusCity.toLowerCase());
+    }
+
+    if (course.campusState) {
+      queryParams.set('state', course.campusState.toLowerCase());
+    }
+
+    if (course.sku) {
+      queryParams.set('sku', course.sku);
+    }
+
+    if (course.unitId) {
+      queryParams.set('unit', course.unitId.toString());
+    }
+
+    if (course.admissionForm) {
+      queryParams.set('admissionForm', course.admissionForm);
+    }
+
+    const queryString = queryParams.toString();
+    const url = `/${institutionSlug}/cursos/detalhes?${queryString}`;
+
+    router.push(url);
   };
 
   return (

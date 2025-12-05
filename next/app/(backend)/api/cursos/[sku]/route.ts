@@ -1,39 +1,58 @@
 import { NextRequest, NextResponse } from 'next/server';
+import {
+  handleCourseDetailsFromStrapi,
+  handleCourseDetailsWithClientApi,
+} from '@/packages/bff/handlers/courses';
 import { getStrapiClient } from '../../services/bff';
-import { handleCourseDetailsFromStrapi } from '@/packages/bff/handlers/courses';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ sku: string }> }
+  { params }: { params: Promise<{ sku: string }> },
 ) {
   try {
     const { sku } = await params;
     const { searchParams } = new URL(request.url);
 
-    // Extract query params (optional, for context/filtering)
-    const instituicao = searchParams.get('instituicao');
-    const estado = searchParams.get('estado');
-    const cidade = searchParams.get('cidade');
-    const idDaUnidade = searchParams.get('idDaUnidade');
+    // Extract query params for Client API
+    const institution = searchParams.get('institution');
+    const state = searchParams.get('state');
+    const city = searchParams.get('city');
+    const unit = searchParams.get('unit');
+    const admissionForm = searchParams.get('admissionForm');
 
     console.log('[API] Fetching course details:', {
       sku,
-      instituicao,
-      estado,
-      cidade,
-      idDaUnidade,
+      institution,
+      state,
+      city,
+      unit,
+      admissionForm,
     });
 
-    // Get Strapi client
+    // Get base course data from Strapi
     const strapiClient = getStrapiClient();
-
-    // Fetch course details from Strapi
-    const courseDetails = await handleCourseDetailsFromStrapi(strapiClient, {
+    const strapiCourse = await handleCourseDetailsFromStrapi(strapiClient, {
       courseSku: sku,
     });
 
-    // Return course details with cache headers
-    return NextResponse.json(courseDetails, {
+    // If we have all Client API params, enrich with pricing data
+    if (institution && state && city && unit) {
+      const enrichedCourse = await handleCourseDetailsWithClientApi(
+        strapiCourse,
+        { institution, state, city, unit, sku, admissionForm: admissionForm || undefined },
+      );
+
+      console.log('[API] Course enriched with Client API data');
+
+      return NextResponse.json(enrichedCourse, {
+        headers: {
+          'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+        },
+      });
+    }
+
+    // Return Strapi-only data
+    return NextResponse.json(strapiCourse, {
       headers: {
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
       },
@@ -41,11 +60,9 @@ export async function GET(
   } catch (error) {
     console.error('[API] Error fetching course details:', error);
 
-    // Determine error type and status code
+    const { sku } = await params;
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
-
-    const { sku } = await params;
 
     return NextResponse.json(
       {
@@ -53,7 +70,7 @@ export async function GET(
         message: error instanceof Error ? error.message : 'Unknown error',
         sku,
       },
-      { status: statusCode }
+      { status: statusCode },
     );
   }
 }

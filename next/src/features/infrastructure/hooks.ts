@@ -96,7 +96,9 @@ export const useInfrastructure = (preselectedUnitId?: number) => {
 
   // Final selected unit (priority: preselected > internal > auto)
   const finalSelectedUnitId =
-    preselectedUnitId?.toString() || currentSelectedUnitId || autoSelectedUnitId;
+    preselectedUnitId?.toString() ||
+    currentSelectedUnitId ||
+    autoSelectedUnitId;
 
   // Step 2: Fetch images for selected unit from Strapi
   const selectedUnitIdNum = finalSelectedUnitId

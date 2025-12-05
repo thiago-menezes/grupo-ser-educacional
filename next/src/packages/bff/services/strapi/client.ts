@@ -137,6 +137,9 @@ export class StrapiClient {
     const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
     const url = `${this.config.baseUrl}/api/${endpoint}${queryString}`;
 
+    console.log('[StrapiClient] Fetching URL:', url);
+    console.log('[StrapiClient] Query parts:', queryParts);
+
     const response = await fetch(url, {
       method: 'GET',
       headers: {

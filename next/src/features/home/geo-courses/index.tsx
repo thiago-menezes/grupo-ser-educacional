@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
+import type { CourseData } from 'types/api/courses';
 import { CourseCard, CourseCardSkeleton, Icon, Pagination } from '@/components';
 import { useCityContext } from '@/contexts/city';
 import {
@@ -58,11 +59,34 @@ export function GeoCoursesSection({ data, title }: GeoCourseSectionProps) {
   );
 
   const handleCourseClick = useCallback(
-    (slug: string) => {
+    (course: CourseData) => {
       if (!institutionId) return;
-      router.push(`/${institutionId}/cursos/${slug}`);
+
+      const queryParams = new URLSearchParams();
+
+      // Use course data for city/state, fallback to context
+      const courseCity = course.campusCity || city;
+      const courseState = course.campusState || state;
+
+      if (courseCity && courseState) {
+        queryParams.set('cidade', courseCity.toLowerCase());
+        queryParams.set('estado', courseState.toLowerCase());
+      }
+
+      if (course.sku) {
+        queryParams.set('sku', course.sku);
+      }
+
+      if (course.unitId) {
+        queryParams.set('idDaUnidade', course.unitId.toString());
+      }
+
+      const queryString = queryParams.toString();
+      router.push(
+        `/${institutionId}/cursos/detalhes${queryString ? `?${queryString}` : ''}`,
+      );
     },
-    [router, institutionId],
+    [router, institutionId, city, state],
   );
 
   return (

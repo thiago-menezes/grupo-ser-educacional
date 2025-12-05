@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { handleCourseDetails } from '@/packages/bff/handlers';
+import { handleCourseDetailsFromStrapi } from '@/packages/bff/handlers/courses';
+import { getStrapiClient } from '../../services/bff';
 
 export async function GET(
   request: NextRequest,
@@ -7,7 +8,11 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
-    const response = handleCourseDetails(slug);
+    const strapiClient = getStrapiClient();
+    const response = await handleCourseDetailsFromStrapi(strapiClient, {
+      courseSku: slug,
+      courseSlug: slug,
+    });
     return NextResponse.json(response);
   } catch (error) {
     const statusCode =
