@@ -143,10 +143,7 @@ async function enrichCoursesWithPrices(
 
       return course;
     } catch (error) {
-      console.error(
-        `Failed to fetch pricing for course ${course.sku}:`,
-        error,
-      );
+      console.error(`Failed to fetch pricing for course ${course.sku}:`, error);
       return course; // Return course without pricing on error
     }
   });
