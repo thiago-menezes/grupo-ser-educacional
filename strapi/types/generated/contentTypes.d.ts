@@ -567,6 +567,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::coordenacao.coordenacao'
     >;
+    grade_curricular: Schema.Attribute.Blocks & Schema.Attribute.Required;
     instituicao: Schema.Attribute.Relation<
       'manyToOne',
       'api::institution.institution'
@@ -583,44 +584,6 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     sku: Schema.Attribute.String & Schema.Attribute.Required;
     slug: Schema.Attribute.UID & Schema.Attribute.Required;
     sobre: Schema.Attribute.Text & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiCurriculumCurriculum extends Struct.CollectionTypeSchema {
-  collectionName: 'curricula';
-  info: {
-    displayName: 'Curso / Grade curricular';
-    pluralName: 'curricula';
-    singularName: 'curriculum';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    curso_detalhe: Schema.Attribute.Relation<'oneToOne', 'api::course.course'>;
-    disciplina: Schema.Attribute.String & Schema.Attribute.Required;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::curriculum.curriculum'
-    > &
-      Schema.Attribute.Private;
-    modalidade: Schema.Attribute.Enumeration<
-      ['Presencial', 'Semipresencial', 'Digital (EAD)', 'Ao vivo']
-    > &
-      Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    semestre: Schema.Attribute.Integer & Schema.Attribute.Required;
-    turno: Schema.Attribute.Enumeration<
-      ['Manh\u00E3', 'Tarde', 'Noite', 'Virtual']
-    > &
-      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1437,7 +1400,6 @@ declare module '@strapi/strapi' {
       'api::coordenacao.coordenacao': ApiCoordenacaoCoordenacao;
       'api::corpo-docente.corpo-docente': ApiCorpoDocenteCorpoDocente;
       'api::course.course': ApiCourseCourse;
-      'api::curriculum.curriculum': ApiCurriculumCurriculum;
       'api::e-mec.e-mec': ApiEMecEMec;
       'api::home-carousel.home-carousel': ApiHomeCarouselHomeCarousel;
       'api::home-promo-banner.home-promo-banner': ApiHomePromoBannerHomePromoBanner;

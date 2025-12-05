@@ -57,6 +57,10 @@
       "relation": "manyToOne",
       "target": "api::coordenacao.coordenacao",
       "inversedBy": "curso_detalhes"
+    },
+    "grade_curricular": {
+      "type": "blocks",
+      "required": true
     }
   }
 }
