@@ -11,6 +11,7 @@ import {
   useState,
   startTransition,
 } from 'react';
+import { useCityContext } from '@/contexts/city';
 import { DEFAULT_FILTERS } from './filters-content/constants';
 import type {
   ActiveFilter,
@@ -18,6 +19,15 @@ import type {
   CourseFiltersFormValues,
   CourseLevel,
 } from './types';
+
+/**
+ * Format city and state into URL format: city:name-state:code
+ */
+function formatCityForUrl(city: string, state: string): string {
+  const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+  const stateCode = state.toLowerCase();
+  return `city:${citySlug}-state:${stateCode}`;
+}
 
 const CourseFiltersContext = createContext<CourseFiltersContextValues>(
   {} as CourseFiltersContextValues,
@@ -177,11 +187,18 @@ function parseFiltersFromSearchParams(
 
 export function CourseFiltersProvider({ children }: PropsWithChildren) {
   const searchParams = useSearchParams();
+  const { city: contextCity, state: contextState } = useCityContext();
 
-  // Initialize filters from URL params on mount
+  // Initialize filters from URL params on mount, fallback to context/localStorage
   const [appliedFilters, setAppliedFilters] = useState<CourseFiltersFormValues>(
     () => {
       const urlFilters = parseFiltersFromSearchParams(searchParams);
+
+      // If no city in URL but have context city, use context
+      if (!urlFilters.city && contextCity && contextState) {
+        urlFilters.city = formatCityForUrl(contextCity, contextState);
+      }
+
       return {
         ...DEFAULT_FILTERS,
         ...urlFilters,
@@ -216,6 +233,24 @@ export function CourseFiltersProvider({ children }: PropsWithChildren) {
       });
     });
   }, [searchParams]);
+
+  // Sync CityContext changes to URL (only on course search page)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!contextCity || !contextState) return;
+
+    const formattedCity = formatCityForUrl(contextCity, contextState);
+    const currentCityInUrl = searchParams.get('city');
+
+    // Only update if different to avoid unnecessary history entries
+    if (currentCityInUrl !== formattedCity) {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.set('city', formattedCity);
+
+      const newUrl = `${window.location.pathname}?${newParams.toString()}`;
+      window.history.replaceState(null, '', newUrl);
+    }
+  }, [contextCity, contextState, searchParams]);
 
   const activeFilters = useMemo(
     () => buildActiveFilters(appliedFilters),

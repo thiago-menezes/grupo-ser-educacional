@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
@@ -87,24 +88,35 @@ export function GeoCoursesSection({ data, title }: GeoCourseSectionProps) {
                   <Icon name="current-location" size={16} />
                   Permitir localização
                 </Button>
-              ) : hasCity ? (
-                <button
-                  type="button"
-                  onClick={focusCityField}
-                  className={styles.locationButton}
-                  disabled={isLoading}
-                >
-                  <Text as="span" variant="body-2" weight="medium">
-                    {city} - {state}
-                  </Text>
-                  <Icon name="current-location" size={16} aria-hidden="true" />
-                </button>
-              ) : null}
+              ) : (
+                hasCity && (
+                  <button
+                    type="button"
+                    onClick={focusCityField}
+                    className={styles.locationButton}
+                    disabled={isLoading}
+                  >
+                    <Text as="span" variant="body-2" weight="medium">
+                      {city} - {state}
+                    </Text>
+                    <Icon
+                      name="current-location"
+                      size={16}
+                      aria-hidden="true"
+                    />
+                  </button>
+                )
+              )}
             </div>
           </div>
-          <Button variant="ghost" aria-label="Ver todos os cursos disponíveis">
-            Ver todos os cursos
-          </Button>
+          <Link href={`/${institutionId}/cursos`}>
+            <Button
+              variant="ghost"
+              aria-label="Ver todos os cursos disponíveis"
+            >
+              Ver todos os cursos
+            </Button>
+          </Link>
         </div>
 
         <div className={styles.coursesContainer}>

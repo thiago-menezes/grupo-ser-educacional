@@ -18,6 +18,7 @@ type UseGeolocationOptions = {
   manualState?: string | null;
   institutionDefaultCity?: string | null;
   institutionDefaultState?: string | null;
+  skip?: boolean; // Skip geolocation request if true
 };
 
 export function useGeolocation(
@@ -28,6 +29,7 @@ export function useGeolocation(
     manualState,
     institutionDefaultCity,
     institutionDefaultState,
+    skip = false,
   } = options || {};
   const [city, setCity] = useState<string | null>(null);
   const [state, setState] = useState<string | null>(null);
@@ -146,6 +148,11 @@ export function useGeolocation(
   };
 
   useEffect(() => {
+    // Skip geolocation if skip option is true (user has saved preference)
+    if (skip) {
+      return;
+    }
+
     // Try to get location on mount - browser will show permission popup
     if (navigator.geolocation) {
       getLocation();
@@ -153,7 +160,7 @@ export function useGeolocation(
       setPermissionDenied(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [skip]);
 
   // Use manual override if provided, otherwise use geolocation result
   // Only use default if permission was explicitly denied
@@ -172,11 +179,11 @@ export function useGeolocation(
   };
 
   const finalCity =
-    manualCity !== undefined && manualCity !== null
+    manualCity !== undefined && manualCity !== null && manualCity !== ''
       ? manualCity
       : city || getDefaultCity();
   const finalState =
-    manualState !== undefined && manualState !== null
+    manualState !== undefined && manualState !== null && manualState !== ''
       ? manualState
       : state || getDefaultState();
 

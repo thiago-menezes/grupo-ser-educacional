@@ -1,6 +1,6 @@
 import type { ClientApiClient } from '../../services/client-api';
-import type { ClientUnitsQueryParams, ClientUnitsResponse } from './types';
 import { transformClientUnits } from '../../transformers/client-api';
+import type { ClientUnitsQueryParams, ClientUnitsResponse } from './types';
 
 /**
  * Handle units request from client API
@@ -56,7 +56,9 @@ export async function handleClientUnits(
     };
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(`Failed to fetch units from client API: ${error.message}`);
+      throw new Error(
+        `Failed to fetch units from client API: ${error.message}`,
+      );
     }
     throw new Error('Failed to fetch units from client API: Unknown error');
   }

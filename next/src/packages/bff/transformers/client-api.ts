@@ -25,8 +25,6 @@ export function transformClientUnit(apiUnit: ClientApiUnit): ClientUnit {
 /**
  * Transform array of units
  */
-export function transformClientUnits(
-  apiUnits: ClientApiUnit[],
-): ClientUnit[] {
+export function transformClientUnits(apiUnits: ClientApiUnit[]): ClientUnit[] {
   return apiUnits.map(transformClientUnit);
 }

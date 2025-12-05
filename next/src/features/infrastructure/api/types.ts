@@ -72,3 +72,23 @@ export type StrapiUnitsResponse = {
     };
   };
 };
+
+/**
+ * Client Units Response (from BFF)
+ */
+export interface ClientUnit {
+  id: number;
+  name: string;
+  state: string;
+  city: string;
+}
+
+export interface ClientUnitsResponse {
+  data: ClientUnit[];
+  meta: {
+    total: number;
+    institution: string;
+    state: string;
+    city: string;
+  };
+}

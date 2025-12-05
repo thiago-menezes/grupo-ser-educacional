@@ -24,19 +24,19 @@ A API retorna dados em formato CSV com ponto-e-vírgula (`;`) como separador. Ca
 
 #### Estrutura das Colunas
 
-| Coluna | Nome             | Tipo   | Descrição                                    | Exemplo                           |
-|--------|------------------|--------|----------------------------------------------|-----------------------------------|
-| 1      | institutionId    | string | ID da instituição                            | `1`                               |
-| 2      | institutionName  | string | Nome da instituição                          | `FACULDADE MAURICIO DE NASSAU`    |
-| 3      | courseId         | string | ID do curso                                  | `1002`                            |
-| 4      | courseName       | string | Nome do curso                                | `ADMINISTRAÇÃO`                   |
-| 5      | unknown1         | string | Valor desconhecido (sempre `1`)              | `1`                               |
-| 6      | unknown2         | string | Versão da matriz? (sempre `1`)               | `1`                               |
-| 7      | matrixName       | string | Nome da matriz curricular                    | `MATRIZ 1 ADMINISTRAÇÃO - EAD`    |
-| 8      | semester         | number | Número do semestre (0 = optativa)            | `1`, `2`, ..., `8`, `0`           |
-| 9      | subjectCode      | string | Código da disciplina                         | `AD0001`                          |
-| 10     | subjectName      | string | Nome da disciplina                           | `INTRODUÇÃO A EAD`                |
-| 11     | subjectType      | string | Tipo: `B` (Básica/Obrigatória) ou `O` (Optativa) | `B` ou `O`                    |
+| Coluna | Nome            | Tipo   | Descrição                                        | Exemplo                        |
+| ------ | --------------- | ------ | ------------------------------------------------ | ------------------------------ |
+| 1      | institutionId   | string | ID da instituição                                | `1`                            |
+| 2      | institutionName | string | Nome da instituição                              | `FACULDADE MAURICIO DE NASSAU` |
+| 3      | courseId        | string | ID do curso                                      | `1002`                         |
+| 4      | courseName      | string | Nome do curso                                    | `ADMINISTRAÇÃO`                |
+| 5      | unknown1        | string | Valor desconhecido (sempre `1`)                  | `1`                            |
+| 6      | unknown2        | string | Versão da matriz? (sempre `1`)                   | `1`                            |
+| 7      | matrixName      | string | Nome da matriz curricular                        | `MATRIZ 1 ADMINISTRAÇÃO - EAD` |
+| 8      | semester        | number | Número do semestre (0 = optativa)                | `1`, `2`, ..., `8`, `0`        |
+| 9      | subjectCode     | string | Código da disciplina                             | `AD0001`                       |
+| 10     | subjectName     | string | Nome da disciplina                               | `INTRODUÇÃO A EAD`             |
+| 11     | subjectType     | string | Tipo: `B` (Básica/Obrigatória) ou `O` (Optativa) | `B` ou `O`                     |
 
 #### Exemplo de Linha CSV
 
@@ -59,10 +59,10 @@ A API retorna dados em formato CSV com ponto-e-vírgula (`;`) como separador. Ca
 
 ```typescript
 type CurriculumSubject = {
-  code: string;        // Código da disciplina (ex: AD0001)
-  name: string;        // Nome da disciplina
-  type: 'B' | 'O';    // B = obrigatória, O = optativa
-  workload?: number;   // Carga horária (opcional, não vem do CSV)
+  code: string; // Código da disciplina (ex: AD0001)
+  name: string; // Nome da disciplina
+  type: 'B' | 'O'; // B = obrigatória, O = optativa
+  workload?: number; // Carga horária (opcional, não vem do CSV)
 };
 ```
 
@@ -70,9 +70,9 @@ type CurriculumSubject = {
 
 ```typescript
 type CurriculumSemester = {
-  semester: number;              // 0 = optativas, 1-8 = semestres regulares
+  semester: number; // 0 = optativas, 1-8 = semestres regulares
   subjects: CurriculumSubject[];
-  totalWorkload?: number;        // Opcional, calculado se houver workload
+  totalWorkload?: number; // Opcional, calculado se houver workload
 };
 ```
 
@@ -84,11 +84,11 @@ type CurriculumResponse = {
   institutionName: string;
   courseId: string;
   courseName: string;
-  matrixName: string;            // Nome da matriz curricular
-  modality: CurriculumModality;  // ead | presencial | semipresencial | aovivo
+  matrixName: string; // Nome da matriz curricular
+  modality: CurriculumModality; // ead | presencial | semipresencial | aovivo
   period: CurriculumPeriod | null;
   totalSemesters: number;
-  totalWorkload?: number;        // Opcional
+  totalWorkload?: number; // Opcional
   semesters: CurriculumSemester[];
   electiveSubjects: CurriculumSubject[]; // Disciplinas optativas (semestre 0)
 };
@@ -104,11 +104,11 @@ GET /api/curriculum?courseId={id}&modality={modality}&period={period}
 
 #### Query Parameters
 
-| Parâmetro | Tipo                                          | Obrigatório | Descrição                  |
-|-----------|-----------------------------------------------|-------------|----------------------------|
-| courseId  | string                                        | Sim         | ID do curso                |
-| modality  | `ead` \| `presencial` \| `semipresencial` \| `aovivo` | Sim | Modalidade do curso        |
-| period    | `morning` \| `afternoon` \| `evening` \| `integral`   | Não | Período/turno (opcional)   |
+| Parâmetro | Tipo                                                  | Obrigatório | Descrição                |
+| --------- | ----------------------------------------------------- | ----------- | ------------------------ |
+| courseId  | string                                                | Sim         | ID do curso              |
+| modality  | `ead` \| `presencial` \| `semipresencial` \| `aovivo` | Sim         | Modalidade do curso      |
+| period    | `morning` \| `afternoon` \| `evening` \| `integral`   | Não         | Período/turno (opcional) |
 
 #### Exemplo
 
@@ -157,10 +157,7 @@ GET /api/curriculum?courseId=1002&modality=ead
 ```tsx
 import { CurriculumGrid } from '@/features/course-details/curriculum-grid';
 
-<CurriculumGrid
-  courseId="1002"
-  defaultModality="ead"
-/>
+<CurriculumGrid courseId="1002" defaultModality="ead" />;
 ```
 
 ### Com período padrão
@@ -175,11 +172,11 @@ import { CurriculumGrid } from '@/features/course-details/curriculum-grid';
 
 ### Props
 
-| Prop             | Tipo                | Obrigatório | Padrão        | Descrição                      |
-|------------------|---------------------|-------------|---------------|--------------------------------|
-| courseId         | string              | Sim         | -             | ID do curso                    |
-| defaultModality  | CurriculumModality  | Não         | 'presencial'  | Modalidade inicial             |
-| defaultPeriod    | CurriculumPeriod    | Não         | undefined     | Período inicial (opcional)     |
+| Prop            | Tipo               | Obrigatório | Padrão       | Descrição                  |
+| --------------- | ------------------ | ----------- | ------------ | -------------------------- |
+| courseId        | string             | Sim         | -            | ID do curso                |
+| defaultModality | CurriculumModality | Não         | 'presencial' | Modalidade inicial         |
+| defaultPeriod   | CurriculumPeriod   | Não         | undefined    | Período inicial (opcional) |
 
 ## 🔄 Hook useQueryCurriculum
 
@@ -203,7 +200,7 @@ const { data, isLoading, isError, error } = useQueryCurriculum({
 
 Para integrar com a API real que retorna CSV:
 
-1. **Atualizar o endpoint** em [app/(backend)/api/curriculum/route.ts](../../../../../../../app/(backend)/api/curriculum/route.ts)
+1. **Atualizar o endpoint** em [app/(backend)/api/curriculum/route.ts](<../../../../../../../app/(backend)/api/curriculum/route.ts>)
 2. **Implementar parser CSV**: Converter o CSV em `CurriculumResponse`
 3. **Mapear modalidade**: Extrair a modalidade do `matrixName`
 4. **Separar optativas**: Filtrar disciplinas com `semester = 0`
@@ -212,9 +209,9 @@ Para integrar com a API real que retorna CSV:
 
 ```typescript
 function parseCSVToCurriculum(csv: string): CurriculumResponse {
-  const lines = csv.split('\n').filter(line => line.trim());
+  const lines = csv.split('\n').filter((line) => line.trim());
 
-  const subjects = lines.map(line => {
+  const subjects = lines.map((line) => {
     const [
       institutionId,
       institutionName,
@@ -226,7 +223,7 @@ function parseCSVToCurriculum(csv: string): CurriculumResponse {
       semester,
       subjectCode,
       subjectName,
-      subjectType
+      subjectType,
     ] = line.split(';');
 
     return {
@@ -239,8 +236,8 @@ function parseCSVToCurriculum(csv: string): CurriculumResponse {
       subject: {
         code: subjectCode,
         name: subjectName,
-        type: subjectType as 'B' | 'O'
-      }
+        type: subjectType as 'B' | 'O',
+      },
     };
   });
 
@@ -271,9 +268,9 @@ function parseCSVToCurriculum(csv: string): CurriculumResponse {
     totalSemesters: Math.max(...Object.keys(semesters).map(Number)),
     semesters: Object.entries(semesters).map(([sem, subjs]) => ({
       semester: parseInt(sem),
-      subjects: subjs
+      subjects: subjs,
     })),
-    electiveSubjects: electives
+    electiveSubjects: electives,
   };
 }
 ```

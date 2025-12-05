@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components';
 import { useCityContext } from '@/contexts/city';
-import { useInfrastructureCombined } from './hooks-combined';
+import { useInfrastructure } from './hooks';
 import { ImageModal } from './image-modal';
 import styles from './styles.module.scss';
 
@@ -30,7 +30,7 @@ export const InfrastructureSection = ({
     selectedImageId,
     selectedUnitId,
     selectedImage,
-  } = useInfrastructureCombined(preselectedUnitId);
+  } = useInfrastructure(preselectedUnitId);
 
   const hasCity = Boolean(city && state);
 
@@ -100,13 +100,6 @@ export const InfrastructureSection = ({
               </div>
             </div>
           </div>
-          <Button
-            variant="ghost"
-            color="primary"
-            aria-label="Ver todas as unidades"
-          >
-            Ver todas as unidades
-          </Button>
         </div>
 
         <div className={styles.tags}>
@@ -167,7 +160,8 @@ export const InfrastructureSection = ({
         {!showGallery && !isLoading && sortedUnits.length > 0 && (
           <div className={styles.emptyState}>
             <Text variant="body-2" color="neutral-faded">
-              Selecione uma unidade acima para visualizar as fotos da infraestrutura
+              Selecione uma unidade acima para visualizar as fotos da
+              infraestrutura
             </Text>
           </div>
         )}

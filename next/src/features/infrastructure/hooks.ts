@@ -1,102 +1,42 @@
 import { useParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useCityContext } from '@/contexts/city';
 import { useGeolocation } from '@/hooks';
 import { getMediaUrl } from '@/packages/utils';
-import { useQueryInfrastructure } from './api/query';
-import type { StrapiUnitsResponse } from './api/types';
+import { useQueryClientUnits, useQueryUnitById } from './api/query';
 import type { InfrastructureImage, InfrastructureUnit } from './types';
 import { markClosestUnit } from './utils';
-import { createFallbackInfrastructure } from './utils/fallback';
 
-function transformStrapiResponse(response?: StrapiUnitsResponse) {
-  if (!response) {
-    throw new Error('No response from API');
-  }
-
-  const { data = [] } = response;
-
-  if (data.length === 0) {
-    throw new Error(
-      'No units found - check if units are associated with institutions in Strapi admin',
-    );
-  }
-
-  const units: InfrastructureUnit[] = data.map((unit) => ({
+/**
+ * Transform client API units to InfrastructureUnit format
+ */
+function transformClientUnits(
+  units: Array<{ id: number; name: string; state: string; city: string }>,
+): InfrastructureUnit[] {
+  // Note: Client API doesn't provide coordinates
+  // Units will appear without coordinates until user selects one
+  return units.map((unit) => ({
     id: unit.id.toString(),
     name: unit.name,
     coordinates: {
-      lat: unit.latitude,
-      lng: unit.longitude,
+      lat: 0, // Placeholder - could be enhanced with geocoding service
+      lng: 0,
     },
-    imageIds: unit.photos?.map((photo) => photo.id.toString()) || [],
+    imageIds: [], // Images loaded separately from Strapi
   }));
-
-  const images: InfrastructureImage[] = data.flatMap((unit) =>
-    (unit.photos || []).map((photo) => ({
-      id: photo.id.toString(),
-      src: getMediaUrl(photo.url),
-      alt: photo.alternativeText || photo.caption || `${unit.name} - Foto`,
-    })),
-  );
-
-  const location = data[0]?.institution?.name || '';
-
-  return { units, images, location };
 }
 
-function transformStrapiResponseWithFallback(
-  response: StrapiUnitsResponse | undefined,
-  institutionSlug: string | undefined,
-) {
-  try {
-    const transformed = transformStrapiResponse(response);
-
-    // If units exist but have no images, use fallback
-    if (transformed.units.length > 0 && transformed.images.length === 0) {
-      if (institutionSlug) {
-        const fallback = createFallbackInfrastructure(institutionSlug);
-        // Merge: use Strapi units but fallback images
-        return {
-          units: transformed.units,
-          images: fallback.images,
-          location: transformed.location || fallback.location,
-        };
-      }
-    }
-
-    return transformed;
-  } catch {
-    // If transformation fails, use fallback if we have institution slug
-    if (institutionSlug) {
-      return createFallbackInfrastructure(institutionSlug);
-    }
-    throw new Error('No data available and no fallback possible');
-  }
-}
-
+/**
+ * Hook for infrastructure with client API integration
+ * Flow:
+ * 1. Fetch units list from client API (by city/state)
+ * 2. User selects a unit
+ * 3. Fetch images for selected unit from Strapi (by unit ID)
+ */
 export const useInfrastructure = (preselectedUnitId?: number) => {
   const params = useParams<{ institution?: string }>();
   const institutionSlug = params.institution;
 
-  const {
-    data: response,
-    error,
-    isError,
-    isLoading: isQueryLoading,
-  } = useQueryInfrastructure();
-
-  const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
-  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(
-    preselectedUnitId?.toString() || null,
-  );
-
-  // Sync with preselected unit from parent
-  useEffect(() => {
-    if (preselectedUnitId !== undefined) {
-      setSelectedUnitId(preselectedUnitId.toString());
-    }
-  }, [preselectedUnitId]);
   const { city: contextCity, state: contextState } = useCityContext();
   const {
     coordinates,
@@ -108,51 +48,85 @@ export const useInfrastructure = (preselectedUnitId?: number) => {
     manualState: contextState || null,
   });
 
-  // Use context city/state if available
   const city = contextCity || '';
   const state = contextState || '';
 
-  // Transform with fallback support
-  const { units, images, location } = useMemo(() => {
-    // If there's an error or no response, try fallback
-    if (isError || !response) {
-      if (institutionSlug) {
-        return createFallbackInfrastructure(institutionSlug);
-      }
-      return { units: [], images: [], location: '' };
-    }
+  // Step 1: Fetch units from client API
+  const {
+    data: clientUnitsResponse,
+    error: clientError,
+    isError: isClientError,
+    isLoading: isClientLoading,
+  } = useQueryClientUnits(institutionSlug, state, city, !!city && !!state);
 
-    try {
-      return transformStrapiResponseWithFallback(response, institutionSlug);
-    } catch {
-      // If transformation fails, try fallback
-      if (institutionSlug) {
-        return createFallbackInfrastructure(institutionSlug);
-      }
-      return { units: [], images: [], location: '' };
-    }
-  }, [isError, response, institutionSlug]);
+  // Create a location-based key to reset state when location changes
+  const locationKey = `${city}-${state}`;
 
-  const hasData = units.length > 0 && images.length > 0;
+  // State for selected unit - includes location key for automatic reset
+  const [selectedState, setSelectedState] = useState<{
+    locationKey: string;
+    unitId: string | null;
+  }>({ locationKey, unitId: null });
 
+  const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+
+  // Get current selected unit (auto-reset if location changed)
+  const currentSelectedUnitId =
+    selectedState.locationKey === locationKey ? selectedState.unitId : null;
+
+  // Transform client units
+  const units = useMemo(() => {
+    if (!clientUnitsResponse?.data) return [];
+    return transformClientUnits(clientUnitsResponse.data);
+  }, [clientUnitsResponse]);
+
+  // Sort units by proximity
   const sortedUnits = useMemo(
     () => markClosestUnit(units, coordinates),
     [units, coordinates],
   );
 
+  // Auto-select first unit if no selection and no preselection
+  const autoSelectedUnitId = useMemo(() => {
+    if (preselectedUnitId || currentSelectedUnitId) return null;
+    if (sortedUnits.length === 0) return null;
+    const firstActiveUnit = sortedUnits.find((unit) => unit.isActive);
+    return firstActiveUnit?.id || null;
+  }, [sortedUnits, preselectedUnitId, currentSelectedUnitId]);
+
+  // Final selected unit (priority: preselected > internal > auto)
+  const finalSelectedUnitId =
+    preselectedUnitId?.toString() || currentSelectedUnitId || autoSelectedUnitId;
+
+  // Step 2: Fetch images for selected unit from Strapi
+  const selectedUnitIdNum = finalSelectedUnitId
+    ? parseInt(finalSelectedUnitId, 10)
+    : undefined;
+  const { data: strapiUnitResponse, isLoading: isStrapiLoading } =
+    useQueryUnitById(selectedUnitIdNum, !!selectedUnitIdNum);
+
+  // Extract images from Strapi unit
+  const images: InfrastructureImage[] = useMemo(() => {
+    if (!strapiUnitResponse?.data?.[0]?.photos) return [];
+
+    const unit = strapiUnitResponse.data[0];
+    return unit.photos.map((photo) => ({
+      id: photo.id.toString(),
+      src: getMediaUrl(photo.url),
+      alt: photo.alternativeText || photo.caption || `${unit.name} - Foto`,
+    }));
+  }, [strapiUnitResponse]);
+
+  const hasData = units.length > 0;
+
   const activeUnit = useMemo(() => {
-    if (selectedUnitId) {
-      return sortedUnits.find((unit) => unit.id === selectedUnitId);
+    if (finalSelectedUnitId) {
+      return sortedUnits.find((unit) => unit.id === finalSelectedUnitId);
     }
     return sortedUnits.find((unit) => unit.isActive);
-  }, [sortedUnits, selectedUnitId]);
+  }, [sortedUnits, finalSelectedUnitId]);
 
-  const unitImages = useMemo(() => {
-    if (!activeUnit?.imageIds || activeUnit.imageIds.length === 0) {
-      return images;
-    }
-    return images.filter((img) => activeUnit.imageIds?.includes(img.id));
-  }, [activeUnit, images]);
+  const unitImages = images; // All images belong to selected unit
 
   const selectedImage = images.find((img) => img.id === selectedImageId);
 
@@ -165,22 +139,25 @@ export const useInfrastructure = (preselectedUnitId?: number) => {
   };
 
   const handleUnitClick = (unitId: string) => {
-    setSelectedUnitId(unitId);
+    setSelectedState({ locationKey, unitId });
   };
 
-  const mainImage = unitImages[0] || images[0];
+  const mainImage = unitImages[0];
   const sideImages = unitImages.slice(1, 5);
 
   return {
     city,
     state,
-    location,
+    location: clientUnitsResponse?.meta?.institution || '',
     permissionDenied,
     requestPermission,
-    isLoading: isQueryLoading || isGeoLoading,
+    isLoading:
+      isClientLoading ||
+      isGeoLoading ||
+      (!!finalSelectedUnitId && isStrapiLoading),
     hasData,
     selectedImage,
-    selectedUnitId,
+    selectedUnitId: finalSelectedUnitId,
     handleImageClick,
     handleCloseModal,
     handleUnitClick,
@@ -190,7 +167,7 @@ export const useInfrastructure = (preselectedUnitId?: number) => {
     activeUnit,
     unitImages,
     selectedImageId,
-    error,
-    isError,
+    error: clientError,
+    isError: isClientError,
   };
 };

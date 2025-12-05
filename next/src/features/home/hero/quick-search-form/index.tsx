@@ -38,6 +38,7 @@ export function QuickSearchForm({
   const {
     city: contextCity,
     state: contextState,
+    source: citySource,
     setCityState,
     setFocusCityFieldCallback,
   } = useCityContext();
@@ -48,16 +49,22 @@ export function QuickSearchForm({
     isLoading: isInstitutionLoading,
   } = useInstitutionData();
 
+  // Skip geolocation for returning users with saved preferences
+  // Only request geolocation if no city exists in context (localStorage)
+  const skipGeolocation = contextCity !== '' && contextState !== '';
+
   // Don't pass manualCity/manualState to geolocation hook
   // This allows geolocation to work independently and update the city
   const {
     city: geolocationCity,
+    state: geolocationState,
     permissionDenied,
     requestPermission,
     isLoading: isGeoLoading,
   } = useGeolocation({
     institutionDefaultCity: defaultCity,
     institutionDefaultState: defaultState,
+    skip: skipGeolocation, // Skip if user has saved preference
   });
 
   // Initialize with institution default or Recife if no city is set on mount
@@ -72,7 +79,7 @@ export function QuickSearchForm({
     ) {
       const defaultCityToUse = defaultCity || 'Recife';
       const defaultStateToUse = defaultState || 'PE';
-      setCityState(defaultCityToUse, defaultStateToUse);
+      setCityState(defaultCityToUse, defaultStateToUse, 'default');
       setInputValue(`${defaultCityToUse} - ${defaultStateToUse}`);
       setFormattedCityValue(
         formatCityValue(defaultCityToUse, defaultStateToUse),
@@ -91,24 +98,28 @@ export function QuickSearchForm({
     });
   }, [setFocusCityFieldCallback]);
 
-  // Set default to institution default or Recife when no city is selected
-  // This ensures the field is never empty
+  // Set city based on priority: default → geolocation → manual
   useEffect(() => {
-    // Only set default if:
-    // 1. No city is currently selected in context
-    // 2. Geolocation is not loading (wait for it to finish)
-    // 3. Geolocation didn't return a city (either denied, failed, or not available)
-    // 4. Institution data is loaded
-    if (
-      !contextCity &&
-      !isGeoLoading &&
-      !geolocationCity &&
-      !isInstitutionLoading
-    ) {
+    // Priority 1: Manual selection - never override manual selection
+    if (citySource === 'manual') {
+      return;
+    }
+
+    // Priority 2: Geolocation (if authorized and available)
+    if (geolocationCity && geolocationState && !isGeoLoading && !permissionDenied) {
+      setCityState(geolocationCity, geolocationState, 'geolocation');
+      setInputValue(`${geolocationCity} - ${geolocationState}`);
+      setFormattedCityValue(
+        formatCityValue(geolocationCity, geolocationState),
+      );
+      return;
+    }
+
+    // Priority 3: Institution default (if no city and geolocation not available)
+    if (!contextCity && !isGeoLoading && !isInstitutionLoading) {
       const defaultCityToUse = defaultCity || 'Recife';
       const defaultStateToUse = defaultState || 'PE';
-      setCityState(defaultCityToUse, defaultStateToUse);
-      // Also set the input value and formatted value
+      setCityState(defaultCityToUse, defaultStateToUse, 'default');
       setInputValue(`${defaultCityToUse} - ${defaultStateToUse}`);
       setFormattedCityValue(
         formatCityValue(defaultCityToUse, defaultStateToUse),
@@ -116,19 +127,23 @@ export function QuickSearchForm({
     }
   }, [
     contextCity,
+    contextState,
+    citySource,
     isGeoLoading,
-    setCityState,
     geolocationCity,
+    geolocationState,
+    permissionDenied,
     defaultCity,
     defaultState,
     isInstitutionLoading,
+    setCityState,
   ]);
 
   // Use dynamic city search
   const { cities: searchResults, isLoading: isSearching } =
     useCitiesAutocomplete(inputValue);
 
-  // Build all available options including geolocation-detected city
+  // Build all available options - only show geolocation button if permission denied
   const allOptions = useMemo(() => {
     const options: CityOption[] = [];
 
@@ -142,36 +157,11 @@ export function QuickSearchForm({
       });
     }
 
-    // Add geolocation-detected city if available and not already in search results
-    if (contextCity && contextState && !permissionDenied) {
-      // Format city name properly: capitalize each word
-      const formattedCity = contextCity
-        .split(' ')
-        .map(
-          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
-        )
-        .join(' ');
-      const geoLabel = `${formattedCity} - ${contextState.toUpperCase()}`;
-      const geoValue = formatCityValue(contextCity, contextState);
-      const existsInResults = searchResults.some(
-        (city) => city.city === contextCity && city.state === contextState,
-      );
-
-      if (!existsInResults) {
-        options.push({
-          label: geoLabel,
-          value: geoValue,
-          city: contextCity,
-          state: contextState,
-        });
-      }
-    }
-
-    // Add search results from API
+    // Add search results from API (don't add geolocation city to options)
     options.push(...searchResults);
 
     return options;
-  }, [permissionDenied, contextCity, contextState, searchResults]);
+  }, [permissionDenied, searchResults]);
 
   // Get current city display label (e.g., "Recife - PE")
   const currentCityLabel = useMemo(() => {
@@ -275,15 +265,12 @@ export function QuickSearchForm({
 
       // Set city and state from selected option (manual selection)
       isUserTypingRef.current = false;
-      setCityState(option.city, option.state);
+      setCityState(option.city, option.state, 'manual');
       // Store formatted value for form submission (don't overwrite contextCity)
       setFormattedCityValue(option.value);
       // Use the label (value from Autocomplete.Item) for display
       setInputValue(value || option.label);
       previousCityRef.current = `${option.city}-${option.state}`;
-      // Mark that user manually selected a city - this will prevent geolocation from overriding
-      // The geolocation hook will check if current city matches geolocation city
-      // If it doesn't match, it means it was manually selected and won't override
     }
   };
 
