@@ -22,6 +22,17 @@ export interface ClientApiUnitsResponse {
   Unidades: ClientApiUnit[];
 }
 
+export interface ClientApiCourse {
+  ID: string;
+  Nome_Curso: string;
+  Modalidade: string;
+  Periodo: number;
+}
+
+export interface ClientApiCoursesResponse {
+  Cursos: ClientApiCourse[];
+}
+
 /**
  * Client API Service Client
  * Framework-agnostic service for fetching data from client's legacy API
@@ -51,6 +62,26 @@ export class ClientApiClient {
     const encodedCity = encodeURIComponent(city.toLowerCase());
 
     return `${this.config.baseUrl}/p/${normalizedInstitution}/${normalizedState}/${encodedCity}/unidades`;
+  }
+
+  /**
+   * Build URL for courses by unit
+   * Handles spaces and special characters in city names
+   */
+  private buildCoursesUrl(
+    institution: string,
+    state: string,
+    city: string,
+    unitId: number,
+  ): string {
+    // Normalize to lowercase as per API requirements
+    const normalizedInstitution = institution.toLowerCase();
+    const normalizedState = state.toLowerCase();
+
+    // URL encode city name to handle spaces and special characters
+    const encodedCity = encodeURIComponent(city.toLowerCase());
+
+    return `${this.config.baseUrl}/p/${normalizedInstitution}/${normalizedState}/${encodedCity}/unidades/${unitId}/cursos`;
   }
 
   /**
@@ -98,6 +129,55 @@ export class ClientApiClient {
       }
 
       throw new Error('Unknown error occurred while fetching units');
+    }
+  }
+
+  /**
+   * Fetch courses for a specific unit from client API
+   */
+  async fetchCoursesByUnit(
+    institution: string,
+    state: string,
+    city: string,
+    unitId: number,
+  ): Promise<ClientApiCoursesResponse> {
+    const url = this.buildCoursesUrl(institution, state, city, unitId);
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(
+      () => controller.abort(),
+      this.config.timeout || 10000,
+    );
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(
+          `Client API request failed: ${response.status} ${response.statusText}`,
+        );
+      }
+
+      return await response.json();
+    } catch (error) {
+      clearTimeout(timeoutId);
+
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Error('Client API request timed out');
+        }
+        throw error;
+      }
+
+      throw new Error('Unknown error occurred while fetching courses');
     }
   }
 }

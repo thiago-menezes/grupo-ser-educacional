@@ -1,6 +1,6 @@
 export type CourseModality = 'presencial' | 'semipresencial' | 'ead';
 
-export interface CoursesQueryParams {
+export type CoursesQueryParams = {
   institution?: string; // slug or id
   location?: string; // city as free text
   page?: number;
@@ -14,7 +14,19 @@ export interface CoursesQueryParams {
   durationRange?: '1-2' | '2-3' | '3-4' | '4+';
   level?: 'graduacao' | 'pos-graduacao';
   course?: string; // course slug or id
-}
+};
+
+export type CityCoursesParams = {
+  institution: string;
+  estado: string;
+  cidade: string;
+  modalities?: string[];
+  shifts?: string[];
+  durations?: string[];
+  courseName?: string;
+  page?: number;
+  perPage?: number;
+};
 
 export type CourseData = {
   id: string;

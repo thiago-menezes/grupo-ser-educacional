@@ -1,4 +1,4 @@
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { Container, View } from 'reshaped';
 import { useQueryCourseDetails } from './api/query';
 import { CourseDetailsContent } from './course-details-content';
@@ -6,14 +6,20 @@ import { CourseDetailsSkeleton } from './course-details-skeleton';
 import styles from './styles.module.scss';
 
 export type CourseDetailsPageParams = {
-  institution: string;
-  slug: string;
+  sku: string;
 };
 
 export function CourseDetailsPage() {
-  const { slug } = useParams<CourseDetailsPageParams>();
+  const params = useParams<CourseDetailsPageParams>();
+  const searchParams = useSearchParams();
 
-  const { data: course, isLoading, error } = useQueryCourseDetails(slug);
+  const { data: course, isLoading, error } = useQueryCourseDetails({
+    sku: params.sku,
+    instituicao: searchParams.get('instituicao') || undefined,
+    estado: searchParams.get('estado') || undefined,
+    cidade: searchParams.get('cidade') || undefined,
+    idDaUnidade: searchParams.get('idDaUnidade') || undefined,
+  });
 
   if (isLoading) {
     return (
