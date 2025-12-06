@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Button } from 'reshaped';
 import { Icon } from '../icon';
 import { MODALITY_LABELS } from './constants';
@@ -9,8 +10,13 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
     onClick?.(course);
   };
 
+  console.log(handleClick);
+
+  const courseUrl =
+    '/unama/cursos/detalhes?city=ananindeua&state=pa&sku=4.EAD017.02&unit=100';
+
   return (
-    <div className={styles.card} onClick={handleClick} role="article">
+    <Link href={courseUrl} className={styles.card} role="article">
       <div className={styles.header}>
         <div className={styles.title}>{course.title}</div>
 
@@ -52,13 +58,13 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
       </div>
 
       <Button
-        onClick={handleClick}
+        // onClick={handleClick}
         color="primary"
         fullWidth
         aria-label={`Saiba mais sobre ${course.title}`}
       >
         Mais sobre o curso
       </Button>
-    </div>
+    </Link>
   );
 }
