@@ -85,7 +85,6 @@ export function useQuickSearchForm() {
   const {
     city: contextCity,
     state: contextState,
-    setCity: setContextCity,
     setCityState,
   } = useCityContext();
   const [localCity, setLocalCity] = useState('');
@@ -185,9 +184,9 @@ export function useQuickSearchForm() {
   const setCity = useCallback(
     (newCity: string) => {
       setLocalCity(newCity);
-      setContextCity(newCity);
+      setCityState(newCity, contextState);
     },
-    [setContextCity],
+    [setCityState, contextState],
   );
 
   const reset = useCallback(() => {
