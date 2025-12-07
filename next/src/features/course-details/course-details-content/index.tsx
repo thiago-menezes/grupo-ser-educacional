@@ -4,6 +4,7 @@ import { View } from 'reshaped';
 import { Breadcrumb } from '@/components';
 import { InfrastructureSection } from '@/features';
 import { GeoCoursesSection } from '@/features/home/geo-courses';
+import { MOCK_GEO_COURSES_DATA } from '@/features/home/geo-courses/api/mocks';
 import { CourseAbout } from '../course-about';
 import { CourseAdmissionForms } from '../course-admission-forms';
 import { CourseCoordination } from '../course-coordination';
@@ -104,7 +105,10 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
         </div>
 
         <InfrastructureSection preselectedUnitId={selectedUnitId} />
-        <GeoCoursesSection title="Encontre o seu curso e transforme sua carreira!" />
+        <GeoCoursesSection
+          data={MOCK_GEO_COURSES_DATA}
+          title="Encontre o seu curso e transforme sua carreira!"
+        />
 
         <CurriculumGridModal
           isOpen={isCurriculumModalOpen}
