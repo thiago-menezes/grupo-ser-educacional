@@ -6,7 +6,7 @@ export const createApiClient = () => {
   const client = axios.create({
     baseURL,
     headers: { 'Content-Type': 'application/json' },
-    timeout: 50000,
+    timeout: 5000, // Reduced to 10s for faster failure when server is down
     withCredentials: true,
   });
 
@@ -14,7 +14,7 @@ export const createApiClient = () => {
     try {
       const controller = new AbortController();
       config.signal = controller.signal;
-      const timeoutMs = config.timeout ?? 50000;
+      const timeoutMs = config.timeout ?? 5000;
       setTimeout(() => controller.abort(), timeoutMs);
 
       return config;

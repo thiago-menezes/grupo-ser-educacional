@@ -30,12 +30,13 @@ export const InfrastructureSection = ({
     selectedImageId,
     selectedUnitId,
     selectedImage,
+    isError,
   } = useInfrastructure(preselectedUnitId);
 
   const hasCity = Boolean(city && state);
 
-  // Don't render if no units are available
-  if (!isLoading && sortedUnits.length === 0) {
+  // Don't render if no units are available and no error
+  if (!isLoading && !isError && sortedUnits.length === 0) {
     return null;
   }
 
@@ -162,6 +163,15 @@ export const InfrastructureSection = ({
             <Text variant="body-2" color="neutral-faded">
               Selecione uma unidade acima para visualizar as fotos da
               infraestrutura
+            </Text>
+          </div>
+        )}
+
+        {isError && !isLoading && hasCity && (
+          <div className={styles.emptyState}>
+            <Text variant="body-2" color="neutral-faded">
+              Não foi possível carregar as informações das unidades no momento.
+              Por favor, tente novamente mais tarde.
             </Text>
           </div>
         )}

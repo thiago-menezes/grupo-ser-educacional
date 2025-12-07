@@ -17,6 +17,7 @@ export function CourseGrid() {
   const {
     totalPages,
     isLoading,
+    isError,
     cardsBeforeBanner,
     cardsAfterBanner,
     handlePageChange,
@@ -68,6 +69,13 @@ export function CourseGrid() {
           {[...Array(3)].map((_, idx) => (
             <CourseCardSkeleton key={idx} />
           ))}
+        </View>
+      ) : isError ? (
+        <View align="center" padding={8}>
+          <p style={{ color: '#666', textAlign: 'center' }}>
+            Não foi possível carregar os cursos no momento. Por favor, tente
+            novamente mais tarde.
+          </p>
         </View>
       ) : (
         <>

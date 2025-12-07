@@ -81,7 +81,7 @@ export const useCourseGrid = () => {
 
   // Use appropriate query based on search mode
   const activeQuery = isCity ? cityQuery : standardQuery;
-  const { data: coursesResponse, isLoading } = activeQuery;
+  const { data: coursesResponse, isLoading, isError, error } = activeQuery;
 
   const { courses = [], totalPages = 0 } = coursesResponse || {};
 
@@ -97,6 +97,8 @@ export const useCourseGrid = () => {
     courses,
     totalPages,
     isLoading,
+    isError,
+    error,
     cardsBeforeBanner,
     cardsAfterBanner,
     handlePageChange,

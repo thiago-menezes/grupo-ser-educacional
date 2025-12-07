@@ -19,6 +19,7 @@ export interface StrapiClientConfig {
   baseUrl: string;
   cacheRevalidate?: number;
   token?: string;
+  timeout?: number;
 }
 
 /**
@@ -140,25 +141,43 @@ export class StrapiClient {
     console.log('[StrapiClient] Fetching URL:', url);
     console.log('[StrapiClient] Query parts:', queryParts);
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(this.config.token
-          ? { Authorization: `Bearer ${this.config.token}` }
-          : {}),
-        ...(noCache ? { 'Cache-Control': 'no-cache' } : {}),
-      },
-    });
+    // Create AbortController for timeout
+    const controller = new AbortController();
+    const timeout = this.config.timeout || 10000; // Default 10 seconds
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `Strapi API request failed: ${response.status} ${response.statusText}. ${errorText}`,
-      );
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(this.config.token
+            ? { Authorization: `Bearer ${this.config.token}` }
+            : {}),
+          ...(noCache ? { 'Cache-Control': 'no-cache' } : {}),
+        },
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Strapi API request failed: ${response.status} ${response.statusText}. ${errorText}`,
+        );
+      }
+
+      return response.json() as Promise<T>;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw new Error(
+          `Strapi API request timeout after ${timeout}ms: ${url}`,
+        );
+      }
+      throw error;
     }
-
-    return response.json() as Promise<T>;
   }
 
   /**
@@ -175,10 +194,12 @@ export class StrapiClient {
 export function createStrapiClient(
   baseUrl: string,
   token?: string,
+  timeout = 10000,
 ): StrapiClient {
   return new StrapiClient({
     baseUrl,
     cacheRevalidate: 3600,
     token,
+    timeout,
   });
 }

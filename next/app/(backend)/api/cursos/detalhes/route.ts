@@ -83,9 +83,19 @@ export async function GET(request: NextRequest) {
                 },
               ];
 
+          // Always use modalities from Client API as they are always from API, not Strapi
+          const enrichedModalities = [
+            {
+              id: 1,
+              name: clientApiDetails.Modalidade,
+              slug: clientApiDetails.Modalidade.toLowerCase(),
+            },
+          ];
+
           courseDetails = {
             ...courseDetails,
             units: enrichedUnits,
+            modalities: enrichedModalities,
             clientApiDetails,
           };
           console.log('[API] Course enriched with Client API data');
