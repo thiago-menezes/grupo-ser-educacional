@@ -16,7 +16,9 @@ export type { FooterProps } from './types';
 export function Footer({ content = DEFAULT_FOOTER_CONTENT }: FooterProps) {
   const { institutionId, institutionName } = useCurrentInstitution();
   const { socialLinks, sections, badge } = content;
-  const { data: emecData } = useEMec(institutionId);
+  const { data: emecResponse } = useEMec(institutionId);
+
+  const emecData = emecResponse?.data?.[0];
 
   return (
     <footer className={styles.wrapper} role="contentinfo">
@@ -83,10 +85,10 @@ export function Footer({ content = DEFAULT_FOOTER_CONTENT }: FooterProps) {
             </Text>
 
             <EmecBadge
-              href={emecData?.link || badge.href}
+              href={emecData?.link ?? ''}
               title={badge.title}
-              qrcodeUrl={emecData?.qrcodeUrl}
-              qrcodeAlt={emecData?.qrcodeAlt ?? undefined}
+              qrcodeUrl={emecData?.qrcodeUrl ?? ''}
+              qrcodeAlt={emecData?.qrcodeAlt ?? 'QR Code e-MEC'}
             />
           </div>
         </div>

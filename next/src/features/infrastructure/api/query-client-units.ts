@@ -4,14 +4,14 @@ import { query } from '@/libs';
 /**
  * Client Units Response (from BFF)
  */
-export interface ClientUnit {
+export type ClientUnit = {
   id: number;
   name: string;
   state: string;
   city: string;
-}
+};
 
-export interface ClientUnitsResponse {
+export type ClientUnitsResponse = {
   data: ClientUnit[];
   meta: {
     total: number;
@@ -19,11 +19,8 @@ export interface ClientUnitsResponse {
     state: string;
     city: string;
   };
-}
+};
 
-/**
- * Query hook for fetching units from client API
- */
 export const useQueryClientUnits = (
   institution: string | undefined,
   state: string | undefined,
@@ -39,7 +36,5 @@ export const useQueryClientUnits = (
         city,
       }),
     enabled: enabled && !!institution && !!state && !!city,
-    staleTime: 1000 * 60 * 60, // 1 hour
-    gcTime: 1000 * 60 * 60 * 24, // 24 hours
   });
 };

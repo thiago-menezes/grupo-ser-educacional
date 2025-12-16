@@ -21,4 +21,3 @@ export type SearchBannerPromosErrorDTO = {
   error: string;
   message?: string;
 };
-

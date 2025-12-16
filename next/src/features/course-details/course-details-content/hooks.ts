@@ -18,27 +18,27 @@ export const useCourseDetailsContent = (course: CourseDetails) => {
 
   const { institutionSlug } = useCurrentInstitution();
 
-  // Initialize selected turno from Client API data
+  // Initialize selected shift from enrollment data
   useEffect(() => {
-    if (course.clientApiDetails?.Turnos?.length) {
+    if (course.enrollment?.shifts?.length) {
       const turnoParam = searchParams.get('turno');
       if (turnoParam) {
-        const turno = course.clientApiDetails.Turnos.find(
-          (t) => t.ID.toString() === turnoParam,
+        const turno = course.enrollment.shifts.find(
+          (t) => t.id.toString() === turnoParam,
         );
         if (turno) {
           startTransition(() => {
-            setSelectedTurnoId(turno.ID);
+            setSelectedTurnoId(turno.id);
           });
           return;
         }
       }
-      // Default to first turno
+      // Default to first shift
       startTransition(() => {
-        setSelectedTurnoId(course.clientApiDetails!.Turnos[0].ID);
+        setSelectedTurnoId(course.enrollment!.shifts[0].id);
       });
     }
-  }, [course.clientApiDetails, searchParams]);
+  }, [course.enrollment, searchParams]);
 
   // Initialize selected modality based on URL params
   useEffect(() => {

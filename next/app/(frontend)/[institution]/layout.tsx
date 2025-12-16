@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Footer, Header } from '@/components';
+import { generateJsonLd, generateMetadata } from '@/features/seo';
 import { isValidInstitution } from '@/packages/utils';
-import { generateJsonLd, generateMetadata } from '@/seo';
 
 type InstitutionLayoutProps = {
   children: React.ReactNode;
@@ -25,7 +25,6 @@ export async function generateStaticParams() {
   }));
 }
 
-// Force dynamic to fetch metadata at request time (not build time)
 export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 
@@ -43,13 +42,7 @@ export default async function InstitutionLayout({
     return notFound();
   }
 
-  // Wrap in try-catch to prevent build failures if CMS is unavailable
-  let jsonLd;
-  try {
-    jsonLd = await generateJsonLd(institution);
-  } catch {
-    jsonLd = undefined;
-  }
+  const jsonLd = await generateJsonLd(institution);
 
   return (
     <>

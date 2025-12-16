@@ -2,6 +2,7 @@ import { clsx } from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { getMediaUrl } from '@/packages/utils';
 import styles from './styles.module.scss';
 import type { HeroBannerProps } from './types';
 
@@ -62,7 +63,7 @@ export function HeroBanner({
 
             const imageElement = (
               <Image
-                src={item.image}
+                src={getMediaUrl(item.image)}
                 alt={item.alt || `Hero banner ${index + 1}`}
                 fill
                 className={styles.image}
@@ -109,7 +110,7 @@ export function HeroBanner({
   return (
     <div className={styles.container}>
       <Image
-        src={imageUrl}
+        src={getMediaUrl(imageUrl)}
         alt={imageAlt}
         fill
         className={styles.image}

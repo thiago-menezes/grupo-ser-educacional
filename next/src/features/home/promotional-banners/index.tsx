@@ -2,7 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Pagination } from '@/components/pagination';
+import { getMediaUrl } from '@/packages/utils';
 import { usePromotionalBanners } from './api';
+import type { PromotionalBannerItemDTO } from './api/types';
 import { useScrollPagination } from './hooks';
 import styles from './styles.module.scss';
 
@@ -16,8 +18,12 @@ const BANNER_GAP = 24;
 export function PromotionalBanners({
   institutionSlug,
 }: PromotionalBannersProps) {
-  const { data: banners = [], isLoading } =
+  const { data: bannersResponse, isLoading } =
     usePromotionalBanners(institutionSlug);
+  const banners = (bannersResponse?.data ?? []).filter(
+    (banner): banner is PromotionalBannerItemDTO & { imageUrl: string } =>
+      Boolean(banner.imageUrl),
+  );
   const [cardWidth, setCardWidth] = useState(294); // Default mobile width
 
   // Update card width based on window size
@@ -49,7 +55,7 @@ export function PromotionalBanners({
           {banners.map((banner) => {
             const imageElement = (
               <Image
-                src={banner.imageUrl}
+                src={getMediaUrl(banner.imageUrl)}
                 alt={banner.imageAlt || 'Banner promocional'}
                 className={styles.bannerImage}
                 priority

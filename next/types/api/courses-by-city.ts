@@ -6,4 +6,3 @@ export type CoursesByCityErrorDTO = {
   error: string;
   message?: string;
 };
-

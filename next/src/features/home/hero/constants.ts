@@ -1,8 +1,6 @@
-import { HeroContent } from './types';
-
 export const HOME_HERO_QUERY_KEY = ['home-hero'] as const;
 
-export const DEFAULT_HERO_CONTENT: HeroContent = {
+export const DEFAULT_HERO_CONTENT = {
   backgroundImage: {
     url: 'https://placehold.co/1800x720.png',
     alternativeText: 'Hero banner background',

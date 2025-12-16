@@ -23,14 +23,9 @@ export const useQueryUnitById = (
         unitId: unitId?.toString(),
       }),
     enabled: enabled && !!slug && !!unitId,
-    staleTime: 1000 * 60 * 60, // 1 hour
-    gcTime: 1000 * 60 * 60 * 24, // 24 hours
   });
 };
 
-/**
- * Query hook for fetching units from client API
- */
 export const useQueryClientUnits = (
   institution: string | undefined,
   state: string | undefined,
@@ -46,7 +41,5 @@ export const useQueryClientUnits = (
         city,
       }),
     enabled: enabled && !!institution && !!state && !!city,
-    staleTime: 1000 * 60 * 60, // 1 hour
-    gcTime: 1000 * 60 * 60 * 24, // 24 hours
   });
 };

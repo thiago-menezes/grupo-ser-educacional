@@ -44,10 +44,17 @@ const DEFAULT_FAQ_ITEMS = [
 
 export function FAQSection() {
   const { institutionId } = useCurrentInstitution();
-  const { data: faqItems } = usePerguntasFrequentes(institutionId);
+  const { data: faqsResponse } = usePerguntasFrequentes(institutionId);
 
-  const displayItems =
-    faqItems && faqItems.length > 0 ? faqItems : DEFAULT_FAQ_ITEMS;
+  const apiItems = (faqsResponse?.data ?? [])
+    .map((item) => ({
+      id: item.id,
+      question: item.question ?? '',
+      answer: item.answer ?? '',
+    }))
+    .filter((item) => item.question && item.answer);
+
+  const displayItems = apiItems.length > 0 ? apiItems : DEFAULT_FAQ_ITEMS;
 
   return (
     <section className={styles.section} aria-labelledby="faq-section-title">

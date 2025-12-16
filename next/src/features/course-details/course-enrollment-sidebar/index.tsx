@@ -26,21 +26,16 @@ export function CourseEnrollmentSidebar({
 
   // Get price from Client API if available
   const getClientApiPrice = () => {
-    if (course.clientApiDetails?.Turnos?.length) {
-      const firstTurno = course.clientApiDetails.Turnos[0];
-      if (firstTurno.FormasIngresso?.length) {
-        const firstForma = firstTurno.FormasIngresso[0];
-        if (firstForma.TiposPagamento?.length) {
-          const firstTipo = firstForma.TiposPagamento[0];
-          if (firstTipo.ValoresPagamento?.length) {
-            const firstValor = firstTipo.ValoresPagamento[0];
-            return {
-              price: parseFloat(firstValor.Mensalidade),
-              priceFrom: parseFloat(firstValor.PrecoBase),
-            };
-          }
-        }
-      }
+    const firstShift = course.enrollment?.shifts?.[0];
+    const firstForm = firstShift?.admissionForms?.[0];
+    const firstPaymentType = firstForm?.paymentTypes?.[0];
+    const firstPaymentOption = firstPaymentType?.paymentOptions?.[0];
+
+    if (firstPaymentOption?.parsed.monthlyPrice) {
+      return {
+        price: firstPaymentOption.parsed.monthlyPrice,
+        priceFrom: firstPaymentOption.parsed.basePrice ?? undefined,
+      };
     }
     return null;
   };

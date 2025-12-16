@@ -1,4 +1,4 @@
-export function getMediaUrl(path: string): string {
+export function getMediaUrl(path: string | null): string {
   if (!path) return '';
   if (path.startsWith('http')) return path;
 

@@ -1,7 +1,8 @@
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { View } from 'reshaped';
 import { Breadcrumb } from '@/components';
+import { useCityContext } from '@/contexts/city';
 import { InfrastructureSection } from '@/features';
 import { GeoCoursesSection } from '@/features/home/geo-courses';
 import { MOCK_GEO_COURSES_DATA } from '@/features/home/geo-courses/api/mocks';
@@ -21,6 +22,9 @@ import styles from './styles.module.scss';
 
 export function CourseDetailsContent({ course }: { course: CourseDetails }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const { setCityState } = useCityContext();
   const unitFromUrl = searchParams.get('unit');
 
   const {
@@ -42,21 +46,30 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
     return course.offerings[0]?.unitId || course.units[0]?.id;
   });
 
-  // Get admission forms from selected turno in Client API data
+  // Get admission forms from selected shift (enrollment data)
   const availableAdmissionForms = useMemo(() => {
-    if (!course.clientApiDetails?.Turnos?.length) return undefined;
+    if (!course.enrollment?.shifts?.length) return undefined;
 
-    const selectedTurno = course.clientApiDetails.Turnos.find(
-      (t) => t.ID === selectedTurnoId,
+    const selectedShift = course.enrollment.shifts.find(
+      (t) => t.id === selectedTurnoId,
     );
 
     return (
-      selectedTurno?.FormasIngresso ||
-      course.clientApiDetails.Turnos[0]?.FormasIngresso
+      selectedShift?.admissionForms ||
+      course.enrollment.shifts[0]?.admissionForms
     );
-  }, [course.clientApiDetails, selectedTurnoId]);
+  }, [course.enrollment, selectedTurnoId]);
 
   const handleUnitClick = (unitId: number) => {
+    const unit = course.units.find((u) => u.id === unitId);
+    if (unit) {
+      setCityState(unit.city, unit.state, 'manual');
+
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('unit', unitId.toString());
+      router.push(`${pathname}?${params.toString()}`);
+    }
+
     setSelectedUnitId(unitId);
 
     // Scroll para infraestrutura

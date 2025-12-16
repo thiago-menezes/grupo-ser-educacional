@@ -67,6 +67,7 @@ export function CityProvider({ children }: { children: ReactNode }) {
 
     const urlParams = new URLSearchParams(window.location.search);
     const cityFromUrl = urlParams.get('city');
+    const stateFromUrl = urlParams.get('state');
 
     if (cityFromUrl) {
       const parsed = parseCityFromUrl(cityFromUrl);
@@ -78,9 +79,20 @@ export function CityProvider({ children }: { children: ReactNode }) {
           timestamp: Date.now(),
           source: 'manual',
         });
+        return;
+      }
+
+      // Support plain query params (used by course details pages), e.g. ?city=ananindeua&state=pa
+      if (stateFromUrl) {
+        setCityData({
+          city: cityFromUrl,
+          state: stateFromUrl.toUpperCase(),
+          timestamp: Date.now(),
+          source: 'manual',
+        });
       }
     }
-  }, []); // Run once on mount
+  }, [setCityData]);
 
   const city = cityData.city;
   const state = cityData.state;

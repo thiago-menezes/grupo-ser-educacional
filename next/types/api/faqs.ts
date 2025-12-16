@@ -20,4 +20,3 @@ export type FaqsErrorDTO = {
   error: string;
   message?: string;
 };
-

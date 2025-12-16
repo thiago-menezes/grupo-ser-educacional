@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import { query } from '@/libs';
+import { CourseDetailsResponseDTO } from '@/types/api/course-details';
 import type { CourseDetails } from '../types';
 
 export type CourseDetailsQueryParams = {
@@ -23,21 +25,16 @@ async function fetchCourseDetails(
   if (unit) queryParams.append('unit', unit);
   if (admissionForm) queryParams.append('admissionForm', admissionForm);
 
-  const queryString = queryParams.toString();
-  const url = `/api/courses/details?${queryString}`;
-
-  const response = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  const response = await query<CourseDetailsResponseDTO>('/courses/details', {
+    sku,
+    institution,
+    state,
+    city,
+    unit,
+    admissionForm,
   });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to fetch course details');
-  }
-
-  return response.json();
+  return response;
 }
 
 export function useQueryCourseDetails(params: CourseDetailsQueryParams) {
@@ -55,7 +52,6 @@ export function useQueryCourseDetails(params: CourseDetailsQueryParams) {
     ],
     queryFn: () => fetchCourseDetails(params),
     enabled: !!sku,
-    staleTime: 5 * 60 * 1000, // 5 minutes
     placeholderData: (previousData) => previousData,
     refetchOnWindowFocus: false,
   });

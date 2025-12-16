@@ -982,6 +982,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@marsidev/react-turnstile@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@marsidev/react-turnstile@npm:1.4.0"
+  peerDependencies:
+    react: ^17.0.2 || ^18.0.0 || ^19.0
+    react-dom: ^17.0.2 || ^18.0.0 || ^19.0
+  checksum: 10c0/677af538241fd1be1f870eb744ad6dc2a969a66688886ba85aa03a45896d03f628763cb45b4830701c388775cb2682aaa04160968165dab0a5120c1b98bd37a0
+  languageName: node
+  linkType: hard
+
 "@napi-rs/wasm-runtime@npm:^0.2.11":
   version: 0.2.12
   resolution: "@napi-rs/wasm-runtime@npm:0.2.12"
@@ -5491,6 +5501,7 @@ __metadata:
     "@csstools/postcss-global-data": "npm:^3.1.0"
     "@eslint/js": "npm:^9.39.1"
     "@hookform/resolvers": "npm:^5.2.2"
+    "@marsidev/react-turnstile": "npm:^1.4.0"
     "@next/eslint-plugin-next": "npm:^16.0.5"
     "@tanstack/react-query": "npm:^5.90.11"
     "@tanstack/react-query-devtools": "npm:^5.91.1"

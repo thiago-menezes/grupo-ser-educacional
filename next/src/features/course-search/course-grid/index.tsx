@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Pagination, View } from 'reshaped';
 import type { CourseData } from 'types/api/courses';
-import { BannerSkeleton, CourseCard } from '@/components';
+import { CourseCard } from '@/components';
 import { CourseCardSkeleton } from '@/components/course-card/skeleton';
-import { useImageFallback } from '@/features/infrastructure/utils/image-fallback';
 import { useCurrentInstitution } from '@/hooks';
+import { getMediaUrl } from '@/packages/utils';
 import { useQuerySearchBannerPromos } from '../banner-promo/api/query';
 import { useCourseGrid } from './hooks';
 import styles from './styles.module.scss';
@@ -29,9 +29,6 @@ export function CourseGrid() {
       enabled: !!institutionSlug,
     });
   const bannerItem = bannerData?.data?.[0];
-  const { src: bannerSrc, handleError: handleBannerError } = useImageFallback(
-    bannerItem?.imageUrl || '/banner cursos.png',
-  );
 
   const handleCourseClick = (course: CourseData) => {
     const queryParams = new URLSearchParams();
@@ -84,31 +81,21 @@ export function CourseGrid() {
               ))}
             </View>
 
-            <View className={styles.bannerContainer}>
-              {isBannerLoading ? (
-                <BannerSkeleton />
-              ) : bannerItem?.link ? (
+            {bannerItem?.imageUrl && !isBannerLoading && (
+              <View className={styles.bannerContainer}>
                 <Link
-                  href={bannerItem.link}
+                  href={bannerItem?.link ?? '#'}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <Image
-                    src={bannerSrc}
-                    alt={bannerItem.imageAlt || 'Banner'}
-                    onError={handleBannerError}
+                    src={getMediaUrl(bannerItem.imageUrl)}
+                    alt={bannerItem?.imageAlt ?? 'Banner'}
                     fill
                   />
                 </Link>
-              ) : (
-                <Image
-                  src={bannerSrc}
-                  alt={bannerItem?.imageAlt || 'Banner'}
-                  onError={handleBannerError}
-                  fill
-                />
-              )}
-            </View>
+              </View>
+            )}
 
             <View gap={4} wrap direction="row" align="center" justify="center">
               {cardsAfterBanner.map((course) => (

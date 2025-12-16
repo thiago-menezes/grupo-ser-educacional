@@ -1,12 +1,15 @@
 import { useRouter } from 'next/navigation';
 import { useCurrentInstitution } from '@/hooks';
-import type { AreaCard } from './types';
+import { AreaOfInterestItemDTO } from './api/types';
 
 export function useAreaSelector() {
   const { institutionId } = useCurrentInstitution();
   const router = useRouter();
 
-  const handleCourseClick = (area: AreaCard, courseName: string) => {
+  const handleCourseClick = (
+    area: AreaOfInterestItemDTO,
+    courseName: string,
+  ) => {
     if (!institutionId) return;
     const params = new URLSearchParams({
       area: area.title,

@@ -1,8 +1,9 @@
-import { CourseDetailsResponse } from 'types/api/courses';
+import type { CourseDetailsDTO } from 'types/api/course-details';
 import {
   createClientApiClient,
   type ClientApiCourseDetails,
 } from '../../services/client-api';
+import { transformClientApiCourseEnrollment } from '../../transformers/client-api';
 
 export type ClientApiParams = {
   institution: string;
@@ -44,16 +45,16 @@ export async function fetchCourseDetailsFromClientApi(
  * Handle course details request combining Strapi and Client API data
  */
 export async function handleCourseDetailsWithClientApi(
-  strapiCourse: CourseDetailsResponse,
+  strapiCourse: CourseDetailsDTO,
   clientApiParams: ClientApiParams,
-): Promise<CourseDetailsResponse> {
+): Promise<CourseDetailsDTO> {
   try {
     const clientApiDetails =
       await fetchCourseDetailsFromClientApi(clientApiParams);
 
     return {
       ...strapiCourse,
-      clientApiDetails,
+      enrollment: transformClientApiCourseEnrollment(clientApiDetails),
     };
   } catch (error) {
     console.warn('[CourseDetails] Failed to fetch Client API details:', error);

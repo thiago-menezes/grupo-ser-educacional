@@ -70,10 +70,8 @@ export async function generateMetadata({
       return defaultMetadata;
     }
 
-    console.log(
-      'SEO: Successfully loaded metadata for institution:',
-      institution,
-    );
+    console.log('SEO: Successfully loaded metadata for institution:', metadata);
+
     return {
       ...(metadata as Metadata),
       icons,

@@ -3,22 +3,19 @@ import { useRef } from 'react';
 import { Button } from 'reshaped';
 import { Icon, Pagination } from '@/components';
 import { useCurrentInstitution, usePagination } from '@/hooks';
-import { useAreasInteresse } from './api';
+import { getMediaUrl } from '@/packages/utils';
+import { useAreasOfInterest } from './api/query';
 import { useAreaSelector } from './hooks';
 import styles from './styles.module.scss';
-import { AreasSelectorProps } from './types';
 
-export function AreasSelector({ content }: AreasSelectorProps) {
+export function AreasSelector() {
   const { institutionId } = useCurrentInstitution();
-  const { data: areas } = useAreasInteresse(institutionId);
-
-  const displayContent = {
-    areas: areas && areas.length > 0 ? areas : content?.areas,
-  };
+  const { data: { data: areas = [] } = {} } = useAreasOfInterest(institutionId);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
+
   const { currentPage, totalPages, goToPage, isScrollable } = usePagination({
-    totalItems: displayContent.areas?.length || 0,
+    totalItems: areas?.length || 0,
     containerRef: scrollRef,
     gap: 24,
   });
@@ -36,11 +33,11 @@ export function AreasSelector({ content }: AreasSelectorProps) {
 
         <div className={styles.carousel}>
           <div ref={scrollRef} className={styles.scrollArea} role="list">
-            {displayContent.areas?.map((area) => (
+            {areas?.map((area) => (
               <article key={area.id} className={styles.card} role="listitem">
                 <div className={styles.imageWrapper}>
                   <Image
-                    src={area.imageUrl}
+                    src={getMediaUrl(area.imageUrl)}
                     alt={`Área ${area.title}`}
                     width={290}
                     height={180}
@@ -52,9 +49,9 @@ export function AreasSelector({ content }: AreasSelectorProps) {
                   <h3 className={styles.areaTitle}>{area.title}</h3>
 
                   <div className={styles.courseList}>
-                    {area.courses.map((course) => (
+                    {area.courses.map((course, index) => (
                       <button
-                        key={course.id}
+                        key={course.id + index}
                         className={styles.courseButton}
                         onClick={() => handleCourseClick(area, course.name)}
                         type="button"

@@ -20,4 +20,3 @@ export type CoursesUnitsErrorDTO = {
   error: string;
   message?: string;
 };
-

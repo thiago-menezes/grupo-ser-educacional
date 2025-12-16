@@ -6,4 +6,3 @@ export type CoursesAutocompleteErrorDTO = {
   error: string;
   message?: string;
 };
-

@@ -21,4 +21,3 @@ export type PromotionalBannersErrorDTO = {
   error: string;
   message?: string;
 };
-

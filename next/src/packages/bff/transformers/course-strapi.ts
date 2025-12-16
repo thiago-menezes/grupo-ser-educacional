@@ -4,11 +4,12 @@
  */
 
 import type {
-  CourseDetails,
-  CoordinatorData,
-  TeacherData,
-  RelatedCourseData,
-} from '@/features/course-details/types';
+  CourseCoordinatorDTO,
+  CourseDetailsDTO,
+  CourseTeacherDTO,
+  RelatedCourseDTO,
+} from 'types/api/course-details';
+import { getMediaUrl } from '@/packages/utils';
 import { formatPrice } from '@/packages/utils/format-price';
 import type {
   StrapiCoordenacao,
@@ -112,7 +113,7 @@ function transformOfferings(offerings: StrapiOferta[]) {
 /**
  * Transform Strapi course to CourseDetails DTO
  */
-export function transformStrapiCourse(strapi: StrapiCourse): CourseDetails {
+export function transformStrapiCourse(strapi: StrapiCourse): CourseDetailsDTO {
   // Extract active offerings
   const activeOfferings = strapi.ofertas?.filter((o) => o.ativo) || [];
 
@@ -140,12 +141,8 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetails {
   // Use "sobre" for description, fallback to "descricao"
   const description = strapi.sobre || strapi.descricao || '';
 
-  // Use "capa" for featured image, fallback to "imagem_destaque"
-  const featuredImage =
-    strapi.capa?.url || strapi.imagem_destaque?.url || undefined;
-
   // Build base course details
-  const courseDetails: CourseDetails = {
+  const courseDetails: CourseDetailsDTO = {
     id: strapi.id,
     name: strapi.nome,
     slug: strapi.slug,
@@ -160,7 +157,7 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetails {
     modalities,
     units,
     offerings: transformOfferings(activeOfferings),
-    featuredImage,
+    featuredImage: getMediaUrl(strapi.capa?.url ?? ''),
     methodology: strapi.metodologia || undefined,
     certificate: strapi.certificado || undefined,
     curriculumMarkdown: strapi.grade_curricular || undefined,
@@ -214,7 +211,7 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetails {
  */
 export function transformStrapiCoordinator(
   strapi: StrapiCoordenacao,
-): CoordinatorData {
+): CourseCoordinatorDTO {
   return {
     id: strapi.id,
     name: strapi.nome,
@@ -230,7 +227,7 @@ export function transformStrapiCoordinator(
  */
 export function transformStrapiTeacher(
   strapi: StrapiCorpoDocente,
-): TeacherData {
+): CourseTeacherDTO {
   return {
     id: strapi.id,
     name: strapi.nome,
@@ -250,7 +247,7 @@ export function transformStrapiRelatedCourse(strapi: {
   tipo?: string | null;
   duracao_padrao?: string | null;
   ofertas?: StrapiOferta[];
-}): RelatedCourseData {
+}): RelatedCourseDTO {
   const firstOffering = strapi.ofertas?.find((o) => o.ativo);
 
   return {

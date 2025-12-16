@@ -2,29 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { useCurrentInstitution } from '@/hooks';
+import { query } from '@/libs';
 import type { CoursesUnitsResponseDTO } from '@/types/api/courses-units';
-
-async function fetchUnitsByCourse(
-  institution: string,
-  state: string,
-  city: string,
-  sku: string,
-): Promise<CoursesUnitsResponseDTO> {
-  const params = new URLSearchParams({
-    institution,
-    state,
-    city,
-    sku,
-  });
-
-  const response = await fetch(`/api/courses/units?${params}`);
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch units');
-  }
-
-  return response.json();
-}
 
 export function useSelectedUnit() {
   const router = useRouter();
@@ -39,7 +18,13 @@ export function useSelectedUnit() {
 
   const { data, isLoading } = useQuery({
     queryKey: ['units-by-course', institutionSlug, state, city, sku],
-    queryFn: () => fetchUnitsByCourse(institutionSlug!, state!, city!, sku!),
+    queryFn: () =>
+      query<CoursesUnitsResponseDTO>('/courses/units', {
+        institution: institutionSlug!,
+        state: state!,
+        city: city!,
+        sku: sku!,
+      }),
     enabled: !!institutionSlug && !!state && !!city && !!sku,
   });
 
@@ -51,6 +36,7 @@ export function useSelectedUnit() {
     (newUnitId: number) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set('unit', newUnitId.toString());
+
       router.push(`${pathname}?${params.toString()}`);
     },
     [router, pathname, searchParams],

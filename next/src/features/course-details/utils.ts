@@ -1,4 +1,4 @@
-import type { TeacherData } from './types';
+import type { CourseTeacherDTO } from 'types/api/course-details';
 
 /**
  * Filter teachers by selected modality
@@ -7,9 +7,9 @@ import type { TeacherData } from './types';
  * 2. Have the selected modality in their modalities list
  */
 export function filterTeachersByModality(
-  teachers: TeacherData[] | undefined,
+  teachers: CourseTeacherDTO[] | undefined,
   selectedModalityId: number | null,
-): TeacherData[] {
+): CourseTeacherDTO[] {
   if (!teachers || teachers.length === 0) {
     return [];
   }
@@ -34,7 +34,7 @@ export function filterTeachersByModality(
  * Check if a teacher can teach a specific modality
  */
 export function canTeacherTeachModality(
-  teacher: TeacherData,
+  teacher: CourseTeacherDTO,
   modalityId: number,
 ): boolean {
   // If teacher has no modalities specified, they can teach all modalities

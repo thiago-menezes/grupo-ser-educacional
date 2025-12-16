@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Button } from 'reshaped';
 import { Icon } from '@/components';
 import { useCurrentInstitution } from '@/hooks';
-import { useHeroContent, useHomeCarousel } from './api/query';
+import { useHomeCarousel } from './api/query';
 import { CarouselControls } from './carousel-controls';
 import { DEFAULT_HERO_CONTENT } from './constants';
 import { HeroBanner } from './hero-banner';
@@ -17,17 +17,14 @@ export type HomeHeroProps = {
 };
 
 function HeroContent({ institutionSlug }: HomeHeroProps) {
-  const { data: heroContent, isLoading: isLoadingHeroContent } =
-    useHeroContent(institutionSlug);
-  const { data: carouselItems = [], isLoading: isLoadingCarousel } =
-    useHomeCarousel(institutionSlug);
+  const {
+    data: { data: carouselItems = [] } = {},
+    isLoading: isLoadingCarousel,
+  } = useHomeCarousel(institutionSlug);
 
-  const isLoading = isLoadingHeroContent || isLoadingCarousel;
+  const isLoading = isLoadingCarousel;
 
-  const content = useMemo(
-    () => heroContent || DEFAULT_HERO_CONTENT,
-    [heroContent],
-  );
+  const content = DEFAULT_HERO_CONTENT;
 
   // Use carousel if items exist, otherwise use single image
   const totalSlides = carouselItems.length > 0 ? carouselItems.length : 1;
@@ -46,11 +43,13 @@ function HeroContent({ institutionSlug }: HomeHeroProps) {
     if (carouselItems.length === 0) {
       return undefined;
     }
-    return carouselItems.map((item) => ({
-      image: item.image,
-      alt: item.alt,
-      link: item.link,
-    }));
+    return carouselItems
+      .map((item) => ({
+        image: item.imageUrl || '',
+        alt: item.imageAlt || '',
+        link: item.link || '',
+      }))
+      .filter((item) => Boolean(item.image));
   }, [carouselItems]);
 
   // Fallback to single image if no carousel items

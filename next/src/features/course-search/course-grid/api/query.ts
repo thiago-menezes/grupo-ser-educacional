@@ -81,7 +81,9 @@ export const useQueryCourses = (
 };
 
 function parseCityParam(cityParam: string): { city: string; state: string } {
-  const match = cityParam.match(/city:([^-]+)-state:([^-]+)/);
+  // Expected format: city:<slug>-state:<uf>
+  // City slug may contain hyphens, so we match greedily until the last "-state:"
+  const match = cityParam.match(/^city:(.+)-state:([a-z]{2})$/i);
   return {
     city: match?.[1] || '',
     state: match?.[2] || '',
@@ -116,8 +118,8 @@ export const useQueryCityBasedCourses = (
     queryFn: async () => {
       const params: Record<string, string | number | string[]> = {
         institution: institutionId,
-        estado: state,
-        cidade: city,
+        state,
+        city,
         page,
         perPage,
       };
@@ -136,9 +138,8 @@ export const useQueryCityBasedCourses = (
         params.courseName = filters.courseName;
       }
 
-      return query<CoursesResponse>('/cursos/cidade', params);
+      return query<CoursesResponse>('/courses/by-city', params);
     },
     enabled: !!city && !!state && !!institutionId,
-    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };

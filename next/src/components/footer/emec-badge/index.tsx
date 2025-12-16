@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Text } from 'reshaped';
+import { getMediaUrl } from '@/packages/utils';
 import styles from './styles.module.scss';
 import type { EmecBadgeProps } from './types';
 
@@ -27,7 +28,7 @@ export function EmecBadge({
       </div>
       <div className={styles.qrCodeWrapper}>
         <Image
-          src={qrcodeUrl || QR_CODE_PLACEHOLDER}
+          src={getMediaUrl(qrcodeUrl) || QR_CODE_PLACEHOLDER}
           alt={qrcodeAlt}
           width={320}
           height={320}

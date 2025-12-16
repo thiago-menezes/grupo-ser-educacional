@@ -1,5 +1,4 @@
 // Barrel export for all components
-export * from './banner-skeleton';
 export * from './breadcrumb';
 export * from './city-autocomplete';
 export * from './course-card';

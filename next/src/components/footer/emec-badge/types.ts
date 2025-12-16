@@ -1,6 +1,6 @@
 export interface EmecBadgeProps {
-  href?: string;
+  href: string;
   title: string;
-  qrcodeUrl?: string;
-  qrcodeAlt?: string;
+  qrcodeUrl: string;
+  qrcodeAlt: string;
 }

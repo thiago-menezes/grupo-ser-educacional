@@ -3,6 +3,7 @@ import {
   handleCourseDetailsFromStrapi,
   fetchCourseDetailsFromClientApi,
 } from '@/packages/bff/handlers/courses';
+import { transformClientApiCourseEnrollment } from '@/packages/bff/transformers/client-api';
 import type {
   CourseDetailsErrorDTO,
   CourseDetailsResponseDTO,
@@ -52,6 +53,7 @@ export async function GET(request: NextRequest) {
           sku,
           admissionForm: admissionForm || undefined,
         });
+        const enrollment = transformClientApiCourseEnrollment(clientApiDetails);
 
         // If Strapi had data, enrich it; otherwise create from Client API
         if (courseDetails) {
@@ -92,7 +94,7 @@ export async function GET(request: NextRequest) {
             ...courseDetails,
             units: enrichedUnits,
             modalities: enrichedModalities,
-            clientApiDetails,
+            enrollment,
           };
         } else {
           // Create course from Client API data with unit info from params
@@ -164,7 +166,7 @@ export async function GET(request: NextRequest) {
                 },
               },
             ],
-            clientApiDetails,
+            enrollment,
           };
         }
       } catch {

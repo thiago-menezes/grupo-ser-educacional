@@ -48,8 +48,8 @@ export const useInfrastructure = (preselectedUnitId?: number) => {
     manualState: contextState || null,
   });
 
-  const city = contextCity || '';
-  const state = contextState || '';
+  const city = contextCity;
+  const state = contextState;
 
   // Step 1: Fetch units from client API
   const {
@@ -69,6 +69,8 @@ export const useInfrastructure = (preselectedUnitId?: number) => {
   }>({ locationKey, unitId: null });
 
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+
+  console.log({ selectedState });
 
   // Get current selected unit (auto-reset if location changed)
   const currentSelectedUnitId =

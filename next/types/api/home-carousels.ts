@@ -1,12 +1,9 @@
 export type HomeCarouselItemDTO = {
   id: number;
-  nome: string | null;
+  name: string | null;
   link?: string | null;
-  imagem?: {
-    id: number;
-    url: string;
-    alternativeText?: string | null;
-  } | null;
+  imageUrl: string | null;
+  imageAlt?: string | null;
 };
 
 export type HomeCarouselResponseDTO = {
@@ -25,4 +22,3 @@ export type HomeCarouselsErrorDTO = {
   error: string;
   message?: string;
 };
-

@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { Button, Text, View } from 'reshaped';
+import { useCurrentInstitution } from '@/hooks';
 import { Icon } from '..';
 import styles from './styles.module.scss';
 
 export function PageNotFound() {
+  const { institutionSlug } = useCurrentInstitution();
   return (
     <View className={styles.container}>
       <View className={styles.content} align="center" gap={6}>
@@ -34,16 +36,7 @@ export function PageNotFound() {
         </View>
 
         <View gap={3} direction="row" align="center">
-          <Button
-            variant="outline"
-            color="neutral"
-            onClick={() => window.history.back()}
-            icon={<Icon name="arrow-left" size={20} />}
-          >
-            Voltar
-          </Button>
-
-          <Link href="/">
+          <Link href={`/${institutionSlug}`}>
             <Button
               variant="solid"
               color="neutral"

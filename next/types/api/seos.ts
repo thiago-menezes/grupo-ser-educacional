@@ -1,4 +1,4 @@
-import type { StrapiSeo } from '@/seo/types';
+import type { StrapiSeo } from '@/features/seo/types';
 
 export type SeosResponseDTO = {
   data: StrapiSeo[];
@@ -16,4 +16,3 @@ export type SeosErrorDTO = {
   error: string;
   message?: string;
 };
-

@@ -21,4 +21,3 @@ export type EMecErrorDTO = {
   error: string;
   message?: string;
 };
-

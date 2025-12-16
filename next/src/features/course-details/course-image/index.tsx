@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { View } from 'reshaped';
-import { useImageFallback } from '@/features/infrastructure/utils/image-fallback';
 import type { CourseDetails } from '../types';
 import styles from './styles.module.scss';
 
@@ -10,19 +9,21 @@ export type CourseImageProps = {
 
 export function CourseImage({ course }: CourseImageProps) {
   // Use Strapi featuredImage if available, fallback to default
-  const initialImageUrl = course.featuredImage || '/banner curso.png';
-  const { src, handleError } = useImageFallback(initialImageUrl);
+
   const imageAlt = course.name || 'Imagem do curso';
+
+  if (!course.featuredImage) {
+    return null;
+  }
 
   return (
     <View className={styles.imageContainer}>
       <Image
-        src={src}
+        src={course.featuredImage}
         alt={imageAlt}
         width={800}
         height={120}
         className={styles.image}
-        onError={handleError}
       />
     </View>
   );

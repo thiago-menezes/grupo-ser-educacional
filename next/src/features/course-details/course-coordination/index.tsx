@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Button, Tabs, Text, View } from 'reshaped';
 import { Icon, MarkdownContent } from '@/components';
+import { getMediaUrl } from '@/packages/utils';
 import type { CourseDetails } from '../types';
 import { filterTeachersByModality } from '../utils';
 import styles from './styles.module.scss';
@@ -57,7 +58,7 @@ export function CourseCoordination({
                   <View key="coordinator" className={styles.coordinatorCard}>
                     {coordinator.photo ? (
                       <Image
-                        src={coordinator.photo}
+                        src={getMediaUrl(coordinator.photo)}
                         alt={`Foto do coordenador(a) ${coordinator.name}`}
                         className={styles.coordinatorPhoto}
                         width={120}

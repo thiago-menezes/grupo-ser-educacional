@@ -29,4 +29,3 @@ export type AreasOfInterestErrorDTO = {
   error: string;
   message?: string;
 };
-

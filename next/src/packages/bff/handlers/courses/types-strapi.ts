@@ -158,7 +158,6 @@ export interface StrapiCourse {
   cursos_relacionados?: StrapiRelatedCourse[];
   // "capa" is the cover image in Strapi
   capa?: StrapiMedia | null;
-  imagem_destaque?: StrapiMedia | null; // fallback field name
   // Direct relations (not from ofertas)
   modalidades?: StrapiModalityNested[];
   // Embedded relations

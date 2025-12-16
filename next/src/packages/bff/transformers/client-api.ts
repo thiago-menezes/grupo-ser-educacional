@@ -1,5 +1,10 @@
+import type { CourseEnrollmentDTO } from 'types/api/course-details';
 import type { CourseData, CourseModality } from 'types/api/courses';
-import type { ClientApiUnit, ClientApiCourse } from '../services/client-api';
+import type {
+  ClientApiCourse,
+  ClientApiCourseDetails,
+  ClientApiUnit,
+} from '../services/client-api';
 
 /**
  * Transformed Unit DTO (English field names)
@@ -121,4 +126,62 @@ export function transformClientCourses(
   return coursesWithUnits.map(({ course, unit }) =>
     transformClientCourse(course, unit),
   );
+}
+
+export function transformClientApiCourseEnrollment(
+  details: ClientApiCourseDetails,
+): CourseEnrollmentDTO {
+  return {
+    courseId: details.ID,
+    courseName: details.Nome_Curso,
+    modality: details.Modalidade,
+    durationMonths: details.Periodo,
+    shifts: (details.Turnos || []).map((turno) => ({
+      id: turno.ID,
+      name: turno.Nome_Turno,
+      period: turno.Periodo,
+      courseShiftHash: turno.Hash_CursoTurno,
+      admissionForms: (turno.FormasIngresso || []).map((forma) => ({
+        id: forma.ID,
+        name: forma.Nome_FormaIngresso,
+        code: forma.Codigo,
+        paymentTypes: (forma.TiposPagamento || []).map((tipoPagamento) => ({
+          id: tipoPagamento.ID,
+          name: tipoPagamento.Nome_TipoPagamento,
+          code: tipoPagamento.Codigo,
+          checkoutUrl: tipoPagamento.LinkCheckout,
+          paymentOptions: (tipoPagamento.ValoresPagamento || []).map(
+            (valor) => {
+              const parsedMonthly = Number.parseFloat(valor.Mensalidade);
+              const parsedBase = Number.parseFloat(valor.PrecoBase);
+
+              return {
+                id: valor.ID,
+                value: valor.Valor,
+                campaignTemplate: valor.TemplateCampanha,
+                entryOffer: (valor.OfertaEntrada || []).map((oferta) => ({
+                  startMonth: oferta.mesInicio,
+                  endMonth: oferta.mesFim,
+                  type: oferta.Tipo === 'Percentual' ? 'Percent' : 'Amount',
+                  value: oferta.Valor,
+                })),
+                basePrice: valor.PrecoBase,
+                monthlyPrice: valor.Mensalidade,
+                validFrom: valor.InicioVigencia,
+                validTo: valor.FimVigencia,
+                coveragePriority: valor.PrioridadeAbrangencia,
+                parsed: {
+                  currency: 'BRL',
+                  basePrice: Number.isFinite(parsedBase) ? parsedBase : null,
+                  monthlyPrice: Number.isFinite(parsedMonthly)
+                    ? parsedMonthly
+                    : null,
+                },
+              };
+            },
+          ),
+        })),
+      })),
+    })),
+  };
 }

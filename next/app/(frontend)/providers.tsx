@@ -1,5 +1,6 @@
 'use client';
 
+import { Turnstile } from '@marsidev/react-turnstile';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useParams } from 'next/navigation';
@@ -44,6 +45,8 @@ export default function Providers({ children }: PropsWithChildren) {
           {process.env.NODE_ENV === 'development' ? (
             <ReactQueryDevtools initialIsOpen={false} />
           ) : null}
+
+          <Turnstile siteKey="1x00000000000000000000AA" />
         </CityProvider>
       </QueryClientProvider>
     </Reshaped>

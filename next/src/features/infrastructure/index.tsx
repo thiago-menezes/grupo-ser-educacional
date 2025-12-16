@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Button, Text } from 'reshaped';
 import { Icon } from '@/components';
 import { useCityContext } from '@/contexts/city';
+import { getMediaUrl } from '@/packages/utils';
 import { useInfrastructure } from './hooks';
 import { ImageModal } from './image-modal';
 import styles from './styles.module.scss';
@@ -146,7 +147,7 @@ export const InfrastructureSection = ({
                   aria-label={image.alt}
                 >
                   <Image
-                    src={image.src}
+                    src={getMediaUrl(image.src)}
                     alt={image.alt}
                     width={290}
                     height={200}

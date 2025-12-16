@@ -9,4 +9,3 @@ export type CurriculumErrorDTO = {
   error: string;
   message?: string;
 };
-
