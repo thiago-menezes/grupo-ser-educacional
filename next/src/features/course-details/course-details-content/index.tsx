@@ -3,8 +3,6 @@ import { View } from 'reshaped';
 import { Breadcrumb } from '@/components';
 import { useCityContext } from '@/contexts/city';
 import { InfrastructureSection } from '@/features';
-import { GeoCoursesSection } from '@/features/home/geo-courses';
-import { MOCK_GEO_COURSES_DATA } from '@/features/home/geo-courses/api/mocks';
 import { useQueryParams } from '@/hooks';
 import { CourseAbout } from '../course-about';
 import { CourseAdmissionForms } from '../course-admission-forms';
@@ -112,7 +110,7 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
               />
             )}
             {course.jobMarketAreas && course.jobMarketAreas.length > 0 && (
-              <CourseJobMarketSection />
+              <CourseJobMarketSection areas={course.jobMarketAreas} />
             )}
             {course.certificate && (
               <CourseTextSection
@@ -137,10 +135,6 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
         </div>
 
         <InfrastructureSection preselectedUnitId={selectedUnitId} />
-        <GeoCoursesSection
-          data={MOCK_GEO_COURSES_DATA}
-          title="Encontre o seu curso e transforme sua carreira!"
-        />
 
         <CurriculumGridModal
           isOpen={isCurriculumModalOpen}

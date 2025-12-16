@@ -114,7 +114,6 @@ function transformOfferings(offerings: StrapiOferta[]) {
  * Transform Strapi course to CourseDetails DTO
  */
 export function transformStrapiCourse(strapi: StrapiCourse): CourseDetailsDTO {
-  console.log({ strapi });
   // Extract active offerings
   const activeOfferings = strapi.ofertas?.filter((o) => o.ativo) || [];
 

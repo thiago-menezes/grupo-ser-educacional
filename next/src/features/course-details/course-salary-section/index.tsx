@@ -1,9 +1,15 @@
 import { Divider, Text, View } from 'reshaped';
 import { Icon } from '@/components';
-import { MOCK_SALARY_RANGES } from '../mock';
+import type { CourseSalaryRangeDTO } from 'types/api/course-details';
 import styles from './styles.module.scss';
 
-export function CourseSalarySection() {
+type CourseSalarySectionProps = {
+  salaryRanges: CourseSalaryRangeDTO[];
+};
+
+export function CourseSalarySection({
+  salaryRanges,
+}: CourseSalarySectionProps) {
   return (
     <View className={styles.section}>
       <Divider />
@@ -29,10 +35,16 @@ export function CourseSalarySection() {
       </View>
 
       <View className={styles.salaryCards}>
-        {MOCK_SALARY_RANGES.map((salary) => (
+        {salaryRanges.map((salary) => (
           <View key={salary.level} className={styles.salaryCard}>
             <View className={styles.salaryHeader}>
-              <Icon name={salary.icon} size={24} className={styles.icon} />
+              {salary.icon && (
+                <Icon
+                  name={salary.icon as any}
+                  size={24}
+                  className={styles.icon}
+                />
+              )}
               <Text
                 as="h3"
                 variant="body-3"

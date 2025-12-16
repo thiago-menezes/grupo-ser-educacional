@@ -2,7 +2,7 @@ import {
   AutocompleteQueryParams,
   AutocompleteResponse,
 } from 'types/api/autocomplete';
-import { getAvailableCourses } from '../../data';
+import { courses, type Course } from '../../data';
 import { searchCities, formatCityValue } from '../../services/cities';
 
 /**
@@ -28,14 +28,13 @@ export async function handleAutocomplete(
   }
 
   if (params.type === 'courses') {
-    const courses = getAvailableCourses();
-    const filtered = courses.filter((course) =>
+    const filtered = courses.filter((course: Course) =>
       course.name.toLowerCase().includes(query.toLowerCase()),
     );
 
     return {
       type: 'courses',
-      results: filtered.map((course) => ({
+      results: filtered.map((course: Course) => ({
         id: course.id,
         label: course.name,
         value: course.slug,

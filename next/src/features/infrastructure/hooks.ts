@@ -70,8 +70,6 @@ export const useInfrastructure = (preselectedUnitId?: number) => {
 
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
 
-  console.log({ selectedState });
-
   // Get current selected unit (auto-reset if location changed)
   const currentSelectedUnitId =
     selectedState.locationKey === locationKey ? selectedState.unitId : null;

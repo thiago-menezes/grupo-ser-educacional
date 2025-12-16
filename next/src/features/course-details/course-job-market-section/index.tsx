@@ -1,8 +1,13 @@
 import { Divider, Text, View } from 'reshaped';
-import { MOCK_JOB_MARKET_AREAS } from '../mock';
 import styles from './styles.module.scss';
 
-export function CourseJobMarketSection() {
+type CourseJobMarketSectionProps = {
+  areas: string[];
+};
+
+export function CourseJobMarketSection({
+  areas,
+}: CourseJobMarketSectionProps) {
   return (
     <View className={styles.section}>
       <Divider />
@@ -27,7 +32,7 @@ export function CourseJobMarketSection() {
           Ciência de Dados:
         </Text>
         <View as="ul" className={styles.areasList}>
-          {MOCK_JOB_MARKET_AREAS.map((area) => (
+          {areas.map((area) => (
             <Text
               key={area}
               as="li"

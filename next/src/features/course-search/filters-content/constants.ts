@@ -9,7 +9,7 @@ export const DEFAULT_FILTERS: CourseFiltersFormValues = {
   courseName: '',
   modalities: [],
   priceRange: {
-    min: 300,
+    min: 100,
     max: 4500,
   },
   shifts: [],
