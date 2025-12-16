@@ -14,7 +14,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "x-generation-date": "2025-12-16T01:04:38.123Z"
+    "x-generation-date": "2025-12-16T01:06:43.390Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -13693,7 +13693,6 @@
           "data": {
             "required": [
               "nome",
-              "sobre",
               "duracao"
             ],
             "type": "object",
@@ -13857,7 +13856,6 @@
         "type": "object",
         "required": [
           "nome",
-          "sobre",
           "duracao"
         ],
         "properties": {

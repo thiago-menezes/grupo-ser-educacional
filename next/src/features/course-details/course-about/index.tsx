@@ -1,4 +1,5 @@
 import { Divider, Text, View } from 'reshaped';
+import { MarkdownContent } from '@/components';
 import styles from './styles.module.scss';
 
 export type CourseAboutProps = {
@@ -13,11 +14,7 @@ export function CourseAbout({ description }: CourseAboutProps) {
         Sobre o curso
       </Text>
 
-      <View className={styles.description}>
-        <Text variant="body-2" color="neutral-faded">
-          {description}
-        </Text>
-      </View>
+      <MarkdownContent content={description} className={styles.description} />
     </View>
   );
 }

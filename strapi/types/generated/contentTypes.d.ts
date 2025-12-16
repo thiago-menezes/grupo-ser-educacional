@@ -585,7 +585,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     nome: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     sku: Schema.Attribute.String;
-    sobre: Schema.Attribute.Text & Schema.Attribute.Required;
+    sobre: Schema.Attribute.RichText;
     unidades: Schema.Attribute.Relation<'oneToMany', 'api::unit.unit'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

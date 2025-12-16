@@ -56,5 +56,7 @@ export function useQueryCourseDetails(params: CourseDetailsQueryParams) {
     queryFn: () => fetchCourseDetails(params),
     enabled: !!sku,
     staleTime: 5 * 60 * 1000, // 5 minutes
+    placeholderData: (previousData) => previousData,
+    refetchOnWindowFocus: false,
   });
 }
