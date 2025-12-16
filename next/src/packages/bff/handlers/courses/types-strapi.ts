@@ -142,6 +142,8 @@ export interface StrapiCourse {
   carga_horaria?: number | null;
   duracao_padrao?: string | null;
   projeto_pedagogico?: string | null; // Rich text field
+  metodologia?: string | null; // Rich text field
+  certificado?: string | null; // Rich text field
   areas_atuacao?: string[] | null; // JSON field
   faixas_salariais?: Array<{
     level: string;

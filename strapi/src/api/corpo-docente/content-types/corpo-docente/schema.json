@@ -17,25 +17,17 @@
     "materia": {
       "type": "text"
     },
-    "modalidade": {
-      "type": "enumeration",
-      "enum": [
-        "presencial",
-        "semipresencial",
-        "digital (EAD)",
-        "ao vivo"
-      ]
-    },
-    "curso": {
+    "cursos": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToMany",
       "target": "api::course.course",
-      "inversedBy": "corpo_docente"
+      "mappedBy": "curso_corpo_docentes"
     },
-    "instituicao": {
+    "modalidades": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::institution.institution"
+      "relation": "manyToMany",
+      "target": "api::modalidade.modalidade",
+      "inversedBy": "curso_corpo_docentes"
     }
   }
 }

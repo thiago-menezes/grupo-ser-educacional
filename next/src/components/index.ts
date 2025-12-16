@@ -9,5 +9,6 @@ export * from './footer';
 export * from './header';
 export * from './icon';
 export * from './loading';
+export * from './markdown-content';
 export * from './page-not-found';
 export * from './pagination';

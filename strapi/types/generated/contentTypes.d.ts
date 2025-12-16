@@ -519,11 +519,7 @@ export interface ApiCorpoDocenteCorpoDocente
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    curso: Schema.Attribute.Relation<'oneToOne', 'api::course.course'>;
-    instituicao: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::institution.institution'
-    >;
+    cursos: Schema.Attribute.Relation<'manyToMany', 'api::course.course'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -531,8 +527,9 @@ export interface ApiCorpoDocenteCorpoDocente
     > &
       Schema.Attribute.Private;
     materia: Schema.Attribute.Text;
-    modalidade: Schema.Attribute.Enumeration<
-      ['presencial', 'semipresencial', 'digital (EAD)', 'ao vivo']
+    modalidades: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::modalidade.modalidade'
     >;
     nome: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
@@ -554,12 +551,9 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    capa: Schema.Attribute.Media<'images' | 'files'> &
-      Schema.Attribute.Required;
-    corpo_docente: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::corpo-docente.corpo-docente'
-    >;
+    capa: Schema.Attribute.Media<'images' | 'files'>;
+    carga_horaria: Schema.Attribute.Integer;
+    certificado: Schema.Attribute.RichText;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -567,7 +561,12 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::coordenacao.coordenacao'
     >;
-    grade_curricular: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    curso_corpo_docentes: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::corpo-docente.corpo-docente'
+    >;
+    duracao: Schema.Attribute.Integer & Schema.Attribute.Required;
+    grade_curricular: Schema.Attribute.RichText;
     instituicao: Schema.Attribute.Relation<
       'manyToOne',
       'api::institution.institution'
@@ -578,12 +577,16 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       'api::course.course'
     > &
       Schema.Attribute.Private;
+    metodologia: Schema.Attribute.RichText;
+    modalidades: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::modalidade.modalidade'
+    >;
     nome: Schema.Attribute.String & Schema.Attribute.Required;
-    projeto_pedagogico: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
-    sku: Schema.Attribute.String & Schema.Attribute.Required;
-    slug: Schema.Attribute.UID & Schema.Attribute.Required;
+    sku: Schema.Attribute.String;
     sobre: Schema.Attribute.Text & Schema.Attribute.Required;
+    unidades: Schema.Attribute.Relation<'oneToMany', 'api::unit.unit'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -730,6 +733,42 @@ export interface ApiInstitutionInstitution extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiModalidadeModalidade extends Struct.CollectionTypeSchema {
+  collectionName: 'modalidades';
+  info: {
+    displayName: 'Modalidade';
+    pluralName: 'modalidades';
+    singularName: 'modalidade';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    curso_corpo_docentes: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::corpo-docente.corpo-docente'
+    >;
+    curso_detalhes: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::course.course'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::modalidade.modalidade'
+    > &
+      Schema.Attribute.Private;
+    nome: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPerguntaFrequentePerguntaFrequente
   extends Struct.CollectionTypeSchema {
   collectionName: 'perguntas_frequentes';
@@ -833,7 +872,7 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
   collectionName: 'units';
   info: {
     description: 'Infrastructure units (campuses) for institutions';
-    displayName: 'Home / Infraestrutura';
+    displayName: '/ Unidades';
     pluralName: 'units';
     singularName: 'unit';
   };
@@ -848,6 +887,10 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    curso_detalhes: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::course.course'
+    >;
     estado: Schema.Attribute.String & Schema.Attribute.Required;
     fotos: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
     id_unidade: Schema.Attribute.Integer;
@@ -973,6 +1016,44 @@ export interface PluginContentReleasesReleaseAction
     >;
     type: Schema.Attribute.Enumeration<['publish', 'unpublish']> &
       Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface PluginExportImportKkmExportImportConfig
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'export_import_kkm_configs';
+  info: {
+    displayName: 'Export Import Config';
+    pluralName: 'export-import-configs';
+    singularName: 'export-import-config';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::export-import-kkm.export-import-config'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    selectedExportCollections: Schema.Attribute.JSON;
+    selectedImportCollections: Schema.Attribute.JSON;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1143,8 +1224,8 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    alternativeText: Schema.Attribute.String;
-    caption: Schema.Attribute.String;
+    alternativeText: Schema.Attribute.Text;
+    caption: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1168,7 +1249,7 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     mime: Schema.Attribute.String & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    previewUrl: Schema.Attribute.String;
+    previewUrl: Schema.Attribute.Text;
     provider: Schema.Attribute.String & Schema.Attribute.Required;
     provider_metadata: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
@@ -1177,7 +1258,7 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    url: Schema.Attribute.String & Schema.Attribute.Required;
+    url: Schema.Attribute.Text & Schema.Attribute.Required;
     width: Schema.Attribute.Integer;
   };
 }
@@ -1404,12 +1485,14 @@ declare module '@strapi/strapi' {
       'api::home-carousel.home-carousel': ApiHomeCarouselHomeCarousel;
       'api::home-promo-banner.home-promo-banner': ApiHomePromoBannerHomePromoBanner;
       'api::institution.institution': ApiInstitutionInstitution;
+      'api::modalidade.modalidade': ApiModalidadeModalidade;
       'api::pergunta-frequente.pergunta-frequente': ApiPerguntaFrequentePerguntaFrequente;
       'api::search-banner-promo.search-banner-promo': ApiSearchBannerPromoSearchBannerPromo;
       'api::seo.seo': ApiSeoSeo;
       'api::unit.unit': ApiUnitUnit;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::export-import-kkm.export-import-config': PluginExportImportKkmExportImportConfig;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::review-workflows.workflow': PluginReviewWorkflowsWorkflow;
       'plugin::review-workflows.workflow-stage': PluginReviewWorkflowsWorkflowStage;

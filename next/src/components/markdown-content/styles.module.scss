@@ -1,0 +1,42 @@
+.paragraph {
+  margin: 0 0 var(--rs-unit-x4) 0;
+}
+
+.heading {
+  margin: var(--rs-unit-x6) 0 var(--rs-unit-x4) 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.list {
+  list-style-type: disc;
+  margin: var(--rs-unit-x4) 0;
+  padding-left: var(--rs-unit-x6);
+  color: var(--rs-color-foreground-neutral-faded);
+
+  li {
+    margin: var(--rs-unit-x2) 0;
+    line-height: 24px;
+    font-size: 16px;
+  }
+}
+
+.strong {
+  color: var(--rs-color-foreground-neutral);
+}
+
+.em {
+  font-style: italic;
+}
+
+.link {
+  color: var(--rs-color-foreground-primary);
+  text-decoration: underline;
+  transition: text-decoration 0.2s ease;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

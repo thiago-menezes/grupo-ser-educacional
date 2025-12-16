@@ -13,6 +13,7 @@ import { CourseImage } from '../course-image';
 import { CourseInfo } from '../course-info';
 import { CourseJobMarketSection } from '../course-job-market-section';
 import { CourseModalitySelector } from '../course-modality-selector';
+import { CourseTextSection } from '../course-text-section';
 import { CurriculumGridModal } from '../curriculum-grid-modal';
 import type { CourseDetails } from '../types';
 import { useCourseDetailsContent } from './hooks';
@@ -21,6 +22,15 @@ import styles from './styles.module.scss';
 export function CourseDetailsContent({ course }: { course: CourseDetails }) {
   const searchParams = useSearchParams();
   const unitFromUrl = searchParams.get('unit');
+
+  console.log('[CourseDetailsContent] Course data:', {
+    hasMethodology: !!course.methodology,
+    hasCertificate: !!course.certificate,
+    methodologyLength: course.methodology?.length,
+    certificateLength: course.certificate?.length,
+    methodology: course.methodology?.substring(0, 100),
+    certificate: course.certificate?.substring(0, 100),
+  });
 
   const {
     breadcrumbItems,
@@ -93,9 +103,29 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
                 onSelectForm={handleAdmissionFormChange}
               />
             </header>
-            <CourseAbout description={course.description} />
-            <CourseJobMarketSection />
-            <CourseCoordination course={course} />
+            {course.description && (
+              <CourseAbout description={course.description} />
+            )}
+            {course.methodology && (
+              <CourseTextSection
+                title="Metodologia"
+                content={course.methodology}
+              />
+            )}
+            {course.jobMarketAreas && course.jobMarketAreas.length > 0 && (
+              <CourseJobMarketSection />
+            )}
+            {course.certificate && (
+              <CourseTextSection
+                title="Certificado"
+                content={course.certificate}
+              />
+            )}
+            {(course.coordinator ||
+              (course.teachers && course.teachers.length > 0) ||
+              course.pedagogicalProject) && (
+              <CourseCoordination course={course} />
+            )}
           </View>
 
           <CourseEnrollmentSidebar

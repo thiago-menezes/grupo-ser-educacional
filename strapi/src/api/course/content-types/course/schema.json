@@ -12,33 +12,28 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "sku": {
-      "type": "string",
-      "required": true
-    },
     "nome": {
       "type": "string",
-      "required": true
-    },
-    "slug": {
-      "type": "uid",
       "required": true
     },
     "sobre": {
       "type": "text",
       "required": true
     },
+    "metodologia": {
+      "type": "richtext"
+    },
+    "sku": {
+      "type": "string"
+    },
     "capa": {
       "type": "media",
       "multiple": false,
-      "required": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files"
       ]
-    },
-    "projeto_pedagogico": {
-      "type": "richtext"
     },
     "instituicao": {
       "type": "relation",
@@ -46,11 +41,24 @@
       "target": "api::institution.institution",
       "inversedBy": "cursos"
     },
-    "corpo_docente": {
+    "grade_curricular": {
+      "type": "richtext"
+    },
+    "certificado": {
+      "type": "richtext"
+    },
+    "duracao": {
+      "type": "integer",
+      "required": true
+    },
+    "carga_horaria": {
+      "type": "integer"
+    },
+    "unidades": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::corpo-docente.corpo-docente",
-      "mappedBy": "curso"
+      "relation": "oneToMany",
+      "target": "api::unit.unit",
+      "mappedBy": "curso_detalhes"
     },
     "curso_coordenacao": {
       "type": "relation",
@@ -58,9 +66,17 @@
       "target": "api::coordenacao.coordenacao",
       "inversedBy": "curso_detalhes"
     },
-    "grade_curricular": {
-      "type": "blocks",
-      "required": true
+    "curso_corpo_docentes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::corpo-docente.corpo-docente",
+      "inversedBy": "cursos"
+    },
+    "modalidades": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::modalidade.modalidade",
+      "inversedBy": "curso_detalhes"
     }
   }
 }

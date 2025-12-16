@@ -43,7 +43,13 @@ export async function GET(request: NextRequest) {
         courseSku: sku,
         courseSlug: sku,
       });
-      console.log('[API] Strapi course fetched:', courseDetails.name);
+      console.log('[API] Strapi course fetched:', {
+        name: courseDetails.name,
+        hasMethodology: !!courseDetails.methodology,
+        hasCertificate: !!courseDetails.certificate,
+        methodologyLength: courseDetails.methodology?.length,
+        certificateLength: courseDetails.certificate?.length,
+      });
     } catch {
       console.warn('[API] Strapi course not found, trying Client API only');
     }
@@ -191,6 +197,14 @@ export async function GET(request: NextRequest) {
         { status: 404 },
       );
     }
+
+    console.log('[API] Returning course details:', {
+      name: courseDetails.name,
+      hasMethodology: !!courseDetails.methodology,
+      hasCertificate: !!courseDetails.certificate,
+      methodologyPreview: courseDetails.methodology?.substring(0, 50),
+      certificatePreview: courseDetails.certificate?.substring(0, 50),
+    });
 
     return NextResponse.json(courseDetails, {
       headers: {

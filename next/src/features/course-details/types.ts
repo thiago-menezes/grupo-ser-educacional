@@ -137,6 +137,8 @@ export type CourseDetails = {
   salaryRanges?: SalaryRangeData[];
   relatedCourses?: RelatedCourseData[];
   featuredImage?: string;
+  methodology?: string;
+  certificate?: string;
   // New fields from Client API (pricing, shifts, admission forms)
   clientApiDetails?: {
     ID: string;

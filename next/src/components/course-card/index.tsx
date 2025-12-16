@@ -1,19 +1,21 @@
 import Link from 'next/link';
 import { Button } from 'reshaped';
+import { useCurrentInstitution } from '@/hooks/useInstitution';
 import { Icon } from '../icon';
 import { MODALITY_LABELS } from './constants';
 import styles from './styles.module.scss';
 import type { CourseCardProps } from './types';
 
-export function CourseCard({ course, onClick }: CourseCardProps) {
-  const handleClick = () => {
-    onClick?.(course);
-  };
+export function CourseCard({ course }: CourseCardProps) {
+  const { institutionSlug } = useCurrentInstitution();
 
-  console.log(handleClick);
+  // Build course URL with actual course data
+  const city = course.campusCity.toLowerCase().replace(/\s+/g, '-');
+  const state = course.campusState.toLowerCase();
+  const sku = course.sku || '';
+  const unitId = course.unitId || '';
 
-  const courseUrl =
-    '/unama/cursos/detalhes?city=ananindeua&state=pa&sku=4.EAD017.02&unit=100';
+  const courseUrl = `/${institutionSlug}/cursos/detalhes?city=${city}&state=${state}&sku=${sku}&unit=${unitId}`;
 
   return (
     <Link href={courseUrl} className={styles.card} role="article">
@@ -58,7 +60,6 @@ export function CourseCard({ course, onClick }: CourseCardProps) {
       </div>
 
       <Button
-        // onClick={handleClick}
         color="primary"
         fullWidth
         aria-label={`Saiba mais sobre ${course.title}`}

@@ -134,6 +134,8 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetails {
     units,
     offerings: transformOfferings(activeOfferings),
     featuredImage,
+    methodology: strapi.metodologia || undefined,
+    certificate: strapi.certificado || undefined,
   };
 
   // Add embedded coordinator if exists

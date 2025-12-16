@@ -70,61 +70,57 @@ export function CourseGrid() {
             <CourseCardSkeleton key={idx} />
           ))}
         </View>
-      ) : isError ? (
-        <View align="center" padding={8}>
-          <p style={{ color: '#666', textAlign: 'center' }}>
-            Não foi possível carregar os cursos no momento. Por favor, tente
-            novamente mais tarde.
-          </p>
-        </View>
       ) : (
-        <>
-          <View gap={4} wrap direction="row" align="center" justify="center">
-            {cardsBeforeBanner.map((course) => (
-              <CourseCard
-                course={course}
-                onClick={handleCourseClick}
-                key={course.id}
-              />
-            ))}
-          </View>
+        !isError &&
+        !isLoading && (
+          <>
+            <View gap={4} wrap direction="row" align="center" justify="center">
+              {cardsBeforeBanner.map((course) => (
+                <CourseCard
+                  course={course}
+                  onClick={handleCourseClick}
+                  key={course.id}
+                />
+              ))}
+            </View>
 
-          <View className={styles.bannerContainer}>
-            {isBannerLoading ? (
-              <BannerSkeleton />
-            ) : bannerItem?.link ? (
-              <Link
-                href={bannerItem.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+            <View className={styles.bannerContainer}>
+              {isBannerLoading ? (
+                <BannerSkeleton />
+              ) : bannerItem?.link ? (
+                <Link
+                  href={bannerItem.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Image
+                    src={bannerSrc}
+                    alt={bannerItem.imageAlt || 'Banner'}
+                    onError={handleBannerError}
+                    fill
+                  />
+                </Link>
+              ) : (
                 <Image
                   src={bannerSrc}
-                  alt={bannerItem.imageAlt || 'Banner'}
+                  alt={bannerItem?.imageAlt || 'Banner'}
                   onError={handleBannerError}
                   fill
                 />
-              </Link>
-            ) : (
-              <Image
-                src={bannerSrc}
-                alt={bannerItem?.imageAlt || 'Banner'}
-                onError={handleBannerError}
-                fill
-              />
-            )}
-          </View>
+              )}
+            </View>
 
-          <View gap={4} wrap direction="row" align="center" justify="center">
-            {cardsAfterBanner.map((course) => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                onClick={handleCourseClick}
-              />
-            ))}
-          </View>
-        </>
+            <View gap={4} wrap direction="row" align="center" justify="center">
+              {cardsAfterBanner.map((course) => (
+                <CourseCard
+                  key={course.id}
+                  course={course}
+                  onClick={handleCourseClick}
+                />
+              ))}
+            </View>
+          </>
+        )
       )}
 
       {totalPages > 1 && (

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "unit",
     "pluralName": "units",
-    "displayName": "Home / Infraestrutura",
+    "displayName": "/ Unidades",
     "description": "Infrastructure units (campuses) for institutions"
   },
   "options": {
@@ -70,6 +70,12 @@
     },
     "id_unidade": {
       "type": "integer"
+    },
+    "curso_detalhes": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::course.course",
+      "inversedBy": "unidades"
     }
   }
 }

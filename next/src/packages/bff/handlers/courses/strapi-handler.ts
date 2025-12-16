@@ -55,10 +55,19 @@ export async function handleCourseDetailsFromStrapi(
       hasCoordinator: !!strapiCourse.curso_coordenacao,
       hasTeacher: !!strapiCourse.corpo_docente,
       hasCover: !!(strapiCourse.capa || strapiCourse.imagem_destaque),
+      hasMethodology: !!strapiCourse.metodologia,
+      hasCertificate: !!strapiCourse.certificado,
     });
 
     // Transform course data (includes embedded coordinator and teacher)
     const courseDetails = transformStrapiCourse(strapiCourse);
+
+    console.log('[CourseDetails] After transformation:', {
+      hasMethodology: !!courseDetails.methodology,
+      hasCertificate: !!courseDetails.certificate,
+      methodologyLength: courseDetails.methodology?.length,
+      certificateLength: courseDetails.certificate?.length,
+    });
 
     // Add pedagogical project if exists
     if (strapiCourse.projeto_pedagogico) {

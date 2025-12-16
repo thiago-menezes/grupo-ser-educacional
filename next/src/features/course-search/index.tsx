@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 
 function CourseSearchPageContent() {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
-  const { courses } = useCourseGrid();
+  const { courses, isLoading } = useCourseGrid();
 
   return (
     <View className={styles.page}>
@@ -32,7 +32,7 @@ function CourseSearchPageContent() {
 
           <View className={styles.coursesGridContainer}>
             <ResultsHeader />
-            {courses.length === 0 && (
+            {!isLoading && courses.length === 0 && (
               <EmptyState
                 icon="search"
                 title="Nenhum curso encontrado"
