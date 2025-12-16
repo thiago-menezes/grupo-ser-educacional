@@ -1,12 +1,9 @@
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { startTransition, useCallback, useEffect, useState } from 'react';
-import { useCurrentInstitution } from '@/hooks';
+import { useCurrentInstitution, useQueryParams } from '@/hooks';
 import type { CourseDetails } from '../types';
 
 export const useCourseDetailsContent = (course: CourseDetails) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { searchParams, setParam } = useQueryParams();
   const [isCurriculumModalOpen, setIsCurriculumModalOpen] = useState(false);
   const [selectedModalityId, setSelectedModalityId] = useState<number | null>(
     null,
@@ -99,12 +96,10 @@ export const useCourseDetailsContent = (course: CourseDetails) => {
         (m) => m.id === modalityId,
       );
       if (selectedModality) {
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('modality', selectedModality.slug);
-        router.push(`${pathname}?${params.toString()}`);
+        setParam('modality', selectedModality.slug);
       }
     },
-    [course.modalities, router, pathname, searchParams],
+    [course.modalities, setParam],
   );
 
   const breadcrumbItems = [
@@ -117,22 +112,18 @@ export const useCourseDetailsContent = (course: CourseDetails) => {
   const handleAdmissionFormChange = useCallback(
     (formId: string) => {
       setSelectedAdmissionFormId(formId);
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('admissionForm', formId);
-      router.push(`${pathname}?${params.toString()}`);
+      setParam('admissionForm', formId);
     },
-    [router, pathname, searchParams],
+    [setParam],
   );
 
   // Handler to update turno query parameter
   const handleTurnoChange = useCallback(
     (turnoId: number) => {
       setSelectedTurnoId(turnoId);
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('turno', turnoId.toString());
-      router.push(`${pathname}?${params.toString()}`);
+      setParam('turno', turnoId.toString());
     },
-    [router, pathname, searchParams],
+    [setParam],
   );
 
   return {

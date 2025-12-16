@@ -1,14 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
-import { useCurrentInstitution } from '@/hooks';
+import { useCurrentInstitution, useQueryParams } from '@/hooks';
 import { query } from '@/libs';
 import type { CoursesUnitsResponseDTO } from '@/types/api/courses-units';
 
 export function useSelectedUnit() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { searchParams, setParam } = useQueryParams();
   const { institutionSlug } = useCurrentInstitution();
 
   const state = searchParams.get('state');
@@ -34,12 +31,9 @@ export function useSelectedUnit() {
 
   const handleUnitChange = useCallback(
     (newUnitId: number) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('unit', newUnitId.toString());
-
-      router.push(`${pathname}?${params.toString()}`);
+      setParam('unit', newUnitId.toString());
     },
-    [router, pathname, searchParams],
+    [setParam],
   );
 
   return {

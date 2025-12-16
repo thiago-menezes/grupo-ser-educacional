@@ -1,6 +1,5 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import {
   createContext,
   PropsWithChildren,
@@ -11,6 +10,7 @@ import {
   useState,
   startTransition,
 } from 'react';
+import { useQueryParams } from '@/hooks';
 import { useCityContext } from '@/contexts/city';
 import { DEFAULT_FILTERS } from './filters-content/constants';
 import type {
@@ -155,13 +155,15 @@ function parseFiltersFromSearchParams(
 }
 
 export function CourseFiltersProvider({ children }: PropsWithChildren) {
-  const searchParams = useSearchParams();
+  const { searchParams, setParam } = useQueryParams();
   const { city: contextCity, state: contextState } = useCityContext();
 
   // Initialize filters from URL params on mount, fallback to context/localStorage
   const [appliedFilters, setAppliedFilters] = useState<CourseFiltersFormValues>(
     () => {
-      const urlFilters = parseFiltersFromSearchParams(searchParams);
+      const urlFilters = parseFiltersFromSearchParams(
+        new URLSearchParams(searchParams.toString()),
+      );
 
       // If no city in URL but have context city, use context
       if (!urlFilters.city && contextCity && contextState) {
@@ -177,7 +179,9 @@ export function CourseFiltersProvider({ children }: PropsWithChildren) {
 
   // Update filters when URL params change
   useEffect(() => {
-    const urlFilters = parseFiltersFromSearchParams(searchParams);
+    const urlFilters = parseFiltersFromSearchParams(
+      new URLSearchParams(searchParams.toString()),
+    );
     startTransition(() => {
       setAppliedFilters((prev) => {
         // Only update if there are actual changes to avoid unnecessary re-renders
@@ -205,7 +209,6 @@ export function CourseFiltersProvider({ children }: PropsWithChildren) {
 
   // Sync CityContext changes to URL (only on course search page)
   useEffect(() => {
-    if (typeof window === 'undefined') return;
     if (!contextCity || !contextState) return;
 
     const formattedCity = formatCityForUrl(contextCity, contextState);
@@ -213,13 +216,9 @@ export function CourseFiltersProvider({ children }: PropsWithChildren) {
 
     // Only update if different to avoid unnecessary history entries
     if (currentCityInUrl !== formattedCity) {
-      const newParams = new URLSearchParams(searchParams.toString());
-      newParams.set('city', formattedCity);
-
-      const newUrl = `${window.location.pathname}?${newParams.toString()}`;
-      window.history.replaceState(null, '', newUrl);
+      setParam('city', formattedCity);
     }
-  }, [contextCity, contextState, searchParams]);
+  }, [contextCity, contextState, searchParams, setParam]);
 
   const activeFilters = useMemo(
     () => buildActiveFilters(appliedFilters),

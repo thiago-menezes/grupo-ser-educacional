@@ -1,13 +1,12 @@
-import { useSearchParams } from 'next/navigation';
 import { Container, View } from 'reshaped';
-import { useCurrentInstitution } from '@/hooks';
+import { useCurrentInstitution, useQueryParams } from '@/hooks';
 import { useQueryCourseDetails } from './api/query';
 import { CourseDetailsContent } from './course-details-content';
 import { CourseDetailsSkeleton } from './course-details-skeleton';
 import styles from './styles.module.scss';
 
 export function CourseDetailsPage() {
-  const searchParams = useSearchParams();
+  const { searchParams } = useQueryParams();
   const { institutionSlug } = useCurrentInstitution();
 
   const sku = searchParams.get('sku');

@@ -1,4 +1,3 @@
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { View } from 'reshaped';
 import { Breadcrumb } from '@/components';
@@ -6,6 +5,7 @@ import { useCityContext } from '@/contexts/city';
 import { InfrastructureSection } from '@/features';
 import { GeoCoursesSection } from '@/features/home/geo-courses';
 import { MOCK_GEO_COURSES_DATA } from '@/features/home/geo-courses/api/mocks';
+import { useQueryParams } from '@/hooks';
 import { CourseAbout } from '../course-about';
 import { CourseAdmissionForms } from '../course-admission-forms';
 import { CourseCoordination } from '../course-coordination';
@@ -21,9 +21,7 @@ import { useCourseDetailsContent } from './hooks';
 import styles from './styles.module.scss';
 
 export function CourseDetailsContent({ course }: { course: CourseDetails }) {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const pathname = usePathname();
+  const { searchParams, setParam } = useQueryParams();
   const { setCityState } = useCityContext();
   const unitFromUrl = searchParams.get('unit');
 
@@ -64,10 +62,7 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
     const unit = course.units.find((u) => u.id === unitId);
     if (unit) {
       setCityState(unit.city, unit.state, 'manual');
-
-      const params = new URLSearchParams(searchParams.toString());
-      params.set('unit', unitId.toString());
-      router.push(`${pathname}?${params.toString()}`);
+      setParam('unit', unitId.toString());
     }
 
     setSelectedUnitId(unitId);

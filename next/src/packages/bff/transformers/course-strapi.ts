@@ -114,6 +114,7 @@ function transformOfferings(offerings: StrapiOferta[]) {
  * Transform Strapi course to CourseDetails DTO
  */
 export function transformStrapiCourse(strapi: StrapiCourse): CourseDetailsDTO {
+  console.log({ strapi });
   // Extract active offerings
   const activeOfferings = strapi.ofertas?.filter((o) => o.ativo) || [];
 
@@ -170,7 +171,7 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetailsDTO {
       name: strapi.curso_coordenacao.nome,
       description: strapi.curso_coordenacao.descricao || '',
       phone: strapi.curso_coordenacao.telefone || undefined,
-      photo: strapi.curso_coordenacao.foto?.url,
+      photo: getMediaUrl(strapi.curso_coordenacao.foto?.url || ''),
     };
   }
 
