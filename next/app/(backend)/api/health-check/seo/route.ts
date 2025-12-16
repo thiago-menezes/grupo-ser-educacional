@@ -1,25 +1,8 @@
 import { NextResponse } from 'next/server';
-
-interface HealthCheck {
-  timestamp: string;
-  environment: string;
-  vercelUrl?: string;
-  strapiUrl?: string;
-  strapiToken: string;
-  apiBaseUrl?: string;
-  nextAuthUrl?: string;
-  seoApiTest?: {
-    url: string;
-    status: number;
-    statusText: string;
-    ok: boolean;
-    dataLength?: number;
-    error?: string;
-  };
-}
+import type { HealthCheckSeoDTO } from '@/types/api/health-check-seo';
 
 export async function GET() {
-  const healthCheck: HealthCheck = {
+  const healthCheck: HealthCheckSeoDTO = {
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'unknown',
     vercelUrl: process.env.VERCEL_URL,
@@ -64,5 +47,5 @@ export async function GET() {
     };
   }
 
-  return NextResponse.json(healthCheck);
+  return NextResponse.json<HealthCheckSeoDTO>(healthCheck);
 }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { CoursesResponse } from 'types/api/courses';
 import {
   handleCoursesList,
   parseCoursesQueryParams,
@@ -9,7 +10,7 @@ export async function GET(request: NextRequest) {
   try {
     const params = parseCoursesQueryParams(request.nextUrl.searchParams);
     const response = handleCoursesList(params);
-    return NextResponse.json(response);
+    return NextResponse.json<CoursesResponse>(response);
   } catch (error) {
     if (error instanceof BffValidationError) {
       return NextResponse.json(

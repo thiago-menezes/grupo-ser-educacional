@@ -1,16 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import type { SearchBannerPromosResponseDTO } from './types';
+import type {
+  SearchBannerPromosResponseDTO,
+  UseSearchBannerPromosParams,
+} from './types';
 
 const SEARCH_BANNER_PROMOS_QUERY_KEY = 'search-banner-promos';
 
-type UseSearchBannerPromosParams = {
-  institutionSlug: string;
-  enabled?: boolean;
-};
-
-async function fetchSearchBannerPromos(
+const getSearchBannerPromos = async (
   institutionSlug: string,
-): Promise<SearchBannerPromosResponseDTO> {
+): Promise<SearchBannerPromosResponseDTO> => {
   const url = new URL('/api/search-banner-promos', window.location.origin);
   url.searchParams.set('institutionSlug', institutionSlug);
 
@@ -21,15 +19,15 @@ async function fetchSearchBannerPromos(
   }
 
   return response.json();
-}
+};
 
-export function useSearchBannerPromos({
+export function useQuerySearchBannerPromos({
   institutionSlug,
   enabled = true,
 }: UseSearchBannerPromosParams) {
   return useQuery({
     queryKey: [SEARCH_BANNER_PROMOS_QUERY_KEY, institutionSlug],
-    queryFn: () => fetchSearchBannerPromos(institutionSlug),
+    queryFn: () => getSearchBannerPromos(institutionSlug),
     enabled: enabled && !!institutionSlug,
     staleTime: 1000 * 60 * 60, // 1 hour
     gcTime: 1000 * 60 * 60 * 24, // 24 hours

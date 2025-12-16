@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchCityCourses } from '@/packages/bff/handlers/courses/client-handler';
+import type {
+  CursosCidadeErrorDTO,
+  CursosCidadeResponseDTO,
+} from '@/types/api/cursos-cidade';
 import { getClientApiClient } from '../../services/bff';
 
 /**
@@ -25,21 +29,21 @@ export async function GET(request: NextRequest) {
 
   // Validate required parameters
   if (!institution) {
-    return NextResponse.json(
+    return NextResponse.json<CursosCidadeErrorDTO>(
       { error: 'institution query parameter is required' },
       { status: 400 },
     );
   }
 
   if (!estado) {
-    return NextResponse.json(
+    return NextResponse.json<CursosCidadeErrorDTO>(
       { error: 'estado query parameter is required' },
       { status: 400 },
     );
   }
 
   if (!cidade) {
-    return NextResponse.json(
+    return NextResponse.json<CursosCidadeErrorDTO>(
       { error: 'cidade query parameter is required' },
       { status: 400 },
     );
@@ -67,7 +71,7 @@ export async function GET(request: NextRequest) {
       perPage,
     });
 
-    return NextResponse.json(data, {
+    return NextResponse.json<CursosCidadeResponseDTO>(data, {
       headers: {
         // Cache for 5 minutes, stale-while-revalidate for 6 hours
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=21600',
@@ -77,7 +81,7 @@ export async function GET(request: NextRequest) {
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
 
-    return NextResponse.json(
+    return NextResponse.json<CursosCidadeErrorDTO>(
       {
         error: 'Failed to fetch courses for city',
         message: error instanceof Error ? error.message : 'Unknown error',

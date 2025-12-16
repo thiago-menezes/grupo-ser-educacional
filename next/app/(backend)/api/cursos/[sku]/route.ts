@@ -3,6 +3,10 @@ import {
   handleCourseDetailsFromStrapi,
   handleCourseDetailsWithClientApi,
 } from '@/packages/bff/handlers/courses';
+import type {
+  CursosSkuErrorDTO,
+  CursosSkuResponseDTO,
+} from '@/types/api/cursos-sku';
 import { getStrapiClient } from '../../services/bff';
 
 export async function GET(
@@ -51,7 +55,7 @@ export async function GET(
 
       console.log('[API] Course enriched with Client API data');
 
-      return NextResponse.json(enrichedCourse, {
+      return NextResponse.json<CursosSkuResponseDTO>(enrichedCourse, {
         headers: {
           'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
         },
@@ -59,7 +63,7 @@ export async function GET(
     }
 
     // Return Strapi-only data
-    return NextResponse.json(strapiCourse, {
+    return NextResponse.json<CursosSkuResponseDTO>(strapiCourse, {
       headers: {
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
       },
@@ -71,7 +75,7 @@ export async function GET(
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
 
-    return NextResponse.json(
+    return NextResponse.json<CursosSkuErrorDTO>(
       {
         error: 'Failed to fetch course details',
         message: error instanceof Error ? error.message : 'Unknown error',

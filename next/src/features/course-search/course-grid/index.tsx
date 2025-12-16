@@ -6,8 +6,8 @@ import type { CourseData } from 'types/api/courses';
 import { BannerSkeleton, CourseCard } from '@/components';
 import { CourseCardSkeleton } from '@/components/course-card/skeleton';
 import { useImageFallback } from '@/features/infrastructure/utils/image-fallback';
-import { useSearchBannerPromos } from '@/features/search/banner-promo/api';
 import { useCurrentInstitution } from '@/hooks';
+import { useQuerySearchBannerPromos } from '../banner-promo/api/query';
 import { useCourseGrid } from './hooks';
 import styles from './styles.module.scss';
 
@@ -24,7 +24,7 @@ export function CourseGrid() {
     currentPage,
   } = useCourseGrid();
   const { data: bannerData, isLoading: isBannerLoading } =
-    useSearchBannerPromos({
+    useQuerySearchBannerPromos({
       institutionSlug,
       enabled: !!institutionSlug,
     });

@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { handleClientUnits } from '@/packages/bff/handlers/units';
+import type {
+  UnitsClientErrorDTO,
+  UnitsClientResponseDTO,
+} from '@/types/api/units-client';
 import { getClientApiClient } from '../../services/bff';
 
 /**
@@ -19,21 +23,21 @@ export async function GET(request: NextRequest) {
 
   // Validate required parameters
   if (!institution) {
-    return NextResponse.json(
+    return NextResponse.json<UnitsClientErrorDTO>(
       { error: 'institution query parameter is required' },
       { status: 400 },
     );
   }
 
   if (!state) {
-    return NextResponse.json(
+    return NextResponse.json<UnitsClientErrorDTO>(
       { error: 'state query parameter is required' },
       { status: 400 },
     );
   }
 
   if (!city) {
-    return NextResponse.json(
+    return NextResponse.json<UnitsClientErrorDTO>(
       { error: 'city query parameter is required' },
       { status: 400 },
     );
@@ -47,7 +51,7 @@ export async function GET(request: NextRequest) {
       city,
     });
 
-    return NextResponse.json(data, {
+    return NextResponse.json<UnitsClientResponseDTO>(data, {
       headers: {
         // Cache for 1 hour, stale-while-revalidate for 24 hours
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
@@ -57,7 +61,7 @@ export async function GET(request: NextRequest) {
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
 
-    return NextResponse.json(
+    return NextResponse.json<UnitsClientErrorDTO>(
       {
         error: 'Failed to fetch units from client API',
         message: error instanceof Error ? error.message : 'Unknown error',

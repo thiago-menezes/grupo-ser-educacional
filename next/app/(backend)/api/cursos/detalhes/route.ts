@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import type { CourseDetails } from '@/features/course-details/types';
 import {
   handleCourseDetailsFromStrapi,
   fetchCourseDetailsFromClientApi,
 } from '@/packages/bff/handlers/courses';
+import type {
+  CursosDetalhesErrorDTO,
+  CursosDetalhesResponseDTO,
+} from '@/types/api/cursos-detalhes';
 import { getStrapiClient } from '../../services/bff';
 
 export async function GET(request: NextRequest) {
@@ -19,7 +22,7 @@ export async function GET(request: NextRequest) {
     const admissionForm = searchParams.get('admissionForm');
 
     if (!sku) {
-      return NextResponse.json(
+      return NextResponse.json<CursosDetalhesErrorDTO>(
         { error: 'SKU parameter is required' },
         { status: 400 },
       );
@@ -34,7 +37,7 @@ export async function GET(request: NextRequest) {
       admissionForm,
     });
 
-    let courseDetails: CourseDetails | null = null;
+    let courseDetails: CursosDetalhesResponseDTO | null = null;
 
     // Try to get base course data from Strapi
     try {
@@ -196,7 +199,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (!courseDetails) {
-      return NextResponse.json(
+      return NextResponse.json<CursosDetalhesErrorDTO>(
         {
           error: 'Course not found',
           message: `No course found for SKU: ${sku}`,
@@ -213,7 +216,7 @@ export async function GET(request: NextRequest) {
       certificatePreview: courseDetails.certificate?.substring(0, 50),
     });
 
-    return NextResponse.json(courseDetails, {
+    return NextResponse.json<CursosDetalhesResponseDTO>(courseDetails, {
       headers: {
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
       },
@@ -224,7 +227,7 @@ export async function GET(request: NextRequest) {
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
 
-    return NextResponse.json(
+    return NextResponse.json<CursosDetalhesErrorDTO>(
       {
         error: 'Failed to fetch course details',
         message: error instanceof Error ? error.message : 'Unknown error',

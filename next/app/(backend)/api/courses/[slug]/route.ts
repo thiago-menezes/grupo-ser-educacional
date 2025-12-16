@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { handleCourseDetailsFromStrapi } from '@/packages/bff/handlers/courses';
+import type {
+  CoursesSlugErrorDTO,
+  CoursesSlugResponseDTO,
+} from '@/types/api/courses-slug';
 import { getStrapiClient } from '../../services/bff';
 
 export async function GET(
@@ -13,11 +17,11 @@ export async function GET(
       courseSku: slug,
       courseSlug: slug,
     });
-    return NextResponse.json(response);
+    return NextResponse.json<CoursesSlugResponseDTO>(response);
   } catch (error) {
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
-    return NextResponse.json(
+    return NextResponse.json<CoursesSlugErrorDTO>(
       {
         error: 'Failed to fetch course',
         message: error instanceof Error ? error.message : 'Unknown error',

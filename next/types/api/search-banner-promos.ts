@@ -16,3 +16,8 @@ export type SearchBannerPromosResponseDTO = {
     };
   };
 };
+
+export type SearchBannerPromosErrorDTO = {
+  error: string;
+  message?: string;
+};

@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { handlePerguntasFrequentes } from '@/packages/bff/handlers/perguntas-frequentes';
 import type { StrapiPerguntaFrequente } from '@/packages/bff/handlers/perguntas-frequentes/types';
+import type {
+  PerguntasFrequentesErrorDTO,
+  PerguntasFrequentesResponseDTO,
+} from '@/types/api/perguntas-frequentes';
 import { getStrapiClient } from '../services/bff';
 
 /**
@@ -20,7 +24,7 @@ export async function GET(request: NextRequest) {
   const noCache = searchParams.get('noCache') === 'true';
 
   if (!institutionSlug) {
-    return NextResponse.json(
+    return NextResponse.json<PerguntasFrequentesErrorDTO>(
       { error: 'institutionSlug query parameter is required' },
       { status: 400 },
     );
@@ -34,7 +38,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Transform Strapi response to expected DTO format
-    const transformedData = {
+    const transformedData: PerguntasFrequentesResponseDTO = {
       data: strapiData.data.map(transformFAQToDTO),
       meta: strapiData.meta,
     };
@@ -44,14 +48,14 @@ export async function GET(request: NextRequest) {
         ? 'no-store, no-cache, must-revalidate, proxy-revalidate'
         : 'public, s-maxage=3600, stale-while-revalidate=86400';
 
-    return NextResponse.json(transformedData, {
+    return NextResponse.json<PerguntasFrequentesResponseDTO>(transformedData, {
       headers: {
         'Cache-Control': cacheControl,
         'X-Cache-Status': noCache ? 'bypassed' : 'cached',
       },
     });
   } catch (error) {
-    return NextResponse.json(
+    return NextResponse.json<PerguntasFrequentesErrorDTO>(
       {
         error: 'Failed to fetch perguntas frequentes data',
         message: error instanceof Error ? error.message : 'Unknown error',

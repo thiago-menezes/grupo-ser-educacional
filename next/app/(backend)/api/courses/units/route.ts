@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { transformClientUnits } from '@/packages/bff/transformers/client-api';
+import type {
+  CoursesUnitsErrorDTO,
+  CoursesUnitsResponseDTO,
+} from '@/types/api/courses-units';
 import { getClientApiClient } from '../../services/bff';
 
 /**
@@ -20,7 +24,7 @@ export async function GET(request: NextRequest) {
   const sku = searchParams.get('sku');
 
   if (!institution || !state || !city || !sku) {
-    return NextResponse.json(
+    return NextResponse.json<CoursesUnitsErrorDTO>(
       { error: 'institution, state, city, and sku are required' },
       { status: 400 },
     );
@@ -36,7 +40,7 @@ export async function GET(request: NextRequest) {
     );
 
     if (!apiResponse.Unidades || apiResponse.Unidades.length === 0) {
-      return NextResponse.json({
+      return NextResponse.json<CoursesUnitsResponseDTO>({
         data: [],
         meta: { total: 0, institution, state, city, sku },
       });
@@ -44,7 +48,7 @@ export async function GET(request: NextRequest) {
 
     const transformedUnits = transformClientUnits(apiResponse.Unidades);
 
-    return NextResponse.json(
+    return NextResponse.json<CoursesUnitsResponseDTO>(
       {
         data: transformedUnits,
         meta: {
@@ -65,7 +69,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('[API] Error fetching units by course:', error);
 
-    return NextResponse.json(
+    return NextResponse.json<CoursesUnitsErrorDTO>(
       {
         error: 'Failed to fetch units for course',
         message: error instanceof Error ? error.message : 'Unknown error',
@@ -74,4 +78,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-

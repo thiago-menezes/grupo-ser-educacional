@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { handleMedia } from '@/packages/bff/handlers';
+import type { MediaErrorDTO } from '@/types/api/media';
 import { getStrapiClient } from '../../services/bff';
 
 export async function GET(
@@ -21,7 +22,7 @@ export async function GET(
   } catch (error) {
     const statusCode =
       error instanceof Error && error.message.includes('Failed') ? 500 : 500;
-    return NextResponse.json(
+    return NextResponse.json<MediaErrorDTO>(
       {
         error: 'Failed to fetch media',
         message: error instanceof Error ? error.message : 'Unknown error',

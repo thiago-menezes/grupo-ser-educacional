@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { transformInstitution } from '@/packages/bff/transformers/strapi';
+import type {
+  InstitutionsErrorDTO,
+  InstitutionsResponseDTO,
+} from '@/types/api/institutions';
 
 export async function GET(request: NextRequest) {
   try {
@@ -7,7 +11,7 @@ export async function GET(request: NextRequest) {
     const slug = searchParams.get('slug');
 
     if (!slug) {
-      return NextResponse.json(
+      return NextResponse.json<InstitutionsErrorDTO>(
         { error: 'Slug parameter is required' },
         { status: 400 },
       );
@@ -35,7 +39,7 @@ export async function GET(request: NextRequest) {
     const data = await response.json();
 
     if (!data.data || data.data.length === 0) {
-      return NextResponse.json(
+      return NextResponse.json<InstitutionsErrorDTO>(
         { error: 'Institution not found' },
         { status: 404 },
       );
@@ -44,13 +48,11 @@ export async function GET(request: NextRequest) {
     const strapiInstitution = data.data[0];
     const institution = transformInstitution(strapiInstitution);
 
-    return NextResponse.json({
-      institution,
-    });
+    return NextResponse.json<InstitutionsResponseDTO>({ institution });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error fetching institution:', error);
-    return NextResponse.json(
+    return NextResponse.json<InstitutionsErrorDTO>(
       { error: 'Internal server error' },
       { status: 500 },
     );

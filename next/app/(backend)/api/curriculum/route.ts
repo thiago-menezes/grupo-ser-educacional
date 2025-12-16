@@ -4,6 +4,7 @@ import type {
   CurriculumModality,
   CurriculumPeriod,
 } from '@/features/course-details/curriculum-grid/types';
+import type { CurriculumErrorDTO } from '@/types/api/curriculum';
 
 function getMockCurriculum(
   _courseId: string,
@@ -159,14 +160,14 @@ export async function GET(request: NextRequest) {
 
   // Validação dos parâmetros
   if (!courseId) {
-    return NextResponse.json(
+    return NextResponse.json<CurriculumErrorDTO>(
       { error: 'courseId é obrigatório' },
       { status: 400 },
     );
   }
 
   if (!modality) {
-    return NextResponse.json(
+    return NextResponse.json<CurriculumErrorDTO>(
       { error: 'modality é obrigatório' },
       { status: 400 },
     );
@@ -180,7 +181,7 @@ export async function GET(request: NextRequest) {
     'aovivo',
   ];
   if (!validModalities.includes(modality)) {
-    return NextResponse.json(
+    return NextResponse.json<CurriculumErrorDTO>(
       {
         error: `modality deve ser um dos seguintes valores: ${validModalities.join(', ')}`,
       },
@@ -196,7 +197,7 @@ export async function GET(request: NextRequest) {
     'integral',
   ];
   if (period && !validPeriods.includes(period)) {
-    return NextResponse.json(
+    return NextResponse.json<CurriculumErrorDTO>(
       {
         error: `period deve ser um dos seguintes valores: ${validPeriods.join(', ')}`,
       },
@@ -222,7 +223,7 @@ export async function GET(request: NextRequest) {
 
       if (response.ok) {
         const data = await response.json();
-        return NextResponse.json(data);
+        return NextResponse.json<CurriculumResponse>(data);
       }
 
       // If not 404, log the error but continue to mock
@@ -238,5 +239,5 @@ export async function GET(request: NextRequest) {
 
   // Fallback to mock data
   const mockResponse = getMockCurriculum(courseId, modality, period);
-  return NextResponse.json(mockResponse);
+  return NextResponse.json<CurriculumResponse>(mockResponse);
 }

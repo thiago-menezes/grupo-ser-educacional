@@ -2,31 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 import { useCurrentInstitution } from '@/hooks';
-
-type Unit = {
-  id: number;
-  name: string;
-  state: string;
-  city: string;
-};
-
-type UnitsResponse = {
-  data: Unit[];
-  meta: {
-    total: number;
-    institution: string;
-    state: string;
-    city: string;
-    sku: string;
-  };
-};
+import type { CoursesUnitsResponseDTO } from '@/types/api/courses-units';
 
 async function fetchUnitsByCourse(
   institution: string,
   state: string,
   city: string,
   sku: string,
-): Promise<UnitsResponse> {
+): Promise<CoursesUnitsResponseDTO> {
   const params = new URLSearchParams({
     institution,
     state,

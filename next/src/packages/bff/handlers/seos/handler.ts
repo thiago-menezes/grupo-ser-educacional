@@ -1,3 +1,4 @@
+import type { SeosResponseDTO } from 'types/api/seos';
 import type { StrapiClient } from '../../services/strapi';
 import type { SeoQueryParams } from './types';
 
@@ -7,8 +8,8 @@ import type { SeoQueryParams } from './types';
 export async function handleSeo(
   strapiClient: StrapiClient,
   params: SeoQueryParams,
-) {
-  const data = await strapiClient.fetch(
+): Promise<SeosResponseDTO> {
+  const data = await strapiClient.fetch<SeosResponseDTO>(
     'seos',
     {
       filters: {

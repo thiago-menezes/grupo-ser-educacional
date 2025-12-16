@@ -2,73 +2,16 @@ import { useQuery } from '@tanstack/react-query';
 import { CoursesResponse } from 'types/api/courses';
 import { useCurrentInstitution } from '@/hooks';
 import { query } from '@/libs';
-
-type CourseFilters = {
-  location?: string;
-  radius?: number;
-  modalities?: string[];
-  priceMin?: number;
-  priceMax?: number;
-  shifts?: string[];
-  durations?: string[];
-  level?: string;
-  courseName?: string;
-};
-
-/**
- * Map course level to API level format
- */
-function mapCourseLevel(level: string): string | undefined {
-  const levelMap: Record<string, string> = {
-    graduation: 'graduacao',
-    postgraduate: 'pos-graduacao',
-  };
-  return levelMap[level];
-}
-
-/**
- * Map modality to API format
- */
-function mapModality(modality: string): string | undefined {
-  const modalityMap: Record<string, string> = {
-    presencial: 'presencial',
-    semipresencial: 'hibrido',
-    ead: 'ead',
-  };
-  return modalityMap[modality];
-}
-
-/**
- * Map duration range to API format
- */
-function mapDurationRange(duration: string): string | undefined {
-  const durationMap: Record<string, string> = {
-    '1-2': '1-2',
-    '2-3': '2-3',
-    '3-4': '3-4',
-    '4-plus': '4+',
-  };
-  return durationMap[duration];
-}
-
-/**
- * Map shift to period ID
- * Shifts: morning, afternoon, night, fulltime, virtual
- * Periods: manha (1), tarde (2), noite (3), integral (4), virtual (5)
- */
-function mapShiftToPeriodId(shift: string): number | undefined {
-  const shiftMap: Record<string, number> = {
-    morning: 1, // Manhã
-    afternoon: 2, // Tarde
-    night: 3, // Noite
-    fulltime: 4, // Integral
-    virtual: 5, // Virtual
-  };
-  return shiftMap[shift];
-}
+import {
+  mapCourseLevel,
+  mapDurationRange,
+  mapModality,
+  mapShiftToPeriodId,
+} from '../mappers';
+import { CityCoursesFilters, CourseFilters } from './types';
 
 export const useQueryCourses = (
-  filters: CourseFilters,
+  filters: Partial<CourseFilters>,
   page: number,
   perPage: number,
 ) => {
@@ -134,5 +77,68 @@ export const useQueryCourses = (
 
       return query<CoursesResponse>('/courses', { params });
     },
+  });
+};
+
+function parseCityParam(cityParam: string): { city: string; state: string } {
+  const match = cityParam.match(/city:([^-]+)-state:([^-]+)/);
+  return {
+    city: match?.[1] || '',
+    state: match?.[2] || '',
+  };
+}
+
+export const useQueryCityBasedCourses = (
+  filters: Partial<CityCoursesFilters>,
+  page: number,
+  perPage: number,
+) => {
+  const { institutionId } = useCurrentInstitution();
+
+  const { city, state } = filters.city
+    ? parseCityParam(filters.city)
+    : { city: '', state: '' };
+
+  return useQuery({
+    queryKey: [
+      'courses',
+      'city',
+      institutionId,
+      state,
+      city,
+      filters.modalities?.join(','),
+      filters.shifts?.join(','),
+      filters.durations?.join(','),
+      filters.courseName,
+      page,
+      perPage,
+    ],
+    queryFn: async () => {
+      const params: Record<string, string | number | string[]> = {
+        institution: institutionId,
+        estado: state,
+        cidade: city,
+        page,
+        perPage,
+      };
+
+      // Add filters to params
+      if (filters.modalities && filters.modalities.length > 0) {
+        params.modalities = filters.modalities;
+      }
+      if (filters.shifts && filters.shifts.length > 0) {
+        params.shifts = filters.shifts;
+      }
+      if (filters.durations && filters.durations.length > 0) {
+        params.durations = filters.durations;
+      }
+      if (filters.courseName) {
+        params.courseName = filters.courseName;
+      }
+
+      return query<CoursesResponse>('/cursos/cidade', params);
+    },
+    enabled: !!city && !!state && !!institutionId,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };
