@@ -24,7 +24,6 @@ export function getStrapiClient() {
     throw new Error('STRAPI_URL environment variable is not configured');
   }
 
-  console.log('Strapi client initialized with URL:', STRAPI_URL);
   return createStrapiClient(STRAPI_URL, STRAPI_TOKEN);
 }
 
@@ -37,6 +36,5 @@ export function getClientApiClient() {
     throw new Error('API_BASE_URL environment variable is not configured');
   }
 
-  console.log('Client API client initialized with URL:', CLIENT_API_BASE_URL);
   return createClientApiClient(CLIENT_API_BASE_URL);
 }

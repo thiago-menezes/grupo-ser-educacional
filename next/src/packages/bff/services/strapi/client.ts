@@ -150,12 +150,6 @@ export class StrapiClient {
     const queryString = queryParts.length > 0 ? `?${queryParts.join('&')}` : '';
     const url = `${this.config.baseUrl}/api/${endpoint}${queryString}`;
 
-    console.log('[StrapiClient] Fetching URL:', url);
-    console.log('[StrapiClient] Total query params:', queryParts.length);
-    if (options?.populate) {
-      console.log('[StrapiClient] Populate structure:', options.populate);
-    }
-
     // Create AbortController for timeout
     const controller = new AbortController();
     const timeout = this.config.timeout || 10000; // Default 10 seconds

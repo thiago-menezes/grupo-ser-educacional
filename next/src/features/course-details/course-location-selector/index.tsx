@@ -1,10 +1,13 @@
 import { Button, DropdownMenu, Skeleton, Text, View } from 'reshaped';
+import { useCurrentInstitution } from '@/hooks';
 import { useSelectedUnit } from './hooks';
 import styles from './styles.module.scss';
 
 export function CourseLocationSelector() {
   const { selectedUnit, units, isLoading, handleUnitChange } =
     useSelectedUnit();
+
+  const { institutionName } = useCurrentInstitution();
 
   if (isLoading) {
     return (
@@ -36,7 +39,8 @@ export function CourseLocationSelector() {
       </Text>
       <View className={styles.unitCard}>
         <Text variant="body-2" weight="bold" className={styles.unitName}>
-          {selectedUnit.name}
+          {selectedUnit.name ||
+            `${institutionName.toUpperCase()} - ${selectedUnit.city}`}
         </Text>
         <Text
           variant="body-3"
@@ -70,7 +74,8 @@ export function CourseLocationSelector() {
               >
                 <View direction="column" gap={0}>
                   <Text variant="body-2" weight="medium">
-                    {unit.name}
+                    {unit.name ||
+                      `${institutionName.toUpperCase()} - ${unit.city}`}
                   </Text>
                   <Text variant="caption-1" color="neutral-faded">
                     {unit.city} - {unit.state}

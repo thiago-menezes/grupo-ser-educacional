@@ -4,9 +4,9 @@ import {
   fetchCourseDetailsFromClientApi,
 } from '@/packages/bff/handlers/courses';
 import type {
-  CursosDetalhesErrorDTO,
-  CursosDetalhesResponseDTO,
-} from '@/types/api/cursos-detalhes';
+  CourseDetailsErrorDTO,
+  CourseDetailsResponseDTO,
+} from '@/types/api/course-details';
 import { getStrapiClient } from '../../services/bff';
 
 export async function GET(request: NextRequest) {
@@ -22,22 +22,13 @@ export async function GET(request: NextRequest) {
     const admissionForm = searchParams.get('admissionForm');
 
     if (!sku) {
-      return NextResponse.json<CursosDetalhesErrorDTO>(
-        { error: 'SKU parameter is required' },
+      return NextResponse.json<CourseDetailsErrorDTO>(
+        { error: 'sku query parameter is required' },
         { status: 400 },
       );
     }
 
-    console.log('[API] Fetching course details:', {
-      sku,
-      institution,
-      state,
-      city,
-      unit,
-      admissionForm,
-    });
-
-    let courseDetails: CursosDetalhesResponseDTO | null = null;
+    let courseDetails: CourseDetailsResponseDTO | null = null;
 
     // Try to get base course data from Strapi
     try {
@@ -46,15 +37,8 @@ export async function GET(request: NextRequest) {
         courseSku: sku,
         courseSlug: sku,
       });
-      console.log('[API] Strapi course fetched:', {
-        name: courseDetails.name,
-        hasMethodology: !!courseDetails.methodology,
-        hasCertificate: !!courseDetails.certificate,
-        methodologyLength: courseDetails.methodology?.length,
-        certificateLength: courseDetails.certificate?.length,
-      });
     } catch {
-      console.warn('[API] Strapi course not found, trying Client API only');
+      // Strapi course not found, will try Client API only below
     }
 
     // If we have Client API params, fetch pricing data
@@ -110,11 +94,6 @@ export async function GET(request: NextRequest) {
             modalities: enrichedModalities,
             clientApiDetails,
           };
-          console.log('[API] Course enriched with Client API data:', {
-            modalitiesCount: enrichedModalities.length,
-            modalitiesFromStrapi: courseDetails.modalities?.length || 0,
-            modalities: enrichedModalities.map((m) => m.name),
-          });
         } else {
           // Create course from Client API data with unit info from params
           const unitIdNum = parseInt(unit, 10);
@@ -187,11 +166,8 @@ export async function GET(request: NextRequest) {
             ],
             clientApiDetails,
           };
-          console.log('[API] Course created from Client API data only');
         }
-      } catch (clientApiError) {
-        console.error('[API] Client API error:', clientApiError);
-        // If we have Strapi data, return it without enrichment
+      } catch {
         if (!courseDetails) {
           throw new Error('Course not found in Strapi or Client API');
         }
@@ -199,7 +175,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (!courseDetails) {
-      return NextResponse.json<CursosDetalhesErrorDTO>(
+      return NextResponse.json<CourseDetailsErrorDTO>(
         {
           error: 'Course not found',
           message: `No course found for SKU: ${sku}`,
@@ -208,26 +184,16 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    console.log('[API] Returning course details:', {
-      name: courseDetails.name,
-      hasMethodology: !!courseDetails.methodology,
-      hasCertificate: !!courseDetails.certificate,
-      methodologyPreview: courseDetails.methodology?.substring(0, 50),
-      certificatePreview: courseDetails.certificate?.substring(0, 50),
-    });
-
-    return NextResponse.json<CursosDetalhesResponseDTO>(courseDetails, {
+    return NextResponse.json<CourseDetailsResponseDTO>(courseDetails, {
       headers: {
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
       },
     });
   } catch (error) {
-    console.error('[API] Error fetching course details:', error);
-
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
 
-    return NextResponse.json<CursosDetalhesErrorDTO>(
+    return NextResponse.json<CourseDetailsErrorDTO>(
       {
         error: 'Failed to fetch course details',
         message: error instanceof Error ? error.message : 'Unknown error',

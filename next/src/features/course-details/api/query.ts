@@ -24,7 +24,7 @@ async function fetchCourseDetails(
   if (admissionForm) queryParams.append('admissionForm', admissionForm);
 
   const queryString = queryParams.toString();
-  const url = `/api/cursos/detalhes?${queryString}`;
+  const url = `/api/courses/details?${queryString}`;
 
   const response = await fetch(url, {
     headers: {

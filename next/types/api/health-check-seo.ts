@@ -17,3 +17,4 @@ export type HealthCheckSeoDTO = {
   nextAuthUrl?: string;
   seoApiTest?: HealthCheckSeoApiTestDTO;
 };
+

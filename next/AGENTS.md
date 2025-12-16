@@ -36,6 +36,11 @@ For project understanding and development guidelines, read:
 - Functions/variables: camelCase
 - Hooks: `useFeatureName`
 - CSS classes: camelCase
+- **Backend API & shared types language**:
+  - All **backend endpoints** (Next.js `app/(backend)/api/**`) must use **English** route paths and file/folder names.
+  - All **shared API contracts** in `types/api/**` must be written in **English** (filenames + exported type names).
+  - **Frontend user-facing URLs** and **HTML text content** may be **Portuguese**.
+  - Backend/CMS responses may contain Portuguese fields, but the **BFF must translate to English DTOs** before exposing to the app.
 - **Context files:**
   - Feature/component-specific: `context.tsx` (inside feature/component folder)
   - Global/shared: Business rule name in `src/contexts/` folder (e.g., `city.tsx`, `courses.tsx`)

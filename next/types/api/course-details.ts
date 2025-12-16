@@ -1,8 +1,8 @@
 import type { CourseDetails } from '@/features/course-details/types';
 
-export type CursosDetalhesResponseDTO = CourseDetails;
+export type CourseDetailsResponseDTO = CourseDetails;
 
-export type CursosDetalhesErrorDTO = {
+export type CourseDetailsErrorDTO = {
   error: string;
   message?: string;
 };

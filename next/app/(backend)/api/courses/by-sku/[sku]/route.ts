@@ -4,10 +4,10 @@ import {
   handleCourseDetailsWithClientApi,
 } from '@/packages/bff/handlers/courses';
 import type {
-  CursosSkuErrorDTO,
-  CursosSkuResponseDTO,
-} from '@/types/api/cursos-sku';
-import { getStrapiClient } from '../../services/bff';
+  CourseBySkuErrorDTO,
+  CourseBySkuResponseDTO,
+} from '@/types/api/course-by-sku';
+import { getStrapiClient } from '../../../services/bff';
 
 export async function GET(
   request: NextRequest,
@@ -23,15 +23,6 @@ export async function GET(
     const city = searchParams.get('city');
     const unit = searchParams.get('unit');
     const admissionForm = searchParams.get('admissionForm');
-
-    console.log('[API] Fetching course details:', {
-      sku,
-      institution,
-      state,
-      city,
-      unit,
-      admissionForm,
-    });
 
     // Get base course data from Strapi
     const strapiClient = getStrapiClient();
@@ -53,9 +44,7 @@ export async function GET(
         },
       );
 
-      console.log('[API] Course enriched with Client API data');
-
-      return NextResponse.json<CursosSkuResponseDTO>(enrichedCourse, {
+      return NextResponse.json<CourseBySkuResponseDTO>(enrichedCourse, {
         headers: {
           'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
         },
@@ -63,19 +52,17 @@ export async function GET(
     }
 
     // Return Strapi-only data
-    return NextResponse.json<CursosSkuResponseDTO>(strapiCourse, {
+    return NextResponse.json<CourseBySkuResponseDTO>(strapiCourse, {
       headers: {
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
       },
     });
   } catch (error) {
-    console.error('[API] Error fetching course details:', error);
-
     const { sku } = await params;
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
 
-    return NextResponse.json<CursosSkuErrorDTO>(
+    return NextResponse.json<CourseBySkuErrorDTO>(
       {
         error: 'Failed to fetch course details',
         message: error instanceof Error ? error.message : 'Unknown error',
@@ -85,3 +72,4 @@ export async function GET(
     );
   }
 }
+

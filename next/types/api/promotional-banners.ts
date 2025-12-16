@@ -1,12 +1,12 @@
-export type HomePromoBannerItemDTO = {
+export type PromotionalBannerItemDTO = {
   id: number;
   link?: string | null;
   imageUrl: string | null;
   imageAlt?: string | null;
 };
 
-export type HomePromoBannersResponseDTO = {
-  data: HomePromoBannerItemDTO[];
+export type PromotionalBannersResponseDTO = {
+  data: PromotionalBannerItemDTO[];
   meta: {
     pagination?: {
       page: number;
@@ -17,7 +17,8 @@ export type HomePromoBannersResponseDTO = {
   };
 };
 
-export type HomePromoBannersErrorDTO = {
+export type PromotionalBannersErrorDTO = {
   error: string;
   message?: string;
 };
+

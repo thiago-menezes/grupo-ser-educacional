@@ -24,8 +24,6 @@ export async function handleCourseDetailsFromStrapi(
   strapiClient: StrapiClient,
   params: CourseDetailsParams,
 ): Promise<CourseDetails> {
-  console.log('[CourseDetails] Fetching from Strapi:', params);
-
   try {
     // Fetch course with all relations populated
     // Using publicationState=preview to get both published and draft content
@@ -48,43 +46,19 @@ export async function handleCourseDetailsFromStrapi(
 
     const strapiCourse = courseResponse.data[0];
 
-    console.log('[CourseDetails] Found course:', {
-      id: strapiCourse.id,
-      nome: strapiCourse.nome,
-      sku: strapiCourse.sku,
-      hasDescription: !!(strapiCourse.sobre || strapiCourse.descricao),
-      hasCoordinator: !!strapiCourse.curso_coordenacao,
-      teachersCount: strapiCourse.curso_corpo_docentes?.length || 0,
-      modalitiesCount: strapiCourse.modalidades?.length || 0,
-      hasCover: !!(strapiCourse.capa || strapiCourse.imagem_destaque),
-      hasMethodology: !!strapiCourse.metodologia,
-      hasCertificate: !!strapiCourse.certificado,
-    });
-
     // Transform course data (includes embedded coordinator and teacher)
     const courseDetails = transformStrapiCourse(strapiCourse);
-
-    console.log('[CourseDetails] After transformation:', {
-      hasMethodology: !!courseDetails.methodology,
-      hasCertificate: !!courseDetails.certificate,
-      methodologyLength: courseDetails.methodology?.length,
-      certificateLength: courseDetails.certificate?.length,
-    });
 
     // Add pedagogical project if exists
     if (strapiCourse.projeto_pedagogico) {
       courseDetails.pedagogicalProject = {
         content: strapiCourse.projeto_pedagogico,
       };
-      console.log('[CourseDetails] Pedagogical project added');
     }
 
     // Add job market areas if exist
     if (strapiCourse.areas_atuacao && strapiCourse.areas_atuacao.length > 0) {
       courseDetails.jobMarketAreas = strapiCourse.areas_atuacao;
-      console.log('[CourseDetails] Job market areas added:', {
-        count: courseDetails.jobMarketAreas.length,
-      });
     }
 
     // Add salary ranges if exist
@@ -93,9 +67,6 @@ export async function handleCourseDetailsFromStrapi(
       strapiCourse.faixas_salariais.length > 0
     ) {
       courseDetails.salaryRanges = strapiCourse.faixas_salariais;
-      console.log('[CourseDetails] Salary ranges added:', {
-        count: courseDetails.salaryRanges.length,
-      });
     }
 
     // Add related courses if exist
@@ -106,9 +77,6 @@ export async function handleCourseDetailsFromStrapi(
       courseDetails.relatedCourses = strapiCourse.cursos_relacionados.map(
         transformStrapiRelatedCourse,
       );
-      console.log('[CourseDetails] Related courses added:', {
-        count: courseDetails.relatedCourses.length,
-      });
     }
 
     return courseDetails;

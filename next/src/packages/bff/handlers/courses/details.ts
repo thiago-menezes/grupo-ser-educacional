@@ -22,8 +22,6 @@ export async function fetchCourseDetailsFromClientApi(
 ): Promise<ClientApiCourseDetails> {
   const { institution, state, city, unit, sku } = params;
 
-  console.log('[CourseDetails] Fetching from Client API:', params);
-
   const baseUrl = process.env.API_BASE_URL || process.env.CLIENT_API_BASE_URL;
   if (!baseUrl) {
     throw new Error('API_BASE_URL environment variable is not configured');
@@ -38,12 +36,6 @@ export async function fetchCourseDetailsFromClientApi(
     parseInt(unit, 10),
     sku,
   );
-
-  console.log('[CourseDetails] Client API details fetched:', {
-    id: clientApiDetails.ID,
-    nome: clientApiDetails.Nome_Curso,
-    turnos: clientApiDetails.Turnos?.length ?? 0,
-  });
 
   return clientApiDetails;
 }

@@ -16,3 +16,4 @@ export type SeosErrorDTO = {
   error: string;
   message?: string;
 };
+

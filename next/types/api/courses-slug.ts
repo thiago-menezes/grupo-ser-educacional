@@ -6,3 +6,4 @@ export type CoursesSlugErrorDTO = {
   error: string;
   message?: string;
 };
+

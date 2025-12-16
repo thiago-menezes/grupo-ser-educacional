@@ -1,11 +1,11 @@
-export type PerguntasFrequentesItemDTO = {
+export type FaqItemDTO = {
   id: number;
   question: string | null;
   answer: string | null;
 };
 
-export type PerguntasFrequentesResponseDTO = {
-  data: PerguntasFrequentesItemDTO[];
+export type FaqsResponseDTO = {
+  data: FaqItemDTO[];
   meta: {
     pagination?: {
       page: number;
@@ -16,7 +16,8 @@ export type PerguntasFrequentesResponseDTO = {
   };
 };
 
-export type PerguntasFrequentesErrorDTO = {
+export type FaqsErrorDTO = {
   error: string;
   message?: string;
 };
+

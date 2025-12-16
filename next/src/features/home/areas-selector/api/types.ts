@@ -1,5 +1,5 @@
 export type {
-  AreaCourseDTO,
-  AreaInteresseItemDTO,
-  AreasInteresseResponseDTO,
-} from '@/types/api/areas-interesse';
+  AreaOfInterestCourseDTO,
+  AreaOfInterestItemDTO,
+  AreasOfInterestResponseDTO,
+} from '@/types/api/areas-of-interest';

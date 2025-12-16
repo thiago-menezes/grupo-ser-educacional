@@ -1,4 +1,4 @@
 export type {
-  HomePromoBannerItemDTO,
-  HomePromoBannersResponseDTO,
-} from '@/types/api/home-promo-banners';
+  PromotionalBannerItemDTO,
+  PromotionalBannersResponseDTO,
+} from '@/types/api/promotional-banners';

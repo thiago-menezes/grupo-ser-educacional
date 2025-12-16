@@ -1,20 +1,20 @@
-export type AreaCourseDTO = {
+export type AreaOfInterestCourseDTO = {
   id: string;
   name: string;
   slug: string;
 };
 
-export type AreaInteresseItemDTO = {
+export type AreaOfInterestItemDTO = {
   id: number;
   title: string;
   slug: string;
   imageUrl: string | null;
   imageAlt: string | null;
-  courses: AreaCourseDTO[];
+  courses: AreaOfInterestCourseDTO[];
 };
 
-export type AreasInteresseResponseDTO = {
-  data: AreaInteresseItemDTO[];
+export type AreasOfInterestResponseDTO = {
+  data: AreaOfInterestItemDTO[];
   meta: {
     pagination?: {
       page: number;
@@ -25,7 +25,8 @@ export type AreasInteresseResponseDTO = {
   };
 };
 
-export type AreasInteresseErrorDTO = {
+export type AreasOfInterestErrorDTO = {
   error: string;
   message?: string;
 };
+

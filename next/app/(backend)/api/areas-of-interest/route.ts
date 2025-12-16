@@ -6,9 +6,9 @@ import type {
 } from '@/packages/bff/handlers/areas-interesse/types';
 import { slugify } from '@/packages/utils';
 import type {
-  AreasInteresseErrorDTO,
-  AreasInteresseResponseDTO,
-} from '@/types/api/areas-interesse';
+  AreasOfInterestErrorDTO,
+  AreasOfInterestResponseDTO,
+} from '@/types/api/areas-of-interest';
 import { getStrapiClient } from '../services/bff';
 
 /**
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
   const noCache = searchParams.get('noCache') === 'true';
 
   if (!institutionSlug) {
-    return NextResponse.json<AreasInteresseErrorDTO>(
+    return NextResponse.json<AreasOfInterestErrorDTO>(
       { error: 'institutionSlug query parameter is required' },
       { status: 400 },
     );
@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Transform Strapi response to expected DTO format
-    const transformedData: AreasInteresseResponseDTO = {
+    const transformedData: AreasOfInterestResponseDTO = {
       data: strapiData.data.map(transformAreaToDTO),
       meta: strapiData.meta,
     };
@@ -78,16 +78,16 @@ export async function GET(request: NextRequest) {
         ? 'no-store, no-cache, must-revalidate, proxy-revalidate'
         : 'public, s-maxage=3600, stale-while-revalidate=86400';
 
-    return NextResponse.json<AreasInteresseResponseDTO>(transformedData, {
+    return NextResponse.json<AreasOfInterestResponseDTO>(transformedData, {
       headers: {
         'Cache-Control': cacheControl,
         'X-Cache-Status': noCache ? 'bypassed' : 'cached',
       },
     });
   } catch (error) {
-    return NextResponse.json<AreasInteresseErrorDTO>(
+    return NextResponse.json<AreasOfInterestErrorDTO>(
       {
-        error: 'Failed to fetch areas de interesse data',
+        error: 'Failed to fetch areas of interest',
         message: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 },

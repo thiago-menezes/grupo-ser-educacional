@@ -1,9 +1,10 @@
 import type { CourseDetails } from '@/features/course-details/types';
 
-export type CursosSkuResponseDTO = CourseDetails;
+export type CourseBySkuResponseDTO = CourseDetails;
 
-export type CursosSkuErrorDTO = {
+export type CourseBySkuErrorDTO = {
   error: string;
   message?: string;
   sku?: string;
 };
+

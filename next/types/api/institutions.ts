@@ -21,3 +21,4 @@ export type InstitutionsErrorDTO = {
   error: string;
   message?: string;
 };
+

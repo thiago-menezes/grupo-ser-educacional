@@ -1,8 +1,9 @@
 import type { CoursesResponse } from 'types/api/courses';
 
-export type CursosCidadeResponseDTO = CoursesResponse;
+export type CoursesByCityResponseDTO = CoursesResponse;
 
-export type CursosCidadeErrorDTO = {
+export type CoursesByCityErrorDTO = {
   error: string;
   message?: string;
 };
+

@@ -66,17 +66,6 @@ export function useScrollPagination({
         const page = Math.floor(scrollCenter / pageWidth);
         const clampedPage = Math.max(0, Math.min(page, totalPages - 1));
 
-        console.log('Scroll Debug:', {
-          scrollLeft,
-          containerWidth,
-          scrollCenter,
-          pageWidth,
-          itemsPerPage,
-          calculatedPage: page,
-          clampedPage,
-          totalPages,
-        });
-
         setCurrentPage(clampedPage);
       });
     };

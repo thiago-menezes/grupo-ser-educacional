@@ -27,14 +27,7 @@ export async function getSeoFromStrapi(
     });
 
     if (!strapiResponse.data || strapiResponse.data.length === 0) {
-      if (process.env.NODE_ENV === 'production') {
-        console.log('SEO: No data found for institution:', institutionSlug);
-      }
       return null;
-    }
-
-    if (process.env.NODE_ENV === 'production') {
-      console.log('SEO: Successfully fetched data for:', institutionSlug);
     }
 
     return strapiResponse.data[0];

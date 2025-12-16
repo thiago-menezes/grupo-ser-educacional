@@ -4,14 +4,4 @@ export type FAQItemDTO = {
   answer: string;
 };
 
-export type PerguntasFrequentesResponseDTO = {
-  data: FAQItemDTO[];
-  meta: {
-    pagination: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
-};
+export type { FaqsResponseDTO } from '@/types/api/faqs';

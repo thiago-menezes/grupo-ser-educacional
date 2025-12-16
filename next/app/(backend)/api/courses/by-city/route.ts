@@ -1,19 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchCityCourses } from '@/packages/bff/handlers/courses/client-handler';
 import type {
-  CursosCidadeErrorDTO,
-  CursosCidadeResponseDTO,
-} from '@/types/api/cursos-cidade';
+  CoursesByCityErrorDTO,
+  CoursesByCityResponseDTO,
+} from '@/types/api/courses-by-city';
 import { getClientApiClient } from '../../services/bff';
 
 /**
- * GET /api/cursos/cidade
- * Fetch courses for a city by fetching units first, then courses for each unit
+ * GET /api/courses/by-city
  *
  * Query params:
  * - institution: Institution slug (e.g., "unama") [required]
- * - estado: State abbreviation (e.g., "pa") [required]
- * - cidade: City name (e.g., "ananindeua") [required]
+ * - state: State abbreviation (e.g., "pa") [required]
+ * - city: City name (e.g., "ananindeua") [required]
  * - modalities: Array of modality filters (e.g., ["presencial", "ead"])
  * - shifts: Array of shift filters (e.g., ["morning", "night"])
  * - durations: Array of duration ranges (e.g., ["1-2", "4-plus"])
@@ -24,27 +23,27 @@ import { getClientApiClient } from '../../services/bff';
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const institution = searchParams.get('institution');
-  const estado = searchParams.get('estado');
-  const cidade = searchParams.get('cidade');
+  const state = searchParams.get('state');
+  const city = searchParams.get('city');
 
   // Validate required parameters
   if (!institution) {
-    return NextResponse.json<CursosCidadeErrorDTO>(
+    return NextResponse.json<CoursesByCityErrorDTO>(
       { error: 'institution query parameter is required' },
       { status: 400 },
     );
   }
 
-  if (!estado) {
-    return NextResponse.json<CursosCidadeErrorDTO>(
-      { error: 'estado query parameter is required' },
+  if (!state) {
+    return NextResponse.json<CoursesByCityErrorDTO>(
+      { error: 'state query parameter is required' },
       { status: 400 },
     );
   }
 
-  if (!cidade) {
-    return NextResponse.json<CursosCidadeErrorDTO>(
-      { error: 'cidade query parameter is required' },
+  if (!city) {
+    return NextResponse.json<CoursesByCityErrorDTO>(
+      { error: 'city query parameter is required' },
       { status: 400 },
     );
   }
@@ -61,8 +60,8 @@ export async function GET(request: NextRequest) {
     const clientApiClient = getClientApiClient();
     const data = await fetchCityCourses(clientApiClient, {
       institution,
-      estado,
-      cidade,
+      estado: state,
+      cidade: city,
       modalities: modalities.length > 0 ? modalities : undefined,
       shifts: shifts.length > 0 ? shifts : undefined,
       durations: durations.length > 0 ? durations : undefined,
@@ -71,7 +70,7 @@ export async function GET(request: NextRequest) {
       perPage,
     });
 
-    return NextResponse.json<CursosCidadeResponseDTO>(data, {
+    return NextResponse.json<CoursesByCityResponseDTO>(data, {
       headers: {
         // Cache for 5 minutes, stale-while-revalidate for 6 hours
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=21600',
@@ -81,12 +80,13 @@ export async function GET(request: NextRequest) {
     const statusCode =
       error instanceof Error && error.message.includes('not found') ? 404 : 500;
 
-    return NextResponse.json<CursosCidadeErrorDTO>(
+    return NextResponse.json<CoursesByCityErrorDTO>(
       {
-        error: 'Failed to fetch courses for city',
+        error: 'Failed to fetch courses by city',
         message: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: statusCode },
     );
   }
 }
+

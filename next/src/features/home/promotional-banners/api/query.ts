@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { query } from '@/libs';
 import { getMediaUrl } from '@/packages/utils';
 import type { PromotionalBanner } from '../types';
-import type { HomePromoBannersResponseDTO } from './types';
+import type { PromotionalBannersResponseDTO } from './types';
 
 const HOME_PROMO_BANNERS_QUERY_KEY = ['home', 'promo-banners'];
 
@@ -10,8 +10,8 @@ async function fetchPromotionalBanners(
   institutionSlug: string,
 ): Promise<PromotionalBanner[]> {
   try {
-    const data = await query<HomePromoBannersResponseDTO>(
-      '/home-promo-banners',
+    const data = await query<PromotionalBannersResponseDTO>(
+      '/home-promotional-banners',
       {
         institutionSlug,
       },

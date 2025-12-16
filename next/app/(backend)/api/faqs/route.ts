@@ -1,16 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { handlePerguntasFrequentes } from '@/packages/bff/handlers/perguntas-frequentes';
 import type { StrapiPerguntaFrequente } from '@/packages/bff/handlers/perguntas-frequentes/types';
-import type {
-  PerguntasFrequentesErrorDTO,
-  PerguntasFrequentesResponseDTO,
-} from '@/types/api/perguntas-frequentes';
+import type { FaqsErrorDTO, FaqsResponseDTO } from '@/types/api/faqs';
 import { getStrapiClient } from '../services/bff';
 
 /**
  * Transform a single Strapi FAQ to DTO format
  */
-function transformFAQToDTO(faq: StrapiPerguntaFrequente) {
+function transformFaqToDTO(faq: StrapiPerguntaFrequente) {
   return {
     id: faq.id,
     question: faq.pergunta,
@@ -24,7 +21,7 @@ export async function GET(request: NextRequest) {
   const noCache = searchParams.get('noCache') === 'true';
 
   if (!institutionSlug) {
-    return NextResponse.json<PerguntasFrequentesErrorDTO>(
+    return NextResponse.json<FaqsErrorDTO>(
       { error: 'institutionSlug query parameter is required' },
       { status: 400 },
     );
@@ -37,9 +34,8 @@ export async function GET(request: NextRequest) {
       noCache,
     });
 
-    // Transform Strapi response to expected DTO format
-    const transformedData: PerguntasFrequentesResponseDTO = {
-      data: strapiData.data.map(transformFAQToDTO),
+    const transformedData: FaqsResponseDTO = {
+      data: strapiData.data.map(transformFaqToDTO),
       meta: strapiData.meta,
     };
 
@@ -48,19 +44,20 @@ export async function GET(request: NextRequest) {
         ? 'no-store, no-cache, must-revalidate, proxy-revalidate'
         : 'public, s-maxage=3600, stale-while-revalidate=86400';
 
-    return NextResponse.json<PerguntasFrequentesResponseDTO>(transformedData, {
+    return NextResponse.json<FaqsResponseDTO>(transformedData, {
       headers: {
         'Cache-Control': cacheControl,
         'X-Cache-Status': noCache ? 'bypassed' : 'cached',
       },
     });
   } catch (error) {
-    return NextResponse.json<PerguntasFrequentesErrorDTO>(
+    return NextResponse.json<FaqsErrorDTO>(
       {
-        error: 'Failed to fetch perguntas frequentes data',
+        error: 'Failed to fetch FAQs',
         message: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 },
     );
   }
 }
+

@@ -23,15 +23,6 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
   const searchParams = useSearchParams();
   const unitFromUrl = searchParams.get('unit');
 
-  console.log('[CourseDetailsContent] Course data:', {
-    hasMethodology: !!course.methodology,
-    hasCertificate: !!course.certificate,
-    methodologyLength: course.methodology?.length,
-    certificateLength: course.certificate?.length,
-    methodology: course.methodology?.substring(0, 100),
-    certificate: course.certificate?.substring(0, 100),
-  });
-
   const {
     breadcrumbItems,
     setIsCurriculumModalOpen,

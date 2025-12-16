@@ -25,3 +25,4 @@ export type HomeCarouselsErrorDTO = {
   error: string;
   message?: string;
 };
+

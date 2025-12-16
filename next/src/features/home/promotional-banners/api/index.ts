@@ -1,5 +1,5 @@
 export { usePromotionalBanners } from './query';
 export type {
-  HomePromoBannerItemDTO,
-  HomePromoBannersResponseDTO,
+  PromotionalBannerItemDTO,
+  PromotionalBannersResponseDTO,
 } from './types';
