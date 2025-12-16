@@ -1,6 +1,19 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { getSeoFromStrapi } from './api';
-import { StrapiSeo } from './types';
+import type { StrapiSeo } from './types';
+
+function extractMetadata(seoData: StrapiSeo): Metadata | undefined {
+  // Strapi may return either:
+  // - { metadata: MetadataLike }
+  // - { metadata: { metadata: MetadataLike } } (nested)
+  const nested = (seoData as unknown as { metadata?: { metadata?: Metadata } })
+    ?.metadata?.metadata;
+  return nested ?? (seoData.metadata as unknown as Metadata) ?? undefined;
+}
+
+function extractJsonLd(seoData: StrapiSeo): StrapiSeo['jsonld'] | undefined {
+  return seoData.jsonld ?? undefined;
+}
 
 export async function generateJsonLd(
   institutionSlug: string,
@@ -9,13 +22,7 @@ export async function generateJsonLd(
 
   try {
     const seoData = await getSeoFromStrapi(institutionSlug);
-
-    // Handle nested structure: metadata.jsonld or jsonld
-    const jsonld =
-      (seoData as { metadata?: { jsonld?: StrapiSeo['jsonld'] } })?.metadata
-        ?.jsonld || (seoData as StrapiSeo)?.jsonld;
-
-    return (jsonld as StrapiSeo['jsonld']) || undefined;
+    return seoData ? extractJsonLd(seoData) : undefined;
   } catch {
     // Return undefined if CMS is unavailable during build
     return undefined;
@@ -41,39 +48,16 @@ export async function generateMetadata({
   };
 
   try {
-    console.log(`SEO: Fetching metadata for ${institution}...`);
-    const startTime = Date.now();
-
-    const seoData = getSeoFromStrapi(institution);
-
-    const elapsed = Date.now() - startTime;
-    console.log(`SEO: Fetch completed in ${elapsed}ms`);
-
+    const seoData = await getSeoFromStrapi(institution);
     if (!seoData) {
-      console.log(
-        'SEO: Using default metadata - no data for institution:',
-        institution,
-      );
       return defaultMetadata;
     }
 
-    // Handle nested structure: metadata.metadata or metadata
-    const metadata =
-      (seoData as { metadata?: { metadata?: Metadata } })?.metadata?.metadata ||
-      ((await seoData) as StrapiSeo)?.metadata;
-
-    if (!metadata) {
-      console.log(
-        'SEO: Using default metadata - no metadata in response for institution:',
-        institution,
-      );
-      return defaultMetadata;
-    }
-
-    console.log('SEO: Successfully loaded metadata for institution:', metadata);
+    const metadata = extractMetadata(seoData);
+    if (!metadata) return defaultMetadata;
 
     return {
-      ...(metadata as Metadata),
+      ...metadata,
       icons,
     };
   } catch (error) {
