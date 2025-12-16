@@ -25,6 +25,7 @@
     "react-hook-form": "^7.67.0",
     "react-markdown": "^10.1.0",
     "react-toastify": "^11.0.5",
+    "remark-gfm": "^4.0.1",
     "reshaped": "^3.8.9",
     "sass": "^1.94.2",
     "use-local-storage": "^3.0.0",

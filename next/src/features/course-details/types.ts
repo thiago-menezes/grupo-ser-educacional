@@ -144,6 +144,7 @@ export type CourseDetails = {
   featuredImage?: string;
   methodology?: string;
   certificate?: string;
+  curriculumMarkdown?: string;
   // New fields from Client API (pricing, shifts, admission forms)
   clientApiDetails?: {
     ID: string;

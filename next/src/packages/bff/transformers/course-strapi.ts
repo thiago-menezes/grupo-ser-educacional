@@ -163,6 +163,7 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetails {
     featuredImage,
     methodology: strapi.metodologia || undefined,
     certificate: strapi.certificado || undefined,
+    curriculumMarkdown: strapi.grade_curricular || undefined,
   };
 
   // Add embedded coordinator if exists

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Markdown, { type Components } from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Text } from 'reshaped';
 import styles from './styles.module.scss';
 import { MarkdownContentProps } from './types';
@@ -91,11 +92,20 @@ export function MarkdownContent({ content, className }: MarkdownContentProps) {
         </a>
       );
     },
+
+    table: ({ children }) => <table className={styles.table}>{children}</table>,
+    thead: ({ children }) => <thead className={styles.thead}>{children}</thead>,
+    tbody: ({ children }) => <tbody className={styles.tbody}>{children}</tbody>,
+    tr: ({ children }) => <tr className={styles.tr}>{children}</tr>,
+    th: ({ children }) => <th className={styles.th}>{children}</th>,
+    td: ({ children }) => <td className={styles.td}>{children}</td>,
   };
 
   return (
     <div className={className}>
-      <Markdown components={components}>{content}</Markdown>
+      <Markdown components={components} remarkPlugins={[remarkGfm]}>
+        {content}
+      </Markdown>
     </div>
   );
 }

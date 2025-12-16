@@ -14,7 +14,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "x-generation-date": "2025-12-16T01:06:43.390Z"
+    "x-generation-date": "2025-12-16T03:07:50.176Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -9646,6 +9646,9 @@
                           }
                         }
                       },
+                      "projeto_pedagogico": {
+                        "type": "string"
+                      },
                       "createdAt": {
                         "type": "string",
                         "format": "date-time"
@@ -11694,6 +11697,9 @@
                         }
                       }
                     },
+                    "projeto_pedagogico": {
+                      "type": "string"
+                    },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time"
@@ -13552,6 +13558,9 @@
                     }
                   }
                 },
+                "projeto_pedagogico": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -13795,6 +13804,9 @@
                   ],
                   "example": "string or id"
                 }
+              },
+              "projeto_pedagogico": {
+                "type": "string"
               },
               "locale": {
                 "type": "string"
@@ -15345,6 +15357,9 @@
                         }
                       }
                     },
+                    "projeto_pedagogico": {
+                      "type": "string"
+                    },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time"
@@ -15598,6 +15613,9 @@
                 }
               }
             }
+          },
+          "projeto_pedagogico": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -17232,6 +17250,9 @@
                           }
                         }
                       }
+                    },
+                    "projeto_pedagogico": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",
@@ -19129,6 +19150,9 @@
                           }
                         }
                       }
+                    },
+                    "projeto_pedagogico": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",
@@ -21288,6 +21312,9 @@
                         }
                       }
                     },
+                    "projeto_pedagogico": {
+                      "type": "string"
+                    },
                     "createdAt": {
                       "type": "string",
                       "format": "date-time"
@@ -23343,6 +23370,9 @@
                     }
                   }
                 },
+                "projeto_pedagogico": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -25057,6 +25087,9 @@
                     }
                   }
                 },
+                "projeto_pedagogico": {
+                  "type": "string"
+                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time"
@@ -26637,6 +26670,9 @@
                             }
                           }
                         }
+                      },
+                      "projeto_pedagogico": {
+                        "type": "string"
                       },
                       "createdAt": {
                         "type": "string",
@@ -28467,6 +28503,9 @@
                           }
                         }
                       }
+                    },
+                    "projeto_pedagogico": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",
@@ -30342,6 +30381,9 @@
                           }
                         }
                       }
+                    },
+                    "projeto_pedagogico": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",
@@ -32331,6 +32373,9 @@
                           }
                         }
                       }
+                    },
+                    "projeto_pedagogico": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",

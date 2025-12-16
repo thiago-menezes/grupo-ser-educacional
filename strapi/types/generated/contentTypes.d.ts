@@ -583,6 +583,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
       'api::modalidade.modalidade'
     >;
     nome: Schema.Attribute.String & Schema.Attribute.Required;
+    projeto_pedagogico: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
     sku: Schema.Attribute.String;
     sobre: Schema.Attribute.RichText;

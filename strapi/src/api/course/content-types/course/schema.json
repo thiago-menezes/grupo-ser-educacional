@@ -76,6 +76,9 @@
       "relation": "manyToMany",
       "target": "api::modalidade.modalidade",
       "inversedBy": "curso_detalhes"
+    },
+    "projeto_pedagogico": {
+      "type": "richtext"
     }
   }
 }
