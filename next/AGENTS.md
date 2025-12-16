@@ -36,6 +36,9 @@ For project understanding and development guidelines, read:
 - Functions/variables: camelCase
 - Hooks: `useFeatureName`
 - CSS classes: camelCase
+- **Feature API file conventions**:
+  - For feature-scoped API code (e.g. `src/features/<feature>/api/`), keep queries consolidated in `query.ts` (and mutations in `mutation.ts` when needed).
+  - Do **not** create ad-hoc files like `*-query.ts`; add new query hooks to the feature’s existing `api/query.ts`.
 - **Backend API & shared types language**:
   - All **backend endpoints** (Next.js `app/(backend)/api/**`) must use **English** route paths and file/folder names.
   - All **shared API contracts** in `types/api/**` must be written in **English** (filenames + exported type names).
