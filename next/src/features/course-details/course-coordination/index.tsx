@@ -3,19 +3,28 @@ import { useState } from 'react';
 import { Button, Tabs, Text, View } from 'reshaped';
 import { Icon, MarkdownContent } from '@/components';
 import type { CourseDetails } from '../types';
+import { filterTeachersByModality } from '../utils';
 import styles from './styles.module.scss';
 
 export type CourseCoordinationProps = {
   course: CourseDetails;
+  selectedModalityId?: number | null;
 };
 
-export function CourseCoordination({ course }: CourseCoordinationProps) {
+export function CourseCoordination({
+  course,
+  selectedModalityId,
+}: CourseCoordinationProps) {
   const [activeTab, setActiveTab] = useState<'coordination' | 'pedagogical'>(
     'coordination',
   );
 
   const coordinator = course.coordinator;
-  const teachers = course.teachers || [];
+  // Filter teachers by selected modality
+  const teachers = filterTeachersByModality(
+    course.teachers,
+    selectedModalityId || null,
+  );
   const hasCoordinationData = coordinator || teachers.length > 0;
   const pedagogicalProject = course.pedagogicalProject;
 

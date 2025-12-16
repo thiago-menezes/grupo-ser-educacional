@@ -89,14 +89,17 @@ export async function GET(request: NextRequest) {
                 },
               ];
 
-          // Always use modalities from Client API as they are always from API, not Strapi
-          const enrichedModalities = [
-            {
-              id: 1,
-              name: clientApiDetails.Modalidade,
-              slug: clientApiDetails.Modalidade.toLowerCase(),
-            },
-          ];
+          // Keep modalities from Strapi if available, otherwise use Client API
+          const enrichedModalities =
+            courseDetails.modalities && courseDetails.modalities.length > 0
+              ? courseDetails.modalities
+              : [
+                  {
+                    id: 1,
+                    name: clientApiDetails.Modalidade,
+                    slug: clientApiDetails.Modalidade.toLowerCase(),
+                  },
+                ];
 
           courseDetails = {
             ...courseDetails,
@@ -104,7 +107,11 @@ export async function GET(request: NextRequest) {
             modalities: enrichedModalities,
             clientApiDetails,
           };
-          console.log('[API] Course enriched with Client API data');
+          console.log('[API] Course enriched with Client API data:', {
+            modalitiesCount: enrichedModalities.length,
+            modalitiesFromStrapi: courseDetails.modalities?.length || 0,
+            modalities: enrichedModalities.map((m) => m.name),
+          });
         } else {
           // Create course from Client API data with unit info from params
           const unitIdNum = parseInt(unit, 10);

@@ -3,10 +3,9 @@
  * Framework-agnostic service for fetching data from Strapi CMS
  */
 
-export type PopulateOption =
-  | string
-  | string[]
-  | Record<string, string | boolean | Record<string, unknown>>;
+export type PopulateOption = string | string[] | Record<string, PopulateValue>;
+
+export type PopulateValue = string | boolean | { populate?: PopulateOption };
 
 export interface StrapiFetchOptions {
   filters?: Record<string, unknown>;
@@ -99,21 +98,34 @@ export class StrapiClient {
           queryParts.push(`populate[${index}]=${field}`);
         });
       } else if (typeof options.populate === 'object') {
-        // Object-based populate: { Desktop: '*', Mobile: '*', instituicao: true }
-        Object.entries(options.populate).forEach(([key, value]) => {
-          if (typeof value === 'string' || typeof value === 'boolean') {
-            queryParts.push(`populate[${key}]=${value}`);
-          } else if (typeof value === 'object' && value !== null) {
-            // Nested populate object
-            Object.entries(value as Record<string, unknown>).forEach(
-              ([nestedKey, nestedValue]) => {
-                queryParts.push(
-                  `populate[${key}][${nestedKey}]=${nestedValue}`,
+        // Build nested populate recursively
+        const buildPopulate = (
+          obj: Record<string, unknown>,
+          prefix = 'populate',
+        ) => {
+          Object.entries(obj).forEach(([key, value]) => {
+            if (typeof value === 'string' || typeof value === 'boolean') {
+              queryParts.push(`${prefix}[${key}]=${value}`);
+            } else if (
+              typeof value === 'object' &&
+              value !== null &&
+              'populate' in value
+            ) {
+              // Nested populate
+              queryParts.push(`${prefix}[${key}][populate]=true`);
+              if (
+                typeof value.populate === 'object' &&
+                !Array.isArray(value.populate)
+              ) {
+                buildPopulate(
+                  value.populate as Record<string, unknown>,
+                  `${prefix}[${key}][populate]`,
                 );
-              },
-            );
-          }
-        });
+              }
+            }
+          });
+        };
+        buildPopulate(options.populate as Record<string, unknown>);
       }
     }
 
@@ -139,7 +151,10 @@ export class StrapiClient {
     const url = `${this.config.baseUrl}/api/${endpoint}${queryString}`;
 
     console.log('[StrapiClient] Fetching URL:', url);
-    console.log('[StrapiClient] Query parts:', queryParts);
+    console.log('[StrapiClient] Total query params:', queryParts.length);
+    if (options?.populate) {
+      console.log('[StrapiClient] Populate structure:', options.populate);
+    }
 
     // Create AbortController for timeout
     const controller = new AbortController();

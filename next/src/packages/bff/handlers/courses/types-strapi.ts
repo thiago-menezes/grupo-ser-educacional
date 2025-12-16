@@ -43,7 +43,7 @@ export interface StrapiModalityNested {
   id: number;
   documentId?: string;
   nome: string;
-  slug: string;
+  slug?: string;
 }
 
 export interface StrapiPeriodNested {
@@ -122,7 +122,8 @@ export interface StrapiCourseTeacher {
   documentId: string;
   nome: string;
   materia?: string | null;
-  modalidade?: string | null;
+  foto?: StrapiMedia | null;
+  modalidades?: StrapiModalityNested[];
 }
 
 /**
@@ -157,9 +158,12 @@ export interface StrapiCourse {
   // "capa" is the cover image in Strapi
   capa?: StrapiMedia | null;
   imagem_destaque?: StrapiMedia | null; // fallback field name
+  // Direct relations (not from ofertas)
+  modalidades?: StrapiModalityNested[];
   // Embedded relations
   curso_coordenacao?: StrapiCourseCoordinator | null;
-  corpo_docente?: StrapiCourseTeacher | null;
+  curso_corpo_docentes?: StrapiCourseTeacher[];
+  corpo_docente?: StrapiCourseTeacher | null; // Deprecated: single teacher fallback
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string | null;

@@ -29,6 +29,7 @@ export async function handleCourseDetailsFromStrapi(
   try {
     // Fetch course with all relations populated
     // Using publicationState=preview to get both published and draft content
+    // Using deep populate to get all nested relations
     const courseResponse = await strapiClient.fetch<StrapiCourseResponse>(
       'courses',
       {
@@ -53,7 +54,8 @@ export async function handleCourseDetailsFromStrapi(
       sku: strapiCourse.sku,
       hasDescription: !!(strapiCourse.sobre || strapiCourse.descricao),
       hasCoordinator: !!strapiCourse.curso_coordenacao,
-      hasTeacher: !!strapiCourse.corpo_docente,
+      teachersCount: strapiCourse.curso_corpo_docentes?.length || 0,
+      modalitiesCount: strapiCourse.modalidades?.length || 0,
       hasCover: !!(strapiCourse.capa || strapiCourse.imagem_destaque),
       hasMethodology: !!strapiCourse.metodologia,
       hasCertificate: !!strapiCourse.certificado,

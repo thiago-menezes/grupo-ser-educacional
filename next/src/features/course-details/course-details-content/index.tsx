@@ -124,7 +124,10 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
             {(course.coordinator ||
               (course.teachers && course.teachers.length > 0) ||
               course.pedagogicalProject) && (
-              <CourseCoordination course={course} />
+              <CourseCoordination
+                course={course}
+                selectedModalityId={selectedModalityId}
+              />
             )}
           </View>
 

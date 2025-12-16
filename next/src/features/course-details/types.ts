@@ -13,6 +13,11 @@ export type TeacherData = {
   role: string;
   title?: string;
   photo?: string;
+  modalities?: Array<{
+    id: number;
+    name: string;
+    slug: string;
+  }>;
 };
 
 export type PedagogicalProjectData = {

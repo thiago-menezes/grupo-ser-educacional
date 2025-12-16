@@ -19,8 +19,9 @@ import type {
 
 /**
  * Helper: Extract unique modalities from offerings
+ * @deprecated Use direct modalities relation instead
  */
-function extractModalities(offerings: StrapiOferta[]) {
+function extractModalitiesFromOfferings(offerings: StrapiOferta[]) {
   const modalityMap = new Map();
 
   offerings.forEach((oferta) => {
@@ -34,6 +35,27 @@ function extractModalities(offerings: StrapiOferta[]) {
   });
 
   return Array.from(modalityMap.values());
+}
+
+/**
+ * Helper: Extract modalities from direct relation
+ */
+function extractModalities(
+  modalidades?: Array<{
+    id: number;
+    nome: string;
+    slug?: string;
+  }>,
+) {
+  if (!modalidades || modalidades.length === 0) {
+    return [];
+  }
+
+  return modalidades.map((modalidade) => ({
+    id: modalidade.id,
+    name: modalidade.nome || '',
+    slug: modalidade.slug || modalidade.nome.toLowerCase().replace(/\s+/g, '-'),
+  }));
 }
 
 /**
@@ -94,9 +116,14 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetails {
   // Extract active offerings
   const activeOfferings = strapi.ofertas?.filter((o) => o.ativo) || [];
 
-  // Extract unique units and modalities
+  // Extract unique units from offerings
   const units = extractUnits(activeOfferings);
-  const modalities = extractModalities(activeOfferings);
+
+  // Extract modalities from direct relation (preferred) or fallback to offerings
+  const modalities =
+    strapi.modalidades && strapi.modalidades.length > 0
+      ? extractModalities(strapi.modalidades)
+      : extractModalitiesFromOfferings(activeOfferings);
 
   // Calculate minimum price from active offerings
   const prices = activeOfferings
@@ -149,13 +176,31 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetails {
     };
   }
 
-  // Add embedded teacher if exists (as array for consistency)
-  if (strapi.corpo_docente) {
+  // Add teaching staff array with modalities
+  if (strapi.curso_corpo_docentes && strapi.curso_corpo_docentes.length > 0) {
+    courseDetails.teachers = strapi.curso_corpo_docentes.map((teacher) => ({
+      id: teacher.id,
+      name: teacher.nome,
+      role: teacher.materia || 'Professor',
+      photo: teacher.foto?.url,
+      modalities: teacher.modalidades?.map((m) => ({
+        id: m.id,
+        name: m.nome,
+        slug: m.slug || m.nome.toLowerCase().replace(/\s+/g, '-'),
+      })),
+    }));
+  } else if (strapi.corpo_docente) {
+    // Fallback to single teacher (deprecated)
     courseDetails.teachers = [
       {
         id: strapi.corpo_docente.id,
         name: strapi.corpo_docente.nome,
         role: strapi.corpo_docente.materia || 'Professor',
+        modalities: strapi.corpo_docente.modalidades?.map((m) => ({
+          id: m.id,
+          name: m.nome,
+          slug: m.slug || m.nome.toLowerCase().replace(/\s+/g, '-'),
+        })),
       },
     ];
   }
