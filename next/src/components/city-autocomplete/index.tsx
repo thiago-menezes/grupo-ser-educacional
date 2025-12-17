@@ -156,13 +156,6 @@ export function CityAutocomplete({
             </Autocomplete.Item>
           );
         })}
-        {!isSearching &&
-          allOptions.length === 0 &&
-          inputValue.trim().length >= 2 && (
-            <Autocomplete.Item value="" data={null} disabled>
-              Nenhuma cidade encontrada
-            </Autocomplete.Item>
-          )}
       </Autocomplete>
     </FormControl>
   );

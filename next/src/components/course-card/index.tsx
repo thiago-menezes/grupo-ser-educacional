@@ -14,12 +14,10 @@ export function CourseCard({ course }: CourseCardProps) {
   const state = course.campusState.toLowerCase();
   const sku = course.sku || '';
   const unitId = course.unitId || '';
-
   const courseUrl = `/${institutionSlug}/cursos/detalhes?city=${city}&state=${state}&sku=${sku}&unit=${unitId}`;
-  const mock = `/${institutionSlug}/cursos/detalhes?city=ananindeua&state=pa&sku=4.EAD017.02&unit=101&modality=digital-%28ead%29`;
 
   return (
-    <Link href={mock || courseUrl} className={styles.card} role="article">
+    <Link href={courseUrl} className={styles.card} role="article">
       <div className={styles.header}>
         <div className={styles.title}>{course.title}</div>
 

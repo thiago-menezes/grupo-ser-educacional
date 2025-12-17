@@ -45,11 +45,21 @@ const DEFAULT_CITY_DATA: CityStorageData = {
 function parseCityFromUrl(
   urlValue: string,
 ): { city: string; state: string } | null {
-  const match = urlValue.match(/^city:(.+?)-state:([a-z]{2})$/i);
-  if (match) {
-    const cityName = match[1].replace(/-/g, ' ');
-    const stateCode = match[2].toUpperCase();
+  const legacyMatch = urlValue.match(/^city:(.+?)-state:([a-z]{2})$/i);
+  if (legacyMatch) {
+    const cityName = legacyMatch[1].replace(/-/g, ' ');
+    const stateCode = legacyMatch[2].toUpperCase();
     return { city: cityName, state: stateCode };
+  }
+
+  const normalized = urlValue.trim();
+  const lastDash = normalized.lastIndexOf('-');
+  if (lastDash > 0) {
+    const cityPart = normalized.slice(0, lastDash).replace(/-/g, ' ');
+    const statePart = normalized.slice(lastDash + 1).toUpperCase();
+    if (statePart.length === 2) {
+      return { city: cityPart, state: statePart };
+    }
   }
   return null;
 }

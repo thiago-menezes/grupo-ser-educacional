@@ -29,6 +29,18 @@ export function formatCityDisplayValue(value: string): string {
     return `${formattedCity} - ${stateCode}`;
   }
 
+  const normalized = value.trim();
+  const lastDash = normalized.lastIndexOf('-');
+  if (lastDash > 0) {
+    const citySlug = normalized.slice(0, lastDash);
+    const stateCode = normalized.slice(lastDash + 1).toUpperCase();
+    if (stateCode.length === 2) {
+      const cityName = citySlug.replace(/-/g, ' ');
+      const formattedCity = formatCityName(cityName);
+      return `${formattedCity} - ${stateCode}`;
+    }
+  }
+
   // Check if already in display format "City - ST"
   const displayFormatMatch = value.match(/^(.+?)\s*-\s*([A-Z]{2})$/);
   if (displayFormatMatch) {

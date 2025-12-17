@@ -32,10 +32,10 @@ export const mapDurationRange = (duration: string): string | undefined => {
  */
 export const mapShiftToPeriodId = (shift: string): number | undefined => {
   const shiftMap: Record<string, number> = {
-    morning: 1, // Manhã
-    afternoon: 2, // Tarde
-    night: 3, // Noite
-    fulltime: 4, // Integral
+    manha: 1, // Matutino
+    tarde: 2, // Vespertino
+    noite: 3, // Noturno
+    integral: 4, // Integral
     virtual: 5, // Virtual
   };
   return shiftMap[shift];

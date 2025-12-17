@@ -15,7 +15,7 @@ export type CoursesSearchParams = {
 export type CourseCard = {
   courseId: string;
   courseName: string;
-  level: 'undergraduate' | 'graduate';
+  level: string;
   modalities: string[];
   shifts: string[];
   durationMonths: number;

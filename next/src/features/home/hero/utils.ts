@@ -29,20 +29,24 @@ export function buildSearchParams(data: {
 }
 
 export function parseCityValue(value: string): string {
-  // Parse format: "city:name-state:code"
-  const match = value.match(/^city:([^-]+)-state:[a-z]{2}$/i);
-  if (match) {
-    return match[1].replace(/-/g, ' ');
+  const legacyMatch = value.match(/^city:(.+?)-state:([a-z]{2})$/i);
+  if (legacyMatch) {
+    return legacyMatch[1].replace(/-/g, ' ');
   }
-  // If not in expected format, return as-is
+
+  const normalized = value.trim();
+  const lastDash = normalized.lastIndexOf('-');
+  if (lastDash > 0) {
+    return normalized.slice(0, lastDash).replace(/-/g, ' ');
+  }
+
   return value;
 }
 
 export function formatCityValue(city: string, state: string): string {
-  // Format: "city:name-state:code"
   const citySlug = city.toLowerCase().replace(/\s+/g, '-');
   const stateCode = state.toLowerCase();
-  return `city:${citySlug}-state:${stateCode}`;
+  return `${citySlug}-${stateCode}`;
 }
 
 /**

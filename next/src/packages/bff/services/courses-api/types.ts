@@ -32,13 +32,13 @@ export type CoursesAPIResponse = {
   total: number;
 };
 
-export type CoursesAPIParams = {
-  nivel_ensino?: string;
-  cidade?: string;
-  estado?: string;
-  modalidade?: string;
-  curso_nome?: string;
-  turno?: string;
-  valor_min?: number;
-  valor_max?: number;
+export type JSONServerQueryParams = {
+  Nivel_Ensino?: string;
+  Cidade?: string;
+  Estado?: string;
+  Modalidade?: string;
+  Curso_Nome_like?: string;
+  Turno_Nome?: string;
+  Valor_gte?: number;
+  Valor_lte?: number;
 };

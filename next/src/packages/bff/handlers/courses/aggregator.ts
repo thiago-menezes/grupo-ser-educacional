@@ -54,55 +54,15 @@ export function aggregateCourses(
 }
 
 export function normalizeShift(shift: string): string {
-  const shiftLower = shift.toLowerCase();
-
-  if (shiftLower.includes('mat') || shiftLower.includes('manhã')) {
-    return 'Morning';
-  }
-  if (shiftLower.includes('vesp') || shiftLower.includes('tarde')) {
-    return 'Afternoon';
-  }
-  if (shiftLower.includes('not') || shiftLower.includes('noite')) {
-    return 'Evening';
-  }
-  if (shiftLower.includes('int')) {
-    return 'Full-time';
-  }
-  if (shiftLower.includes('virt') || shiftLower.includes('ead')) {
-    return 'Virtual';
-  }
-
   return shift;
 }
 
 export function normalizeModality(modality: string): string {
-  const modalityLower = modality.toLowerCase();
-
-  if (modalityLower.includes('presencial') && !modalityLower.includes('semi')) {
-    return 'In-person';
-  }
-  if (modalityLower.includes('semi')) {
-    return 'Hybrid';
-  }
-  if (
-    modalityLower.includes('ead') ||
-    modalityLower.includes('distância') ||
-    modalityLower.includes('distancia')
-  ) {
-    return 'Online';
-  }
-
   return modality;
 }
 
-export function normalizeLevel(level: string): 'undergraduate' | 'graduate' {
-  const levelLower = level.toLowerCase();
-
-  if (levelLower.includes('pós') || levelLower.includes('pos')) {
-    return 'graduate';
-  }
-
-  return 'undergraduate';
+export function normalizeLevel(level: string): string {
+  return level;
 }
 
 export function calculateDurationText(months: number): string {
@@ -117,8 +77,8 @@ export function calculateDurationText(months: number): string {
 }
 
 export function formatPrice(price: number): string {
-  return `A partir de R$ ${price.toLocaleString('pt-BR', {
+  return `R$ ${price.toLocaleString('pt-BR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  })}/mês`;
+  })}`;
 }

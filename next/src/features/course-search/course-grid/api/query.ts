@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { CoursesResponse } from 'types/api/courses';
+import type { CoursesSearchResponse } from 'types/api/courses-search';
 import { useCurrentInstitution } from '@/hooks';
 import { query } from '@/libs';
 import {
@@ -81,12 +82,26 @@ export const useQueryCourses = (
 };
 
 function parseCityParam(cityParam: string): { city: string; state: string } {
-  // Expected format: city:<slug>-state:<uf>
-  // City slug may contain hyphens, so we match greedily until the last "-state:"
-  const match = cityParam.match(/^city:(.+)-state:([a-z]{2})$/i);
+  const legacyMatch = cityParam.match(/^city:(.+)-state:([a-z]{2})$/i);
+  const legacyCitySlug = legacyMatch?.[1];
+  const legacyState = legacyMatch?.[2];
+
+  const normalized = cityParam.trim();
+  const lastDash = normalized.lastIndexOf('-');
+  const newCitySlug = lastDash > 0 ? normalized.slice(0, lastDash) : '';
+  const newState = lastDash > 0 ? normalized.slice(lastDash + 1) : '';
+
+  const citySlug = legacyCitySlug ?? newCitySlug;
+  const state = legacyState ?? newState;
+
+  const cityName = citySlug
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
   return {
-    city: match?.[1] || '',
-    state: match?.[2] || '',
+    city: cityName,
+    state: state.toUpperCase(),
   };
 }
 
@@ -124,7 +139,6 @@ export const useQueryCityBasedCourses = (
         perPage,
       };
 
-      // Add filters to params
       if (filters.modalities && filters.modalities.length > 0) {
         params.modalities = filters.modalities;
       }
@@ -141,5 +155,63 @@ export const useQueryCityBasedCourses = (
       return query<CoursesResponse>('/courses/by-city', params);
     },
     enabled: !!city && !!state && !!institutionId,
+  });
+};
+
+export const useQueryCoursesSearch = (
+  filters: Partial<CityCoursesFilters>,
+  page: number = 1,
+  perPage: number = 12,
+) => {
+  const { city, state } = filters.city
+    ? parseCityParam(filters.city)
+    : { city: '', state: '' };
+
+  return useQuery({
+    queryKey: [
+      'courses-search',
+      state,
+      city,
+      filters.modalities?.join(','),
+      filters.shifts?.join(','),
+      filters.durations?.join(','),
+      filters.courseName,
+      page,
+      perPage,
+    ],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+
+      if (city) params.set('city', city);
+      if (state) params.set('state', state);
+      params.set('page', page.toString());
+      params.set('perPage', perPage.toString());
+
+      if (filters.modalities && filters.modalities.length > 0) {
+        filters.modalities.forEach((m) => params.append('modalities', m));
+      }
+      if (filters.shifts && filters.shifts.length > 0) {
+        filters.shifts.forEach((s) => params.append('shifts', s));
+      }
+      if (filters.durations && filters.durations.length > 0) {
+        filters.durations.forEach((d) => params.append('durations', d));
+      }
+      if (filters.courseName) {
+        params.set('course', filters.courseName);
+      }
+
+      const response = await fetch(`/api/courses?${params.toString()}`);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.message ||
+            `HTTP ${response.status}: Failed to fetch courses`,
+        );
+      }
+
+      return response.json() as Promise<CoursesSearchResponse>;
+    },
+    enabled: !!city && !!state,
   });
 };

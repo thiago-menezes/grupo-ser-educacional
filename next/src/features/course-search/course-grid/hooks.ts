@@ -1,14 +1,16 @@
-import { startTransition, useEffect, useRef, useState } from 'react';
+import { startTransition, useEffect, useRef, useState, useMemo } from 'react';
 import { useCourseFiltersContext } from '../context';
-import { useQueryCityBasedCourses, useQueryCourses } from './api/query';
+import {
+  useQueryCityBasedCourses,
+  useQueryCourses,
+  useQueryCoursesSearch,
+} from './api/query';
 import { ITEMS_PER_PAGE } from './constants';
+import { adaptCourseCardToCourseData } from './adapters';
 
-/**
- * Check if the city filter is in the format "city:name-state:code"
- * which indicates a city-based search
- */
 function isCityBasedSearch(cityFilter: string): boolean {
-  return /^city:.+-state:.+$/.test(cityFilter);
+  if (/^city:.+-state:[a-z]{2}$/i.test(cityFilter)) return true;
+  return /.+-[a-z]{2}$/i.test(cityFilter);
 }
 
 export const useCourseGrid = () => {
@@ -44,28 +46,9 @@ export const useCourseGrid = () => {
     }
   }, [filtersKey, currentPage]);
 
-  // Detect if this is a city-based search
   const isCity = filters.city && isCityBasedSearch(filters.city);
 
-  // Use city-based query for city searches, standard query otherwise
-  const standardQuery = useQueryCourses(
-    {
-      location: filters.city || undefined,
-      radius: filters.radius,
-      modalities:
-        filters.modalities.length > 0 ? filters.modalities : undefined,
-      priceMin: filters.priceRange.min,
-      priceMax: filters.priceRange.max,
-      shifts: filters.shifts.length > 0 ? filters.shifts : undefined,
-      durations: filters.durations.length > 0 ? filters.durations : undefined,
-      level: filters.courseLevel,
-      courseName: filters.courseName || undefined,
-    },
-    currentPage,
-    ITEMS_PER_PAGE,
-  );
-
-  const cityQuery = useQueryCityBasedCourses(
+  const bffQuery = useQueryCoursesSearch(
     {
       city: filters.city,
       modalities:
@@ -78,11 +61,14 @@ export const useCourseGrid = () => {
     ITEMS_PER_PAGE,
   );
 
-  // Use appropriate query based on search mode
-  const activeQuery = isCity ? cityQuery : standardQuery;
-  const { data: coursesResponse, isLoading, isError, error } = activeQuery;
+  const { data: bffResponse, isLoading, isError, error } = bffQuery;
 
-  const { courses = [], totalPages = 0 } = coursesResponse || {};
+  const courses = useMemo(
+    () => bffResponse?.courses.map(adaptCourseCardToCourseData) ?? [],
+    [bffResponse],
+  );
+
+  const totalPages = bffResponse?.totalPages ?? 0;
 
   const cardsBeforeBanner = courses.slice(0, 6);
   const cardsAfterBanner = courses.slice(6);

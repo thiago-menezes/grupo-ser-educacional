@@ -243,7 +243,7 @@ export async function getCityByCode(code: string): Promise<City | null> {
 export function formatCityValue(city: string, state: string): string {
   const slug = cityToSlug(city);
   const stateCode = getStateCode(state).toLowerCase();
-  return `city:${slug}-state:${stateCode}`;
+  return `${slug}-${stateCode}`;
 }
 
 /**
@@ -252,16 +252,22 @@ export function formatCityValue(city: string, state: string): string {
 export function parseCityValue(
   value: string,
 ): { city: string; state: string } | null {
-  const match = value.match(/^city:(.+?)-state:([a-z]{2})$/i);
-  if (!match) {
-    return null;
+  const legacyMatch = value.match(/^city:(.+?)-state:([a-z]{2})$/i);
+  if (legacyMatch) {
+    return {
+      city: legacyMatch[1].replace(/-/g, ' '),
+      state: legacyMatch[2].toUpperCase(),
+    };
   }
 
-  const citySlug = match[1];
-  const stateCode = match[2].toUpperCase();
+  const normalized = value.trim();
+  const lastDash = normalized.lastIndexOf('-');
+  if (lastDash <= 0) return null;
 
-  // Try to find the city by searching
-  // This is a simplified version - in practice, you might want to cache this mapping
+  const citySlug = normalized.slice(0, lastDash);
+  const stateCode = normalized.slice(lastDash + 1).toUpperCase();
+  if (stateCode.length !== 2) return null;
+
   return {
     city: citySlug.replace(/-/g, ' '),
     state: stateCode,

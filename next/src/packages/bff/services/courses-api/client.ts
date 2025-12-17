@@ -1,11 +1,6 @@
-/**
- * Courses API Client
- * Cliente HTTP para consumir a API fake de cursos (JSON Server)
- */
-
 import type {
   CourseAPIRaw,
-  CoursesAPIParams,
+  JSONServerQueryParams,
   CoursesAPIResponse,
 } from './types';
 
@@ -14,9 +9,6 @@ export interface CoursesApiConfig {
   timeout?: number;
 }
 
-/**
- * Cliente para a API externa de cursos
- */
 export class CoursesApiClient {
   private config: CoursesApiConfig;
 
@@ -24,51 +16,21 @@ export class CoursesApiClient {
     this.config = config;
   }
 
-  /**
-   * Constrói URL com query params para JSON Server
-   * JSON Server usa os nomes dos campos diretamente e operadores especiais
-   */
-  private buildCoursesUrl(params?: CoursesAPIParams): string {
+  private buildCoursesUrl(params?: JSONServerQueryParams): string {
     const url = new URL(`${this.config.baseUrl}/cursos`);
 
     if (params) {
-      // JSON Server usa os nomes dos campos exatamente como estão no JSON
-      if (params.nivel_ensino) {
-        url.searchParams.append('Nivel_Ensino', params.nivel_ensino);
-      }
-      if (params.cidade) {
-        url.searchParams.append('Cidade', params.cidade);
-      }
-      if (params.estado) {
-        url.searchParams.append('Estado', params.estado);
-      }
-      if (params.modalidade) {
-        url.searchParams.append('Modalidade', params.modalidade);
-      }
-      // Para busca parcial no nome do curso, JSON Server usa o operador _like
-      if (params.curso_nome) {
-        url.searchParams.append('Curso_Nome_like', params.curso_nome);
-      }
-      if (params.turno) {
-        url.searchParams.append('Turno_Nome', params.turno);
-      }
-      // JSON Server usa operadores _gte (greater than or equal) e _lte (less than or equal)
-      if (params.valor_min !== undefined) {
-        url.searchParams.append('Valor_gte', params.valor_min.toString());
-      }
-      if (params.valor_max !== undefined) {
-        url.searchParams.append('Valor_lte', params.valor_max.toString());
-      }
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          url.searchParams.append(key, value.toString());
+        }
+      });
     }
 
     return url.toString();
   }
 
-  /**
-   * Busca cursos no JSON Server
-   * Retorna sempre um array de cursos
-   */
-  async fetchCourses(params?: CoursesAPIParams): Promise<CourseAPIRaw[]> {
+  async fetchCourses(params?: JSONServerQueryParams): Promise<CourseAPIRaw[]> {
     const url = this.buildCoursesUrl(params);
 
     const controller = new AbortController();
@@ -96,8 +58,6 @@ export class CoursesApiClient {
 
       const data = await response.json();
 
-      // A API fake pode retornar apenas um array ou um objeto com { cursos: [] }
-      // Vamos suportar ambos os formatos
       if (Array.isArray(data)) {
         return data;
       }
@@ -122,12 +82,9 @@ export class CoursesApiClient {
   }
 }
 
-/**
- * Factory para criar instância do cliente
- */
 export function createCoursesApiClient(baseUrl: string): CoursesApiClient {
   return new CoursesApiClient({
     baseUrl,
-    timeout: 15000, // 15 segundos (API mock pode ser mais lenta)
+    timeout: 15000,
   });
 }

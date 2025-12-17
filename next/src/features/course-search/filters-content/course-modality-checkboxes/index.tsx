@@ -19,7 +19,7 @@ export function CourseModalityCheckboxes({
           <FormControl.Label>Modalidade do curso</FormControl.Label>
           <View gap={2}>
             <Checkbox
-              name="modality-presencial"
+              name="modality-Presencial"
               checked={field?.value?.includes('presencial')}
               onChange={({ checked }) => {
                 if (checked) {
@@ -34,7 +34,7 @@ export function CourseModalityCheckboxes({
               Presencial (32)
             </Checkbox>
             <Checkbox
-              name="modality-semipresencial"
+              name="modality-SemiPresencial"
               checked={field?.value?.includes('semipresencial')}
               onChange={({ checked }) => {
                 if (checked) {
@@ -49,7 +49,7 @@ export function CourseModalityCheckboxes({
               Semipresencial (50)
             </Checkbox>
             <Checkbox
-              name="modality-ead"
+              name="modality-Distancia"
               checked={field?.value?.includes('ead')}
               onChange={({ checked }) => {
                 if (checked) {

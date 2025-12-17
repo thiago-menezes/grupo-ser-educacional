@@ -366,7 +366,6 @@ export function QuickSearchForm({
                 );
               }
 
-              // Show all other options (already filtered by API)
               return (
                 <Autocomplete.Item
                   key={option.value}
@@ -377,13 +376,6 @@ export function QuickSearchForm({
                 </Autocomplete.Item>
               );
             })}
-            {!isSearching &&
-              allOptions.length === 0 &&
-              inputValue.trim().length >= 2 && (
-                <Autocomplete.Item value="" data={null} disabled>
-                  Nenhuma cidade encontrada
-                </Autocomplete.Item>
-              )}
           </Autocomplete>
         </FormControl>
 

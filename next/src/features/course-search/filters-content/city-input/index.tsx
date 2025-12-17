@@ -17,14 +17,22 @@ export function CityInput({ control }: CityInputProps) {
   // Sync form value to context (and thus localStorage) when city changes
   useEffect(() => {
     if (cityValue) {
-      // Parse cityValue format: city:name-state:code
-      const match = cityValue.match(/^city:(.+?)-state:([a-z]{2})$/i);
-      if (match) {
-        const citySlug = match[1];
-        const stateCode = match[2].toUpperCase();
-        // Convert slug back to city name (replace hyphens with spaces)
-        const cityName = citySlug.replace(/-/g, ' ');
+      const legacyMatch = cityValue.match(/^city:(.+?)-state:([a-z]{2})$/i);
+      if (legacyMatch) {
+        const cityName = legacyMatch[1].replace(/-/g, ' ');
+        const stateCode = legacyMatch[2].toUpperCase();
         setCityState(cityName, stateCode, 'manual');
+        return;
+      }
+
+      const normalized = cityValue.trim();
+      const lastDash = normalized.lastIndexOf('-');
+      if (lastDash > 0) {
+        const cityName = normalized.slice(0, lastDash).replace(/-/g, ' ');
+        const stateCode = normalized.slice(lastDash + 1).toUpperCase();
+        if (stateCode.length === 2) {
+          setCityState(cityName, stateCode, 'manual');
+        }
       }
     }
   }, [cityValue, setCityState]);

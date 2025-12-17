@@ -91,7 +91,7 @@ export function useQuickSearchForm() {
   const [course, setCourse] = useState('');
   const [modalities, setModalities] = useState<
     Array<'presencial' | 'semi' | 'ead'>
-  >(['presencial', 'semi', 'ead']);
+  >(['presencial']);
 
   // Use geolocation without manual override
   // This allows geolocation to detect and update the city independently

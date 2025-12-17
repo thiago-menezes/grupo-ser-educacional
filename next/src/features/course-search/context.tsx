@@ -10,8 +10,8 @@ import {
   useState,
   startTransition,
 } from 'react';
-import { useQueryParams } from '@/hooks';
 import { useCityContext } from '@/contexts/city';
+import { useQueryParams } from '@/hooks';
 import { DEFAULT_FILTERS } from './filters-content/constants';
 import type {
   ActiveFilter,
@@ -26,7 +26,7 @@ import type {
 function formatCityForUrl(city: string, state: string): string {
   const citySlug = city.toLowerCase().replace(/\s+/g, '-');
   const stateCode = state.toLowerCase();
-  return `city:${citySlug}-state:${stateCode}`;
+  return `${citySlug}-${stateCode}`;
 }
 
 const CourseFiltersContext = createContext<CourseFiltersContextValues>(
@@ -145,17 +145,19 @@ function parseFiltersFromSearchParams(
 
   const modalities = searchParams.getAll('modalities');
   if (modalities.length > 0) {
-    filters.modalities = modalities.filter(
-      (m): m is CourseFiltersFormValues['modalities'][number] =>
-        m === 'presencial' || m === 'semipresencial' || m === 'ead',
-    );
+    filters.modalities = modalities
+      .map((m) => (m === 'semi' ? 'semipresencial' : m))
+      .filter(
+        (m): m is CourseFiltersFormValues['modalities'][number] =>
+          m === 'presencial' || m === 'semipresencial' || m === 'ead',
+      );
   }
 
   return filters;
 }
 
 export function CourseFiltersProvider({ children }: PropsWithChildren) {
-  const { searchParams, setParam } = useQueryParams();
+  const { searchParams, setParam, setParams } = useQueryParams();
   const { city: contextCity, state: contextState } = useCityContext();
 
   // Initialize filters from URL params on mount, fallback to context/localStorage
@@ -227,9 +229,40 @@ export function CourseFiltersProvider({ children }: PropsWithChildren) {
 
   const activeFiltersCount = activeFilters.length;
 
-  const applyFilters = useCallback((filters: CourseFiltersFormValues) => {
-    setAppliedFilters(filters);
-  }, []);
+  const applyFilters = useCallback(
+    (filters: CourseFiltersFormValues) => {
+      setAppliedFilters(filters);
+
+      setParams(
+        {
+          city: filters.city || null,
+          courseLevel:
+            filters.courseLevel !== DEFAULT_FILTERS.courseLevel
+              ? filters.courseLevel
+              : null,
+          course: filters.courseName.trim() ? filters.courseName.trim() : null,
+          modalities: filters.modalities.length > 0 ? filters.modalities : null,
+          shifts: filters.shifts.length > 0 ? filters.shifts : null,
+          durations: filters.durations.length > 0 ? filters.durations : null,
+          radius:
+            filters.radius !== DEFAULT_FILTERS.radius
+              ? String(filters.radius)
+              : null,
+          minPrice:
+            filters.priceRange.min !== DEFAULT_FILTERS.priceRange.min
+              ? String(filters.priceRange.min)
+              : null,
+          maxPrice:
+            filters.priceRange.max !== DEFAULT_FILTERS.priceRange.max
+              ? String(filters.priceRange.max)
+              : null,
+          page: null,
+        },
+        { scroll: false },
+      );
+    },
+    [setParams],
+  );
 
   const resetFilters = useCallback(() => {
     setAppliedFilters(DEFAULT_FILTERS);
