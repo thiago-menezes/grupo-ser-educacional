@@ -5,5 +5,3 @@ import { CourseDetailsPage } from '@/features';
 export default function CourseDetailsRoute() {
   return <CourseDetailsPage />;
 }
-
-

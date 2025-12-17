@@ -2,22 +2,24 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useRef } from 'react';
 import { Button, Text } from 'reshaped';
-import type { CourseData } from 'types/api/courses';
-import { CourseCard, Icon, Pagination } from '@/components';
+import { Icon, Pagination, CourseCard } from '@/components';
 import { CourseCardSkeleton } from '@/components/course-card/skeleton';
 import { useCityContext } from '@/contexts/city';
+import { adaptCourseCardToCourseData } from '@/features/course-search/course-grid/adapters';
 import {
   useCurrentInstitution,
   useGeolocation,
   useInstitutionData,
   usePagination,
 } from '@/hooks';
+import { CourseCard as CourseCardType } from '@/types/api/courses-search';
+import { useQueryGeoCourses } from './api';
 import styles from './styles.module.scss';
 import type { GeoCourseSectionProps } from './types';
 
-const SKELETON_COUNT = 4;
+const SKELETON_COUNT = 5;
 
-export function GeoCoursesSection({ data, title }: GeoCourseSectionProps) {
+export function GeoCoursesSection({ title }: GeoCourseSectionProps) {
   const router = useRouter();
   const { institutionId } = useCurrentInstitution();
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
@@ -46,8 +48,14 @@ export function GeoCoursesSection({ data, title }: GeoCourseSectionProps) {
   const state = contextState || geoState || '';
   const hasCity = Boolean(city && state);
 
-  const showSkeletons = isLoading;
-  const coursesToShow = showSkeletons ? [] : data?.courses;
+  const { data: fetchedData, isLoading: isFetching } = useQueryGeoCourses({
+    city: city || undefined,
+    state: state || undefined,
+    enabled: true,
+  });
+
+  const showSkeletons = isLoading || isFetching;
+  const coursesToShow = showSkeletons ? [] : fetchedData?.courses?.slice(0, 5);
 
   const { currentPage, totalPages, goToPage, isScrollable } = usePagination({
     totalItems: showSkeletons ? SKELETON_COUNT : coursesToShow?.length || 0,
@@ -60,27 +68,23 @@ export function GeoCoursesSection({ data, title }: GeoCourseSectionProps) {
   );
 
   const handleCourseClick = useCallback(
-    (course: CourseData) => {
+    (course: CourseCardType) => {
       if (!institutionId) return;
 
       const queryParams = new URLSearchParams();
 
       // Use course data for city/state, fallback to context
-      const courseCity = course.campusCity || city;
-      const courseState = course.campusState || state;
+      const courseCity = course.city || city;
+      const courseState = course.state || state;
 
       if (courseCity && courseState) {
         queryParams.set('city', courseCity);
         queryParams.set('state', courseState);
       }
 
-      if (course.unitId) {
-        queryParams.set('unit', course.unitId.toString());
-      }
-
       const queryString = queryParams.toString();
       router.push(
-        `/${institutionId}/cursos/${course.id}${queryString ? `?${queryString}` : ''}`,
+        `/${institutionId}/cursos/${course.courseId}${queryString ? `?${queryString}` : ''}`,
       );
     },
     [router, institutionId, city, state],
@@ -159,7 +163,14 @@ export function GeoCoursesSection({ data, title }: GeoCourseSectionProps) {
                 ))
               : coursesToShow?.map((course) => (
                   <div key={course.id} className={styles.card} role="listitem">
-                    <CourseCard course={course} onClick={handleCourseClick} />
+                    <CourseCard
+                      course={adaptCourseCardToCourseData(
+                        course as unknown as CourseCardType,
+                      )}
+                      onClick={(course) =>
+                        handleCourseClick(course as unknown as CourseCardType)
+                      }
+                    />
                   </div>
                 ))}
           </div>
