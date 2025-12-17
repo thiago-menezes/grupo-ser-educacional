@@ -329,16 +329,16 @@ export async function GET(request: NextRequest) {
       courseId,
     );
 
-    // Merge Strapi data with API data (Strapi takes precedence for static content)
     let courseDetails: CourseDetailsResponseDTO = strapiCourseDetails
       ? {
-          ...apiCourseDetails, // API data (offerings, prices, units, modalities)
-          ...strapiCourseDetails, // Strapi data (description, methodology, etc.)
-          // Always use API data for these dynamic fields
+          ...apiCourseDetails,
+          ...strapiCourseDetails,
+          name: apiCourseDetails.name,
           offerings: apiCourseDetails.offerings,
           units: apiCourseDetails.units,
           modalities: apiCourseDetails.modalities,
           priceFrom: apiCourseDetails.priceFrom,
+          enrollment: apiCourseDetails.enrollment,
         }
       : apiCourseDetails;
 

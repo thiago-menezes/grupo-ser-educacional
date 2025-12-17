@@ -17,10 +17,10 @@ export function CourseCard({ course }: CourseCardProps) {
   if (course.admissionForm) params.set('admissionForm', course.admissionForm);
 
   const queryString = params.toString();
-  const courseUrl = `/${institutionSlug}/cursos/${course.id}${queryString ? `?${queryString}` : ''}`;
+  const courseUrl = `/${institutionSlug}/cursos/detalhes/${course.id}${queryString ? `?${queryString}` : ''}`;
 
   return (
-    <Link href={courseUrl} className={styles.card} role="article">
+    <Link href={courseUrl} className={styles.card}>
       <div className={styles.header}>
         <div className={styles.title}>{course.title}</div>
 
