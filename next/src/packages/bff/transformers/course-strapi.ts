@@ -10,33 +10,11 @@ import type {
   RelatedCourseDTO,
 } from 'types/api/course-details';
 import { getMediaUrl } from '@/packages/utils';
-import { formatPrice } from '@/packages/utils/format-price';
 import type {
   StrapiCoordenacao,
   StrapiCorpoDocente,
   StrapiCourse,
-  StrapiOferta,
 } from '../handlers/courses/types-strapi';
-
-/**
- * Helper: Extract unique modalities from offerings
- * @deprecated Use direct modalities relation instead
- */
-function extractModalitiesFromOfferings(offerings: StrapiOferta[]) {
-  const modalityMap = new Map();
-
-  offerings.forEach((oferta) => {
-    if (oferta.modalidade && !modalityMap.has(oferta.modalidade.id)) {
-      modalityMap.set(oferta.modalidade.id, {
-        id: oferta.modalidade.id,
-        name: oferta.modalidade.nome || '',
-        slug: oferta.modalidade.slug || '',
-      });
-    }
-  });
-
-  return Array.from(modalityMap.values());
-}
 
 /**
  * Helper: Extract modalities from direct relation
@@ -60,88 +38,20 @@ function extractModalities(
 }
 
 /**
- * Helper: Extract unique units from offerings
- */
-function extractUnits(offerings: StrapiOferta[]) {
-  const unitMap = new Map();
-
-  offerings.forEach((oferta) => {
-    if (oferta.unidade && !unitMap.has(oferta.unidade.id)) {
-      unitMap.set(oferta.unidade.id, {
-        id: oferta.unidade.id,
-        name: oferta.unidade.nome || '',
-        city: oferta.unidade.cidade || '',
-        state: oferta.unidade.estado || '',
-        address: oferta.unidade.endereco || '',
-      });
-    }
-  });
-
-  return Array.from(unitMap.values());
-}
-
-/**
- * Helper: Transform offerings array
- */
-function transformOfferings(offerings: StrapiOferta[]) {
-  return offerings.map((oferta) => ({
-    id: oferta.id,
-    unitId: oferta.unidade.id,
-    modalityId: oferta.modalidade.id,
-    periodId: oferta.periodo.id,
-    price: oferta.preco,
-    duration: oferta.duracao,
-    enrollmentOpen: oferta.inscricoes_abertas,
-    unit: {
-      id: oferta.unidade.id,
-      name: oferta.unidade.nome || '',
-      city: oferta.unidade.cidade || '',
-      state: oferta.unidade.estado || '',
-    },
-    modality: {
-      id: oferta.modalidade.id,
-      name: oferta.modalidade.nome || '',
-      slug: oferta.modalidade.slug || '',
-    },
-    period: {
-      id: oferta.periodo.id,
-      name: oferta.periodo.nome || '',
-    },
-  }));
-}
-
-/**
  * Transform Strapi course to CourseDetails DTO
  */
 export function transformStrapiCourse(strapi: StrapiCourse): CourseDetailsDTO {
-  // Extract active offerings
-  const activeOfferings = strapi.ofertas?.filter((o) => o.ativo) || [];
-
-  // Extract unique units from offerings
-  const units = extractUnits(activeOfferings);
-
-  // Extract modalities from direct relation (preferred) or fallback to offerings
+  // Extract modalities from direct relation
   const modalities =
     strapi.modalidades && strapi.modalidades.length > 0
       ? extractModalities(strapi.modalidades)
-      : extractModalitiesFromOfferings(activeOfferings);
-
-  // Calculate minimum price from active offerings
-  const prices = activeOfferings
-    .map((o) => o.preco)
-    .filter((p): p is number => p !== null && p !== undefined);
-
-  const minPrice = prices.length > 0 ? Math.min(...prices) : null;
-
-  // Get duration from first active offering or default
-  const firstOffering = activeOfferings[0];
-  const duration =
-    firstOffering?.duracao || strapi.duracao_padrao || 'Não informado';
+      : [];
 
   // Use "sobre" for description, fallback to "descricao"
   const description = strapi.sobre || strapi.descricao || '';
 
   // Build base course details
+  // Note: offerings, units, and pricing come from Courses API, not Strapi
   const courseDetails: CourseDetailsDTO = {
     id: strapi.id,
     name: strapi.nome,
@@ -149,14 +59,12 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetailsDTO {
     description,
     type: strapi.tipo || 'Não informado',
     workload: strapi.carga_horaria ? String(strapi.carga_horaria) : null,
-    category: strapi.categoria
-      ? { id: strapi.categoria.id, name: strapi.categoria.nome }
-      : { id: 0, name: 'Graduação' },
-    duration,
-    priceFrom: minPrice ? formatPrice(minPrice) : null,
+    category: { id: 0, name: 'Graduação' },
+    duration: strapi.duracao_padrao || 'Não informado',
+    priceFrom: null,
     modalities,
-    units,
-    offerings: transformOfferings(activeOfferings),
+    units: [],
+    offerings: [],
     featuredImage: getMediaUrl(strapi.capa?.url ?? ''),
     methodology: strapi.metodologia || undefined,
     certificate: strapi.certificado || undefined,
@@ -187,20 +95,6 @@ export function transformStrapiCourse(strapi: StrapiCourse): CourseDetailsDTO {
         slug: m.slug || m.nome.toLowerCase().replace(/\s+/g, '-'),
       })),
     }));
-  } else if (strapi.corpo_docente) {
-    // Fallback to single teacher (deprecated)
-    courseDetails.teachers = [
-      {
-        id: strapi.corpo_docente.id,
-        name: strapi.corpo_docente.nome,
-        role: strapi.corpo_docente.materia || 'Professor',
-        modalities: strapi.corpo_docente.modalidades?.map((m) => ({
-          id: m.id,
-          name: m.nome,
-          slug: m.slug || m.nome.toLowerCase().replace(/\s+/g, '-'),
-        })),
-      },
-    ];
   }
 
   return courseDetails;
@@ -246,17 +140,14 @@ export function transformStrapiRelatedCourse(strapi: {
   slug: string;
   tipo?: string | null;
   duracao_padrao?: string | null;
-  ofertas?: StrapiOferta[];
 }): RelatedCourseDTO {
-  const firstOffering = strapi.ofertas?.find((o) => o.ativo);
-
   return {
     id: strapi.id,
     name: strapi.nome,
     slug: strapi.slug,
     type: strapi.tipo || 'Não informado',
     duration: strapi.duracao_padrao || 'Não informado',
-    modality: firstOffering?.modalidade?.nome || 'Não informado',
-    price: firstOffering?.preco || null,
+    modality: 'Não informado',
+    price: null,
   };
 }

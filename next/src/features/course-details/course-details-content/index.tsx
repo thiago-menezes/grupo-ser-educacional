@@ -12,6 +12,7 @@ import { CourseImage } from '../course-image';
 import { CourseInfo } from '../course-info';
 import { CourseJobMarketSection } from '../course-job-market-section';
 import { CourseModalitySelector } from '../course-modality-selector';
+import { CourseShiftSelector } from '../course-shift-selector';
 import { CourseTextSection } from '../course-text-section';
 import { CurriculumGridModal } from '../curriculum-grid-modal';
 import type { CourseDetails } from '../types';
@@ -32,7 +33,7 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
     handleAdmissionFormChange,
     isCurriculumModalOpen,
     selectedTurnoId,
-    // handleTurnoChange - available for future turno selector component
+    handleTurnoChange,
   } = useCourseDetailsContent(course);
 
   const [selectedUnitId, setSelectedUnitId] = useState<number>(() => {
@@ -94,6 +95,14 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
                 selectedModalityId={selectedModalityId}
                 onSelectModality={handleModalityChange}
               />
+              {course.enrollment?.shifts &&
+                course.enrollment.shifts.length > 0 && (
+                  <CourseShiftSelector
+                    shifts={course.enrollment.shifts}
+                    selectedShiftId={selectedTurnoId}
+                    onSelectShift={handleTurnoChange}
+                  />
+                )}
               <CourseAdmissionForms
                 availableForms={availableAdmissionForms}
                 selectedFormId={selectedAdmissionFormId}
@@ -131,6 +140,9 @@ export function CourseDetailsContent({ course }: { course: CourseDetails }) {
           <CourseEnrollmentSidebar
             course={course}
             selectedModalityId={selectedModalityId}
+            selectedUnitId={selectedUnitId}
+            selectedPeriodId={selectedTurnoId}
+            selectedAdmissionFormCode={selectedAdmissionFormId}
           />
         </div>
 

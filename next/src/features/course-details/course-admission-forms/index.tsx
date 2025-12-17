@@ -1,6 +1,6 @@
 import { Text, View } from 'reshaped';
 import styles from './styles.module.scss';
-import type { CourseAdmissionFormsProps, AdmissionForm } from './types';
+import type { CourseAdmissionFormsProps } from './types';
 
 export function CourseAdmissionForms({
   availableForms,
@@ -56,58 +56,4 @@ export function CourseAdmissionForms({
       </View>
     );
   }
-
-  // Fallback to static forms
-  return (
-    <View className={styles.forms}>
-      <Text
-        as="h2"
-        variant="featured-2"
-        weight="medium"
-        className={styles.label}
-      >
-        Selecione sua forma de ingresso:
-      </Text>
-
-      <View className={styles.formsGrid}>
-        {availableForms?.map((form) => {
-          const formId = (form as AdmissionForm).id;
-          const isSelected = selectedFormId === formId;
-          const isDisabled = availableForms.length === 1;
-
-          return (
-            <button
-              key={(form as AdmissionForm).id}
-              type="button"
-              className={`${styles.formCard} ${
-                isSelected ? styles.selected : ''
-              } ${isDisabled ? styles.disabled : ''}`}
-              aria-label={`${(form as AdmissionForm).title}: ${(form as AdmissionForm).description}`}
-              aria-pressed={isSelected}
-              disabled={isDisabled}
-              onClick={() => onSelectForm(formId)}
-            >
-              <View className={styles.formContent}>
-                <Text
-                  as="h3"
-                  variant="body-2"
-                  weight="bold"
-                  className={styles.formTitle}
-                >
-                  {(form as AdmissionForm).title}
-                </Text>
-                <Text
-                  variant="body-3"
-                  color="neutral-faded"
-                  className={styles.formDescription}
-                >
-                  {(form as AdmissionForm).description}
-                </Text>
-              </View>
-            </button>
-          );
-        })}
-      </View>
-    </View>
-  );
 }

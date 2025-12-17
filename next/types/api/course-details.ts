@@ -41,6 +41,15 @@ export type RelatedCourseDTO = {
   price: number | null;
 };
 
+export type CourseUnitDTO = {
+  id: number;
+  name: string;
+  city: string;
+  state: string;
+  address?: string;
+  originalId?: string;
+};
+
 export type CourseEnrollmentOfferEntryDTO = {
   startMonth: number;
   endMonth: number;
@@ -114,13 +123,7 @@ export type CourseDetailsDTO = {
     name: string;
     slug: string;
   }>;
-  units: Array<{
-    id: number;
-    name: string;
-    city: string;
-    state: string;
-    address?: string;
-  }>;
+  units: CourseUnitDTO[];
   offerings: Array<{
     id: number;
     unitId: number;
@@ -129,6 +132,7 @@ export type CourseDetailsDTO = {
     price: number | null;
     duration: string;
     enrollmentOpen: boolean;
+    checkoutUrl?: string;
     unit: {
       id: number;
       name: string;

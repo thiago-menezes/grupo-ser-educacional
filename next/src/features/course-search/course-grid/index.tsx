@@ -34,15 +34,11 @@ export function CourseGrid() {
     const queryParams = new URLSearchParams();
 
     if (course.campusCity) {
-      queryParams.set('city', course.campusCity.toLowerCase());
+      queryParams.set('city', course.campusCity);
     }
 
     if (course.campusState) {
-      queryParams.set('state', course.campusState.toLowerCase());
-    }
-
-    if (course.sku) {
-      queryParams.set('sku', course.sku);
+      queryParams.set('state', course.campusState);
     }
 
     if (course.unitId) {
@@ -54,7 +50,7 @@ export function CourseGrid() {
     }
 
     const queryString = queryParams.toString();
-    const url = `/${institutionSlug}/cursos/detalhes?${queryString}`;
+    const url = `/${institutionSlug}/cursos/${course.id}${queryString ? `?${queryString}` : ''}`;
 
     router.push(url);
   };

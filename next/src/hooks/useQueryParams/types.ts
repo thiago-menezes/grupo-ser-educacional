@@ -10,8 +10,14 @@ export type SetQueryParamsOptions = {
 
 export type UseQueryParamsReturn = {
   searchParams: ReadonlyURLSearchParams;
-  setParam: (key: string, value: string | null | undefined, options?: SetQueryParamsOptions) => void;
-  setParams: (input: SetQueryParamsInput, options?: SetQueryParamsOptions) => void;
+  setParam: (
+    key: string,
+    value: string | null | undefined,
+    options?: SetQueryParamsOptions,
+  ) => void;
+  setParams: (
+    input: SetQueryParamsInput,
+    options?: SetQueryParamsOptions,
+  ) => void;
   deleteParam: (key: string, options?: SetQueryParamsOptions) => void;
 };
-

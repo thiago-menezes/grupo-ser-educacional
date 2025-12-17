@@ -11,13 +11,27 @@ export const useCourseDetailsContent = (course: CourseDetails) => {
   const [selectedAdmissionFormId, setSelectedAdmissionFormId] = useState<
     string | null
   >(null);
-  const [selectedTurnoId, setSelectedTurnoId] = useState<number | null>(null);
+  const [selectedTurnoId, setSelectedTurnoId] = useState<number | null>(() => {
+    // Initialize from URL or first shift
+    const turnoParam = searchParams.get('turno');
+    if (turnoParam && course.enrollment?.shifts?.length) {
+      const turno = course.enrollment.shifts.find(
+        (t) => t.id.toString() === turnoParam,
+      );
+      if (turno) return turno.id;
+    }
+    // Default to first shift
+    return course.enrollment?.shifts?.[0]?.id ?? null;
+  });
 
   const { institutionSlug } = useCurrentInstitution();
 
-  // Initialize selected shift from enrollment data
+  // Update selected shift when enrollment data changes
   useEffect(() => {
-    if (course.enrollment?.shifts?.length) {
+    if (
+      course.enrollment?.shifts?.length &&
+      !course.enrollment.shifts.find((s) => s.id === selectedTurnoId)
+    ) {
       const turnoParam = searchParams.get('turno');
       if (turnoParam) {
         const turno = course.enrollment.shifts.find(
@@ -35,7 +49,7 @@ export const useCourseDetailsContent = (course: CourseDetails) => {
         setSelectedTurnoId(course.enrollment!.shifts[0].id);
       });
     }
-  }, [course.enrollment, searchParams]);
+  }, [course.enrollment, searchParams, selectedTurnoId]);
 
   // Initialize selected modality based on URL params
   useEffect(() => {
@@ -82,11 +96,14 @@ export const useCourseDetailsContent = (course: CourseDetails) => {
       if (admissionFormParam) {
         setSelectedAdmissionFormId(admissionFormParam);
       } else {
-        // Default to first form if no param (will update URL when user selects)
-        setSelectedAdmissionFormId('vestibular');
+        // Default to first form from enrollment data if available
+        const firstForm = course.enrollment?.shifts?.[0]?.admissionForms?.[0];
+        if (firstForm) {
+          setSelectedAdmissionFormId(firstForm.code);
+        }
       }
     });
-  }, [searchParams]);
+  }, [searchParams, course.enrollment]);
 
   // Handler to update modality query parameter
   const handleModalityChange = useCallback(

@@ -5,15 +5,12 @@
 
 import type { CourseDetails } from '@/features/course-details/types';
 import type { StrapiClient } from '../../services/strapi/client';
-import {
-  transformStrapiCourse,
-  transformStrapiRelatedCourse,
-} from '../../transformers/course-strapi';
+import { transformStrapiCourse } from '../../transformers/course-strapi';
 import type { StrapiCourseResponse } from './types-strapi';
 
 export type CourseDetailsParams = {
-  courseSku: string;
-  courseSlug?: string;
+  courseId?: string;
+  courseSku?: string;
 };
 
 /**
@@ -25,14 +22,26 @@ export async function handleCourseDetailsFromStrapi(
   params: CourseDetailsParams,
 ): Promise<CourseDetails> {
   try {
+    const courseId = params.courseId?.trim();
+    const courseSku = params.courseSku?.trim();
+
+    if (!courseId && !courseSku) {
+      throw new Error('CourseDetailsParams must include courseId or courseSku');
+    }
+
+    // Do not coerce to Number: courseId can be larger than Number.MAX_SAFE_INTEGER
+    // and Strapi filter must match the exact value.
+
     // Fetch course with all relations populated
     // Using publicationState=preview to get both published and draft content
-    // Using deep populate to get all nested relations
+    // Using explicit deep populate to ensure nested relations (like media) are included
     const courseResponse = await strapiClient.fetch<StrapiCourseResponse>(
       'courses',
       {
         filters: {
-          sku: { $eq: params.courseSku },
+          ...(courseId
+            ? { id_do_curso: { $eq: courseId } }
+            : { sku: { $eq: courseSku } }),
         },
         populate: '*',
         params: { publicationState: 'preview' },
@@ -41,7 +50,11 @@ export async function handleCourseDetailsFromStrapi(
 
     // Validate course exists
     if (!courseResponse.data || courseResponse.data.length === 0) {
-      throw new Error(`Course not found with SKU: ${params.courseSku}`);
+      throw new Error(
+        courseId
+          ? `Course not found with courseId: ${courseId}`
+          : `Course not found with SKU: ${courseSku}`,
+      );
     }
 
     const strapiCourse = courseResponse.data[0];
@@ -67,16 +80,6 @@ export async function handleCourseDetailsFromStrapi(
       strapiCourse.faixas_salariais.length > 0
     ) {
       courseDetails.salaryRanges = strapiCourse.faixas_salariais;
-    }
-
-    // Add related courses if exist
-    if (
-      strapiCourse.cursos_relacionados &&
-      strapiCourse.cursos_relacionados.length > 0
-    ) {
-      courseDetails.relatedCourses = strapiCourse.cursos_relacionados.map(
-        transformStrapiRelatedCourse,
-      );
     }
 
     return courseDetails;

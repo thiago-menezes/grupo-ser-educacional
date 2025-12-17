@@ -70,21 +70,17 @@ export function GeoCoursesSection({ data, title }: GeoCourseSectionProps) {
       const courseState = course.campusState || state;
 
       if (courseCity && courseState) {
-        queryParams.set('cidade', courseCity.toLowerCase());
-        queryParams.set('estado', courseState.toLowerCase());
-      }
-
-      if (course.sku) {
-        queryParams.set('sku', course.sku);
+        queryParams.set('city', courseCity);
+        queryParams.set('state', courseState);
       }
 
       if (course.unitId) {
-        queryParams.set('idDaUnidade', course.unitId.toString());
+        queryParams.set('unit', course.unitId.toString());
       }
 
       const queryString = queryParams.toString();
       router.push(
-        `/${institutionId}/cursos/detalhes${queryString ? `?${queryString}` : ''}`,
+        `/${institutionId}/cursos/${course.id}${queryString ? `?${queryString}` : ''}`,
       );
     },
     [router, institutionId, city, state],

@@ -5,9 +5,7 @@ type CourseJobMarketSectionProps = {
   areas: string[];
 };
 
-export function CourseJobMarketSection({
-  areas,
-}: CourseJobMarketSectionProps) {
+export function CourseJobMarketSection({ areas }: CourseJobMarketSectionProps) {
   return (
     <View className={styles.section}>
       <Divider />

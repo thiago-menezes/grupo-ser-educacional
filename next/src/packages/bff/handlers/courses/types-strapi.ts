@@ -98,8 +98,6 @@ export interface StrapiRelatedCourse {
   sku?: string | null;
   tipo?: string | null;
   duracao_padrao?: string | null;
-  categoria?: StrapiCategoryNested;
-  ofertas?: StrapiOferta[];
 }
 
 /**
@@ -136,6 +134,7 @@ export interface StrapiCourse {
   nome: string;
   slug: string;
   sku?: string | null;
+  id_do_curso?: number | string | null;
   // "sobre" is the description field in Strapi
   sobre?: string | null;
   descricao?: string | null; // fallback field name
@@ -153,9 +152,6 @@ export interface StrapiCourse {
     description: string;
     icon?: string;
   }> | null; // JSON field
-  categoria?: StrapiCategoryNested | null;
-  ofertas?: StrapiOferta[];
-  cursos_relacionados?: StrapiRelatedCourse[];
   // "capa" is the cover image in Strapi
   capa?: StrapiMedia | null;
   // Direct relations (not from ofertas)
@@ -163,7 +159,6 @@ export interface StrapiCourse {
   // Embedded relations
   curso_coordenacao?: StrapiCourseCoordinator | null;
   curso_corpo_docentes?: StrapiCourseTeacher[];
-  corpo_docente?: StrapiCourseTeacher | null; // Deprecated: single teacher fallback
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string | null;

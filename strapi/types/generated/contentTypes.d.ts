@@ -567,6 +567,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     >;
     duracao: Schema.Attribute.Integer & Schema.Attribute.Required;
     grade_curricular: Schema.Attribute.RichText;
+    id_do_curso: Schema.Attribute.String;
     instituicao: Schema.Attribute.Relation<
       'manyToOne',
       'api::institution.institution'
@@ -585,7 +586,6 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     nome: Schema.Attribute.String & Schema.Attribute.Required;
     projeto_pedagogico: Schema.Attribute.RichText;
     publishedAt: Schema.Attribute.DateTime;
-    sku: Schema.Attribute.String;
     sobre: Schema.Attribute.RichText;
     unidades: Schema.Attribute.Relation<'oneToMany', 'api::unit.unit'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -894,7 +894,7 @@ export interface ApiUnitUnit extends Struct.CollectionTypeSchema {
     >;
     estado: Schema.Attribute.String & Schema.Attribute.Required;
     fotos: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
-    id_unidade: Schema.Attribute.Integer;
+    id_unidade: Schema.Attribute.BigInteger;
     instituicao: Schema.Attribute.Relation<
       'oneToOne',
       'api::institution.institution'

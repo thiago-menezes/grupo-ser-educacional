@@ -1,8 +1,4 @@
-import type {
-  CourseAPIRaw,
-  JSONServerQueryParams,
-  CoursesAPIResponse,
-} from './types';
+import type { CourseAPIRaw, JSONServerQueryParams } from './types';
 
 export interface CoursesApiConfig {
   baseUrl: string;

@@ -69,7 +69,7 @@
       "target": "api::institution.institution"
     },
     "id_unidade": {
-      "type": "integer"
+      "type": "biginteger"
     },
     "curso_detalhes": {
       "type": "relation",

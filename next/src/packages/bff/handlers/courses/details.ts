@@ -10,7 +10,7 @@ export type ClientApiParams = {
   state: string;
   city: string;
   unit: string;
-  sku: string;
+  courseId: string;
   admissionForm?: string;
 };
 
@@ -21,7 +21,7 @@ export type ClientApiParams = {
 export async function fetchCourseDetailsFromClientApi(
   params: ClientApiParams,
 ): Promise<ClientApiCourseDetails> {
-  const { institution, state, city, unit, sku } = params;
+  const { institution, state, city, unit, courseId } = params;
 
   const baseUrl = process.env.API_BASE_URL || process.env.CLIENT_API_BASE_URL;
   if (!baseUrl) {
@@ -35,7 +35,7 @@ export async function fetchCourseDetailsFromClientApi(
     state,
     city,
     parseInt(unit, 10),
-    sku,
+    courseId,
   );
 
   return clientApiDetails;

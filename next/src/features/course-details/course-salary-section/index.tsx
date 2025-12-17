@@ -1,6 +1,7 @@
 import { Divider, Text, View } from 'reshaped';
-import { Icon } from '@/components';
 import type { CourseSalaryRangeDTO } from 'types/api/course-details';
+import { Icon } from '@/components';
+import type { IconNames } from '@/components/icon/types';
 import styles from './styles.module.scss';
 
 type CourseSalarySectionProps = {
@@ -40,7 +41,7 @@ export function CourseSalarySection({
             <View className={styles.salaryHeader}>
               {salary.icon && (
                 <Icon
-                  name={salary.icon as any}
+                  name={salary.icon as IconNames}
                   size={24}
                   className={styles.icon}
                 />

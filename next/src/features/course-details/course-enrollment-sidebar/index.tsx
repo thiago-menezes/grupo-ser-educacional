@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Button, Text, TextField, View } from 'reshaped';
 import { withMask } from 'use-mask-input';
-import { useCurrentInstitution } from '@/hooks';
 import { formatPrice } from '@/packages/utils';
 import { CourseLocationSelector } from '../course-location-selector';
 import type { CourseDetails } from '../types';
@@ -12,16 +11,33 @@ import styles from './styles.module.scss';
 export type CourseEnrollmentSidebarProps = {
   course: CourseDetails;
   selectedModalityId: number | null;
+  selectedUnitId?: number;
+  selectedPeriodId?: number | null;
+  selectedAdmissionFormCode?: string | null;
 };
 
 export function CourseEnrollmentSidebar({
   course,
   selectedModalityId,
+  selectedUnitId,
+  selectedPeriodId,
+  selectedAdmissionFormCode,
 }: CourseEnrollmentSidebarProps) {
   // Get offerings for selected modality
   const modalityOfferings = course.offerings.filter(
     (o) => !selectedModalityId || o.modalityId === selectedModalityId,
   );
+
+  // Find the best matching offering based on selections
+  const selectedOffering =
+    course.offerings.find((o) => {
+      const matchesModality =
+        !selectedModalityId || o.modalityId === selectedModalityId;
+      const matchesUnit = !selectedUnitId || o.unitId === selectedUnitId;
+      const matchesPeriod =
+        !selectedPeriodId || o.periodId === selectedPeriodId;
+      return matchesModality && matchesUnit && matchesPeriod;
+    }) || modalityOfferings[0];
 
   // Get minimum price from available offerings
   const prices = modalityOfferings
@@ -45,7 +61,47 @@ export function CourseEnrollmentSidebar({
     return null;
   };
 
-  const { institutionSlug } = useCurrentInstitution();
+  // Get checkout URL based on selected shift and admission form
+  const getCheckoutUrl = () => {
+    if (!course.enrollment?.shifts) {
+      return selectedOffering?.checkoutUrl || '';
+    }
+
+    // Find selected shift
+    const selectedShift = course.enrollment.shifts.find(
+      (shift) => shift.id === selectedPeriodId,
+    );
+
+    if (!selectedShift) {
+      // Fallback to first shift
+      const firstShift = course.enrollment.shifts[0];
+      const firstForm = firstShift?.admissionForms?.[0];
+      const firstPaymentType = firstForm?.paymentTypes?.[0];
+      return (
+        firstPaymentType?.checkoutUrl || selectedOffering?.checkoutUrl || ''
+      );
+    }
+
+    // Find selected admission form
+    const selectedForm = selectedShift.admissionForms?.find(
+      (form) => form.code === selectedAdmissionFormCode,
+    );
+
+    if (!selectedForm) {
+      // Fallback to first form in selected shift
+      const firstForm = selectedShift.admissionForms?.[0];
+      const firstPaymentType = firstForm?.paymentTypes?.[0];
+      return (
+        firstPaymentType?.checkoutUrl || selectedOffering?.checkoutUrl || ''
+      );
+    }
+
+    // Get first payment type (usually "Parcela")
+    const paymentType = selectedForm.paymentTypes?.[0];
+    return paymentType?.checkoutUrl || selectedOffering?.checkoutUrl || '';
+  };
+
+  const checkoutUrl = getCheckoutUrl();
 
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -79,7 +135,7 @@ export function CourseEnrollmentSidebar({
         if (!turnstileSuccess) {
           setFirstClick(true);
         } else {
-          router.push(`/${institutionSlug}/pre-inscricao`);
+          router.push(`https://${checkoutUrl}`);
         }
       }}
     >
@@ -215,7 +271,9 @@ export function CourseEnrollmentSidebar({
           </Button>
         </View>
 
-        <CourseLocationSelector />
+        {selectedOffering && (
+          <CourseLocationSelector unit={selectedOffering.unit} />
+        )}
       </View>
     </form>
   );

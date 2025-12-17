@@ -33,6 +33,7 @@ export type CoursesAPIResponse = {
 };
 
 export type JSONServerQueryParams = {
+  Curso_ID?: string;
   Nivel_Ensino?: string;
   Cidade?: string;
   Estado?: string;

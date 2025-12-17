@@ -1,12 +1,12 @@
-import { Metadata } from 'next';
-import { PropsWithChildren } from 'react';
+import type { Metadata } from 'next';
+import type { PropsWithChildren } from 'react';
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ institution: string; slug: string }>;
+  params: Promise<{ institution: string; courseId: string }>;
 }): Promise<Metadata> {
-  const { institution, slug } = await params;
+  const { institution, courseId } = await params;
 
   try {
     const baseUrl =
@@ -15,14 +15,13 @@ export async function generateMetadata({
         ? 'http://localhost:3000'
         : window.location.origin);
 
-    const response = await fetch(`${baseUrl}/api/courses/${slug}`, {
-      next: { revalidate: 3600 },
-    });
+    const response = await fetch(
+      `${baseUrl}/api/courses/details?courseId=${encodeURIComponent(courseId)}`,
+      { next: { revalidate: 3600 } },
+    );
 
     if (!response.ok) {
-      return {
-        title: 'Curso não encontrado',
-      };
+      return { title: 'Curso não encontrado' };
     }
 
     const course = await response.json();
@@ -33,9 +32,7 @@ export async function generateMetadata({
         course.description || `Saiba mais sobre o curso ${course.name}`,
     };
   } catch {
-    return {
-      title: 'Curso',
-    };
+    return { title: 'Curso' };
   }
 }
 

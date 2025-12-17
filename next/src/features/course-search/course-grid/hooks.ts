@@ -1,17 +1,8 @@
-import { startTransition, useEffect, useRef, useState, useMemo } from 'react';
+import { startTransition, useEffect, useMemo, useRef, useState } from 'react';
 import { useCourseFiltersContext } from '../context';
-import {
-  useQueryCityBasedCourses,
-  useQueryCourses,
-  useQueryCoursesSearch,
-} from './api/query';
-import { ITEMS_PER_PAGE } from './constants';
 import { adaptCourseCardToCourseData } from './adapters';
-
-function isCityBasedSearch(cityFilter: string): boolean {
-  if (/^city:.+-state:[a-z]{2}$/i.test(cityFilter)) return true;
-  return /.+-[a-z]{2}$/i.test(cityFilter);
-}
+import { useQueryCoursesSearch } from './api/query';
+import { ITEMS_PER_PAGE } from './constants';
 
 export const useCourseGrid = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,8 +36,6 @@ export const useCourseGrid = () => {
       }
     }
   }, [filtersKey, currentPage]);
-
-  const isCity = filters.city && isCityBasedSearch(filters.city);
 
   const bffQuery = useQueryCoursesSearch(
     {

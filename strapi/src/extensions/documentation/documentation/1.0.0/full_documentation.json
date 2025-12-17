@@ -14,7 +14,7 @@
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     },
-    "x-generation-date": "2025-12-16T19:03:27.768Z"
+    "x-generation-date": "2025-12-17T06:26:01.856Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -8817,7 +8817,7 @@
                       "metodologia": {
                         "type": "string"
                       },
-                      "sku": {
+                      "id_do_curso": {
                         "type": "string"
                       },
                       "capa": {
@@ -9159,7 +9159,9 @@
                               }
                             },
                             "id_unidade": {
-                              "type": "integer"
+                              "type": "string",
+                              "pattern": "^\\d*$",
+                              "example": "123456789"
                             },
                             "curso_detalhes": {
                               "type": "object",
@@ -10868,7 +10870,7 @@
                     "metodologia": {
                       "type": "string"
                     },
-                    "sku": {
+                    "id_do_curso": {
                       "type": "string"
                     },
                     "capa": {
@@ -11210,7 +11212,9 @@
                             }
                           },
                           "id_unidade": {
-                            "type": "integer"
+                            "type": "string",
+                            "pattern": "^\\d*$",
+                            "example": "123456789"
                           },
                           "curso_detalhes": {
                             "type": "object",
@@ -12101,7 +12105,7 @@
                 "metodologia": {
                   "type": "string"
                 },
-                "sku": {
+                "id_do_curso": {
                   "type": "string"
                 },
                 "capa": {
@@ -13071,7 +13075,9 @@
                         }
                       },
                       "id_unidade": {
-                        "type": "integer"
+                        "type": "string",
+                        "pattern": "^\\d*$",
+                        "example": "123456789"
                       },
                       "curso_detalhes": {
                         "type": "object",
@@ -13715,7 +13721,7 @@
               "metodologia": {
                 "type": "string"
               },
-              "sku": {
+              "id_do_curso": {
                 "type": "string"
               },
               "capa": {
@@ -13886,7 +13892,7 @@
           "metodologia": {
             "type": "string"
           },
-          "sku": {
+          "id_do_curso": {
             "type": "string"
           },
           "capa": {
@@ -14528,7 +14534,7 @@
                     "metodologia": {
                       "type": "string"
                     },
-                    "sku": {
+                    "id_do_curso": {
                       "type": "string"
                     },
                     "capa": {
@@ -14870,7 +14876,9 @@
                             }
                           },
                           "id_unidade": {
-                            "type": "integer"
+                            "type": "string",
+                            "pattern": "^\\d*$",
+                            "example": "123456789"
                           },
                           "curso_detalhes": {
                             "type": "object",
@@ -16422,7 +16430,7 @@
                     "metodologia": {
                       "type": "string"
                     },
-                    "sku": {
+                    "id_do_curso": {
                       "type": "string"
                     },
                     "capa": {
@@ -16764,7 +16772,9 @@
                             }
                           },
                           "id_unidade": {
-                            "type": "integer"
+                            "type": "string",
+                            "pattern": "^\\d*$",
+                            "example": "123456789"
                           },
                           "curso_detalhes": {
                             "type": "object",
@@ -17853,7 +17863,7 @@
                     "metodologia": {
                       "type": "string"
                     },
-                    "sku": {
+                    "id_do_curso": {
                       "type": "string"
                     },
                     "capa": {
@@ -18664,7 +18674,9 @@
                             }
                           },
                           "id_unidade": {
-                            "type": "integer"
+                            "type": "string",
+                            "pattern": "^\\d*$",
+                            "example": "123456789"
                           },
                           "curso_detalhes": {
                             "type": "object",
@@ -20483,7 +20495,7 @@
                     "metodologia": {
                       "type": "string"
                     },
-                    "sku": {
+                    "id_do_curso": {
                       "type": "string"
                     },
                     "capa": {
@@ -20825,7 +20837,9 @@
                             }
                           },
                           "id_unidade": {
-                            "type": "integer"
+                            "type": "string",
+                            "pattern": "^\\d*$",
+                            "example": "123456789"
                           },
                           "curso_detalhes": {
                             "type": "object",
@@ -21913,7 +21927,7 @@
                 "metodologia": {
                   "type": "string"
                 },
-                "sku": {
+                "id_do_curso": {
                   "type": "string"
                 },
                 "capa": {
@@ -22883,7 +22897,9 @@
                         }
                       },
                       "id_unidade": {
-                        "type": "integer"
+                        "type": "string",
+                        "pattern": "^\\d*$",
+                        "example": "123456789"
                       },
                       "curso_detalhes": {
                         "type": "object",
@@ -23630,7 +23646,7 @@
                 "metodologia": {
                   "type": "string"
                 },
-                "sku": {
+                "id_do_curso": {
                   "type": "string"
                 },
                 "capa": {
@@ -24600,7 +24616,9 @@
                         }
                       },
                       "id_unidade": {
-                        "type": "integer"
+                        "type": "string",
+                        "pattern": "^\\d*$",
+                        "example": "123456789"
                       },
                       "curso_detalhes": {
                         "type": "object",
@@ -25373,7 +25391,7 @@
                       "metodologia": {
                         "type": "string"
                       },
-                      "sku": {
+                      "id_do_curso": {
                         "type": "string"
                       },
                       "capa": {
@@ -26184,7 +26202,9 @@
                               }
                             },
                             "id_unidade": {
-                              "type": "integer"
+                              "type": "string",
+                              "pattern": "^\\d*$",
+                              "example": "123456789"
                             },
                             "curso_detalhes": {
                               "type": "object",
@@ -27675,7 +27695,7 @@
                     "metodologia": {
                       "type": "string"
                     },
-                    "sku": {
+                    "id_do_curso": {
                       "type": "string"
                     },
                     "capa": {
@@ -28017,7 +28037,9 @@
                             }
                           },
                           "id_unidade": {
-                            "type": "integer"
+                            "type": "string",
+                            "pattern": "^\\d*$",
+                            "example": "123456789"
                           },
                           "curso_detalhes": {
                             "type": "object",
@@ -29084,7 +29106,7 @@
                     "metodologia": {
                       "type": "string"
                     },
-                    "sku": {
+                    "id_do_curso": {
                       "type": "string"
                     },
                     "capa": {
@@ -29895,7 +29917,9 @@
                             }
                           },
                           "id_unidade": {
-                            "type": "integer"
+                            "type": "string",
+                            "pattern": "^\\d*$",
+                            "example": "123456789"
                           },
                           "curso_detalhes": {
                             "type": "object",
@@ -30781,7 +30805,9 @@
                 "example": "string or id"
               },
               "id_unidade": {
-                "type": "integer"
+                "type": "string",
+                "pattern": "^\\d*$",
+                "example": "123456789"
               },
               "curso_detalhes": {
                 "oneOf": [
@@ -31545,7 +31571,7 @@
                     "metodologia": {
                       "type": "string"
                     },
-                    "sku": {
+                    "id_do_curso": {
                       "type": "string"
                     },
                     "capa": {
@@ -31887,7 +31913,9 @@
                             }
                           },
                           "id_unidade": {
-                            "type": "integer"
+                            "type": "string",
+                            "pattern": "^\\d*$",
+                            "example": "123456789"
                           },
                           "curso_detalhes": {
                             "type": "object",
@@ -32567,7 +32595,9 @@
             }
           },
           "id_unidade": {
-            "type": "integer"
+            "type": "string",
+            "pattern": "^\\d*$",
+            "example": "123456789"
           },
           "curso_detalhes": {
             "type": "object",

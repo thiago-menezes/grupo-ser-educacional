@@ -15,7 +15,6 @@ export async function GET(
     const strapiClient = getStrapiClient();
     const response = await handleCourseDetailsFromStrapi(strapiClient, {
       courseSku: slug,
-      courseSlug: slug,
     });
     return NextResponse.json<CoursesSlugResponseDTO>(response);
   } catch (error) {

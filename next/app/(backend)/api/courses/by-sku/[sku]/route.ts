@@ -39,7 +39,7 @@ export async function GET(
           state,
           city,
           unit,
-          sku,
+          courseId: sku,
           admissionForm: admissionForm || undefined,
         },
       );

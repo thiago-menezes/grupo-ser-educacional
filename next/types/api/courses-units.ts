@@ -12,7 +12,7 @@ export type CoursesUnitsResponseDTO = {
     institution: string;
     state: string;
     city: string;
-    sku: string;
+    courseId: string;
   };
 };
 

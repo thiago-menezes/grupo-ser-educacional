@@ -4,7 +4,7 @@ import { CourseDetailsResponseDTO } from '@/types/api/course-details';
 import type { CourseDetails } from '../types';
 
 export type CourseDetailsQueryParams = {
-  sku: string;
+  courseId: string;
   institution?: string;
   state?: string;
   city?: string;
@@ -15,10 +15,10 @@ export type CourseDetailsQueryParams = {
 async function fetchCourseDetails(
   params: CourseDetailsQueryParams,
 ): Promise<CourseDetails> {
-  const { sku, institution, state, city, unit, admissionForm } = params;
+  const { courseId, institution, state, city, unit, admissionForm } = params;
 
   const queryParams = new URLSearchParams();
-  if (sku) queryParams.append('sku', sku);
+  if (courseId) queryParams.append('courseId', courseId);
   if (institution) queryParams.append('institution', institution);
   if (state) queryParams.append('state', state);
   if (city) queryParams.append('city', city);
@@ -26,7 +26,7 @@ async function fetchCourseDetails(
   if (admissionForm) queryParams.append('admissionForm', admissionForm);
 
   const response = await query<CourseDetailsResponseDTO>('/courses/details', {
-    sku,
+    courseId,
     institution,
     state,
     city,
@@ -38,12 +38,12 @@ async function fetchCourseDetails(
 }
 
 export function useQueryCourseDetails(params: CourseDetailsQueryParams) {
-  const { sku, institution, state, city, unit, admissionForm } = params;
+  const { courseId, institution, state, city, unit, admissionForm } = params;
 
   return useQuery({
     queryKey: [
       'course-details',
-      sku,
+      courseId,
       institution,
       state,
       city,
@@ -51,7 +51,7 @@ export function useQueryCourseDetails(params: CourseDetailsQueryParams) {
       admissionForm,
     ],
     queryFn: () => fetchCourseDetails(params),
-    enabled: !!sku,
+    enabled: !!courseId,
     placeholderData: (previousData) => previousData,
     refetchOnWindowFocus: false,
   });

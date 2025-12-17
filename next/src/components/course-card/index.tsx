@@ -10,11 +10,14 @@ export function CourseCard({ course }: CourseCardProps) {
   const { institutionSlug } = useCurrentInstitution();
 
   // Build course URL with actual course data
-  const city = course.campusCity.toLowerCase().replace(/\s+/g, '-');
-  const state = course.campusState.toLowerCase();
-  const sku = course.sku || '';
-  const unitId = course.unitId || '';
-  const courseUrl = `/${institutionSlug}/cursos/detalhes?city=${city}&state=${state}&sku=${sku}&unit=${unitId}`;
+  const params = new URLSearchParams();
+  if (course.campusCity) params.set('city', course.campusCity);
+  if (course.campusState) params.set('state', course.campusState);
+  if (course.unitId) params.set('unit', course.unitId.toString());
+  if (course.admissionForm) params.set('admissionForm', course.admissionForm);
+
+  const queryString = params.toString();
+  const courseUrl = `/${institutionSlug}/cursos/${course.id}${queryString ? `?${queryString}` : ''}`;
 
   return (
     <Link href={courseUrl} className={styles.card} role="article">

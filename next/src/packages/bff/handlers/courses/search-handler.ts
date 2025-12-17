@@ -1,13 +1,13 @@
-import type { CoursesApiClient } from '../../services/courses-api/client';
-import type { JSONServerQueryParams } from '../../services/courses-api/types';
 import type {
   CoursesSearchParams,
   CoursesSearchResponse,
   CourseCard,
   FiltersCount,
 } from 'types/api/courses-search';
-import { aggregateCourses } from './aggregator';
+import type { CoursesApiClient } from '../../services/courses-api/client';
+import type { JSONServerQueryParams } from '../../services/courses-api/types';
 import { transformCoursesToCards } from '../../transformers/courses-search';
+import { aggregateCourses } from './aggregator';
 
 const DEFAULT_PER_PAGE = 12;
 

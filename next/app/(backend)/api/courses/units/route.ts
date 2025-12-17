@@ -14,18 +14,18 @@ import { getClientApiClient } from '../../services/bff';
  * - institution: Institution slug (e.g., "unama")
  * - state: State abbreviation (e.g., "pa")
  * - city: City name (e.g., "ananindeua")
- * - sku: Course SKU (e.g., "4.EAD017.02")
+ * - courseId: Course ID (Client API Course_ID)
  */
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const institution = searchParams.get('institution');
   const state = searchParams.get('state');
   const city = searchParams.get('city');
-  const sku = searchParams.get('sku');
+  const courseId = searchParams.get('courseId') ?? searchParams.get('sku');
 
-  if (!institution || !state || !city || !sku) {
+  if (!institution || !state || !city || !courseId) {
     return NextResponse.json<CoursesUnitsErrorDTO>(
-      { error: 'institution, state, city, and sku are required' },
+      { error: 'institution, state, city, and courseId are required' },
       { status: 400 },
     );
   }
@@ -36,13 +36,13 @@ export async function GET(request: NextRequest) {
       institution,
       state,
       city,
-      sku,
+      courseId,
     );
 
     if (!apiResponse.Unidades || apiResponse.Unidades.length === 0) {
       return NextResponse.json<CoursesUnitsResponseDTO>({
         data: [],
-        meta: { total: 0, institution, state, city, sku },
+        meta: { total: 0, institution, state, city, courseId },
       });
     }
 
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
           institution,
           state,
           city,
-          sku,
+          courseId,
         },
       },
       {
@@ -67,8 +67,6 @@ export async function GET(request: NextRequest) {
       },
     );
   } catch (error) {
-    console.error('[API] Error fetching units by course:', error);
-
     return NextResponse.json<CoursesUnitsErrorDTO>(
       {
         error: 'Failed to fetch units for course',

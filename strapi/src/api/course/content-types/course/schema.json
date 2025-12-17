@@ -22,7 +22,7 @@
     "metodologia": {
       "type": "richtext"
     },
-    "sku": {
+    "id_do_curso": {
       "type": "string"
     },
     "capa": {
