@@ -1,8 +1,12 @@
 'use client';
 
-import { useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { SetQueryParamsInput, SetQueryParamsOptions, UseQueryParamsReturn } from './types';
+import { useCallback } from 'react';
+import type {
+  SetQueryParamsInput,
+  SetQueryParamsOptions,
+  UseQueryParamsReturn,
+} from './types';
 
 function buildHref(pathname: string, params: URLSearchParams): string {
   const query = params.toString();
@@ -24,7 +28,11 @@ export function useQueryParams(): UseQueryParamsReturn {
   );
 
   const setParam = useCallback(
-    (key: string, value: string | null | undefined, options?: SetQueryParamsOptions) => {
+    (
+      key: string,
+      value: string | null | undefined,
+      options?: SetQueryParamsOptions,
+    ) => {
       const params = new URLSearchParams(searchParams.toString());
       if (value === null || value === undefined || value === '') {
         params.delete(key);
@@ -85,4 +93,3 @@ export type {
   SetQueryParamsValue,
   UseQueryParamsReturn,
 } from './types';
-

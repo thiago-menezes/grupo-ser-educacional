@@ -67,9 +67,10 @@ export type { ComponentProps };
 - Use design tokens (`var(--rs-*)`)
 - Conditional rendering with `&&` operator
 - List keys must be unique IDs, not indices
-- **Always use `type` instead of `interface`** (except for global definitions)
+- **Always use `type` instead of `interface`** (no exceptions)
 - All types go in `types.ts` files
 - Only export component from `index.ts`
+- **No comments in code** - code should be self-explanatory
 
 ### Error Handling
 
