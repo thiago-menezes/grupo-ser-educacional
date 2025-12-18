@@ -27,7 +27,7 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
                 }
               }}
             >
-              Manhã (10)
+              Manhã
             </Checkbox>
             <Checkbox
               name="shift-afternoon"
@@ -55,7 +55,7 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
                 }
               }}
             >
-              Noite (22)
+              Noite
             </Checkbox>
             <Checkbox
               name="shift-fulltime"
@@ -81,7 +81,7 @@ export function ShiftCheckboxes({ control }: ShiftCheckboxesProps) {
                 }
               }}
             >
-              Virtual (118)
+              Virtual
             </Checkbox>
           </View>
         </FormControl>

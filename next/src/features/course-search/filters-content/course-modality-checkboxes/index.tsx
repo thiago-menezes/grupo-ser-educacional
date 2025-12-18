@@ -31,7 +31,7 @@ export function CourseModalityCheckboxes({
                 }
               }}
             >
-              Presencial (32)
+              Presencial
             </Checkbox>
             <Checkbox
               name="modality-SemiPresencial"
@@ -46,7 +46,7 @@ export function CourseModalityCheckboxes({
                 }
               }}
             >
-              Semipresencial (50)
+              Semipresencial
             </Checkbox>
             <Checkbox
               name="modality-Distancia"
@@ -59,7 +59,7 @@ export function CourseModalityCheckboxes({
                 }
               }}
             >
-              A distância EAD (68)
+              A distância EAD
             </Checkbox>
           </View>
         </FormControl>

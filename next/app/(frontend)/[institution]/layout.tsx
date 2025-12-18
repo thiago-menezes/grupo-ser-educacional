@@ -25,7 +25,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export const dynamic = 'force-dynamic';
+// Removed 'force-dynamic' to enable ISR (Incremental Static Regeneration)
+// Pages will be statically generated at build time and revalidated on-demand via webhook
 export const dynamicParams = true;
 
 export { generateMetadata };

@@ -42,7 +42,7 @@ export function CourseDurationCheckboxes({
                 }
               }}
             >
-              2 a 3 anos (78)
+              2 a 3 anos
             </Checkbox>
             <Checkbox
               name="duration-3-4"
@@ -55,7 +55,7 @@ export function CourseDurationCheckboxes({
                 }
               }}
             >
-              3 a 4 anos (48)
+              3 a 4 anos
             </Checkbox>
             <Checkbox
               name="duration-4-plus"
@@ -68,7 +68,7 @@ export function CourseDurationCheckboxes({
                 }
               }}
             >
-              Mais que 4 anos (4)
+              Mais que 4 anos
             </Checkbox>
           </View>
         </FormControl>
