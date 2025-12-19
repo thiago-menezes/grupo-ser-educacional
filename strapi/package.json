@@ -21,6 +21,7 @@
     "@strapi/plugin-cloud": "5.32.0",
     "@strapi/plugin-documentation": "^5.31.2",
     "@strapi/plugin-users-permissions": "5.32.0",
+    "@strapi/provider-upload-aws-s3": "^5.33.0",
     "@strapi/strapi": "5.32.0",
     "better-sqlite3": "^12.5.0",
     "export-import-kkm": "^1.1.1",

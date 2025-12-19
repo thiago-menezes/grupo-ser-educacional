@@ -1,4 +1,4 @@
-export default () => ({
+export default ({ env }) => ({
   documentation: {
     enabled: true,
     config: {
@@ -34,6 +34,32 @@ export default () => ({
         url: "https://docs.strapi.io/developer-docs/latest/getting-started/introduction.html",
       },
       security: [{ bearerAuth: [] }],
+    },
+  },
+  // AWS S3 Upload Provider Configuration
+  upload: {
+    config: {
+      provider: "aws-s3",
+      providerOptions: {
+        baseUrl: env("CDN_URL", "https://assets.gruposer.com.br"),
+        rootPath: env("AWS_S3_ROOT_PATH", "uploads"),
+        s3Options: {
+          credentials: {
+            accessKeyId: env("AWS_ACCESS_KEY_ID"),
+            secretAccessKey: env("AWS_SECRET_ACCESS_KEY"),
+          },
+          region: env("AWS_REGION", "us-east-1"),
+          params: {
+            ACL: env("AWS_ACL", "private"), // CloudFront OAC access
+            Bucket: env("AWS_BUCKET", "strapi-media-uploads"),
+          },
+        },
+      },
+      actionOptions: {
+        upload: {},
+        uploadStream: {},
+        delete: {},
+      },
     },
   },
 });
